@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.WebSockets;
@@ -9,15 +10,20 @@ using System.Windows;
 
 namespace BitmexGUI.Services.Implementations
 {
-    internal class BitmexAPIPrice: BitmexGUI.Services.Interfaces.IPrice
+    public abstract class APIPrice: BitmexGUI.Services.Interfaces.IPrice
     {
         private readonly string _ApiID;
         private readonly string _ApiKey;
-        public BitmexAPIPrice(string ID,string key)
+        private readonly string _UrlRest;
+        private readonly string _UrlWss; 
+        private string filePath = Path.Combine("../../../Logs", "logs.txt");
+        public APIPrice(string ID,string key, string urlRest, string urlWss)
         {
             _ApiID = ID;
             _ApiKey = key;
-
+            _UrlRest = urlRest;
+            _UrlWss = urlWss;
+            
         }
         public async void GetPriceREST()
         {
@@ -26,27 +32,27 @@ namespace BitmexGUI.Services.Implementations
             //BitmexHttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", key);
 
 
-            HttpResponseMessage response = await BitmexHttpClient.GetAsync("https://www.bitmex.com/api/v1/instrument?symbol=XBTUSDT&timeframe=nearest&count=1&reverse=false");
+            HttpResponseMessage response = await BitmexHttpClient.GetAsync(_UrlRest);
 
 
-            MessageBox.Show(response.StatusCode.ToString());
+            //MessageBox.Show(response.StatusCode.ToString());
 
 
             string content = await response.Content.ReadAsStringAsync();
 
-            MessageBox.Show(content);
+            //MessageBox.Show(content);
         }
 
         public async void GetPriceWSS()
         {
             System.Net.WebSockets.ClientWebSocket BitmexHttpClientWSS = new System.Net.WebSockets.ClientWebSocket();
 
-            //BitmexHttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", key);
+            
 
             CancellationTokenSource source = new CancellationTokenSource();
             CancellationToken token = source.Token;
 
-            await BitmexHttpClientWSS.ConnectAsync(new Uri("wss://ws.bitmex.com/realtime?subscribe=instrument:XBTUSDT"), token);
+            await BitmexHttpClientWSS.ConnectAsync(new Uri(_UrlWss), token);
 
 
             int size = 5000;
@@ -61,11 +67,49 @@ namespace BitmexGUI.Services.Implementations
                 }
                 else
                 {
-                    MessageBox.Show(Encoding.ASCII.GetString(buffer, 0, result.Count));
+                    string resp=Encoding.ASCII.GetString(buffer, 0, result.Count);
+
+
+                    System.IO.File.AppendAllText(filePath, resp+"\n");
                 }
             }
 
 
         }
     }
+
+    public class BitmexAPIPrice : APIPrice 
+    {
+        private readonly string _ApiID;
+        private readonly string _ApiKey;
+        private readonly string _UrlRest;
+        private readonly string _UrlWss;
+        public BitmexAPIPrice(string ID, string key, string urlRest, string urlWss) : base( ID,  key,  urlRest,  urlWss)
+        {
+            _ApiID = ID;
+            _ApiKey = key;
+            _UrlRest = urlRest;
+            _UrlWss = urlWss;
+        }
+
+    }
+
+    public class BinanceAPIPrice : APIPrice
+    {
+        private readonly string _ApiID;
+        private readonly string _ApiKey;
+        private readonly string _UrlRest;
+        private readonly string _UrlWss;
+        public BinanceAPIPrice(string ID, string key, string urlRest, string urlWss) : base(ID, key, urlRest, urlWss)
+        {
+            _ApiID = ID;
+            _ApiKey = key;
+            _UrlRest = urlRest;
+            _UrlWss = urlWss;
+        }
+
+    }
+
+
+
 }

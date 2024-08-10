@@ -24,8 +24,11 @@ namespace Alpha_APIGUI
     {
         private string ID = "";
         private string APIKEY = "";
+        private string BimexEndpointRest = "https://www.bitmex.com/api/v1/instrument?symbol=XBTUSDT&timeframe=nearest&count=1&reverse=false";
+        private string BimexEndpointWss = "wss://ws.bitmex.com/realtime?subscribe=instrument:XBTUSDT";
+        private string BinanceEndpointRest = "https://www.bitmex.com/api/v1/instrument?symbol=XBTUSDT&timeframe=nearest&count=1&reverse=false";
+        private string BinanceEndpointWss = "wss://fstream.binance.com/ws/btcusdt@kline_1m";
 
-        
 
         public MainWindow()
         {
@@ -35,9 +38,10 @@ namespace Alpha_APIGUI
             InitializeComponent();
 
 
-            IPrice BitmexAPI = new BitmexAPIPrice(ID, APIKEY);
-            
-            BitmexAPI.GetPriceWSS();
+            IPrice BitmexAPI = new BitmexAPIPrice(ID, APIKEY, BimexEndpointRest, BimexEndpointWss);
+            IPrice BinanceAPI = new BinanceAPIPrice(ID, APIKEY, BimexEndpointRest, BinanceEndpointWss);
+
+            BinanceAPI.GetPriceWSS();
         }
 
 
