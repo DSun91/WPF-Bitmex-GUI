@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "0lR2SbgOmo+az8F5GBaZzZfAclGm18MaOxpr04dsnJFYcIBLE8pvr6mCLzShhHU2PGQH9t58TExAho6JJ+hQMw==",
+  "dgSpecHash": "LVEEh98WjKmhpDMmXAUDt9pUlfDfii9M/5FeamV0JjitcQeImTMVU03l/0PZDGvmzTZhuJTV/ayI3ft0laT5rg==",
   "success": true,
   "projectFilePath": "C:\\Users\\dials\\Desktop\\Folders\\Coding Projects\\BITMEX\\BITMEX_APIGUI\\Alpha_APIGUI\\BitmexGUI.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\dials\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

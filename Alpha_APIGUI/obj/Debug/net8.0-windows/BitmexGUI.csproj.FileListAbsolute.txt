@@ -38,3 +38,6 @@ C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI
 C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\BitmexGUI.pdb
 C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\BitmexGUI.genruntimeconfig.cache
 C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\ref\BitmexGUI.dll
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\BitmexGUI.csproj.AssemblyReference.cache
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\BitmexGUI.csproj.CopyComplete

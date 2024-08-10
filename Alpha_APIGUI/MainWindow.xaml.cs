@@ -42,6 +42,7 @@ namespace Alpha_APIGUI
             IPrice BinanceAPI = new BinanceAPIPrice(ID, APIKEY, BimexEndpointRest, BinanceEndpointWss);
 
             BinanceAPI.GetPriceWSS();
+            BitmexAPI.GetPriceWSS();
         }
 
 
