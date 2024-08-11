@@ -20,11 +20,11 @@ namespace BitmexGUI.Services.Implementations
 
         // Target range
         private double minTarget = 0;
-        private double maxTarget = 500;
+        private double maxTarget = 400;
 
         
-        double interspace = 9; // Increased for better visibility
-        double candleWidth = 8; // Increased for better visibility
+        double interspace = 5; // Increased for better visibility
+        double candleWidth = 4; // Increased for better visibility
         double xOffset = 20;
         private MainViewModel _ViewModel;
         private Canvas _DrawingCanvas;
@@ -71,6 +71,7 @@ namespace BitmexGUI.Services.Implementations
                 Foreground = Brushes.Black,
                 Background = Brushes.Transparent,
                 FontSize = 14,
+                FontWeight = FontWeights.Bold,
                 Padding = new Thickness(2) // Optional padding for better visibility
             };
             if (isCurrentCandle)

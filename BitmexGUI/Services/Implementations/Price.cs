@@ -138,8 +138,16 @@ namespace BitmexGUI.Services.Implementations
                 // Store the prices in a list 
 
                 // Add to the SortedDictionary
-                PriceData.Add(InitData);
-                _priceDataDictionary.Add(InitData.Timestamp.ToString(), InitData);
+                if(!PriceData.Contains(InitData)) 
+                {
+                    PriceData.Add(InitData);
+                    CachedPriceData.Add(InitData);
+                }
+                if (!_priceDataDictionary.ContainsKey(InitData.Timestamp.ToString()))
+                {
+                    _priceDataDictionary.TryAdd(InitData.Timestamp.ToString(), InitData);
+                }
+               
             }
             
         }

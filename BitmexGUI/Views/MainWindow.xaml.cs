@@ -28,7 +28,7 @@ namespace BitmexGUI.Views
 
 
 
-        private int initialcandles = 25;
+        private int initialcandles = 150;
         private int maxcandles = 136;
         private MainViewModel ViewModel => (MainViewModel)DataContext;
         private MainViewModel viewModel;
@@ -96,14 +96,18 @@ namespace BitmexGUI.Views
                 int newInitialCandles = (int)Math.Round(slider.Value, 0);
                 if (newInitialCandles != initialcandles)
                 {
-                    initialcandles = newInitialCandles;
-                    viewModel.UpdateInitialCandles(initialcandles);
+                    viewModel.UpdateInitialCandles(newInitialCandles);
+                    
+                    
                     // Optionally, you might want to refresh or reset the candlestick view as well
                     CandleStickView.RefreshCanvas();
                 }
             }
         }
 
-        
+        private void Slider_ValueChanged_1(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+        }
     }
 }

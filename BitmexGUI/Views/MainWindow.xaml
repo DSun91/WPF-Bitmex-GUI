@@ -5,23 +5,89 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  
         xmlns:viewmodels="clr-namespace:BitmexGUI.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="750" Width="1400">
-    <Grid>
+        Title="MainWindow" Height="800" Width="1000">
+    <Window.Resources>
+        <ResourceDictionary>
+            <Style TargetType="TextBox">
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="BorderBrush" Value="Gray"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="FontFamily" Value="Book Antiqua"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TextBox">
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="5"
+                                    Padding="{TemplateBinding Padding}">
+                                <ScrollViewer x:Name="PART_ContentHost"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value> 
+                 </Setter>
+            </Style>
+            
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Margin="1,0,-1,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"  />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"  />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Canvas x:Name="DrawingCanvas"  Background="AliceBlue" Width="950" HorizontalAlignment="Left" Margin="40,80,0,0" Height="550" VerticalAlignment="Top" Grid.Row="0" >
-        </Canvas>
-        <TextBox x:Name="Entryprice" HorizontalAlignment="Left" Height="25" Margin="1138,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" FontFamily="Book Antiqua" FontSize="14" />
-        <Label Content="Entry price" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="39" Margin="1020,80,0,0" VerticalAlignment="Top" Width="130" FontFamily="Sitka Heading" FontSize="18" RenderTransformOrigin="1.026,0.54" FontWeight="Bold">
+        <Label Content="Bitmex Trading GUI" Grid.Row="0" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Height="49" Margin="174,20,0,0" VerticalAlignment="Top" Width="317" FontFamily="Franklin Gothic Book" FontSize="36" FontWeight="Bold" Cursor="AppStarting" FontStyle="Italic"/>
 
+        <Canvas x:Name="DrawingCanvas"  Grid.Row="1" Background="AliceBlue" Width="619" HorizontalAlignment="Left" Margin="40,10,0,0" Height="415" VerticalAlignment="Top" >
+        </Canvas>
+        <Slider HorizontalAlignment="Left" Grid.Row="2" Margin="37,25,0,0"  VerticalAlignment="Top" Width="595" Minimum="1" Maximum="150" Value="55"  ValueChanged="Slider_ValueChanged" TickFrequency="5"  TickPlacement="Both" Height="42">
+            <Slider.Resources>
+                <Style TargetType="TickBar">
+                    <Setter Property="Fill" Value="Black"/>
+                    <Setter Property="Height" Value="10"/>
+                    <Setter Property="MinWidth" Value="7"/>
+                </Style>
+            </Slider.Resources>
+        </Slider>
+        <Label Content="Entry price" Grid.Row="3" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="39" Margin="62,30,0,0" VerticalAlignment="Top" Width="130" FontFamily="Sitka Heading" FontSize="18" RenderTransformOrigin="1.026,0.54" FontWeight="Bold">
         </Label>
-        <Slider HorizontalAlignment="Left" Margin="110,24,0,0" Grid.Row="1" VerticalAlignment="Top" Width="810" Minimum="1" Maximum="100" Value="55"  ValueChanged="Slider_ValueChanged" TickFrequency="5"  IsSnapToTickEnabled="True" />
-        <Label Content="Bitmex Trading GUI" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Height="49" Margin="0,10,0,0" VerticalAlignment="Top" Width="570" FontFamily="Franklin Gothic Book" FontSize="36" FontWeight="Bold" Cursor="AppStarting" FontStyle="Italic"/>
+        <TextBox x:Name="Entryprice" Grid.Row="3" HorizontalAlignment="Left" Height="25" Margin="182,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" FontFamily="Book Antiqua" FontSize="14"  />
+        <Label Content="Leverage" Grid.Row="4" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="40" Margin="67,10,0,0" VerticalAlignment="Top" Width="130" FontFamily="Sitka Heading" FontSize="18" RenderTransformOrigin="1.026,0.54" FontWeight="Bold" />
+        <Slider HorizontalAlignment="Left" Grid.Row="4" Height="20" Margin="182,17,0,0" VerticalAlignment="Top" Width="190" />
+        <Button Content="Buy Limit" Grid.Row="5" HorizontalAlignment="Left" Height="30" Margin="287,0,0,0" VerticalAlignment="Center" Width="95"/>
+        <Button Content="Sell Limit" Grid.Row="5" HorizontalAlignment="Left" Height="30" Margin="387,0,0,0" VerticalAlignment="Center" Width="94"/>
+        <Button Content="Buy Market" Grid.Row="7" HorizontalAlignment="Left" Height="30" Margin="287,0,0,0" VerticalAlignment="Center" Width="95"/>
+        <Button Content="Sell Market" Grid.Row="7" HorizontalAlignment="Left" Height="30" Margin="387,0,0,0" VerticalAlignment="Center" Width="94"/>
+        <Slider HorizontalAlignment="Left" Grid.Row="3" Height="20" Margin="557,53,0,0" VerticalAlignment="Top" Width="190" RenderTransformOrigin="0.511,0.902" Grid.RowSpan="2" />
+        <Label Content="Ammount" Grid.Row="3" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="38" Margin="547,22,0,0" VerticalAlignment="Top" Width="99" FontFamily="Sitka Heading" FontSize="18" RenderTransformOrigin="1.026,0.54" FontWeight="Bold"/>
+        <Label Content="%" HorizontalAlignment="Left" Height="24" Margin="757,21,0,0" Grid.Row="3" VerticalAlignment="Top" Width="50"/>
+        <TextBox x:Name="Entryprice_Copy" Grid.Row="3" HorizontalAlignment="Left" Height="25" Margin="637,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="108" FontFamily="Book Antiqua" FontSize="14"  />
+        <Label Content="Balance " VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="32" Margin="709,4,0,0" VerticalAlignment="Top" Width="73" FontFamily="Sitka Heading" FontSize="18" RenderTransformOrigin="1.026,0.54" FontWeight="Bold" Grid.Row="1"/>
+        <TextBox x:Name="Entryprice_Copy1"  HorizontalAlignment="Left" Height="25" Margin="791,7,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" FontFamily="Book Antiqua" FontSize="14" Grid.Row="1"  />
+        <ComboBox HorizontalAlignment="Left" SelectedIndex="0" Height="25" Margin="907,7,0,0" VerticalAlignment="Top" Width="75" Grid.Row="1">
+            <ComboBoxItem Content="USDT"/>
+            <ComboBoxItem Content="BTC"/>
+            <ComboBoxItem Content="BNB"/>
+        </ComboBox>
+        <Label Content="Liquidation Price: " Grid.Row="1" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="39" Margin="677,50,0,0" VerticalAlignment="Top" Width="158" FontFamily="Sitka Heading" FontSize="18" RenderTransformOrigin="1.026,0.54" FontWeight="Bold"/>
+        <Label Content="" Grid.Row="1" BorderBrush="OrangeRed" BorderThickness="2" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="30" Margin="840,50,0,0" VerticalAlignment="Top" Width="119" FontFamily="Sitka Heading" FontSize="18" RenderTransformOrigin="1.026,0.54" FontWeight="Bold"/>
+        <Label Content="Entry Fee: " Grid.Row="1" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="39" Margin="736,110,0,0" VerticalAlignment="Top" Width="92" FontFamily="Sitka Heading" FontSize="18" RenderTransformOrigin="1.026,0.54" FontWeight="Bold"/>
+        <Label Content="" Grid.Row="1" BorderBrush="OrangeRed" BorderThickness="2" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="30" Margin="840,110,0,0" VerticalAlignment="Top" Width="119" FontFamily="Sitka Heading" FontSize="18" RenderTransformOrigin="1.026,0.54" FontWeight="Bold"/>
+        <Menu HorizontalAlignment="Center" Grid.Row="0" Height="20" Margin="0,0,0,0" VerticalAlignment="Top" Width="1000"/>
+
 
         <!-- You can add more controls here to display other data or add user interactions -->
     </Grid>

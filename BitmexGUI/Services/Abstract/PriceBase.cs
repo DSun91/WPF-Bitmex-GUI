@@ -20,6 +20,8 @@ namespace BitmexGUI.Services.Abstract
         protected string  _UrlRest;
         protected string  _UrlWss;
         private string LogfilePath = ConfigurationManager.AppSettings["LogFile"];
+        public ObservableCollection<PriceData> CachedPriceData = new ObservableCollection<PriceData>();
+
 
         //Constructor
         public APIPrice(string ID, string key, string urlRest, string urlWss)
