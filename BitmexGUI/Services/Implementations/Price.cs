@@ -89,10 +89,10 @@ namespace BitmexGUI.Services.Implementations
             var priceData = new PriceData
             {
                 Symbol = data["s"].ToString(),
-                Open = decimal.Parse(KandleStick["o"].ToString()),
-                High = decimal.Parse(KandleStick["h"].ToString()),
-                Low = decimal.Parse(KandleStick["l"].ToString()),
-                Close = decimal.Parse(KandleStick["c"].ToString()),
+                Open = double.Parse(KandleStick["o"].ToString()),
+                High = double.Parse(KandleStick["h"].ToString()),
+                Low = double.Parse(KandleStick["l"].ToString()),
+                Close = double.Parse(KandleStick["c"].ToString()),
                 Timestamp = DateTimeOffset.FromUnixTimeMilliseconds(long.Parse(KandleStick["t"].ToString())).DateTime
             };
 

@@ -7,20 +7,17 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="750" Width="1000"> 
     <Grid>
-        <ListView ItemsSource="{Binding PriceData}" 
-                  Height="300" 
-                  VerticalAlignment="Top">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Symbol" DisplayMemberBinding="{Binding Symbol}" Width="100"/>
-                    <GridViewColumn Header="Open" DisplayMemberBinding="{Binding Open}" Width="100"/>
-                    <GridViewColumn Header="High" DisplayMemberBinding="{Binding High}" Width="100"/>
-                    <GridViewColumn Header="Low" DisplayMemberBinding="{Binding Low}" Width="100"/>
-                    <GridViewColumn Header="Close" DisplayMemberBinding="{Binding Close}" Width="100"/>
-                    <GridViewColumn Header="Timestamp" DisplayMemberBinding="{Binding Timestamp}" Width="200"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Canvas x:Name="DrawingCanvas" MouseLeftButtonDown="DrawingCanvas_MouseLeftButtonDown"  Background="AliceBlue" Width="850" HorizontalAlignment="Center" Margin="0,40,0,0" Height="550" VerticalAlignment="Top" Grid.Row="0" >
+        </Canvas>
+        <TextBox x:Name="Entryprice" HorizontalAlignment="Center" Height="25" Margin="0,5,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" FontFamily="Book Antiqua" FontSize="14" />
+        <Label Content="Entry price" HorizontalAlignment="Center" Height="26" Margin="-270,0,0,0" Grid.Row="1" VerticalAlignment="Center" Width="78" FontFamily="Sitka Heading" FontSize="14"/>
 
         <!-- You can add more controls here to display other data or add user interactions -->
     </Grid>
