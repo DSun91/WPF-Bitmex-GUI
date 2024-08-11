@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Configuration;
 using BitmexGUI.Models;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace BitmexGUI.Services.Implementations
 {
@@ -31,16 +33,26 @@ namespace BitmexGUI.Services.Implementations
             _UrlRest = urlRest;
             _UrlWss = urlWss;
         }
+        public override void ProcessResponseRest()
+        { 
         
+        }
 
-    }
+        }
+
+
+
+
+
+
+
 
     public class BinanceAPIPrice : APIPrice
     {
         private readonly string _ApiID;
         private readonly string _ApiKey;
-        private readonly string _UrlRest;
-        private readonly string _UrlWss;
+         
+        private string _UrlWss { get; set; }
         public event Action<PriceData> PriceUpdated;
         public BinanceAPIPrice(string ID, string key, string urlRest, string urlWss) : base(ID, key, urlRest, urlWss)
         {
@@ -50,7 +62,7 @@ namespace BitmexGUI.Services.Implementations
             _UrlWss = urlWss;
         }
 
-        override public void ProcessResponse(string response)
+        override public void ProcessResponseWss(string response)
         {
             //MessageBox.Show(response);
             JObject jsonObject = JObject.Parse(response);
@@ -79,11 +91,8 @@ namespace BitmexGUI.Services.Implementations
             // Add the nested dictionary to the main dictionary
             data["k"] = kData;
 
-            var KandleStick = (Dictionary<string, object>)data["k"];
-
-            string values = $"{{ {KandleStick["o"]}f,{KandleStick["h"]}f,{KandleStick["l"]}f,{KandleStick["c"]}f }}";
-
-            System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], values + "\n");
+            var KandleStick = (Dictionary<string, object>)data["k"]; 
+            System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], $"{{ {KandleStick["o"]}f,{KandleStick["h"]}f,{KandleStick["l"]}f,{KandleStick["c"]}f }}" + "\n");
 
 
             var priceData = new PriceData
@@ -97,23 +106,57 @@ namespace BitmexGUI.Services.Implementations
             };
 
             PriceUpdated?.Invoke(priceData);
-            //MessageBox.Show($"Close price: {KandleStick["c"]}");
+          
+        }
 
-            // Now you can access the elements like this:
-            //Console.WriteLine($"Event type: {data["e"]}");
-            //Console.WriteLine($"Event time: {data["E"]}");
-            //Console.WriteLine($"Symbol: {data["s"]}");
+        public override async void ProcessResponseRest(string response, ObservableCollection<PriceData> PriceData, Dictionary<string, PriceData> _priceDataDictionary)
+        {
+            var klines = JArray.Parse(response);
+            
+            foreach (var kline in klines)
+            {
+                long openTime = kline[0].ToObject<long>();
 
-            // Accessing nested "k" data
+                // Parse prices from the kline data
+                double openPrice = double.Parse(kline[1].ToString());
+                double highPrice = double.Parse(kline[2].ToString());
+                double lowPrice = double.Parse(kline[3].ToString());
+                double closePrice = double.Parse(kline[4].ToString());
 
-            //Console.WriteLine($"Open price: {kDict["o"]}");
-            //Console.WriteLine($"Close price: {kDict["c"]}");
-            //Console.WriteLine($"High price: {kDict["h"]}");
-            //Console.WriteLine($"Low price: {kDict["l"]}");
+
+                Dictionary<string, List<double>> existingData = new Dictionary<string, List<double>>();
+
+
+                PriceData InitData = new PriceData();
+
+                InitData.Timestamp = DateTimeOffset.FromUnixTimeSeconds(openTime / 1000).UtcDateTime;
+                // Assuming PriceData has properties like Open, High, Low, Close
+                InitData.Open = openPrice;
+                InitData.High = highPrice;
+                InitData.Low = lowPrice;
+                InitData.Close = closePrice;
+                // Store the prices in a list 
+
+                // Add to the SortedDictionary
+                PriceData.Add(InitData);
+                _priceDataDictionary.Add(InitData.Timestamp.ToString(), InitData);
+            }
+            
+        }
+
+        public void UpdateRestEndpoint(string newEndpoint)
+        {
+            // Update the endpoint URL and potentially restart any connections
+            _UrlRest = newEndpoint;
+           
+             
+        }
+
+        public void UpdateWssEndpoint(string newEndpoint)
+        {
+            // Update the endpoint URL and potentially restart any connections
+            _UrlWss = newEndpoint;
         }
 
     }
-
-
-
 }

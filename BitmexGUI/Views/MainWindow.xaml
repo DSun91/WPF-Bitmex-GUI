@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  
         xmlns:viewmodels="clr-namespace:BitmexGUI.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="750" Width="1000"> 
+        Title="MainWindow" Height="750" Width="1400">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -14,10 +14,14 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Canvas x:Name="DrawingCanvas" MouseLeftButtonDown="DrawingCanvas_MouseLeftButtonDown"  Background="AliceBlue" Width="850" HorizontalAlignment="Center" Margin="0,40,0,0" Height="550" VerticalAlignment="Top" Grid.Row="0" >
+        <Canvas x:Name="DrawingCanvas"  Background="AliceBlue" Width="950" HorizontalAlignment="Left" Margin="40,80,0,0" Height="550" VerticalAlignment="Top" Grid.Row="0" >
         </Canvas>
-        <TextBox x:Name="Entryprice" HorizontalAlignment="Center" Height="25" Margin="0,5,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" FontFamily="Book Antiqua" FontSize="14" />
-        <Label Content="Entry price" HorizontalAlignment="Center" Height="26" Margin="-270,0,0,0" Grid.Row="1" VerticalAlignment="Center" Width="78" FontFamily="Sitka Heading" FontSize="14"/>
+        <TextBox x:Name="Entryprice" HorizontalAlignment="Left" Height="25" Margin="1138,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" FontFamily="Book Antiqua" FontSize="14" />
+        <Label Content="Entry price" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="39" Margin="1020,80,0,0" VerticalAlignment="Top" Width="130" FontFamily="Sitka Heading" FontSize="18" RenderTransformOrigin="1.026,0.54" FontWeight="Bold">
+
+        </Label>
+        <Slider HorizontalAlignment="Left" Margin="110,24,0,0" Grid.Row="1" VerticalAlignment="Top" Width="810" Minimum="1" Maximum="100" Value="55"  ValueChanged="Slider_ValueChanged" TickFrequency="5"  IsSnapToTickEnabled="True" />
+        <Label Content="Bitmex Trading GUI" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Height="49" Margin="0,10,0,0" VerticalAlignment="Top" Width="570" FontFamily="Franklin Gothic Book" FontSize="36" FontWeight="Bold" Cursor="AppStarting" FontStyle="Italic"/>
 
         <!-- You can add more controls here to display other data or add user interactions -->
     </Grid>

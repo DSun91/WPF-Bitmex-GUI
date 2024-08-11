@@ -1,5 +1,7 @@
-﻿using System;
+﻿using BitmexGUI.Models;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.IO;
 using System.Linq;
@@ -7,6 +9,7 @@ using System.Net.Http;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace BitmexGUI.Services.Abstract
 {
@@ -14,8 +17,8 @@ namespace BitmexGUI.Services.Abstract
     {
         private readonly string _ApiID;
         private readonly string _ApiKey;
-        private readonly string _UrlRest;
-        private readonly string _UrlWss;
+        protected string  _UrlRest;
+        protected string  _UrlWss;
         private string LogfilePath = ConfigurationManager.AppSettings["LogFile"];
 
         //Constructor
@@ -27,12 +30,12 @@ namespace BitmexGUI.Services.Abstract
             _UrlWss = urlWss;
 
         }
-        public async void GetPriceREST()
+        public async void GetPriceREST(ObservableCollection<PriceData> PriceData, Dictionary<string, PriceData> _priceDataDictionary)
         {
             System.Net.Http.HttpClient BitmexHttpClient = new System.Net.Http.HttpClient();
 
             //BitmexHttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", key);
-
+            
 
             HttpResponseMessage response = await BitmexHttpClient.GetAsync(_UrlRest);
 
@@ -42,7 +45,9 @@ namespace BitmexGUI.Services.Abstract
 
             string content = await response.Content.ReadAsStringAsync();
 
+            ProcessResponseRest(content, PriceData, _priceDataDictionary);
             //MessageBox.Show(content);
+             
         }
 
         public async void GetPriceWSS()
@@ -69,19 +74,39 @@ namespace BitmexGUI.Services.Abstract
                 }
                 else
                 {
-                    string resp = Encoding.ASCII.GetString(buffer, 0, result.Count); 
+                    string resp = Encoding.ASCII.GetString(buffer, 0, result.Count);
 
                     //System.IO.File.AppendAllText(filePath, resp + "\n");
 
-                    ProcessResponse(resp);
+                    ProcessResponseWss(resp);
                 }
             }
 
 
         }
-
-        public virtual void ProcessResponse(string response)
+         
+        
+        public virtual void ProcessResponseWss()
         {
+
+        }
+        public virtual void ProcessResponseWss(string response)
+        {
+
+        }
+
+
+        public virtual void ProcessResponseRest()
+        {
+
+        }
+        public virtual void ProcessResponseRest(string response)
+        {
+
+        }
+        public virtual async void ProcessResponseRest(string response, ObservableCollection<PriceData> PriceData, Dictionary<string, PriceData> _priceDataDictionary)
+        {
+            
 
         }
     }

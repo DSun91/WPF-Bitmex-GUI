@@ -8,7 +8,9 @@ namespace BitmexGUI.Services.Interfaces
 {
     internal interface IChart
     {
-        public void GetInitialCandlesticks();
-        public void DrawCandlesticks();
+        public void GetInitialData();
+        public void DrawCharts();
+
+
     }
 }
