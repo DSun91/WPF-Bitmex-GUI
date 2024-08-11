@@ -1,0 +1,68 @@
+C:\Users\dials\Desktop\Folders\Coding Projects\fiverr alpha_vantage\Alpha_APIGUI\Alpha_APIGUI\bin\Debug\net8.0-windows\BitmexGUI.exe
+C:\Users\dials\Desktop\Folders\Coding Projects\fiverr alpha_vantage\Alpha_APIGUI\Alpha_APIGUI\bin\Debug\net8.0-windows\BitmexGUI.deps.json
+C:\Users\dials\Desktop\Folders\Coding Projects\fiverr alpha_vantage\Alpha_APIGUI\Alpha_APIGUI\bin\Debug\net8.0-windows\BitmexGUI.runtimeconfig.json
+C:\Users\dials\Desktop\Folders\Coding Projects\fiverr alpha_vantage\Alpha_APIGUI\Alpha_APIGUI\bin\Debug\net8.0-windows\BitmexGUI.dll
+C:\Users\dials\Desktop\Folders\Coding Projects\fiverr alpha_vantage\Alpha_APIGUI\Alpha_APIGUI\bin\Debug\net8.0-windows\BitmexGUI.pdb
+C:\Users\dials\Desktop\Folders\Coding Projects\fiverr alpha_vantage\Alpha_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\MainWindow.g.cs
+C:\Users\dials\Desktop\Folders\Coding Projects\fiverr alpha_vantage\Alpha_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\App.g.cs
+C:\Users\dials\Desktop\Folders\Coding Projects\fiverr alpha_vantage\Alpha_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\BitmexGUI_MarkupCompile.cache
+C:\Users\dials\Desktop\Folders\Coding Projects\fiverr alpha_vantage\Alpha_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\BitmexGUI_MarkupCompile.lref
+C:\Users\dials\Desktop\Folders\Coding Projects\fiverr alpha_vantage\Alpha_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\MainWindow.baml
+C:\Users\dials\Desktop\Folders\Coding Projects\fiverr alpha_vantage\Alpha_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\BitmexGUI.g.resources
+C:\Users\dials\Desktop\Folders\Coding Projects\fiverr alpha_vantage\Alpha_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\BitmexGUI.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\dials\Desktop\Folders\Coding Projects\fiverr alpha_vantage\Alpha_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\BitmexGUI.AssemblyInfoInputs.cache
+C:\Users\dials\Desktop\Folders\Coding Projects\fiverr alpha_vantage\Alpha_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\BitmexGUI.AssemblyInfo.cs
+C:\Users\dials\Desktop\Folders\Coding Projects\fiverr alpha_vantage\Alpha_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\BitmexGUI.csproj.CoreCompileInputs.cache
+C:\Users\dials\Desktop\Folders\Coding Projects\fiverr alpha_vantage\Alpha_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\BitmexGUI.dll
+C:\Users\dials\Desktop\Folders\Coding Projects\fiverr alpha_vantage\Alpha_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\refint\BitmexGUI.dll
+C:\Users\dials\Desktop\Folders\Coding Projects\fiverr alpha_vantage\Alpha_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\BitmexGUI.pdb
+C:\Users\dials\Desktop\Folders\Coding Projects\fiverr alpha_vantage\Alpha_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\BitmexGUI.genruntimeconfig.cache
+C:\Users\dials\Desktop\Folders\Coding Projects\fiverr alpha_vantage\Alpha_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\ref\BitmexGUI.dll
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\bin\Debug\net8.0-windows\BitmexGUI.exe
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\bin\Debug\net8.0-windows\BitmexGUI.deps.json
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\bin\Debug\net8.0-windows\BitmexGUI.runtimeconfig.json
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\bin\Debug\net8.0-windows\BitmexGUI.dll
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\bin\Debug\net8.0-windows\BitmexGUI.pdb
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\App.g.cs
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\BitmexGUI_MarkupCompile.cache
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\BitmexGUI_MarkupCompile.lref
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\BitmexGUI.g.resources
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\BitmexGUI.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\BitmexGUI.AssemblyInfoInputs.cache
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\BitmexGUI.AssemblyInfo.cs
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\BitmexGUI.csproj.CoreCompileInputs.cache
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\BitmexGUI.dll
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\refint\BitmexGUI.dll
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\BitmexGUI.pdb
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\BitmexGUI.genruntimeconfig.cache
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\ref\BitmexGUI.dll
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\BitmexGUI.csproj.AssemblyReference.cache
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\BitmexGUI.csproj.CopyComplete
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\bin\Debug\net8.0-windows\BitmexGUI.dll.config
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\Views\MainWindow.g.cs
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\Alpha_APIGUI\obj\Debug\net8.0-windows\Views\MainWindow.baml
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\BitmexGUI\bin\Debug\net8.0-windows\BitmexGUI.exe
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\BitmexGUI\bin\Debug\net8.0-windows\BitmexGUI.dll.config
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\BitmexGUI\bin\Debug\net8.0-windows\BitmexGUI.deps.json
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\BitmexGUI\bin\Debug\net8.0-windows\BitmexGUI.runtimeconfig.json
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\BitmexGUI\bin\Debug\net8.0-windows\BitmexGUI.dll
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\BitmexGUI\bin\Debug\net8.0-windows\BitmexGUI.pdb
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\BitmexGUI\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\BitmexGUI\obj\Debug\net8.0-windows\BitmexGUI.csproj.AssemblyReference.cache
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\BitmexGUI\obj\Debug\net8.0-windows\Views\MainWindow.g.cs
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\BitmexGUI\obj\Debug\net8.0-windows\App.g.cs
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\BitmexGUI\obj\Debug\net8.0-windows\BitmexGUI_MarkupCompile.cache
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\BitmexGUI\obj\Debug\net8.0-windows\BitmexGUI_MarkupCompile.lref
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\BitmexGUI\obj\Debug\net8.0-windows\Views\MainWindow.baml
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\BitmexGUI\obj\Debug\net8.0-windows\BitmexGUI.g.resources
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\BitmexGUI\obj\Debug\net8.0-windows\BitmexGUI.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\BitmexGUI\obj\Debug\net8.0-windows\BitmexGUI.AssemblyInfoInputs.cache
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\BitmexGUI\obj\Debug\net8.0-windows\BitmexGUI.AssemblyInfo.cs
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\BitmexGUI\obj\Debug\net8.0-windows\BitmexGUI.csproj.CoreCompileInputs.cache
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\BitmexGUI\obj\Debug\net8.0-windows\BitmexGUI.csproj.CopyComplete
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\BitmexGUI\obj\Debug\net8.0-windows\BitmexGUI.dll
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\BitmexGUI\obj\Debug\net8.0-windows\refint\BitmexGUI.dll
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\BitmexGUI\obj\Debug\net8.0-windows\BitmexGUI.pdb
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\BitmexGUI\obj\Debug\net8.0-windows\BitmexGUI.genruntimeconfig.cache
+C:\Users\dials\Desktop\Folders\Coding Projects\BITMEX\BITMEX_APIGUI\BitmexGUI\obj\Debug\net8.0-windows\ref\BitmexGUI.dll
