@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BitmexGUI.Models
 {
-    public class PriceData
+    public class CandlestickData
     {
         public string Symbol { get; set; }
         public double Open { get; set; }
@@ -15,4 +15,15 @@ namespace BitmexGUI.Models
         public double Close { get; set; }
         public DateTime Timestamp { get; set; }
     }
+
+    public class SettledPrice
+    {
+        public string Symbol { get; set; }
+        public double SettledPriceValue { get; set; }
+
+        public string Timestamp { get; set; }
+
+    }
+
+
 }

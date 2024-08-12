@@ -1,59 +1,23 @@
-﻿using BitmexGUI.Services.Abstract;
+﻿using BitmexGUI.Models;
+using BitmexGUI.Services.Abstract;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Net.WebSockets;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Configuration;
-using BitmexGUI.Models;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
+using System.Configuration;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BitmexGUI.Services.Implementations
 {
-    
-
-    public class BitmexAPIPrice : APIPrice 
-    {
-        private readonly string _ApiID;
-        private readonly string _ApiKey;
-        private readonly string _UrlRest;
-        private readonly string _UrlWss;
-        public BitmexAPIPrice(string ID, string key, string urlRest, string urlWss) : base( ID,  key,  urlRest,  urlWss)
-        {
-            _ApiID = ID;
-            _ApiKey = key;
-            _UrlRest = urlRest;
-            _UrlWss = urlWss;
-        }
-        public override void ProcessResponseRest()
-        { 
-        
-        }
-
-        }
-
-
-
-
-
-
-
-
     public class BinanceAPIPrice : APIPrice
     {
         private readonly string _ApiID;
         private readonly string _ApiKey;
-         
-        private string _UrlWss { get; set; }
-        public event Action<PriceData> PriceUpdated;
+
+
+        public event Action<CandlestickData> PriceUpdated;
         public BinanceAPIPrice(string ID, string key, string urlRest, string urlWss) : base(ID, key, urlRest, urlWss)
         {
             _ApiID = ID;
@@ -91,11 +55,11 @@ namespace BitmexGUI.Services.Implementations
             // Add the nested dictionary to the main dictionary
             data["k"] = kData;
 
-            var KandleStick = (Dictionary<string, object>)data["k"]; 
+            var KandleStick = (Dictionary<string, object>)data["k"];
             System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], $"{{ {KandleStick["o"]}f,{KandleStick["h"]}f,{KandleStick["l"]}f,{KandleStick["c"]}f }}" + "\n");
 
 
-            var priceData = new PriceData
+            var priceData = new CandlestickData
             {
                 Symbol = data["s"].ToString(),
                 Open = double.Parse(KandleStick["o"].ToString()),
@@ -106,13 +70,13 @@ namespace BitmexGUI.Services.Implementations
             };
 
             PriceUpdated?.Invoke(priceData);
-          
+
         }
 
-        public override async void ProcessResponseRest(string response, ObservableCollection<PriceData> PriceData, Dictionary<string, PriceData> _priceDataDictionary)
+        public override async void ProcessResponseRest(string response, ObservableCollection<CandlestickData> PriceData, Dictionary<string, CandlestickData> _priceDataDictionary)
         {
             var klines = JArray.Parse(response);
-            
+
             foreach (var kline in klines)
             {
                 long openTime = kline[0].ToObject<long>();
@@ -127,7 +91,7 @@ namespace BitmexGUI.Services.Implementations
                 Dictionary<string, List<double>> existingData = new Dictionary<string, List<double>>();
 
 
-                PriceData InitData = new PriceData();
+                CandlestickData InitData = new CandlestickData();
 
                 InitData.Timestamp = DateTimeOffset.FromUnixTimeSeconds(openTime / 1000).UtcDateTime;
                 // Assuming PriceData has properties like Open, High, Low, Close
@@ -138,7 +102,7 @@ namespace BitmexGUI.Services.Implementations
                 // Store the prices in a list 
 
                 // Add to the SortedDictionary
-                if(!PriceData.Contains(InitData)) 
+                if (!PriceData.Contains(InitData))
                 {
                     PriceData.Add(InitData);
                     CachedPriceData.Add(InitData);
@@ -147,17 +111,17 @@ namespace BitmexGUI.Services.Implementations
                 {
                     _priceDataDictionary.TryAdd(InitData.Timestamp.ToString(), InitData);
                 }
-               
+
             }
-            
+
         }
 
         public void UpdateRestEndpoint(string newEndpoint)
         {
             // Update the endpoint URL and potentially restart any connections
             _UrlRest = newEndpoint;
-           
-             
+
+
         }
 
         public void UpdateWssEndpoint(string newEndpoint)

@@ -34,12 +34,88 @@ namespace BitmexGUI.Services.Implementations
             _ViewModel = ViewModel;
             _DrawingCanvas = DrawingCanvas; 
         }
+        public void RefreshCanvas()
+        {
+            _DrawingCanvas.Children.Clear();
+            DrawGrid();
+            DrawBorder();
+            lock (_ViewModel.PriceData)
+            {
+                if (_ViewModel.PriceData.Count == 0)
+                {
+                    Console.WriteLine("No candle data available.");
+                    return;
+                }
 
+                var allValues = _ViewModel.PriceData.SelectMany(data => new[] { data.Open, data.High, data.Low, data.Close });
+                minOriginal = allValues.Min();
+                maxOriginal = allValues.Max();
+
+                double padding = (maxOriginal - minOriginal) * 0.05;
+                minOriginal -= padding;
+                maxOriginal += padding;
+
+                int i = 0;
+                //MessageBox.Show(_ViewModel.SettledPriceData.Count.ToString());
+                foreach (var candleData in _ViewModel.PriceData)
+                {
+
+                    var candleValues = candleData;
+
+                    var open = MapToScale(candleData.Open);
+                    var high = MapToScale(candleData.High);
+                    var low = MapToScale(candleData.Low);
+                    var close = MapToScale(candleData.Close);
+                    //this.CurrentPriceTextBlock.Text =Math.Round(candleValues[3],3).ToString();
+                    //this.CurrentPriceTextBlock.Margin = new Thickness(400, close-40, 0, 0);
+
+                    DrawCharts(i * interspace, open, high, low, close, candleWidth);
+                    //MessageBox.Show(candleData.Timestamp.ToString());
+                    i++;
+                }
+            }
+        }
         public void DrawCharts(double centerX, double open, double high, double low, double close, double width)
         {
 
+            int fontsize = 14;
+            double mappedSettledPrice = InvMapToScale(MapToScale(_ViewModel.SettledPriceData.Last().SettledPriceValue));
 
             bool isCurrentCandle = (centerX == (_ViewModel.PriceData.Count - 1) * interspace);
+
+            Line SettPrice = new Line
+            {
+                X1 = centerX + xOffset-10,
+                Y1 =MapToScale(_ViewModel.SettledPriceData.Last().SettledPriceValue),
+                X2 = centerX + xOffset+10,
+                Y2 = MapToScale(_ViewModel.SettledPriceData.Last().SettledPriceValue),
+                Stroke = Brushes.DarkViolet,
+                StrokeThickness = 2
+            };
+
+            Line ClosePrice = new Line
+            {
+                X1 = centerX + xOffset - 10,
+                Y1 = close,
+                X2 = centerX + xOffset + 10,
+                Y2 = close,
+                Stroke = Brushes.Black,
+                StrokeThickness = 2
+            };
+
+            TextBlock SettPriceLabel = new TextBlock
+            {
+                
+                Text =mappedSettledPrice.ToString("F2")+$" = {Math.Round(mappedSettledPrice - InvMapToScale(close),2)}", // Format the close value to 2 decimal places
+                Foreground = Brushes.DarkViolet,
+                Background = Brushes.Transparent,
+                FontSize = fontsize,
+                FontWeight = FontWeights.Bold,
+                Padding = new Thickness(2) // Optional padding for better visibility
+            };
+
+
+
 
             Line wick = new Line
             {
@@ -67,18 +143,24 @@ namespace BitmexGUI.Services.Implementations
 
             TextBlock closeLabel = new TextBlock
             {
-                Text = InvMapToScale(close).ToString("F2"), // Format the close value to 2 decimal places
+                Text = InvMapToScale(close).ToString("F2")+ " -", // Format the close value to 2 decimal places
                 Foreground = Brushes.Black,
                 Background = Brushes.Transparent,
-                FontSize = 14,
+                FontSize = fontsize,
                 FontWeight = FontWeights.Bold,
                 Padding = new Thickness(2) // Optional padding for better visibility
             };
             if (isCurrentCandle)
             {
                 Canvas.SetLeft(closeLabel, centerX + xOffset + width / 2 + 5); // Position horizontally to the right of the candlestick
-                Canvas.SetTop(closeLabel, close); // Position vertically at the 'close' value
+                Canvas.SetTop(closeLabel, close ); // Position vertically at the 'close' value
+                
+                Canvas.SetLeft(SettPriceLabel, centerX + xOffset + 80); // Position horizontally to the right of the candlestick
+                Canvas.SetTop(SettPriceLabel, close); // Position vertically at the 'close' value
+                _DrawingCanvas.Children.Add(SettPriceLabel);
                 _DrawingCanvas.Children.Add(closeLabel);
+                _DrawingCanvas.Children.Add(SettPrice);
+                _DrawingCanvas.Children.Add(ClosePrice);
             }
 
         }
@@ -92,46 +174,7 @@ namespace BitmexGUI.Services.Implementations
         {
             return ((maxTarget - Value) / (maxTarget - minTarget)) * (maxOriginal - minOriginal) + minOriginal;
         }
-        public void RefreshCanvas()
-        {
-            _DrawingCanvas.Children.Clear();
-            DrawGrid();
-            DrawBorder();
-            lock (_ViewModel.PriceData)
-            {
-                if (_ViewModel.PriceData.Count == 0)
-                {
-                    Console.WriteLine("No candle data available.");
-                    return;
-                }
-
-                var allValues = _ViewModel.PriceData.SelectMany(data => new[] { data.Open, data.High, data.Low, data.Close });
-                minOriginal = allValues.Min();
-                maxOriginal = allValues.Max();
-
-                double padding = (maxOriginal - minOriginal) * 0.05;
-                minOriginal -= padding;
-                maxOriginal += padding;
-
-                int i = 0;
-
-                foreach (var candleData in _ViewModel.PriceData)
-                {
-                    var candleValues = candleData;
-
-                    var open = MapToScale(candleData.Open);
-                    var high = MapToScale(candleData.High);
-                    var low = MapToScale(candleData.Low);
-                    var close = MapToScale(candleData.Close);
-                    //this.CurrentPriceTextBlock.Text =Math.Round(candleValues[3],3).ToString();
-                    //this.CurrentPriceTextBlock.Margin = new Thickness(400, close-40, 0, 0);
-                    
-                    DrawCharts(i * interspace, open, high, low, close, candleWidth);
-                    //MessageBox.Show(candleData.Timestamp.ToString());
-                    i++;
-                }
-            }
-        }
+        
         private void DrawGrid()
         {
             // Clear existing grid lines if any

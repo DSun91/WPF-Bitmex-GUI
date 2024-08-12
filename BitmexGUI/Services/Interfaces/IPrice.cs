@@ -11,7 +11,8 @@ namespace BitmexGUI.Services.Interfaces
     internal interface IPrice
     {
         async void GetPriceREST() { }
-        async void GetPriceREST(ObservableCollection<PriceData> PriceData) { }
+
+        async void GetPriceREST(ObservableCollection<CandlestickData> PriceData) { }
         
         async void GetPriceWSS() { }
     }

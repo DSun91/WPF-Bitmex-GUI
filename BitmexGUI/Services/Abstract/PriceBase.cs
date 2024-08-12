@@ -20,7 +20,7 @@ namespace BitmexGUI.Services.Abstract
         protected string  _UrlRest;
         protected string  _UrlWss;
         private string LogfilePath = ConfigurationManager.AppSettings["LogFile"];
-        public ObservableCollection<PriceData> CachedPriceData = new ObservableCollection<PriceData>();
+        public ObservableCollection<CandlestickData> CachedPriceData = new ObservableCollection<CandlestickData>();
 
 
         //Constructor
@@ -32,7 +32,7 @@ namespace BitmexGUI.Services.Abstract
             _UrlWss = urlWss;
 
         }
-        public async void GetPriceREST(ObservableCollection<PriceData> PriceData, Dictionary<string, PriceData> _priceDataDictionary)
+        public async void GetPriceREST(ObservableCollection<CandlestickData> PriceData, Dictionary<string, CandlestickData> _priceDataDictionary)
         {
             System.Net.Http.HttpClient BitmexHttpClient = new System.Net.Http.HttpClient();
 
@@ -106,7 +106,7 @@ namespace BitmexGUI.Services.Abstract
         {
 
         }
-        public virtual async void ProcessResponseRest(string response, ObservableCollection<PriceData> PriceData, Dictionary<string, PriceData> _priceDataDictionary)
+        public virtual async void ProcessResponseRest(string response, ObservableCollection<CandlestickData> PriceData, Dictionary<string, CandlestickData> _priceDataDictionary)
         {
             
 

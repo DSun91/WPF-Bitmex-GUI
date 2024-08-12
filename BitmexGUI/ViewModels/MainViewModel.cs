@@ -22,21 +22,24 @@ namespace BitmexGUI.ViewModels
         private readonly string IdBitmex = "";
         private readonly string ApiKeyBitmex = "";
 
-        private readonly string BinanceEndpointRest = "";
-        private readonly string BinanceEndpointWss = "";
-        private readonly string BitmexEndpointRest = "https://www.bitmex.com/api/v1";
-        private readonly string BitmexEndpointWss = "wss://ws.bitmex.com/realtime";
+        private readonly string BinanceEndpointRest = ConfigurationManager.AppSettings["BaseRESTBinance"];
+        private readonly string BinanceEndpointWss = ConfigurationManager.AppSettings["BaseWSSBinance"];
+        private readonly string BitmexEndpointRest = ConfigurationManager.AppSettings["BaseRESTBitmex"];
+        private readonly string BitmexEndpointWss = ConfigurationManager.AppSettings["BaseWSSBitmex"];
+        private readonly string Instrument = ConfigurationManager.AppSettings["Instrument"];
         public event Action PriceDataUpdated;
-        private ObservableCollection<PriceData> _priceData = new ObservableCollection<PriceData>();
-        private Dictionary<string, PriceData> _priceDataDictionary = new Dictionary<string, PriceData>();
+        public event Action SettledPriceDataUpdated;
+        private ObservableCollection<CandlestickData> _priceData = new ObservableCollection<CandlestickData>();
+        private ObservableCollection<SettledPrice> _settledPriceData = new ObservableCollection<SettledPrice>();
+        private Dictionary<string, CandlestickData> _priceDataDictionary = new Dictionary<string, CandlestickData>();
     
         private readonly int _maxCandlesLoading;
-        private readonly BinanceAPIPrice _binanceApi;
-        private readonly BitmexAPIPrice _bitmexApi;
+        private readonly BinanceAPIPrice BinanceApi;
+        private readonly BitmexAPIPrice BitmexApi;
         private string TimeFrame= ConfigurationManager.AppSettings["Timeframe"];
        
 
-        public ObservableCollection<PriceData> PriceData
+        public ObservableCollection<CandlestickData> PriceData
         {
             get => _priceData;
             set
@@ -45,9 +48,19 @@ namespace BitmexGUI.ViewModels
                 OnPropertyChanged(nameof(PriceData));
             }
         }
-        
-     
-        
+        public ObservableCollection<SettledPrice> SettledPriceData
+        {
+            get => _settledPriceData;
+            set
+            {
+                _settledPriceData = value;
+                OnPropertyChanged(nameof(SettledPriceData));
+            }
+        }
+
+
+
+
         public MainViewModel(int InitialCandlesNumber)
         {
 
@@ -55,60 +68,38 @@ namespace BitmexGUI.ViewModels
             int.TryParse(ConfigurationManager.AppSettings["MaxCandles"],out _maxCandlesLoading);
 
             
-            BinanceEndpointRest = $"https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval={TimeFrame}&limit={InitialCandlesNumber}";
-            BinanceEndpointWss = $"wss://stream.binance.com:443/ws/btcusdt@kline_{TimeFrame}";
-            _binanceApi = new BinanceAPIPrice(IdBinance, ApiKeyBinance, BinanceEndpointRest, BinanceEndpointWss);
-            _bitmexApi = new BitmexAPIPrice(IdBitmex, ApiKeyBitmex, BitmexEndpointRest, BitmexEndpointWss);
+            BinanceEndpointRest += $"/klines?symbol={Instrument}&interval={TimeFrame}&limit={InitialCandlesNumber}";
+            BinanceEndpointWss += $"{Instrument.ToLower()}@kline_{TimeFrame}";
+            BitmexEndpointWss += $"?subscribe=instrument:XBTUSDT";
+            //MessageBox.Show(BinanceEndpointRest);
+            BinanceApi = new BinanceAPIPrice(IdBinance, ApiKeyBinance, BinanceEndpointRest, BinanceEndpointWss);
+            BinanceApi.GetPriceREST(PriceData,_priceDataDictionary);
+            BinanceApi.PriceUpdated += OnPriceUpdatedBinance;
 
-            _binanceApi.GetPriceREST(PriceData,_priceDataDictionary);
+            BitmexApi = new BitmexAPIPrice(IdBitmex, ApiKeyBitmex, BitmexEndpointRest, BitmexEndpointWss);
 
-            //MessageBox.Show("hrtr");
-
-            _binanceApi.PriceUpdated += OnPriceUpdated;
-
+            BitmexApi.SettledPriceUpdated += OnPriceUpdatedBitmex;
 
         }
 
-        
-
-        public void UpdateInitialCandles(int newInitialCandlesNumber)
+        public void StartPriceFeed()
         {
-            
-            _binanceApi.UpdateRestEndpoint($"https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval={TimeFrame}&limit={newInitialCandlesNumber}");
-
-            //MessageBox.Show(_binanceApi.UrlRest);
-
-            PriceData = new ObservableCollection<PriceData>();
-
-            _priceDataDictionary=new Dictionary<string,PriceData>();
-
-             
-
-            for (int i = _binanceApi.CachedPriceData.Count- newInitialCandlesNumber; i < _binanceApi.CachedPriceData.Count;i++)
-            {
-                PriceData.Add(_binanceApi.CachedPriceData[i]);
-                _priceDataDictionary.TryAdd(_binanceApi.CachedPriceData[i].Timestamp.ToString(), _binanceApi.CachedPriceData[i]);
-            }
-            
-
-            //_binanceApi.GetPriceREST(PriceData,_priceDataDictionary); 
+            BinanceApi.GetPriceWSS();
+            BitmexApi.GetPriceWSS();
         }
-
-      
-        
-        private void OnPriceUpdated(PriceData priceData)
+        private void OnPriceUpdatedBinance(CandlestickData priceData)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                
+
 
                 var timestamp = priceData.Timestamp;
 
-             
-                
-                if (_priceDataDictionary.ContainsKey(timestamp.ToString()) && priceData!=null)
+
+
+                if (_priceDataDictionary.ContainsKey(timestamp.ToString()) && priceData != null)
                 {
-                    
+
                     // Update existing entry
                     var existingData = _priceDataDictionary[timestamp.ToString()];
                     // Assuming PriceData has properties like Open, High, Low, Close
@@ -122,7 +113,7 @@ namespace BitmexGUI.ViewModels
                     if (index >= 0)
                     {
                         PriceData[index] = existingData; // Update the item in the ObservableCollection
-                       
+
                     }
                 }
                 else
@@ -140,11 +131,48 @@ namespace BitmexGUI.ViewModels
                 PriceDataUpdated?.Invoke(); // Trigger the event
             });
         }
-
-        public void StartPriceFeed()
+        private void OnPriceUpdatedBitmex(SettledPrice setpriceData)
         {
-            _binanceApi.GetPriceWSS();
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+
+
+                var timestamp = setpriceData.Timestamp;
+                 
+                SettledPriceData.Add(setpriceData);
+
+                SettledPriceDataUpdated?.Invoke();  
+            });
         }
+
+        public void UpdateInitialCandles(int newInitialCandlesNumber)
+        {
+
+            BinanceApi.UpdateRestEndpoint($"https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval={TimeFrame}&limit={newInitialCandlesNumber}");
+
+            //MessageBox.Show(_binanceApi.UrlRest);
+
+            PriceData = new ObservableCollection<CandlestickData>();
+
+            _priceDataDictionary=new Dictionary<string,CandlestickData>();
+
+             
+
+            for (int i = BinanceApi.CachedPriceData.Count- newInitialCandlesNumber; i < BinanceApi.CachedPriceData.Count;i++)
+            {
+                PriceData.Add(BinanceApi.CachedPriceData[i]);
+                _priceDataDictionary.TryAdd(BinanceApi.CachedPriceData[i].Timestamp.ToString(), BinanceApi.CachedPriceData[i]);
+            }
+            
+
+            //_binanceApi.GetPriceREST(PriceData,_priceDataDictionary); 
+        }
+
+      
+        
+       
+
+        
         
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)

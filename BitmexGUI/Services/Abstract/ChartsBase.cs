@@ -21,16 +21,7 @@ namespace BitmexGUI.Services.Abstract
              
              
         }
-       
-        public void GetInitialData()
-        {
-            
-
-
-            
-
-        }
-
+        
 
         public virtual void DrawCharts()
         {
