@@ -23,8 +23,8 @@ namespace BitmexGUI.Services.Implementations
         private double maxTarget = 400;
 
         
-        double interspace = 5; // Increased for better visibility
-        double candleWidth = 4; // Increased for better visibility
+        double interspace = 8; // Increased for better visibility
+        double candleWidth = 7; // Increased for better visibility
         double xOffset = 20;
         private MainViewModel _ViewModel;
         private Canvas _DrawingCanvas;
@@ -39,6 +39,7 @@ namespace BitmexGUI.Services.Implementations
             _DrawingCanvas.Children.Clear();
             DrawGrid();
             DrawBorder();
+
             lock (_ViewModel.PriceData)
             {
                 if (_ViewModel.PriceData.Count == 0)

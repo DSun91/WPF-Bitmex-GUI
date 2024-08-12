@@ -1,4 +1,5 @@
 ﻿using BitmexGUI.Models;
+using BitmexGUI.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,23 +14,23 @@ using System.Windows;
 
 namespace BitmexGUI.Services.Abstract
 {
-    public abstract class APIPrice : BitmexGUI.Services.Interfaces.IPrice
+    public abstract class GeneralExchangeAPI : IPrice, IAccount
     {
-        private readonly string _ApiID;
-        private readonly string _ApiKey;
-        protected string  _UrlRest;
-        protected string  _UrlWss;
+        private readonly string ApiID;
+        private readonly string ApiKey;
+        protected string  UrlRest;
+        protected string  UrlWss;
         private string LogfilePath = ConfigurationManager.AppSettings["LogFile"];
         public ObservableCollection<CandlestickData> CachedPriceData = new ObservableCollection<CandlestickData>();
 
 
         //Constructor
-        public APIPrice(string ID, string key, string urlRest, string urlWss)
+        public GeneralExchangeAPI(string ID, string key, string urlRest, string urlWss)
         {
-            _ApiID = ID;
-            _ApiKey = key;
-            _UrlRest = urlRest;
-            _UrlWss = urlWss;
+            ApiID = ID;
+            ApiKey = key;
+            UrlRest = urlRest;
+            UrlWss = urlWss;
 
         }
         public async void GetPriceREST(ObservableCollection<CandlestickData> PriceData, Dictionary<string, CandlestickData> _priceDataDictionary)
@@ -39,7 +40,7 @@ namespace BitmexGUI.Services.Abstract
             //BitmexHttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", key);
             
 
-            HttpResponseMessage response = await BitmexHttpClient.GetAsync(_UrlRest);
+            HttpResponseMessage response = await BitmexHttpClient.GetAsync(UrlRest);
 
 
             //MessageBox.Show(response.StatusCode.ToString());
@@ -52,6 +53,16 @@ namespace BitmexGUI.Services.Abstract
              
         }
 
+        public async void GetPriceREST(ObservableCollection<CandlestickData> PriceData)
+        {
+
+        }
+
+        public async void GetPriceREST()
+        {
+
+        }
+
         public async void GetPriceWSS()
         {
             System.Net.WebSockets.ClientWebSocket BitmexHttpClientWSS = new System.Net.WebSockets.ClientWebSocket();
@@ -61,7 +72,7 @@ namespace BitmexGUI.Services.Abstract
             CancellationTokenSource source = new CancellationTokenSource();
             CancellationToken token = source.Token;
 
-            await BitmexHttpClientWSS.ConnectAsync(new Uri(_UrlWss), token);
+            await BitmexHttpClientWSS.ConnectAsync(new Uri(UrlWss), token);
 
 
             int size = 5000;
@@ -96,8 +107,7 @@ namespace BitmexGUI.Services.Abstract
         {
 
         }
-
-
+         
         public virtual void ProcessResponseRest()
         {
 
@@ -109,6 +119,11 @@ namespace BitmexGUI.Services.Abstract
         public virtual async void ProcessResponseRest(string response, ObservableCollection<CandlestickData> PriceData, Dictionary<string, CandlestickData> _priceDataDictionary)
         {
             
+
+        }
+
+        public virtual void GetBalance()
+        {
 
         }
     }

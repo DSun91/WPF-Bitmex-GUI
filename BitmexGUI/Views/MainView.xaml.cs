@@ -28,7 +28,7 @@ namespace BitmexGUI.Views
 
 
 
-        private int initialcandles = 150;
+        private int initialcandles = 50;
         private int maxcandles = 136;
         private MainViewModel ViewModel => (MainViewModel)DataContext;
         private MainViewModel viewModel;
@@ -52,12 +52,22 @@ namespace BitmexGUI.Views
             CandleStickView = new CandlestickChart(ViewModel, DrawingCanvas);
 
             DrawingCanvas.MouseLeftButtonDown += DrawingCanvas_MouseLeftButtonDown;
+             
+
+            
+
         }
 
         
+
         private void OnPriceDataUpdated()
-        { 
+        {
+            if (viewModel.AccountInfos.Count > 0)
+            {
+                CurrentBalance.Text = viewModel.AccountInfos[0].Balance.ToString();
+            }
             CandleStickView.RefreshCanvas();
+            
         }
 
         private void DrawingCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

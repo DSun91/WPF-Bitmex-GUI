@@ -11,19 +11,19 @@ using System.Threading.Tasks;
 
 namespace BitmexGUI.Services.Implementations
 {
-    public class BinanceAPIPrice : APIPrice
+    public class BinanceAPI : GeneralExchangeAPI
     {
-        private readonly string _ApiID;
-        private readonly string _ApiKey;
+        private readonly string ApiID;
+        private readonly string ApiKey;
 
 
         public event Action<CandlestickData> PriceUpdated;
-        public BinanceAPIPrice(string ID, string key, string urlRest, string urlWss) : base(ID, key, urlRest, urlWss)
+        public BinanceAPI(string ID, string key, string urlRest, string urlWss) : base(ID, key, urlRest, urlWss)
         {
-            _ApiID = ID;
-            _ApiKey = key;
-            _UrlRest = urlRest;
-            _UrlWss = urlWss;
+            ApiID = ID;
+            ApiKey = key;
+            UrlRest = urlRest;
+            UrlWss = urlWss;
         }
 
         override public void ProcessResponseWss(string response)
@@ -119,7 +119,7 @@ namespace BitmexGUI.Services.Implementations
         public void UpdateRestEndpoint(string newEndpoint)
         {
             // Update the endpoint URL and potentially restart any connections
-            _UrlRest = newEndpoint;
+            UrlRest = newEndpoint;
 
 
         }
@@ -127,7 +127,7 @@ namespace BitmexGUI.Services.Implementations
         public void UpdateWssEndpoint(string newEndpoint)
         {
             // Update the endpoint URL and potentially restart any connections
-            _UrlWss = newEndpoint;
+            UrlWss = newEndpoint;
         }
 
     }

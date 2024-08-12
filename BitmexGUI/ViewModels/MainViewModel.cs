@@ -28,16 +28,18 @@ namespace BitmexGUI.ViewModels
         private readonly string BitmexEndpointWss = ConfigurationManager.AppSettings["BaseWSSBitmex"];
         private readonly string Instrument = ConfigurationManager.AppSettings["Instrument"];
         public event Action PriceDataUpdated;
-        public event Action SettledPriceDataUpdated;
+        public event Action SettledPriceDataUpdated; 
+        private Dictionary<string, CandlestickData> _priceDataDictionary = new Dictionary<string, CandlestickData>(); 
+        private readonly int _maxCandlesLoading;
+        private readonly BinanceAPI BinanceApi;
+        private readonly BitmexAPI BitmexApi;
+        private string TimeFrame= ConfigurationManager.AppSettings["Timeframe"];
+
         private ObservableCollection<CandlestickData> _priceData = new ObservableCollection<CandlestickData>();
         private ObservableCollection<SettledPrice> _settledPriceData = new ObservableCollection<SettledPrice>();
-        private Dictionary<string, CandlestickData> _priceDataDictionary = new Dictionary<string, CandlestickData>();
-    
-        private readonly int _maxCandlesLoading;
-        private readonly BinanceAPIPrice BinanceApi;
-        private readonly BitmexAPIPrice BitmexApi;
-        private string TimeFrame= ConfigurationManager.AppSettings["Timeframe"];
-       
+        private ObservableCollection<Account> _accountData = new ObservableCollection<Account>();
+        private ObservableCollection<Instrument> _instrumentData = new ObservableCollection<Instrument>();
+
 
         public ObservableCollection<CandlestickData> PriceData
         {
@@ -57,6 +59,24 @@ namespace BitmexGUI.ViewModels
                 OnPropertyChanged(nameof(SettledPriceData));
             }
         }
+        public ObservableCollection<Account> AccountInfos
+        {
+            get => _accountData;
+            set
+            {
+                _accountData = value;
+                OnPropertyChanged(nameof(AccountInfos));
+            }
+        }
+        public ObservableCollection<Instrument> InstrumentInfo
+        {
+            get => _instrumentData;
+            set
+            {
+                _instrumentData = value;
+                OnPropertyChanged(nameof(InstrumentInfo));
+            }
+        }
 
 
 
@@ -72,20 +92,33 @@ namespace BitmexGUI.ViewModels
             BinanceEndpointWss += $"{Instrument.ToLower()}@kline_{TimeFrame}";
             BitmexEndpointWss += $"?subscribe=instrument:XBTUSDT";
             //MessageBox.Show(BinanceEndpointRest);
-            BinanceApi = new BinanceAPIPrice(IdBinance, ApiKeyBinance, BinanceEndpointRest, BinanceEndpointWss);
+            BinanceApi = new BinanceAPI(IdBinance, ApiKeyBinance, BinanceEndpointRest, BinanceEndpointWss);
             BinanceApi.GetPriceREST(PriceData,_priceDataDictionary);
             BinanceApi.PriceUpdated += OnPriceUpdatedBinance;
 
-            BitmexApi = new BitmexAPIPrice(IdBitmex, ApiKeyBitmex, BitmexEndpointRest, BitmexEndpointWss);
-
+            BitmexApi = new BitmexAPI(IdBitmex, ApiKeyBitmex, BitmexEndpointRest, BitmexEndpointWss); 
             BitmexApi.SettledPriceUpdated += OnPriceUpdatedBitmex;
+            
+            BitmexApi.AccountInfo += OnbalanceInfoReceived;
 
+            BitmexApi.GetBalance("USDT");
         }
 
         public void StartPriceFeed()
         {
             BinanceApi.GetPriceWSS();
             BitmexApi.GetPriceWSS();
+        }
+
+
+        private void OnbalanceInfoReceived(Account accountInfo)
+        {
+             
+            if (accountInfo != null) 
+            {
+                AccountInfos.Clear();
+                AccountInfos.Add(accountInfo);
+            }
         }
         private void OnPriceUpdatedBinance(CandlestickData priceData)
         {
