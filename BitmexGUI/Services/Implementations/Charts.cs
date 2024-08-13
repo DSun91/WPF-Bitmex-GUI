@@ -23,32 +23,35 @@ namespace BitmexGUI.Services.Implementations
         private double maxTarget = 400;
 
         
-        double interspace = 8; // Increased for better visibility
-        double candleWidth = 7; // Increased for better visibility
+        public double interspace = 8; // Increased for better visibility
+        public double candleWidth = 7; // Increased for better visibility
         double xOffset = 20;
-        private MainViewModel _ViewModel;
-        private Canvas _DrawingCanvas;
-        public CandlestickChart(MainViewModel ViewModel, Canvas DrawingCanvas) 
+        private MainViewModel ViewModel;
+        private Canvas DrawingCanvas;
+        public int InView;
+        private int TotalCached;
+        public CandlestickChart(MainViewModel viewModel, Canvas drawingCanvas,int InviewN, int TotalN) 
         {
-            
-            _ViewModel = ViewModel;
-            _DrawingCanvas = DrawingCanvas; 
+            InView = InviewN;
+            TotalCached=TotalN;
+            ViewModel = viewModel;
+            DrawingCanvas = drawingCanvas; 
         }
         public void RefreshCanvas()
         {
-            _DrawingCanvas.Children.Clear();
+            DrawingCanvas.Children.Clear();
             DrawGrid();
             DrawBorder();
 
-            lock (_ViewModel.PriceData)
+            lock (ViewModel.PriceData)
             {
-                if (_ViewModel.PriceData.Count == 0)
+                if (ViewModel.PriceData.Count == 0)
                 {
                     Console.WriteLine("No candle data available.");
                     return;
                 }
 
-                var allValues = _ViewModel.PriceData.SelectMany(data => new[] { data.Open, data.High, data.Low, data.Close });
+                var allValues = ViewModel.PriceData.SelectMany(data => new[] { data.Open, data.High, data.Low, data.Close });
                 minOriginal = allValues.Min();
                 maxOriginal = allValues.Max();
 
@@ -57,39 +60,46 @@ namespace BitmexGUI.Services.Implementations
                 maxOriginal += padding;
 
                 int i = 0;
+                
+                int counter = 0;
                 //MessageBox.Show(_ViewModel.SettledPriceData.Count.ToString());
-                foreach (var candleData in _ViewModel.PriceData)
+                foreach (var candleData in ViewModel.PriceData)
                 {
+                    if(counter >= TotalCached - InView)
+                    {
+                        var candleValues = candleData;
 
-                    var candleValues = candleData;
+                        var open = MapToScale(candleData.Open);
+                        var high = MapToScale(candleData.High);
+                        var low = MapToScale(candleData.Low);
+                        var close = MapToScale(candleData.Close);
+                        //this.CurrentPriceTextBlock.Text =Math.Round(candleValues[3],3).ToString();
+                        //this.CurrentPriceTextBlock.Margin = new Thickness(400, close-40, 0, 0);
 
-                    var open = MapToScale(candleData.Open);
-                    var high = MapToScale(candleData.High);
-                    var low = MapToScale(candleData.Low);
-                    var close = MapToScale(candleData.Close);
-                    //this.CurrentPriceTextBlock.Text =Math.Round(candleValues[3],3).ToString();
-                    //this.CurrentPriceTextBlock.Margin = new Thickness(400, close-40, 0, 0);
-
-                    DrawCharts(i * interspace, open, high, low, close, candleWidth);
-                    //MessageBox.Show(candleData.Timestamp.ToString());
-                    i++;
+                        DrawCharts(i * interspace, open, high, low, close, candleWidth, InView);
+                        //MessageBox.Show(candleData.Timestamp.ToString());
+                        i++;
+                    }
+                    counter++;
                 }
             }
         }
-        public void DrawCharts(double centerX, double open, double high, double low, double close, double width)
+        public void DrawCharts(double centerX, double open, double high, double low, double close, double width,int InView)
         {
 
             int fontsize = 14;
-            double mappedSettledPrice = InvMapToScale(MapToScale(_ViewModel.SettledPriceData.Last().SettledPriceValue));
+            double mappedSettledPrice = InvMapToScale(MapToScale(ViewModel.SettledPriceData.Last().SettledPriceValue));
 
-            bool isCurrentCandle = (centerX == (_ViewModel.PriceData.Count - 1) * interspace);
+             //isCurrentCandle = (centerX == (ViewModel.PriceData.Count - 1) * interspace);
+
+            bool isCurrentCandle = (centerX == (InView - 1) * interspace);
 
             Line SettPrice = new Line
             {
                 X1 = centerX + xOffset-10,
-                Y1 =MapToScale(_ViewModel.SettledPriceData.Last().SettledPriceValue),
+                Y1 =MapToScale(ViewModel.SettledPriceData.Last().SettledPriceValue),
                 X2 = centerX + xOffset+10,
-                Y2 = MapToScale(_ViewModel.SettledPriceData.Last().SettledPriceValue),
+                Y2 = MapToScale(ViewModel.SettledPriceData.Last().SettledPriceValue),
                 Stroke = Brushes.DarkViolet,
                 StrokeThickness = 2
             };
@@ -127,7 +137,7 @@ namespace BitmexGUI.Services.Implementations
                 Stroke = isCurrentCandle ? Brushes.Blue : Brushes.Black,
                 StrokeThickness = isCurrentCandle ? 2 : 1
             };
-            _DrawingCanvas.Children.Add(wick);
+            DrawingCanvas.Children.Add(wick);
 
             Rectangle body = new Rectangle
             {
@@ -139,7 +149,7 @@ namespace BitmexGUI.Services.Implementations
             };
             Canvas.SetLeft(body, centerX + xOffset - width / 2);
             Canvas.SetTop(body, Math.Min(open, close));
-            _DrawingCanvas.Children.Add(body);
+            DrawingCanvas.Children.Add(body);
 
 
             TextBlock closeLabel = new TextBlock
@@ -158,10 +168,10 @@ namespace BitmexGUI.Services.Implementations
                 
                 Canvas.SetLeft(SettPriceLabel, centerX + xOffset + 80); // Position horizontally to the right of the candlestick
                 Canvas.SetTop(SettPriceLabel, close); // Position vertically at the 'close' value
-                _DrawingCanvas.Children.Add(SettPriceLabel);
-                _DrawingCanvas.Children.Add(closeLabel);
-                _DrawingCanvas.Children.Add(SettPrice);
-                _DrawingCanvas.Children.Add(ClosePrice);
+                DrawingCanvas.Children.Add(SettPriceLabel);
+                DrawingCanvas.Children.Add(closeLabel);
+                DrawingCanvas.Children.Add(SettPrice);
+                DrawingCanvas.Children.Add(ClosePrice);
             }
 
         }
@@ -182,35 +192,35 @@ namespace BitmexGUI.Services.Implementations
 
             int GridSpacing = 50;
             // Horizontal lines
-            for (double y = 0; y <= _DrawingCanvas.Height; y += GridSpacing)
+            for (double y = 0; y <= DrawingCanvas.Height; y += GridSpacing)
             {
                 Line horizontalLine = new Line
                 {
                     X1 = 0,
                     Y1 = y,
-                    X2 = _DrawingCanvas.Width,
+                    X2 = DrawingCanvas.Width,
                     Y2 = y,
                     Stroke = Brushes.LightBlue,
                     StrokeThickness = 2,
                     StrokeDashArray = new DoubleCollection { 2, 2 } // Dotted line
                 };
-                _DrawingCanvas.Children.Add(horizontalLine);
+                DrawingCanvas.Children.Add(horizontalLine);
             }
 
             // Vertical lines
-            for (double x = 0; x <= _DrawingCanvas.Width; x += GridSpacing)
+            for (double x = 0; x <= DrawingCanvas.Width; x += GridSpacing)
             {
                 Line verticalLine = new Line
                 {
                     X1 = x,
                     Y1 = 0,
                     X2 = x,
-                    Y2 = _DrawingCanvas.Height,
+                    Y2 = DrawingCanvas.Height,
                     Stroke = Brushes.LightBlue,
                     StrokeThickness = 2,
                     StrokeDashArray = new DoubleCollection { 2, 2 } // Dotted line
                 };
-                _DrawingCanvas.Children.Add(verticalLine);
+                DrawingCanvas.Children.Add(verticalLine);
             }
         }
 
@@ -222,15 +232,15 @@ namespace BitmexGUI.Services.Implementations
                 CornerRadius = new CornerRadius(8),
                 BorderBrush = Brushes.Black, // Set the color of the border
 
-                Height = _DrawingCanvas.ActualHeight, // Use ActualHeight to get the current size
-                Width = _DrawingCanvas.ActualWidth // Use ActualWidth to get the current size
+                Height = DrawingCanvas.ActualHeight, // Use ActualHeight to get the current size
+                Width = DrawingCanvas.ActualWidth // Use ActualWidth to get the current size
             };
             Canvas.SetLeft(border, 0);
             Canvas.SetTop(border, 0);
             Panel.SetZIndex(border, -1);
 
-            _DrawingCanvas.Children.Add(border);
-            _DrawingCanvas.Clip = new RectangleGeometry(new Rect(0, 0, _DrawingCanvas.ActualWidth, _DrawingCanvas.ActualHeight), 8, 8);
+            DrawingCanvas.Children.Add(border);
+            DrawingCanvas.Clip = new RectangleGeometry(new Rect(0, 0, DrawingCanvas.ActualWidth, DrawingCanvas.ActualHeight), 8, 8);
         }
       
     }

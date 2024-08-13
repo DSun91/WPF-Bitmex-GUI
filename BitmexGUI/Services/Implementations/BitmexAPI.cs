@@ -113,10 +113,10 @@ namespace BitmexGUI.Services.Implementations
                 {
                     if (x["currency"].ToString().ToLower().Contains(Symbol.ToLower())) 
                     {
-
+                        
                         var CurrentBalance = new Account
                         {
-                            Balance = double.Parse(x["amount"].ToString())/1000000
+                            Balance = Math.Round(double.Parse(x["amount"].ToString())/1000000,2)
                         };
                         
                         AccountInfo?.Invoke(CurrentBalance);

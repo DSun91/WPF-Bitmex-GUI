@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Reflection.Metadata;
 using System.Configuration;
+using System.Runtime.CompilerServices;
 
 namespace BitmexGUI.ViewModels
 {
@@ -28,7 +29,8 @@ namespace BitmexGUI.ViewModels
         private readonly string BitmexEndpointWss = ConfigurationManager.AppSettings["BaseWSSBitmex"];
         private readonly string Instrument = ConfigurationManager.AppSettings["Instrument"];
         public event Action PriceDataUpdated;
-        public event Action SettledPriceDataUpdated; 
+        public event Action SettledPriceDataUpdated;
+        public event Action BalanceUpdated; 
         private Dictionary<string, CandlestickData> _priceDataDictionary = new Dictionary<string, CandlestickData>(); 
         private readonly int _maxCandlesLoading;
         private readonly BinanceAPI BinanceApi;
@@ -79,6 +81,7 @@ namespace BitmexGUI.ViewModels
         }
 
 
+        public event PropertyChangedEventHandler PropertyChanged;
 
 
         public MainViewModel(int InitialCandlesNumber)
@@ -101,7 +104,7 @@ namespace BitmexGUI.ViewModels
             
             BitmexApi.AccountInfo += OnbalanceInfoReceived;
 
-            BitmexApi.GetBalance("USDT");
+         
         }
 
         public void StartPriceFeed()
@@ -110,15 +113,23 @@ namespace BitmexGUI.ViewModels
             BitmexApi.GetPriceWSS();
         }
 
-
+        public void GetBalance(string currency)
+        {
+            BitmexApi.GetBalance(currency);
+        }
         private void OnbalanceInfoReceived(Account accountInfo)
         {
-             
-            if (accountInfo != null) 
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                AccountInfos.Clear();
-                AccountInfos.Add(accountInfo);
-            }
+                if (accountInfo != null)
+                {
+                    AccountInfos.Clear();
+                    AccountInfos.Add(accountInfo);
+
+                }
+            });
+            
+            BalanceUpdated?.Invoke();
         }
         private void OnPriceUpdatedBinance(CandlestickData priceData)
         {
@@ -201,14 +212,78 @@ namespace BitmexGUI.ViewModels
             //_binanceApi.GetPriceREST(PriceData,_priceDataDictionary); 
         }
 
-      
-        
-       
 
+
+        private double _entryAmount;
+        private double _sliderLeverage;
+        private double _positionValue;
         
-        
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
+
+
+        public double EntryAmount
+        {
+            get => _entryAmount;
+            set
+            {
+                if (Math.Abs(_entryAmount - value) > 0.001) // Avoid unnecessary updates
+                {
+                    _entryAmount = value;
+                    OnPropertyChanged();
+                    CalculatePositionValue();
+                }
+            }
+        }
+
+        public double SliderLeverage
+        {
+            get => _sliderLeverage;
+            set
+            {
+                if (Math.Abs(_sliderLeverage - value) > 0.001) // Avoid unnecessary updates
+                {
+                    _sliderLeverage = Math.Round(value);
+                    OnPropertyChanged();
+                    CalculatePositionValue();
+                }
+            }
+        }
+
+        public double PositionValue
+        {
+            get => _positionValue;
+            private set
+            {
+                if (Math.Abs(_positionValue - value) > 0.001) // Avoid unnecessary updates
+                {
+                    _positionValue = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private void CalculatePositionValue()
+        {
+             
+            if (_entryAmount > 0 && _sliderLeverage>0)
+            {
+                
+                PositionValue = Math.Round(_entryAmount * _sliderLeverage, 2);
+                
+            }
+            else if (_entryAmount > 0 && _sliderLeverage <=0)
+            {
+                PositionValue = Math.Round(_entryAmount, 2);
+            }
+            else
+            {
+                PositionValue = 0;
+            }
+        }
+
+
+         
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
