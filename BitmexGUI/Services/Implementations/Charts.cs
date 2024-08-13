@@ -24,8 +24,8 @@ namespace BitmexGUI.Services.Implementations
         private double maxTarget = 400;
 
         
-        public double interspace = 8; // Increased for better visibility
-        public double candleWidth = 7; // Increased for better visibility
+        public double interspace = 10; // Increased for better visibility
+        public double candleWidth = 9; // Increased for better visibility
         double xOffset = 20;
         private MainViewModel ViewModel;
         private Canvas DrawingCanvas;
