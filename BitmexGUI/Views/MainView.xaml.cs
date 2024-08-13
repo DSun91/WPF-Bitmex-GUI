@@ -3,6 +3,7 @@ using BitmexGUI.Services.Implementations;
 using BitmexGUI.Services.Interfaces;
 using BitmexGUI.ViewModels;
 using System.ComponentModel.Design;
+using System.Configuration;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -29,8 +30,8 @@ namespace BitmexGUI.Views
 
 
 
-        private int initialcandles = 250;
-        private int Candle_inView = 50;
+        private int CachedCandleSize;  
+        private int Candles_inView;
         private MainViewModel ViewModel => (MainViewModel)DataContext;
         private MainViewModel viewModel;
         // Target range
@@ -44,14 +45,16 @@ namespace BitmexGUI.Views
             
              
             InitializeComponent();
-
-            viewModel = new MainViewModel(initialcandles); 
+            int.TryParse(ConfigurationManager.AppSettings["MaxCacheCandles"].ToString(), out CachedCandleSize);
+            int.TryParse(ConfigurationManager.AppSettings["CandlesInView"],out Candles_inView);
+            viewModel = new MainViewModel(CachedCandleSize); 
             DataContext = viewModel;
             viewModel.StartPriceFeed();
             viewModel.PriceDataUpdated += OnPriceDataUpdated;
+            viewModel.NewPricedataAdded += OnPriceDataAdded;
             viewModel.BalanceUpdated += OnBalanceInfoUpdated;
 
-            CandleStickView = new CandlestickChart(ViewModel, DrawingCanvas,Candle_inView,initialcandles);
+            CandleStickView = new CandlestickChart(ViewModel, DrawingCanvas,Candles_inView, CachedCandleSize);
 
             DrawingCanvas.MouseLeftButtonDown += DrawingCanvas_MouseLeftButtonDown;
             DrawingCanvas.MouseWheel += DrawingCanvas_MouseWheel;
@@ -93,6 +96,7 @@ namespace BitmexGUI.Views
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         { 
             viewModel.GetBalance(CmbCurrency.SelectedValue.ToString().Split(": ")[1].Replace(" ",""));
+           
             SetupElementsValues();
             
         }
@@ -116,10 +120,17 @@ namespace BitmexGUI.Views
 
         private void OnPriceDataUpdated()
         {
-           
+ 
             CandleStickView.RefreshCanvas();
             
+            
+        }
 
+        private void OnPriceDataAdded()
+        {
+
+            //MessageBox.Show("new data added");
+            
 
         }
 
@@ -157,7 +168,7 @@ namespace BitmexGUI.Views
             if (slider != null)
             {
                 int newInitialCandles = (int)Math.Round(slider.Value, 0);
-                if (newInitialCandles != initialcandles)
+                if (newInitialCandles != CachedCandleSize)
                 {
                     viewModel.UpdateInitialCandles(newInitialCandles);
                     
@@ -175,6 +186,18 @@ namespace BitmexGUI.Views
             BalancePercent.Content=Math.Round(sld.Value * 100 / viewModel.AccountInfos[0].Balance, 2).ToString()+" %";
         }
 
-        
+        private void ResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            CandleStickView.InView = Candles_inView;
+            CandleStickView.RefreshCanvas();
+        }
+
+        private void BitmexSettled_Click(object sender, RoutedEventArgs e)
+        {
+             
+            Entryprice.Text = Math.Round(viewModel.SettledPriceData.Last().SettledPriceValue, 3).ToString();
+          
+
+        }
     }
 }

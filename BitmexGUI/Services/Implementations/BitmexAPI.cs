@@ -22,13 +22,14 @@ namespace BitmexGUI.Services.Implementations
         private readonly string ApiKey;
         private readonly string UrlRest;
         private readonly string UrlWss;
-
+        private string BaseUrl = "https://www.bitmex.com";
+        private int  expires = (int)(DateTimeOffset.UtcNow.ToUnixTimeSeconds() + 1800);
         public event Action<SettledPrice> SettledPriceUpdated;
         public event Action<Account> AccountInfo;
         public BitmexAPI(string ID, string key, string urlRest, string urlWss) : base(ID, key, urlRest, urlWss)
         {
-            ApiID = ID;
-            ApiKey = key;
+            ApiID = ConfigurationManager.AppSettings["ID"];
+            ApiKey = ConfigurationManager.AppSettings["SecretKey"];
             UrlRest = urlRest;
             UrlWss = urlWss;
         }
@@ -95,13 +96,13 @@ namespace BitmexGUI.Services.Implementations
             string path = "/api/v1/user/wallet?currency=all";
             int expires = (int)(DateTimeOffset.UtcNow.ToUnixTimeSeconds() + 1800); // 30 minutes from now
 
-            string signature = GenerateSignature(ConfigurationManager.AppSettings["SecretKey"], verb, path, expires, "");
+            string signature = GenerateSignature(ApiKey, verb, path, expires, "");
 
             string URL = "https://www.bitmex.com" + path;
             using (HttpClient client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Add("api-expires", expires.ToString());
-                client.DefaultRequestHeaders.Add("api-key", ConfigurationManager.AppSettings["ID"]);
+                client.DefaultRequestHeaders.Add("api-key", ApiID);
                 client.DefaultRequestHeaders.Add("api-signature", signature);
 
                 HttpResponseMessage response = client.GetAsync(URL).Result;
@@ -128,7 +129,98 @@ namespace BitmexGUI.Services.Implementations
             }
         }
 
+        private async void SetLeverage(string Symbol,double leverage)
+        {
+            HttpClient client = new HttpClient();
+            string FunctionUrl = "/api/v1/position/leverage";
+            string url = BaseUrl + FunctionUrl;
+            string Verb = "POST";
 
+            var data = new
+            {
+                symbol = Symbol,
+                leverage =Math.Round(leverage,0)
+            };
+            string dataJson = JsonConvert.SerializeObject(data);
+
+            string signature = GenerateSignature(ApiKey, Verb, FunctionUrl, expires, dataJson);
+
+            var headers = new HttpRequestMessage(HttpMethod.Post, url);
+            headers.Headers.Add("api-expires", expires.ToString());
+            headers.Headers.Add("api-key", ApiID);
+            headers.Headers.Add("api-signature", signature);
+
+            headers.Content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = await client.SendAsync(headers);
+            string responseString = await response.Content.ReadAsStringAsync();
+
+            //MessageBox.Show(responseString);
+             
+        }
+
+        public void GetLeverage(string Symbol)
+        {
+
+        }
+
+        public async void CreateOrder(string Symbol,double Qty,double Price,string Type,string TimeInForce,string side,double leverage=0)
+        {
+            HttpClient client = new HttpClient();
+            string FunctionUrl = "/api/v1/order";
+            string url = BaseUrl + FunctionUrl;
+            string Verb = "POST";
+
+
+
+            if(leverage > 0) 
+            {
+                SetLeverage(Symbol, leverage);
+            }
+
+            var data = new  {
+                                symbol= Symbol,
+                                orderQty = Qty,
+                                price = Price,
+                                ordType = Type,
+                                timeInForce = TimeInForce,
+                                side = side
+                             };
+
+
+            string dataJson = JsonConvert.SerializeObject(data);
+
+            string signature = GenerateSignature(ApiKey, Verb, FunctionUrl, expires, dataJson);
+
+            var headers = new HttpRequestMessage(HttpMethod.Post, url);
+            headers.Headers.Add("api-expires", expires.ToString());
+            headers.Headers.Add("api-key", ApiID);
+            headers.Headers.Add("api-signature", signature);
+
+            headers.Content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+
+            try
+            {
+                HttpResponseMessage response = await client.SendAsync(headers);
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    
+                }
+                else
+                {
+                    string responseString = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show(responseString);
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+
+         
 
     }
 }

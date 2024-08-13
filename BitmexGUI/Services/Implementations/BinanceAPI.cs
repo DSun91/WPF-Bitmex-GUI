@@ -8,6 +8,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace BitmexGUI.Services.Implementations
 {
@@ -68,7 +69,7 @@ namespace BitmexGUI.Services.Implementations
                 Close = double.Parse(KandleStick["c"].ToString()),
                 Timestamp = DateTimeOffset.FromUnixTimeMilliseconds(long.Parse(KandleStick["t"].ToString())).DateTime
             };
-
+             
             PriceUpdated?.Invoke(priceData);
 
         }

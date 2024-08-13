@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows;
 using System.Windows.Input;
+using System.Configuration;
 
 namespace BitmexGUI.Services.Implementations
 {
@@ -82,6 +83,7 @@ namespace BitmexGUI.Services.Implementations
                     }
                     counter++;
                 }
+                //MessageBox.Show(counter.ToString()+" "+i.ToString());
             }
         }
         public void DrawCharts(double centerX, double open, double high, double low, double close, double width,int InView)
@@ -90,11 +92,29 @@ namespace BitmexGUI.Services.Implementations
             int fontsize = 14;
             double mappedSettledPrice = InvMapToScale(MapToScale(ViewModel.SettledPriceData.Last().SettledPriceValue));
 
-             //isCurrentCandle = (centerX == (ViewModel.PriceData.Count - 1) * interspace);
+            //bool isCurrentCandle = (centerX == (ViewModel.PriceData.Count - 1) * interspace);
 
-            bool isCurrentCandle = (centerX == (InView - 1) * interspace);
+            bool isCurrentCandle = (centerX == (InView-1) * interspace);
 
-            Line SettPrice = new Line
+
+            string timeframe = ConfigurationManager.AppSettings["Timeframe"];
+
+
+
+            Label TimeFrame = new Label()
+            {
+                Content ="Timeframe: "+ timeframe,
+                Height = 40,
+                Width = 100,
+              
+            };
+            Canvas.SetLeft(TimeFrame, 0 ); // Position horizontally to the right of the candlestick
+            Canvas.SetTop(TimeFrame, 0);
+            DrawingCanvas.Children.Add(TimeFrame);
+
+             
+
+            Line SettPriceLine = new Line
             {
                 X1 = centerX + xOffset-10,
                 Y1 =MapToScale(ViewModel.SettledPriceData.Last().SettledPriceValue),
@@ -104,7 +124,7 @@ namespace BitmexGUI.Services.Implementations
                 StrokeThickness = 2
             };
 
-            Line ClosePrice = new Line
+            Line ClosePriceLine = new Line
             {
                 X1 = centerX + xOffset - 10,
                 Y1 = close,
@@ -125,9 +145,7 @@ namespace BitmexGUI.Services.Implementations
                 Padding = new Thickness(2) // Optional padding for better visibility
             };
 
-
-
-
+             
             Line wick = new Line
             {
                 X1 = centerX + xOffset,
@@ -163,15 +181,19 @@ namespace BitmexGUI.Services.Implementations
             };
             if (isCurrentCandle)
             {
+               
                 Canvas.SetLeft(closeLabel, centerX + xOffset + width / 2 + 5); // Position horizontally to the right of the candlestick
                 Canvas.SetTop(closeLabel, close ); // Position vertically at the 'close' value
                 
                 Canvas.SetLeft(SettPriceLabel, centerX + xOffset + 80); // Position horizontally to the right of the candlestick
                 Canvas.SetTop(SettPriceLabel, close); // Position vertically at the 'close' value
+
                 DrawingCanvas.Children.Add(SettPriceLabel);
                 DrawingCanvas.Children.Add(closeLabel);
-                DrawingCanvas.Children.Add(SettPrice);
-                DrawingCanvas.Children.Add(ClosePrice);
+
+
+                DrawingCanvas.Children.Add(SettPriceLine);
+                DrawingCanvas.Children.Add(ClosePriceLine);
             }
 
         }

@@ -13,9 +13,32 @@ using System.Runtime.InteropServices;
 using System.Reflection.Metadata;
 using System.Configuration;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
+using Microsoft.VisualBasic;
 
 namespace BitmexGUI.ViewModels
 {
+    public class RelayCommand : ICommand
+    {
+        private readonly Action _execute;
+        private readonly Func<bool> _canExecute;
+
+        public RelayCommand(Action execute, Func<bool> canExecute = null)
+        {
+            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+            _canExecute = canExecute;
+        }
+
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+
+        public bool CanExecute(object parameter) => _canExecute == null || _canExecute();
+
+        public void Execute(object parameter) => _execute();
+    }
     public class MainViewModel : INotifyPropertyChanged
     {
         private readonly string IdBinance = "";
@@ -30,7 +53,8 @@ namespace BitmexGUI.ViewModels
         private readonly string Instrument = ConfigurationManager.AppSettings["Instrument"];
         public event Action PriceDataUpdated;
         public event Action SettledPriceDataUpdated;
-        public event Action BalanceUpdated; 
+        public event Action BalanceUpdated;
+        public event Action NewPricedataAdded;
         private Dictionary<string, CandlestickData> _priceDataDictionary = new Dictionary<string, CandlestickData>(); 
         private readonly int _maxCandlesLoading;
         private readonly BinanceAPI BinanceApi;
@@ -80,15 +104,86 @@ namespace BitmexGUI.ViewModels
             }
         }
 
+        private double _entryAmount;
+        private double _sliderLeverage;
+        private double _positionValue;
+        private double _entryPrice;
+
+
+        public double EntryAmount
+        {
+            get => _entryAmount;
+            set
+            {
+                if (Math.Abs(_entryAmount - value) > 0.001) // Avoid unnecessary updates
+                {
+                    _entryAmount = value;
+                    OnPropertyChanged();
+                    CalculatePositionValue();
+                }
+            }
+        }
+
+        public double SliderLeverage
+        {
+            get => _sliderLeverage;
+            set
+            {
+                if (Math.Abs(_sliderLeverage - value) > 0.001) // Avoid unnecessary updates
+                {
+                    _sliderLeverage = Math.Round(value);
+                    OnPropertyChanged();
+                    CalculatePositionValue();
+                }
+            }
+        }
+
+        public double PositionValue
+        {
+            get => _positionValue;
+            private set
+            {
+                if (Math.Abs(_positionValue - value) > 0.001) // Avoid unnecessary updates
+                {
+                    _positionValue = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public double EntryPrice
+        {
+            get => _entryPrice;
+            set
+            {
+                if (Math.Abs(_entryPrice - value) > 0.001) // Avoid unnecessary updates
+                {
+                    _entryPrice = value;
+                    
+                    OnPropertyChanged(); 
+                }
+            }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-
+        private ICommand _createNewOrderCommand;
+        public ICommand CreateNewOrderCommand
+        {
+            get
+            {
+                if (_createNewOrderCommand == null)
+                {
+                    _createNewOrderCommand = new RelayCommand(CreateNewOrder);
+                }
+                return _createNewOrderCommand;
+            }
+        }
         public MainViewModel(int InitialCandlesNumber)
         {
 
 
-            int.TryParse(ConfigurationManager.AppSettings["MaxCandles"],out _maxCandlesLoading);
+            int.TryParse(ConfigurationManager.AppSettings["MaxCacheCandles"],out _maxCandlesLoading);
 
             
             BinanceEndpointRest += $"/klines?symbol={Instrument}&interval={TimeFrame}&limit={InitialCandlesNumber}";
@@ -104,7 +199,34 @@ namespace BitmexGUI.ViewModels
             
             BitmexApi.AccountInfo += OnbalanceInfoReceived;
 
-         
+            //BitmexApi.SetLeverage("XBTUSDT",5.4);
+
+
+
+        }
+
+        public void CreateNewOrder()
+        {
+
+
+            double quantity = (int)Math.Round(1000 * EntryAmount * SliderLeverage / EntryPrice,2)*1000;
+            EntryPrice = Math.Round(EntryPrice, 0);
+
+            double actualtradeAmount = quantity * EntryPrice / (SliderLeverage * 1000000) ;
+
+            MessageBox.Show($"Actual Trade Amount: {actualtradeAmount}");
+
+            MessageBox.Show($"Actual Position value: {actualtradeAmount * SliderLeverage}, fee {actualtradeAmount * SliderLeverage* 0.00015},total spent {actualtradeAmount + 2*(actualtradeAmount * SliderLeverage * 0.00015)}"); 
+
+            BitmexApi.CreateOrder("XBTUSDT",
+                                   quantity,
+                                   Math.Round(EntryPrice,0),
+                                   "Limit",
+                                   "GoodTillCancel",
+                                   "Buy",
+                                   SliderLeverage);
+            
+
         }
 
         public void StartPriceFeed()
@@ -159,20 +281,23 @@ namespace BitmexGUI.ViewModels
                         PriceData[index] = existingData; // Update the item in the ObservableCollection
 
                     }
+                    PriceDataUpdated?.Invoke(); // Trigger the event
                 }
                 else
                 {
+                   
                     // Add new entry
                     _priceDataDictionary[timestamp.ToString()] = priceData;
                     PriceData.Add(priceData);
-
+                    
                     while (PriceData.Count > _maxCandlesLoading)
                     {
                         PriceData.Remove(PriceData.First());
                     }
+                    NewPricedataAdded?.Invoke();
                 }
 
-                PriceDataUpdated?.Invoke(); // Trigger the event
+               
             });
         }
         private void OnPriceUpdatedBitmex(SettledPrice setpriceData)
@@ -214,53 +339,7 @@ namespace BitmexGUI.ViewModels
 
 
 
-        private double _entryAmount;
-        private double _sliderLeverage;
-        private double _positionValue;
         
-
-
-        public double EntryAmount
-        {
-            get => _entryAmount;
-            set
-            {
-                if (Math.Abs(_entryAmount - value) > 0.001) // Avoid unnecessary updates
-                {
-                    _entryAmount = value;
-                    OnPropertyChanged();
-                    CalculatePositionValue();
-                }
-            }
-        }
-
-        public double SliderLeverage
-        {
-            get => _sliderLeverage;
-            set
-            {
-                if (Math.Abs(_sliderLeverage - value) > 0.001) // Avoid unnecessary updates
-                {
-                    _sliderLeverage = Math.Round(value);
-                    OnPropertyChanged();
-                    CalculatePositionValue();
-                }
-            }
-        }
-
-        public double PositionValue
-        {
-            get => _positionValue;
-            private set
-            {
-                if (Math.Abs(_positionValue - value) > 0.001) // Avoid unnecessary updates
-                {
-                    _positionValue = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
         private void CalculatePositionValue()
         {
              
