@@ -15,6 +15,7 @@ using System.Configuration;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Microsoft.VisualBasic;
+using System;
 
 namespace BitmexGUI.ViewModels
 {
@@ -120,6 +121,7 @@ namespace BitmexGUI.ViewModels
                     _entryAmount = value;
                     OnPropertyChanged();
                     CalculatePositionValue();
+                    CalculateOrderCost();
                 }
             }
         }
@@ -134,9 +136,48 @@ namespace BitmexGUI.ViewModels
                     _sliderLeverage = Math.Round(value);
                     OnPropertyChanged();
                     CalculatePositionValue();
+                    CalculateOrderCost();
                 }
             }
         }
+        private void CalculatePositionValue()
+        {
+
+            if (_entryAmount > 0 && _sliderLeverage > 0)
+            {
+
+                PositionValue = Math.Round(_entryAmount * _sliderLeverage, 2);
+
+            }
+            else if (_entryAmount > 0 && _sliderLeverage <= 0)
+            {
+                PositionValue = Math.Round(_entryAmount, 2);
+            }
+            else
+            {
+                PositionValue = 0;
+            }
+        }
+
+        private void CalculateOrderCost()
+        {
+            CalculateQuantity();
+
+            EntryPrice = Math.Round(EntryPrice, 0);
+
+            double EOV = (Quantity) * EntryPrice;
+
+            double BK = EOV + (EOV / SliderLeverage);
+
+            OrderCost = Math.Round((EOV / SliderLeverage) + (EOV + BK) * (0.075 / 100), 2);
+        }
+
+        private void CalculateQuantity()
+        {
+            Quantity = (Math.Round(1000 * EntryAmount * SliderLeverage / EntryPrice)/1000);
+            CalculateActualPositionValue();
+        }
+
 
         public double PositionValue
         {
@@ -147,6 +188,7 @@ namespace BitmexGUI.ViewModels
                 {
                     _positionValue = value;
                     OnPropertyChanged();
+                    
                 }
             }
         }
@@ -159,7 +201,7 @@ namespace BitmexGUI.ViewModels
                 if (Math.Abs(_entryPrice - value) > 0.001) // Avoid unnecessary updates
                 {
                     _entryPrice = value;
-                    
+                    CalculateOrderCost();
                     OnPropertyChanged(); 
                 }
             }
@@ -204,28 +246,65 @@ namespace BitmexGUI.ViewModels
 
 
         }
+        private double _orderCost;
+
+
+        public double OrderCost
+        {
+            get => _orderCost;
+            set
+            { 
+                _orderCost = value;
+                OnPropertyChanged();
+                 
+                 
+                    
+            }
+        }
+
+        private double _quantity;
+
+
+        public double Quantity
+        {
+            get => _quantity;
+            set
+            {
+                _quantity = value;
+                OnPropertyChanged(); 
+            }
+        }
+
+        private double _actualpositionvalue;
+
+        public double ActualPositionValue
+        {
+            get => _actualpositionvalue;
+            set
+            {
+                _actualpositionvalue = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private void CalculateActualPositionValue()
+        {
+            ActualPositionValue = Math.Round(Quantity * EntryPrice,2);
+        }
 
         public void CreateNewOrder()
         {
-
-
-            double quantity = (int)Math.Round(1000 * EntryAmount * SliderLeverage / EntryPrice,2)*1000;
-            EntryPrice = Math.Round(EntryPrice, 0);
-
-            double actualtradeAmount = quantity * EntryPrice / (SliderLeverage * 1000000) ;
-
-            MessageBox.Show($"Actual Trade Amount: {actualtradeAmount}");
-
-            MessageBox.Show($"Actual Position value: {actualtradeAmount * SliderLeverage}, fee {actualtradeAmount * SliderLeverage* 0.00015},total spent {actualtradeAmount + 2*(actualtradeAmount * SliderLeverage * 0.00015)}"); 
+             
+            //MessageBox.Show($"Order Cost: {actualtradeAmount * SliderLeverage}, fee {actualtradeAmount * SliderLeverage * 0.00015},total spent {actualtradeAmount + 2 * (actualtradeAmount * SliderLeverage * 0.00015)}");
 
             BitmexApi.CreateOrder("XBTUSDT",
-                                   quantity,
-                                   Math.Round(EntryPrice,0),
+                                   Quantity*1000000,
+                                   Math.Round(EntryPrice, 0),
                                    "Limit",
                                    "GoodTillCancel",
                                    "Buy",
                                    SliderLeverage);
-            
+
 
         }
 
@@ -340,24 +419,7 @@ namespace BitmexGUI.ViewModels
 
 
         
-        private void CalculatePositionValue()
-        {
-             
-            if (_entryAmount > 0 && _sliderLeverage>0)
-            {
-                
-                PositionValue = Math.Round(_entryAmount * _sliderLeverage, 2);
-                
-            }
-            else if (_entryAmount > 0 && _sliderLeverage <=0)
-            {
-                PositionValue = Math.Round(_entryAmount, 2);
-            }
-            else
-            {
-                PositionValue = 0;
-            }
-        }
+        
 
 
          

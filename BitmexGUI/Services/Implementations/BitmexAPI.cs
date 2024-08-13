@@ -204,7 +204,7 @@ namespace BitmexGUI.Services.Implementations
                 HttpResponseMessage response = await client.SendAsync(headers);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    
+                    MessageBox.Show("Order Created Successfully!");
                 }
                 else
                 {
