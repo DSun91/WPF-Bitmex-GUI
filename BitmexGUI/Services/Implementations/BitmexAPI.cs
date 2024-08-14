@@ -239,15 +239,15 @@ namespace BitmexGUI.Services.Implementations
                                         break;
                                     case "realisedPnl":
                                         if (!string.IsNullOrEmpty(positionData["realisedPnl"].ToString()))
-                                            position.RealisedPnl = int.Parse(positionData["realisedPnl"].ToString());
+                                            position.RealisedPnl = long.Parse(positionData["realisedPnl"].ToString());
                                         break;
                                     case "posLoss": 
                                         if (!string.IsNullOrEmpty(positionData["posLoss"].ToString()))
-                                            position.PosLoss = int.Parse(positionData["posLoss"].ToString());
+                                            position.PosLoss = long.Parse(positionData["posLoss"].ToString());
                                         break;
                                     case "unrealisedPnl":
                                         if (!string.IsNullOrEmpty(positionData["unrealisedPnl"].ToString()))
-                                            position.UnrealisedPnl = int.Parse(positionData["unrealisedPnl"].ToString());
+                                            position.UnrealisedPnl = long.Parse(positionData["unrealisedPnl"].ToString());
                                         break;
                                     case "commission":
                                         if (!string.IsNullOrEmpty(positionData["commission"].ToString()))
@@ -263,15 +263,15 @@ namespace BitmexGUI.Services.Implementations
                                         break;
                                     case "currentCost":
                                         if (!string.IsNullOrEmpty(positionData["currentCost"].ToString()))
-                                            position.CurrentCost = int.Parse(positionData["currentCost"].ToString());
+                                            position.CurrentCost = long.Parse(positionData["currentCost"].ToString());
                                         break; 
                                     case "realisedCost":
                                         if (!string.IsNullOrEmpty(positionData["realisedCost"].ToString()))
-                                            position.RealisedCost = int.Parse(positionData["realisedCost"].ToString());
+                                            position.RealisedCost = long.Parse(positionData["realisedCost"].ToString());
                                         break;
                                    case "posComm":
                                         if (!string.IsNullOrEmpty(positionData["posComm"].ToString()))
-                                            position.PosComm = int.Parse(positionData["posComm"].ToString());
+                                            position.PosComm = long.Parse(positionData["posComm"].ToString());
                                         break;
                                     case "isOpen":
                                         if (!string.IsNullOrEmpty(positionData["isOpen"].ToString()))
