@@ -4,10 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  
         xmlns:viewmodels="clr-namespace:BitmexGUI.ViewModels"
+        xmlns:local="clr-namespace:BitmexGUI.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1000">
     <Window.Resources>
-        <ResourceDictionary>
+        <ResourceDictionary> 
             <Style TargetType="Button">
                 <Setter Property="Template">
                     <Setter.Value>
@@ -56,9 +57,10 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-
-        </ResourceDictionary>
+            <local:StringToDoubleConverter x:Key="StringToDoubleConverter"/>
+        </ResourceDictionary> 
     </Window.Resources>
+     
     <Grid Margin="1,0,-1,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -85,7 +87,7 @@
                 <Separator/>
                 <MenuItem Header="Exit"/>
             </MenuItem>
-            <MenuItem Header="Edit" Width="106" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <MenuItem Header="Edit" Width="106" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20">
                 <MenuItem Header="Undo"/>
                 <MenuItem Header="Redo"/>
                 <Separator/>
@@ -101,11 +103,9 @@
 
         <Canvas x:Name="DrawingCanvas" Grid.Row="1" Background="AliceBlue" Width="838" HorizontalAlignment="Left" Margin="66,10,0,0" Height="415" VerticalAlignment="Top" />
         <Label Content="Balance" Grid.Row="2" HorizontalAlignment="Left" VerticalContentAlignment="Top" Height="32" Margin="103,18,811,0" VerticalAlignment="Top" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" />
-        <TextBox x:Name="CurrentBalance" IsEnabled="False"  Grid.Row="2"  HorizontalAlignment="Left" Height="25" Margin="183,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" FontFamily="Book Antiqua" FontSize="14" />
-        <ComboBox x:Name="CmbCurrency" Grid.Row="2" HorizontalAlignment="Left" SelectedIndex="0" Height="25" Margin="299,22,0,0" VerticalAlignment="Top" Width="75">
-            <ComboBoxItem Content="USDT"/>
-            <ComboBoxItem Content="BTC"/>
-            <ComboBoxItem Content="BNB"/>
+        <TextBox x:Name="CurrentBalance" IsEnabled="False" Text="{Binding CurrentBalance,UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"  Grid.Row="2"  HorizontalAlignment="Left" Height="25" Margin="183,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" FontFamily="Book Antiqua" FontSize="14" />
+        <ComboBox x:Name="CmbCurrency" Grid.Row="2" SelectedItem="{Binding SelectedCurrency}" ItemsSource="{Binding Currencies}" HorizontalAlignment="Left" SelectedIndex="0" Height="25" Margin="299,22,0,0" VerticalAlignment="Top" Width="75">
+           
         </ComboBox>
         <Button x:Name="ResetButton" Content="Reset" Grid.Row="1" HorizontalAlignment="Left" Height="40" Margin="17,10,0,0" VerticalAlignment="Top" Width="40" Click="ResetButton_Click"/>
         <Button Content="" Grid.Row="1" HorizontalAlignment="Left" Height="40" Margin="17,60,0,0" VerticalAlignment="Top" Width="40"/>
@@ -116,7 +116,7 @@
 
 
 
-        <Slider x:Name="AmountSlider" Grid.Row="2" TickFrequency="5" HorizontalAlignment="Left"  Height="20" Margin="469,41,0,0" VerticalAlignment="Top" Width="353" ValueChanged="AmountSlider_ValueChanged"  />
+        <Slider x:Name="AmountSlider" Grid.Row="2" TickFrequency="5" Minimum="0" Maximum="{Binding CurrentBalance, Converter={StaticResource StringToDoubleConverter}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"     HorizontalAlignment="Left"  Height="20" Margin="469,41,0,0" VerticalAlignment="Top" Width="353" ValueChanged="AmountSlider_ValueChanged"  />
         <Label Content="Balance entry amount:" Grid.Row="2" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="34" Margin="489,9,0,0" VerticalAlignment="Top" Width="193" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
         <Label x:Name="BalancePercent" Grid.Row="2" Content="%" HorizontalAlignment="Left" Height="24" Margin="822,37,0,0"  VerticalAlignment="Top" Width="112" FontWeight="Bold"/>
         <TextBox x:Name="EntryAmount" Grid.Row="2" Text="{Binding EntryAmount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  HorizontalAlignment="Left" Height="26" Margin="683,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" FontFamily="Book Antiqua" FontSize="14" />

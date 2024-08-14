@@ -2,13 +2,16 @@
 using BitmexGUI.Services.Implementations;
 using BitmexGUI.Services.Interfaces;
 using BitmexGUI.ViewModels;
+using System.Collections.ObjectModel;
 using System.ComponentModel.Design;
 using System.Configuration;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.WebSockets;
 using System.Reflection.Metadata;
+using System.Security.Principal;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,12 +22,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System;
+using System.Globalization;
+using System.Windows.Data;
+
 
 namespace BitmexGUI.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+
     public partial class MainWindow : Window
     {
 
@@ -53,7 +62,7 @@ namespace BitmexGUI.Views
             viewModel.PriceDataUpdated += OnPriceDataUpdated;
             viewModel.NewPricedataAdded += OnPriceDataAdded;
             viewModel.BalanceUpdated += OnBalanceInfoUpdated;
-
+           
             CandleStickView = new CandlestickChart(ViewModel, DrawingCanvas,Candles_inView, CachedCandleSize);
 
             DrawingCanvas.MouseLeftButtonDown += DrawingCanvas_MouseLeftButtonDown;
@@ -61,7 +70,7 @@ namespace BitmexGUI.Views
             this.Loaded += MainWindow_Loaded;
             
         }
-
+       
         private void DrawingCanvas_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             
@@ -94,28 +103,52 @@ namespace BitmexGUI.Views
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        { 
-            viewModel.GetBalance(CmbCurrency.SelectedValue.ToString().Split(": ")[1].Replace(" ",""));
-           
-            SetupElementsValues();
+        {
+            
+            viewModel.GetBalances(); 
+            
             
         }
 
         private void SetupElementsValues()
         {
+            var account = viewModel.AccountInfos.FirstOrDefault(x => x.CurrencyName.Equals(viewModel.SelectedCurrency, StringComparison.OrdinalIgnoreCase));
             AmountSlider.Minimum = 0;
-            AmountSlider.Maximum = viewModel.AccountInfos[0].Balance;
-            
+            AmountSlider.Maximum = account?.Balance ?? 0.1 ;
+
 
 
         }
 
-
+        //private ObservableCollection<string> Currencies=new ObservableCollection<string>();
 
         private void OnBalanceInfoUpdated()
         {
-            
-            CurrentBalance.Text = viewModel.AccountInfos[0].Balance.ToString();
+
+          
+            //Currencies.Clear();
+
+            //// Populate the list with new currency names
+            //foreach (var accountInfo in viewModel.AccountInfos)
+            //{
+            //    if (!Currencies.Contains(accountInfo.CurrencyName))
+            //    {
+            //        Currencies.Add(accountInfo.CurrencyName);
+            //    }
+            //}
+
+            //// Set the updated list as the ItemsSource for the ComboBox
+            //CmbCurrency.ItemsSource = Currencies;
+
+            //string currencyname = CmbCurrency.Items[0].ToString();
+
+
+
+            //var account = viewModel.AccountInfos.FirstOrDefault(account => account.CurrencyName.Equals(currencyname, StringComparison.OrdinalIgnoreCase));
+
+            //CurrentBalance.Text = account?.Balance.ToString() ?? "No balance available";  // default message if no account is found
+
+
         }
 
         private void OnPriceDataUpdated()
@@ -199,5 +232,7 @@ namespace BitmexGUI.Views
           
 
         }
+      
     }
+    
 }

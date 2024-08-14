@@ -22,7 +22,7 @@ namespace BitmexGUI.Services.Implementations
         private readonly string ApiKey;
         private readonly string UrlRest;
         private readonly string UrlWss;
-        private string BaseUrl = "https://www.bitmex.com";
+        private string BaseUrl = ConfigurationManager.AppSettings["BaseBitmexUrl"];
         private int  expires = (int)(DateTimeOffset.UtcNow.ToUnixTimeSeconds() + 1800);
         public event Action<SettledPrice> SettledPriceUpdated;
         public event Action<Account> AccountInfo;
@@ -90,7 +90,11 @@ namespace BitmexGUI.Services.Implementations
             }
         }
 
-        public void GetBalance(string Symbol)
+
+         
+
+
+        public void GetWallet()
         {
             string verb = "GET";
             string path = "/api/v1/user/wallet?currency=all";
@@ -98,7 +102,7 @@ namespace BitmexGUI.Services.Implementations
 
             string signature = GenerateSignature(ApiKey, verb, path, expires, "");
 
-            string URL = "https://www.bitmex.com" + path;
+            string URL = BaseUrl + path;
             using (HttpClient client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Add("api-expires", expires.ToString());
@@ -107,25 +111,33 @@ namespace BitmexGUI.Services.Implementations
 
                 HttpResponseMessage response = client.GetAsync(URL).Result;
                 string responseBody = response.Content.ReadAsStringAsync().Result;
-                 
+
+                //MessageBox.Show(responseBody);
                 List<Dictionary<string, object>> data = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(responseBody);
+
+
+                var accounts = new List<Account>();
 
                 foreach (var x in data)
                 {
-                    if (x["currency"].ToString().ToLower().Contains(Symbol.ToLower())) 
+
+                    if (x["currency"].ToString() != null)
                     {
-                        
-                        var CurrentBalance = new Account
+
+                        var Account = new Account
                         {
-                            Balance = Math.Round(double.Parse(x["amount"].ToString())/1000000,2)
+                            Balance = Math.Round(double.Parse(x["amount"].ToString()) / 1000000, 2),
+                            CurrencyName = x["currency"].ToString().ToUpper()
                         };
-                        
-                        AccountInfo?.Invoke(CurrentBalance);
-                    
-                    }
-                      
+
+                        accounts.Add(Account);
+
+                    } 
                 }
-                
+                foreach (var account in accounts)
+                {
+                    AccountInfo?.Invoke(account);
+                }
             }
         }
 
@@ -133,7 +145,7 @@ namespace BitmexGUI.Services.Implementations
         {
             HttpClient client = new HttpClient();
             string FunctionUrl = "/api/v1/position/leverage";
-            string url = BaseUrl + FunctionUrl;
+            string url ="https:"+ BaseUrl.Split(":")[1] + FunctionUrl;
             string Verb = "POST";
 
             var data = new
@@ -168,7 +180,7 @@ namespace BitmexGUI.Services.Implementations
         {
             HttpClient client = new HttpClient();
             string FunctionUrl = "/api/v1/order";
-            string url = BaseUrl + FunctionUrl;
+            string url = "https:" + BaseUrl.Split(":")[1] + FunctionUrl;
             string Verb = "POST";
 
 

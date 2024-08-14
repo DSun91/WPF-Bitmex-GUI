@@ -49,9 +49,10 @@ namespace BitmexGUI.ViewModels
 
         private readonly string BinanceEndpointRest = ConfigurationManager.AppSettings["BaseRESTBinance"];
         private readonly string BinanceEndpointWss = ConfigurationManager.AppSettings["BaseWSSBinance"];
-        private readonly string BitmexEndpointRest = ConfigurationManager.AppSettings["BaseRESTBitmex"];
+        private readonly string BitmexEndpointRest = ConfigurationManager.AppSettings["BaseBitmexUrl"] + ConfigurationManager.AppSettings["BaseRESTBitmex"];
         private readonly string BitmexEndpointWss = ConfigurationManager.AppSettings["BaseWSSBitmex"];
-        private readonly string Instrument = ConfigurationManager.AppSettings["Instrument"];
+        private readonly string BinanceInstrument = ConfigurationManager.AppSettings["Instrument"];
+        private readonly string BitmexInstrument = ConfigurationManager.AppSettings["BitMexSymbol"];
         public event Action PriceDataUpdated;
         public event Action SettledPriceDataUpdated;
         public event Action BalanceUpdated;
@@ -110,7 +111,31 @@ namespace BitmexGUI.ViewModels
         private double _positionValue;
         private double _entryPrice;
 
+        public MainViewModel(int InitialCandlesNumber)
+        {
 
+
+            int.TryParse(ConfigurationManager.AppSettings["MaxCacheCandles"], out _maxCandlesLoading);
+
+
+            BinanceEndpointRest += $"/klines?symbol={BinanceInstrument}&interval={TimeFrame}&limit={InitialCandlesNumber}";
+            BinanceEndpointWss += $"{BinanceInstrument.ToLower()}@kline_{TimeFrame}";
+            BitmexEndpointWss += $"?subscribe=instrument:{BitmexInstrument}";
+            //MessageBox.Show(BinanceEndpointRest);
+            BinanceApi = new BinanceAPI(IdBinance, ApiKeyBinance, BinanceEndpointRest, BinanceEndpointWss);
+            BinanceApi.GetPriceREST(PriceData, _priceDataDictionary);
+            BinanceApi.PriceUpdated += OnPriceUpdatedBinance;
+
+            BitmexApi = new BitmexAPI(IdBitmex, ApiKeyBitmex, BitmexEndpointRest, BitmexEndpointWss);
+            BitmexApi.SettledPriceUpdated += OnPriceUpdatedBitmex;
+
+            BitmexApi.AccountInfo += OnWalletInfoReceived;
+
+            //BitmexApi.SetLeverage("XBTUSDT",5.4);
+
+
+
+        }
         public double EntryAmount
         {
             get => _entryAmount;
@@ -221,31 +246,7 @@ namespace BitmexGUI.ViewModels
                 return _createNewOrderCommand;
             }
         }
-        public MainViewModel(int InitialCandlesNumber)
-        {
-
-
-            int.TryParse(ConfigurationManager.AppSettings["MaxCacheCandles"],out _maxCandlesLoading);
-
-            
-            BinanceEndpointRest += $"/klines?symbol={Instrument}&interval={TimeFrame}&limit={InitialCandlesNumber}";
-            BinanceEndpointWss += $"{Instrument.ToLower()}@kline_{TimeFrame}";
-            BitmexEndpointWss += $"?subscribe=instrument:XBTUSDT";
-            //MessageBox.Show(BinanceEndpointRest);
-            BinanceApi = new BinanceAPI(IdBinance, ApiKeyBinance, BinanceEndpointRest, BinanceEndpointWss);
-            BinanceApi.GetPriceREST(PriceData,_priceDataDictionary);
-            BinanceApi.PriceUpdated += OnPriceUpdatedBinance;
-
-            BitmexApi = new BitmexAPI(IdBitmex, ApiKeyBitmex, BitmexEndpointRest, BitmexEndpointWss); 
-            BitmexApi.SettledPriceUpdated += OnPriceUpdatedBitmex;
-            
-            BitmexApi.AccountInfo += OnbalanceInfoReceived;
-
-            //BitmexApi.SetLeverage("XBTUSDT",5.4);
-
-
-
-        }
+        
         private double _orderCost;
 
 
@@ -294,10 +295,10 @@ namespace BitmexGUI.ViewModels
 
         public void CreateNewOrder()
         {
-             
+
             //MessageBox.Show($"Order Cost: {actualtradeAmount * SliderLeverage}, fee {actualtradeAmount * SliderLeverage * 0.00015},total spent {actualtradeAmount + 2 * (actualtradeAmount * SliderLeverage * 0.00015)}");
 
-            BitmexApi.CreateOrder("XBTUSDT",
+            BitmexApi.CreateOrder(ConfigurationManager.AppSettings["BitMexSymbol"].ToString(),
                                    Quantity*1000000,
                                    Math.Round(EntryPrice, 0),
                                    "Limit",
@@ -314,24 +315,92 @@ namespace BitmexGUI.ViewModels
             BitmexApi.GetPriceWSS();
         }
 
-        public void GetBalance(string currency)
+
+        private string _currency;
+
+        public event Action currencieslist;
+
+        private List<string> _currencies=new List<string>();
+
+
+        private string _currentBalance;
+        public string SelectedCurrency
         {
-            BitmexApi.GetBalance(currency);
+            get => _currency;
+            set
+            {
+                _currency = value.ToUpper();
+                
+                UpdateCurrentBalance();
+                OnPropertyChanged();
+            }
         }
-        private void OnbalanceInfoReceived(Account accountInfo)
+
+        public string CurrentBalance
+        {
+            get => _currentBalance;
+            set
+            {
+                if (_currentBalance != value)
+                {
+                    _currentBalance = value;
+                    OnPropertyChanged(nameof(CurrentBalance));
+                }
+            }
+        }
+        private void UpdateCurrentBalance()
+        { 
+            var account = AccountInfos.FirstOrDefault(x => x.CurrencyName.Equals(SelectedCurrency, StringComparison.OrdinalIgnoreCase));
+            if (account != null)
+            {
+                CurrentBalance = account.Balance.ToString(); // This will trigger OnPropertyChanged
+            }
+            else
+            {
+                CurrentBalance = "0"; // Or handle as needed if no account is found
+            }
+        }
+
+        
+
+        public void GetBalances()
+        {
+            BitmexApi.GetWallet();
+        }
+
+        public List<string> Currencies
+        {
+            get => _currencies;
+            set
+            {
+                _currencies = value; 
+                OnPropertyChanged(nameof(Currencies));
+            }
+        }
+
+        
+
+        private void OnWalletInfoReceived(Account accountInfo)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
                 if (accountInfo != null)
                 {
-                    AccountInfos.Clear();
+                    
                     AccountInfos.Add(accountInfo);
-
+                    Currencies.Add(accountInfo.CurrencyName);
+                    OnPropertyChanged(nameof(Currencies));
                 }
             });
             
             BalanceUpdated?.Invoke();
         }
+
+        
+
+
+
+
         private void OnPriceUpdatedBinance(CandlestickData priceData)
         {
             Application.Current.Dispatcher.Invoke(() =>
