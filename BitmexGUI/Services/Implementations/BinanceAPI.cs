@@ -57,7 +57,7 @@ namespace BitmexGUI.Services.Implementations
             data["k"] = kData;
 
             var KandleStick = (Dictionary<string, object>)data["k"];
-            System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], $"{{ {KandleStick["o"]}f,{KandleStick["h"]}f,{KandleStick["l"]}f,{KandleStick["c"]}f }}" + "\n");
+            //System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], $"{{ {KandleStick["o"]}f,{KandleStick["h"]}f,{KandleStick["l"]}f,{KandleStick["c"]}f }}" + "\n");
 
 
             var priceData = new CandlestickData

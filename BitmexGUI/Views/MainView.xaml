@@ -6,9 +6,9 @@
         xmlns:viewmodels="clr-namespace:BitmexGUI.ViewModels"
         xmlns:local="clr-namespace:BitmexGUI.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="1000">
+        Title="MainWindow" Height="800" Width="1500">
     <Window.Resources>
-        <ResourceDictionary> 
+        <ResourceDictionary>
             <Style TargetType="Button">
                 <Setter Property="Template">
                     <Setter.Value>
@@ -57,104 +57,171 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            
+
+            <!-- Style for DataGridCell to Illuminate Updating Cells -->
+            <Style TargetType="DataGridCell">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsEditing}" Value="True">
+                        <Setter Property="Background" Value="Yellow"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                    </DataTrigger>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="LightGreen"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
             <local:StringToDoubleConverter x:Key="StringToDoubleConverter"/>
-        </ResourceDictionary> 
+        </ResourceDictionary>
     </Window.Resources>
-     
-    <Grid Margin="1,0,-1,0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto"  />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto"  />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Label Content="Bitmex Trading GUI" Grid.Row="0" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Height="49" Margin="338,20,0,0" VerticalAlignment="Top" Width="317" FontFamily="Franklin Gothic Book" FontSize="36" FontWeight="Bold" Cursor="AppStarting" FontStyle="Italic"/>
-        <Menu HorizontalAlignment="Left" Grid.Row="0" Height="25"  Margin="0,0,0,0" VerticalAlignment="Top" Width="1000">
-            <MenuItem Header="File" Width="81" HorizontalContentAlignment="Right" VerticalContentAlignment="Center">
-                <MenuItem Header="New"/>
-                <MenuItem Header="Open"/>
-                <MenuItem Header="Save"/>
-                <Separator/>
-                <MenuItem Header="Exit"/>
+    <DockPanel>
+        <!-- MenuBar -->
+        <Menu DockPanel.Dock="Top" Height="20" Background="AliceBlue">
+            <MenuItem Header="File">
+                <MenuItem Header="New" />
+                <MenuItem Header="Open" />
+                <MenuItem Header="Save" />
             </MenuItem>
-            <MenuItem Header="Edit" Width="106" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20">
-                <MenuItem Header="Undo"/>
-                <MenuItem Header="Redo"/>
-                <Separator/>
-                <MenuItem Header="Cut"/>
-                <MenuItem Header="Copy"/>
-                <MenuItem Header="Paste"/>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Undo" />
+                <MenuItem Header="Redo" />
             </MenuItem>
-            <MenuItem Header="Help" Width="134" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <MenuItem Header="About"/>
+            <MenuItem Header="Help">
+                <MenuItem Header="About" />
             </MenuItem>
         </Menu>
 
-
-        <Canvas x:Name="DrawingCanvas" Grid.Row="1" Background="AliceBlue" Width="838" HorizontalAlignment="Left" Margin="66,10,0,0" Height="415" VerticalAlignment="Top" />
-        <Label Content="Balance" Grid.Row="2" HorizontalAlignment="Left" VerticalContentAlignment="Top" Height="32" Margin="103,18,811,0" VerticalAlignment="Top" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" />
-        <TextBox x:Name="CurrentBalance" IsEnabled="False" Text="{Binding CurrentBalance,UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"  Grid.Row="2"  HorizontalAlignment="Left" Height="25" Margin="183,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" FontFamily="Book Antiqua" FontSize="14" />
-        <ComboBox x:Name="CmbCurrency" Grid.Row="2" SelectedItem="{Binding SelectedCurrency}" ItemsSource="{Binding Currencies}" HorizontalAlignment="Left" SelectedIndex="0" Height="25" Margin="299,22,0,0" VerticalAlignment="Top" Width="75">
-           
-        </ComboBox>
-        <Button x:Name="ResetButton" Content="Reset" Grid.Row="1" HorizontalAlignment="Left" Height="40" Margin="17,10,0,0" VerticalAlignment="Top" Width="40" Click="ResetButton_Click"/>
-        <Button Content="" Grid.Row="1" HorizontalAlignment="Left" Height="40" Margin="17,60,0,0" VerticalAlignment="Top" Width="40"/>
-        <Button Content="" Grid.Row="1" HorizontalAlignment="Left" Height="40" Margin="17,110,0,0"  VerticalAlignment="Top" Width="40"/>
-        <Button Content="" Grid.Row="1" HorizontalAlignment="Left" Height="40" Margin="17,160,0,0"  VerticalAlignment="Top" Width="40"/>
-
-
-
-
-
-        <Slider x:Name="AmountSlider" Grid.Row="2" TickFrequency="5" Minimum="0" Maximum="{Binding CurrentBalance, Converter={StaticResource StringToDoubleConverter}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"     HorizontalAlignment="Left"  Height="20" Margin="469,41,0,0" VerticalAlignment="Top" Width="353" ValueChanged="AmountSlider_ValueChanged"  />
-        <Label Content="Balance entry amount:" Grid.Row="2" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="34" Margin="489,9,0,0" VerticalAlignment="Top" Width="193" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
-        <Label x:Name="BalancePercent" Grid.Row="2" Content="%" HorizontalAlignment="Left" Height="24" Margin="822,37,0,0"  VerticalAlignment="Top" Width="112" FontWeight="Bold"/>
-        <TextBox x:Name="EntryAmount" Grid.Row="2" Text="{Binding EntryAmount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  HorizontalAlignment="Left" Height="26" Margin="683,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" FontFamily="Book Antiqua" FontSize="14" />
-        <Button x:Name="BitmexSettled" Content="Bitmex Settled" Grid.Row="3" HorizontalAlignment="Left" Height="26" Margin="315,24,0,0" VerticalAlignment="Top" Width="89" Click="BitmexSettled_Click" />
-        <Label Content="Entry price: " Grid.Row="3" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="39" Margin="71,21,0,0" VerticalAlignment="Top" Width="130" FontFamily="Sitka Heading" FontSize="18"  FontWeight="Bold"/>
-        <TextBox x:Name="Entryprice" Text="{Binding EntryPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="3" HorizontalAlignment="Left" Height="25" Margin="180,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="132" FontFamily="Book Antiqua" FontSize="14"  />
-        <Label Content="Nominal value : " Grid.Row="3" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="38" Margin="445,17,0,0" VerticalAlignment="Top" Width="175" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
-        <TextBox x:Name="PositionValue" Grid.Row="3" IsEnabled="False" Text="{Binding PositionValue ,Mode=OneWay}" HorizontalAlignment="Left" Height="26" Margin="588,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="119" FontFamily="Book Antiqua" FontSize="14" />
+        <!-- Main content area -->
+        <Grid Margin="1,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"  />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"  />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Content="Bitmex Trading GUI" Grid.Row="0" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Height="49" Margin="338,20,0,0" VerticalAlignment="Top" Width="317" FontFamily="Franklin Gothic Book" FontSize="36" FontWeight="Bold" Cursor="AppStarting" FontStyle="Italic"/>
 
 
 
+            <Canvas x:Name="DrawingCanvas" Grid.Row="1" Background="AliceBlue" Width="671" HorizontalAlignment="Left" Margin="66,10,0,0" Height="415" VerticalAlignment="Top" />
+            <Label Content="Balance" Grid.Row="2" HorizontalAlignment="Left" VerticalContentAlignment="Top" Height="32" Margin="103,18,811,0" VerticalAlignment="Top" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" />
+            <TextBox x:Name="CurrentBalance" IsEnabled="False" Text="{Binding CurrentBalance,UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"  Grid.Row="2"  HorizontalAlignment="Left" Height="25" Margin="183,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" FontFamily="Book Antiqua" FontSize="14" />
+            <ComboBox x:Name="CmbCurrency" Grid.Row="2" SelectedItem="{Binding SelectedCurrency}" ItemsSource="{Binding Currencies}" HorizontalAlignment="Left" SelectedIndex="0" Height="25" Margin="299,22,0,0" VerticalAlignment="Top" Width="75">
 
-        <Label Content="Leverage:" Grid.Row="4" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="40" Margin="92,10,0,0" VerticalAlignment="Top" Width="130" FontFamily="Sitka Heading" FontSize="18"  FontWeight="Bold" />
-        <Slider x:Name="SliderLeverage"  Grid.Row="4" TickFrequency="5"  SmallChange="1" Minimum="1" Maximum="100" Value="{Binding SliderLeverage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  TickPlacement="Both" HorizontalAlignment="Left" Height="28" Margin="182,0,0,0" VerticalAlignment="Center" Width="190"  />
-        <Label x:Name="LeverageMultiplier" Grid.Row="4" Content="{Binding SliderLeverage,StringFormat='Value: X{{0:0.00}}'}" HorizontalAlignment="Left" Height="28" Margin="387,0,0,0" VerticalAlignment="Center" Width="67" FontWeight="Bold"/>
-        <Label x:Name="LeverageMultiplier_Copy" Grid.Row="4" Content="X" HorizontalAlignment="Left" Height="28" Margin="372,0,0,0"  VerticalAlignment="Center" Width="18" FontWeight="Bold"/>
-        <Label Content="Liquidation Price: " Grid.Row="4" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="40" Margin="429,0,0,0" VerticalAlignment="Center" Width="158" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
-        <TextBox Text="" Grid.Row="4" IsEnabled="False" BorderBrush="OrangeRed" BorderThickness="2" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="26" Margin="587,5,0,0" VerticalAlignment="Top" Width="119" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
-
-
-        <Label Content="Entry Fee: " Grid.Row="5" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="39" Margin="488,0,0,0" VerticalAlignment="Top" Width="92" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.RowSpan="2"/>
-        <TextBox Text="" Grid.Row="5" IsEnabled="False" BorderBrush="OrangeRed" BorderThickness="2" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="26" Margin="588,0,0,0" VerticalAlignment="Center" Width="121" FontFamily="Sitka Heading" FontSize="18"  FontWeight="Bold"/>
-
-        <Button Content="Buy Limit" Grid.Row="5" HorizontalAlignment="Left" Height="30" Margin="181,0,0,0" VerticalAlignment="Center" Width="95" Command="{Binding CreateNewOrderCommand}"/>
-        <Button Content="Sell Limit" Grid.Row="5" HorizontalAlignment="Left" Height="30" Margin="281,0,0,0" VerticalAlignment="Center" Width="94"/>
-
-        <Button Content="Buy Market" Grid.Row="6" HorizontalAlignment="Left" Height="30" Margin="181,0,0,0" VerticalAlignment="Center" Width="95"/>
-        <Button Content="Sell Market"   Grid.Row="6" HorizontalAlignment="Left" Height="30" Margin="281,0,0,0" VerticalAlignment="Center" Width="94"/>
-        <Label Content="Order Cost: " Grid.Row="3" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="38" Margin="735,17,0,0" VerticalAlignment="Top" Width="146" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
-        <TextBox x:Name="OrderCost" Grid.Row="3" IsEnabled="False" Text="{Binding OrderCost, Mode=OneWay}" HorizontalAlignment="Left" Height="26" Margin="838,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="119" FontFamily="Book Antiqua" FontSize="14" />
-        <Label Content="Quantity: " Grid.Row="4" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="38" Margin="735,0,0,0" VerticalAlignment="Center" Width="146" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
-        <TextBox x:Name="Quantity" Grid.Row="4" IsEnabled="False" Text="{Binding Quantity, Mode=OneWay}" HorizontalAlignment="Left" Height="26" Margin="838,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="119" FontFamily="Book Antiqua" FontSize="14" />
-        <Label Content="Actual Value: " Grid.Row="4" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="38" Margin="724,48,0,0" VerticalAlignment="Top" Width="157" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.RowSpan="3"/>
-        <TextBox x:Name="ActualPositionValue" Grid.Row="5" IsEnabled="False" Text="{Binding ActualPositionValue, Mode=OneWay}" HorizontalAlignment="Left" Height="26" Margin="838,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="119" FontFamily="Book Antiqua" FontSize="14" />
+            </ComboBox>
+            <Button x:Name="ResetButton" Content="Reset" Grid.Row="1" HorizontalAlignment="Left" Height="40" Margin="17,10,0,0" VerticalAlignment="Top" Width="40" Click="ResetButton_Click"/>
+            <Button Content="" Grid.Row="1" HorizontalAlignment="Left" Height="40" Margin="17,60,0,0" VerticalAlignment="Top" Width="40"/>
+            <Button Content="" Grid.Row="1" HorizontalAlignment="Left" Height="40" Margin="17,110,0,0"  VerticalAlignment="Top" Width="40"/>
+            <Button Content="" Grid.Row="1" HorizontalAlignment="Left" Height="40" Margin="17,160,0,0"  VerticalAlignment="Top" Width="40"/>
 
 
 
 
-        <!-- You can add more controls here to display other data or add user interactions -->
-    </Grid>
+
+            <Slider x:Name="AmountSlider" Grid.Row="2" TickFrequency="5" Minimum="0" Maximum="{Binding CurrentBalance, Converter={StaticResource StringToDoubleConverter}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"     HorizontalAlignment="Left"  Height="20" Margin="469,41,0,0" VerticalAlignment="Top" Width="353" ValueChanged="AmountSlider_ValueChanged"  />
+            <Label Content="Balance entry amount:" Grid.Row="2" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="34" Margin="489,9,0,0" VerticalAlignment="Top" Width="193" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
+            <Label x:Name="BalancePercent" Grid.Row="2" Content="%" HorizontalAlignment="Left" Height="24" Margin="822,37,0,0"  VerticalAlignment="Top" Width="112" FontWeight="Bold"/>
+            <TextBox x:Name="EntryAmount" Grid.Row="2" Text="{Binding EntryAmount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  HorizontalAlignment="Left" Height="26" Margin="683,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" FontFamily="Book Antiqua" FontSize="14" />
+
+
+            <Button x:Name="BitmexSettled" Content="Bitmex Settled" Grid.Row="3" HorizontalAlignment="Left" Height="26" Margin="315,24,0,0" VerticalAlignment="Top" Width="89" Click="BitmexSettled_Click" />
+            <Label Content="Entry price: " Grid.Row="3" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="39" Margin="71,21,0,0" VerticalAlignment="Top" Width="130" FontFamily="Sitka Heading" FontSize="18"  FontWeight="Bold"/>
+            <TextBox x:Name="Entryprice" Text="{Binding EntryPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="3" HorizontalAlignment="Left" Height="25" Margin="180,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="132" FontFamily="Book Antiqua" FontSize="14"  />
+            <Label Content="Nominal value : " Grid.Row="3" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="38" Margin="445,17,0,0" VerticalAlignment="Top" Width="175" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
+            <TextBox x:Name="PositionValue" Grid.Row="3" IsEnabled="False" Text="{Binding PositionValue ,Mode=OneWay}" HorizontalAlignment="Left" Height="26" Margin="588,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="119" FontFamily="Book Antiqua" FontSize="14" />
+            <Label Content="Order Cost: " Grid.Row="3" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="38" Margin="735,17,0,0" VerticalAlignment="Top" Width="146" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
+            <TextBox x:Name="OrderCost" Grid.Row="3" IsEnabled="False" Text="{Binding OrderCost, Mode=OneWay}" HorizontalAlignment="Left" Height="26" Margin="838,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="119" FontFamily="Book Antiqua" FontSize="14" />
+            <Label Content="Quantity: " Grid.Row="4" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="38" Margin="735,0,0,0" VerticalAlignment="Center" Width="146" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
+
+
+
+            <TextBox x:Name="Quantity" Grid.Row="4" IsEnabled="False" Text="{Binding Quantity, Mode=OneWay}" HorizontalAlignment="Left" Height="26" Margin="838,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="119" FontFamily="Book Antiqua" FontSize="14" />
+            <Label Content="Actual Value: " Grid.Row="4" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="38" Margin="724,48,0,0" VerticalAlignment="Top" Width="157" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.RowSpan="3"/>
+            <Label Content="Leverage:" Grid.Row="4" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="40" Margin="92,10,0,0" VerticalAlignment="Top" Width="130" FontFamily="Sitka Heading" FontSize="18"  FontWeight="Bold" />
+            <Slider x:Name="SliderLeverage"  Grid.Row="4" TickFrequency="5"  SmallChange="1" Minimum="1" Maximum="100" Value="{Binding SliderLeverage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  TickPlacement="Both" HorizontalAlignment="Left" Height="28" Margin="182,0,0,0" VerticalAlignment="Center" Width="190"  />
+            <Label x:Name="LeverageMultiplier" Grid.Row="4" Content="{Binding SliderLeverage,StringFormat='Value: X{{0:0.00}}'}" HorizontalAlignment="Left" Height="28" Margin="387,0,0,0" VerticalAlignment="Center" Width="67" FontWeight="Bold"/>
+            <Label x:Name="LeverageMultiplier_Copy" Grid.Row="4" Content="X" HorizontalAlignment="Left" Height="28" Margin="372,0,0,0"  VerticalAlignment="Center" Width="18" FontWeight="Bold"/>
+            <Label Content="Liquidation Price: " Grid.Row="4" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="40" Margin="429,0,0,0" VerticalAlignment="Center" Width="158" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
+            <TextBox Text="" Grid.Row="4" IsEnabled="False" BorderBrush="OrangeRed" BorderThickness="2" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="26" Margin="587,10,0,0" VerticalAlignment="Top" Width="119" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
+
+            <TextBox x:Name="ActualPositionValue" Grid.Row="5" IsEnabled="False" Text="{Binding ActualPositionValue, Mode=OneWay}" HorizontalAlignment="Left" Height="26" Margin="838,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="119" FontFamily="Book Antiqua" FontSize="14" />
+            <Button Content="Stop Limit Buy" Grid.Row="5" HorizontalAlignment="Left" Height="30" Margin="246,0,0,0" VerticalAlignment="Center" Width="95" Command="{Binding CreateNewOrderCommand}"/>
+            <Label Content="Entry Fee: " Grid.Row="5" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="39" Margin="488,0,0,0" VerticalAlignment="Top" Width="92" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.RowSpan="3"/>
+            <TextBox Text="" Grid.Row="5" IsEnabled="False" BorderBrush="OrangeRed" BorderThickness="2" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="26" Margin="588,0,0,0" VerticalAlignment="Top" Width="121" FontFamily="Sitka Heading" FontSize="18"  FontWeight="Bold"/>
+            <Button Content="Buy Limit" Grid.Row="5" HorizontalAlignment="Left" Height="30" Margin="46,0,0,0" VerticalAlignment="Center" Width="95" Command="{Binding CreateNewOrderCommand}"/>
+            <Button Content="Buy Market" Grid.Row="5" HorizontalAlignment="Left" Height="30" Margin="146,0,0,0" VerticalAlignment="Center" Width="95"/>
+
+            <Button Content="Sell Limit" Grid.Row="6" HorizontalAlignment="Left" Height="30" Margin="46,0,0,0" VerticalAlignment="Center" Width="95"/>
+            <Button Content="Stop Limit Sell"   Grid.Row="6" HorizontalAlignment="Left" Height="30" Margin="247,0,0,0" VerticalAlignment="Center" Width="94"/>
+            <Button Content="Sell Market"   Grid.Row="6" HorizontalAlignment="Left" Height="30" Margin="146,0,0,0" VerticalAlignment="Center" Width="94"/>
+            <Button Content="Limit TP+SL Buy" Grid.Row="5" HorizontalAlignment="Left" Height="30" Margin="345,0,0,0" VerticalAlignment="Center" Width="95" Command="{Binding CreateNewOrderCommand}"/>
+            <Button Content="Limit TP+SL Sell"   Grid.Row="6" HorizontalAlignment="Left" Height="30" Margin="346,0,0,0" VerticalAlignment="Center" Width="94"/>
+            <DataGrid x:Name="Positions" Height="200" RowHeaderWidth="30" Margin="790,10,30,0" Grid.Row="1" VerticalAlignment="Top" ItemsSource="{Binding PositionsInfo, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
+                <DataGrid.Resources>
+                     
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#4A4A4A"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Padding" Value="5"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="BorderBrush" Value="#6A6A6A"/>
+                        
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="DataGridColumnHeader">
+                                    <Border Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            Padding="{TemplateBinding Padding}"
+                                            Margin="2,0,2,0">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Account ID" Binding="{Binding AccountID}" Width="Auto" />
+                    <DataGridTextColumn Header="Symbol" Binding="{Binding Symbol}" Width="Auto" />
+                    <DataGridTextColumn Header="Commission" Binding="{Binding Commission}" Width="Auto" />
+                    <DataGridTextColumn Header="PosComm" Binding="{Binding PosComm}" Width="Auto" />
+                    <DataGridTextColumn Header="Leverage" Binding="{Binding Leverage}" Width="Auto" />
+                    <DataGridTextColumn Header="MarkPrice" Binding="{Binding MarkPrice}" Width="Auto" />
+
+                    <DataGridTextColumn Header="UnrealisedPnl" Binding="{Binding UnrealisedPnl}" Width="Auto" />
+                    <DataGridTextColumn Header="AvgEntryPrice" Binding="{Binding AvgEntryPrice}" Width="Auto" />
+                    <DataGridTextColumn Header="BreakEvenPrice" Binding="{Binding BreakEvenPrice}" Width="Auto" />
+
+                    <DataGridTextColumn Header="LiquidationPrice" Binding="{Binding LiquidationPrice}" Width="Auto" />
+                    <DataGridTextColumn Header="RealisedPnl" Binding="{Binding RealisedPnl}" Width="Auto" />
+
+
+
+                    <DataGridTextColumn Header="PosLoss" Binding="{Binding PosLoss}" Width="Auto" />
+                    <DataGridTextColumn Header="CurrentQty" Binding="{Binding CurrentQty}" Width="Auto" />
+                    <DataGridTextColumn Header="CurrentCost" Binding="{Binding CurrentCost}" Width="Auto" />
+                    <DataGridTextColumn Header="RealisedCost" Binding="{Binding RealisedCost}" Width="Auto" />
+                    <DataGridTextColumn Header="IsOpen" Binding="{Binding IsOpen}" Width="Auto" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+
+
+
+            <!-- You can add more controls here to display other data or add user interactions -->
+        </Grid>
+    </DockPanel>
+
 </Window>

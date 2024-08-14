@@ -16,6 +16,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Microsoft.VisualBasic;
 using System;
+using System.Reflection;
 
 namespace BitmexGUI.ViewModels
 {
@@ -67,6 +68,7 @@ namespace BitmexGUI.ViewModels
         private ObservableCollection<SettledPrice> _settledPriceData = new ObservableCollection<SettledPrice>();
         private ObservableCollection<Account> _accountData = new ObservableCollection<Account>();
         private ObservableCollection<Instrument> _instrumentData = new ObservableCollection<Instrument>();
+        private ObservableCollection<Position> _positionData = new ObservableCollection<Position>();
 
 
         public ObservableCollection<CandlestickData> PriceData
@@ -106,6 +108,17 @@ namespace BitmexGUI.ViewModels
             }
         }
 
+
+        public ObservableCollection<Position> PositionsInfo
+        {
+            get => _positionData;
+            set
+            {
+                _positionData = value;
+                OnPropertyChanged();
+            }
+        }
+
         private double _entryAmount;
         private double _sliderLeverage;
         private double _positionValue;
@@ -130,11 +143,49 @@ namespace BitmexGUI.ViewModels
             BitmexApi.SettledPriceUpdated += OnPriceUpdatedBitmex;
 
             BitmexApi.AccountInfo += OnWalletInfoReceived;
-
+            BitmexApi.PositionUpdated += OnPositionUpdate;
             //BitmexApi.SetLeverage("XBTUSDT",5.4);
 
 
 
+        }
+
+        private void OnPositionUpdate(Position newPositionData)
+        {
+            var existingPosition = PositionsInfo.FirstOrDefault(p => p.AccountID == newPositionData.AccountID && p.Symbol == newPositionData.Symbol);
+
+            if (existingPosition != null)
+            {
+                // Create a new Position object with updated data
+                var updatedPosition = new Position
+                {
+                    AccountID = existingPosition.AccountID,
+                    Symbol = existingPosition.Symbol,
+                    AvgEntryPrice = newPositionData.AvgEntryPrice != 0 ? newPositionData.AvgEntryPrice : existingPosition.AvgEntryPrice,
+                    MarkPrice = newPositionData.MarkPrice != 0 ? newPositionData.MarkPrice : existingPosition.MarkPrice,
+                    BreakEvenPrice = newPositionData.BreakEvenPrice != 0 ? newPositionData.BreakEvenPrice : existingPosition.BreakEvenPrice,
+                    LiquidationPrice = newPositionData.LiquidationPrice != 0 ? newPositionData.LiquidationPrice : existingPosition.LiquidationPrice,
+                    RealisedPnl = newPositionData.RealisedPnl != 0 ? newPositionData.RealisedPnl : existingPosition.RealisedPnl,
+                    UnrealisedPnl = newPositionData.UnrealisedPnl != 0 ? newPositionData.UnrealisedPnl : existingPosition.UnrealisedPnl,
+                    Commission = newPositionData.Commission != 0 ? newPositionData.Commission : existingPosition.Commission,
+                    Leverage = newPositionData.Leverage != 0 ? newPositionData.Leverage : existingPosition.Leverage,
+                    CurrentQty = newPositionData.CurrentQty != 0 ? newPositionData.CurrentQty : existingPosition.CurrentQty,
+                    CurrentCost = newPositionData.CurrentCost != 0 ? newPositionData.CurrentCost : existingPosition.CurrentCost,
+                    RealisedCost = newPositionData.RealisedCost != 0 ? newPositionData.RealisedCost : existingPosition.RealisedCost,
+                    PosComm = newPositionData.PosComm != 0 ? newPositionData.PosComm : existingPosition.PosComm,
+                    IsOpen = newPositionData.IsOpen
+
+                    // Copy other properties as needed
+                };
+
+                int index = PositionsInfo.IndexOf(existingPosition);
+                PositionsInfo[index] = updatedPosition;
+            }
+            else
+            {
+                // Add a new position if it doesn't exist
+                PositionsInfo.Add(newPositionData);
+            }
         }
         public double EntryAmount
         {
@@ -313,6 +364,7 @@ namespace BitmexGUI.ViewModels
         {
             BinanceApi.GetPriceWSS();
             BitmexApi.GetPriceWSS();
+            BitmexApi.GetPositionWSS();
         }
 
 
