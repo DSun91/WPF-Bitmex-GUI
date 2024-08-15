@@ -58,6 +58,9 @@ namespace BitmexGUI.ViewModels
         public event Action SettledPriceDataUpdated;
         public event Action BalanceUpdated;
         public event Action NewPricedataAdded;
+        public event Action PositionsdatsUpdated;
+        public event Action OpenordersInfoUpdated;
+        public event Action HistoricOrderdataUpdated;
         private Dictionary<string, CandlestickData> _priceDataDictionary = new Dictionary<string, CandlestickData>(); 
         private readonly int _maxCandlesLoading;
         private readonly BinanceAPI BinanceApi;
@@ -69,7 +72,8 @@ namespace BitmexGUI.ViewModels
         private ObservableCollection<Account> _accountData = new ObservableCollection<Account>();
         private ObservableCollection<Instrument> _instrumentData = new ObservableCollection<Instrument>();
         private ObservableCollection<Position> _positionData = new ObservableCollection<Position>();
-
+        private ObservableCollection<Order> _orderData = new ObservableCollection<Order>();
+        private ObservableCollection<Order> _historicorderData = new ObservableCollection<Order>();
 
         public ObservableCollection<CandlestickData> PriceData
         {
@@ -107,7 +111,25 @@ namespace BitmexGUI.ViewModels
                 OnPropertyChanged(nameof(InstrumentInfo));
             }
         }
+        public ObservableCollection<Order> OrdersInfo
+        {
+            get => _orderData;
+            set
+            {
+                _orderData = value;
+                OnPropertyChanged(nameof(OrdersInfo));
+            }
+        }
 
+        public ObservableCollection<Order> HistoricOrdersInfo
+        {
+            get => _historicorderData;
+            set
+            {
+                _historicorderData = value;
+                OnPropertyChanged(nameof(HistoricOrdersInfo));
+            }
+        }
 
         public ObservableCollection<Position> PositionsInfo
         {
@@ -144,47 +166,95 @@ namespace BitmexGUI.ViewModels
 
             BitmexApi.AccountInfo += OnWalletInfoReceived;
             BitmexApi.PositionUpdated += OnPositionUpdate;
+            BitmexApi.OrderUpdated += OnOrderReceived;
             //BitmexApi.SetLeverage("XBTUSDT",5.4);
 
 
 
         }
 
+
+
+        private void OnOrderReceived(Order newOrderData)
+        {
+            MessageBox.Show("new order received");
+            if (newOrderData != null)
+            {
+               
+
+                string orderStatus = newOrderData.OrdStatus.ToLower();
+ 
+
+                if (newOrderData.OrdStatus.ToLower().Contains("new"))
+                {
+                    OrdersInfo.Add(newOrderData);
+                    OpenordersInfoUpdated?.Invoke();
+                }
+                else
+                {
+                    
+                    var existingOrder = OrdersInfo.FirstOrDefault(p => p.OrderID.Equals(newOrderData.OrderID));
+                    if (existingOrder != null)
+                    {
+                        MessageBox.Show(newOrderData.OrderID+" "+ existingOrder.OrderID);
+                        OrdersInfo.Remove(existingOrder);
+                        OpenordersInfoUpdated?.Invoke();
+                    }
+                    HistoricOrdersInfo.Add(newOrderData);
+                    HistoricOrderdataUpdated?.Invoke();
+                }
+
+            }
+        }
+
+
         private void OnPositionUpdate(Position newPositionData)
         {
             var existingPosition = PositionsInfo.FirstOrDefault(p => p.AccountID == newPositionData.AccountID && p.Symbol == newPositionData.Symbol);
 
+            // MessageBox.Show("new pos has commision "+ newPositionData.Symbol+ " "+newPositionData.PosComm.HasValue.ToString()+" "+ newPositionData.PosComm+" "+ newPositionData.CurrentQty);
+            //MessageBox.Show("new pos has commision " + newPositionData.Symbol + " " + newPositionData.PosComm.HasValue.ToString() + " " + newPositionData.MarkPrice + " " + newPositionData.AvgEntryPrice);
+            //PositionsInfo.Clear();
+
             if (existingPosition != null)
             {
+                //MessageBox.Show("existing pos has commision " + existingPosition.PosComm.HasValue.ToString());
                 // Create a new Position object with updated data
                 var updatedPosition = new Position
                 {
                     AccountID = existingPosition.AccountID,
                     Symbol = existingPosition.Symbol,
-                    AvgEntryPrice = newPositionData.AvgEntryPrice != 0 ? newPositionData.AvgEntryPrice : existingPosition.AvgEntryPrice,
-                    MarkPrice = newPositionData.MarkPrice != 0 ? newPositionData.MarkPrice : existingPosition.MarkPrice,
-                    BreakEvenPrice = newPositionData.BreakEvenPrice != 0 ? newPositionData.BreakEvenPrice : existingPosition.BreakEvenPrice,
-                    LiquidationPrice = newPositionData.LiquidationPrice != 0 ? newPositionData.LiquidationPrice : existingPosition.LiquidationPrice,
-                    RealisedPnl = newPositionData.RealisedPnl != 0 ? newPositionData.RealisedPnl : existingPosition.RealisedPnl,
-                    UnrealisedPnl = newPositionData.UnrealisedPnl != 0 ? newPositionData.UnrealisedPnl : existingPosition.UnrealisedPnl,
-                    Commission = newPositionData.Commission != 0 ? newPositionData.Commission : existingPosition.Commission,
-                    Leverage = newPositionData.Leverage != 0 ? newPositionData.Leverage : existingPosition.Leverage,
-                    CurrentQty = newPositionData.CurrentQty != 0 ? newPositionData.CurrentQty : existingPosition.CurrentQty,
-                    CurrentCost = newPositionData.CurrentCost != 0 ? newPositionData.CurrentCost : existingPosition.CurrentCost,
-                    RealisedCost = newPositionData.RealisedCost != 0 ? newPositionData.RealisedCost : existingPosition.RealisedCost,
-                    PosComm = newPositionData.PosComm != 0 ? newPositionData.PosComm : existingPosition.PosComm,
-                    IsOpen = newPositionData.IsOpen
-
-                    // Copy other properties as needed
+                    AvgEntryPrice = newPositionData.AvgEntryPrice.HasValue ? newPositionData.AvgEntryPrice.Value : existingPosition.AvgEntryPrice,
+                    MarkPrice = newPositionData.MarkPrice.HasValue ? newPositionData.MarkPrice.Value : existingPosition.MarkPrice,
+                    BreakEvenPrice = newPositionData.BreakEvenPrice.HasValue ? newPositionData.BreakEvenPrice.Value : existingPosition.BreakEvenPrice,
+                    LiquidationPrice = newPositionData.LiquidationPrice.HasValue ? newPositionData.LiquidationPrice.Value : existingPosition.LiquidationPrice,
+                    RealisedPnl = newPositionData.RealisedPnl.HasValue ? newPositionData.RealisedPnl.Value : existingPosition.RealisedPnl,
+                    UnrealisedPnl = newPositionData.UnrealisedPnl.HasValue ? newPositionData.UnrealisedPnl.Value : existingPosition.UnrealisedPnl,
+                    Commission = newPositionData.Commission.HasValue ? newPositionData.Commission.Value : existingPosition.Commission,
+                    Leverage = newPositionData.Leverage.HasValue ? newPositionData.Leverage.Value : existingPosition.Leverage,
+                    CurrentQty = newPositionData.CurrentQty.HasValue ? newPositionData.CurrentQty.Value : existingPosition.CurrentQty,
+                    CurrentCost = newPositionData.CurrentCost.HasValue ? newPositionData.CurrentCost.Value : existingPosition.CurrentCost,
+                    RealisedCost = newPositionData.RealisedCost.HasValue ? newPositionData.RealisedCost.Value : existingPosition.RealisedCost,
+                    PosComm = newPositionData.PosComm.HasValue ? newPositionData.PosComm.Value: existingPosition.PosComm,
+                    MarkValue = newPositionData.MarkValue.HasValue ? newPositionData.MarkValue.Value : existingPosition.MarkValue,
+                    RebalancedPnl = newPositionData.RebalancedPnl.HasValue ? newPositionData.RebalancedPnl.Value : existingPosition.RebalancedPnl
                 };
 
                 int index = PositionsInfo.IndexOf(existingPosition);
                 PositionsInfo[index] = updatedPosition;
+                //MessageBox.Show("updated pos has commision " + newPositionData.Symbol + " " + updatedPosition.MarkValue + " " + updatedPosition.RebalancedPnl + " " + updatedPosition.AvgEntryPrice);
+                if (updatedPosition.MarkValue==0 && updatedPosition.RebalancedPnl==0)
+                {
+                    
+                    PositionsInfo.RemoveAt(index);
+                    PositionsdatsUpdated?.Invoke();
+                }
+
             }
-            else
+            else if (newPositionData.CurrentQty > 0)
             {
-                // Add a new position if it doesn't exist
                 PositionsInfo.Add(newPositionData);
+                PositionsdatsUpdated?.Invoke();
             }
         }
         public double EntryAmount
@@ -365,6 +435,7 @@ namespace BitmexGUI.ViewModels
             BinanceApi.GetPriceWSS();
             BitmexApi.GetPriceWSS();
             BitmexApi.GetPositionWSS();
+            BitmexApi.GetOrdersWSS();
         }
 
 

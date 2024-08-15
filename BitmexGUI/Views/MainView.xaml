@@ -57,7 +57,7 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-            
+
 
             <!-- Style for DataGridCell to Illuminate Updating Cells -->
             <Style TargetType="DataGridCell">
@@ -114,7 +114,7 @@
 
 
 
-            <Canvas x:Name="DrawingCanvas" Grid.Row="1" Background="AliceBlue" Width="671" HorizontalAlignment="Left" Margin="66,10,0,0" Height="415" VerticalAlignment="Top" />
+            <Canvas x:Name="DrawingCanvas" Grid.Row="1" Background="AliceBlue" Width="674" HorizontalAlignment="Left" Margin="66,0,0,0" Height="363" VerticalAlignment="Center" />
             <Label Content="Balance" Grid.Row="2" HorizontalAlignment="Left" VerticalContentAlignment="Top" Height="32" Margin="103,18,811,0" VerticalAlignment="Top" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" />
             <TextBox x:Name="CurrentBalance" IsEnabled="False" Text="{Binding CurrentBalance,UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"  Grid.Row="2"  HorizontalAlignment="Left" Height="25" Margin="183,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" FontFamily="Book Antiqua" FontSize="14" />
             <ComboBox x:Name="CmbCurrency" Grid.Row="2" SelectedItem="{Binding SelectedCurrency}" ItemsSource="{Binding Currencies}" HorizontalAlignment="Left" SelectedIndex="0" Height="25" Margin="299,22,0,0" VerticalAlignment="Top" Width="75">
@@ -167,55 +167,129 @@
             <Button Content="Sell Market"   Grid.Row="6" HorizontalAlignment="Left" Height="30" Margin="146,0,0,0" VerticalAlignment="Center" Width="94"/>
             <Button Content="Limit TP+SL Buy" Grid.Row="5" HorizontalAlignment="Left" Height="30" Margin="345,0,0,0" VerticalAlignment="Center" Width="95" Command="{Binding CreateNewOrderCommand}"/>
             <Button Content="Limit TP+SL Sell"   Grid.Row="6" HorizontalAlignment="Left" Height="30" Margin="346,0,0,0" VerticalAlignment="Center" Width="94"/>
-            <DataGrid x:Name="Positions" Height="200" RowHeaderWidth="30" Margin="790,10,30,0" Grid.Row="1" VerticalAlignment="Top" ItemsSource="{Binding PositionsInfo, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
-                <DataGrid.Resources>
-                     
-                    <Style TargetType="DataGridColumnHeader">
-                        <Setter Property="Background" Value="#4A4A4A"/>
-                        <Setter Property="Foreground" Value="White"/>
-                        <Setter Property="Padding" Value="5"/>
-                        <Setter Property="BorderThickness" Value="0"/>
-                        <Setter Property="BorderBrush" Value="#6A6A6A"/>
-                        
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="DataGridColumnHeader">
-                                    <Border Background="{TemplateBinding Background}"
-                                            BorderBrush="{TemplateBinding BorderBrush}"
-                                            BorderThickness="{TemplateBinding BorderThickness}"
-                                            Padding="{TemplateBinding Padding}"
-                                            Margin="2,0,2,0">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </DataGrid.Resources>
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Account ID" Binding="{Binding AccountID}" Width="Auto" />
-                    <DataGridTextColumn Header="Symbol" Binding="{Binding Symbol}" Width="Auto" />
-                    <DataGridTextColumn Header="Commission" Binding="{Binding Commission}" Width="Auto" />
-                    <DataGridTextColumn Header="PosComm" Binding="{Binding PosComm}" Width="Auto" />
-                    <DataGridTextColumn Header="Leverage" Binding="{Binding Leverage}" Width="Auto" />
-                    <DataGridTextColumn Header="MarkPrice" Binding="{Binding MarkPrice}" Width="Auto" />
 
-                    <DataGridTextColumn Header="UnrealisedPnl" Binding="{Binding UnrealisedPnl}" Width="Auto" />
-                    <DataGridTextColumn Header="AvgEntryPrice" Binding="{Binding AvgEntryPrice}" Width="Auto" />
-                    <DataGridTextColumn Header="BreakEvenPrice" Binding="{Binding BreakEvenPrice}" Width="Auto" />
+            <DockPanel LastChildFill="True" Grid.Row="1" Margin="0,00,20,0" VerticalAlignment="Top">
+                <TextBlock Text="Open Positions" Margin="790,00,30,0"
+                           Background="SandyBrown"
+                           Foreground="White"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           TextAlignment="Center"
+                           HorizontalAlignment="Stretch"
+                           DockPanel.Dock="Top" />
+                <DataGrid x:Name="Positions" Grid.Row="1" Height="150" RowHeaderWidth="30" Margin="790,00,30,0" ItemsSource="{Binding PositionsInfo, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
+                    <DataGrid.Resources>
 
-                    <DataGridTextColumn Header="LiquidationPrice" Binding="{Binding LiquidationPrice}" Width="Auto" />
-                    <DataGridTextColumn Header="RealisedPnl" Binding="{Binding RealisedPnl}" Width="Auto" />
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#4A4A4A"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Padding" Value="5"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="BorderBrush" Value="#6A6A6A"/>
+
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="DataGridColumnHeader">
+                                        <Border Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                Padding="{TemplateBinding Padding}"
+                                                Margin="2,0,2,0">   
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Account ID" Binding="{Binding AccountID}" Width="Auto" />
+                        <DataGridTextColumn Header="Symbol" Binding="{Binding Symbol}" Width="Auto" />
+                        <DataGridTextColumn Header="CurrentQty" Binding="{Binding CurrentQty}" Width="Auto" />
+                        <DataGridTextColumn Header="Commission" Binding="{Binding Commission}" Width="Auto" />
+                        <DataGridTextColumn Header="PosComm" Binding="{Binding PosComm}" Width="Auto" />
+                        <DataGridTextColumn Header="Leverage" Binding="{Binding Leverage}" Width="Auto" />
+                        <DataGridTextColumn Header="MarkPrice" Binding="{Binding MarkPrice}" Width="Auto" />
+
+                        <DataGridTextColumn Header="UnrealisedPnl" Binding="{Binding UnrealisedPnl}" Width="Auto" />
+                        <DataGridTextColumn Header="AvgEntryPrice" Binding="{Binding AvgEntryPrice}" Width="Auto" />
+                        <DataGridTextColumn Header="BreakEvenPrice" Binding="{Binding BreakEvenPrice}" Width="Auto" />
+
+                        <DataGridTextColumn Header="LiquidationPrice" Binding="{Binding LiquidationPrice}" Width="Auto" />
+                        <DataGridTextColumn Header="RealisedPnl" Binding="{Binding RealisedPnl}" Width="Auto" />
 
 
 
-                    <DataGridTextColumn Header="PosLoss" Binding="{Binding PosLoss}" Width="Auto" />
-                    <DataGridTextColumn Header="CurrentQty" Binding="{Binding CurrentQty}" Width="Auto" />
-                    <DataGridTextColumn Header="CurrentCost" Binding="{Binding CurrentCost}" Width="Auto" />
-                    <DataGridTextColumn Header="RealisedCost" Binding="{Binding RealisedCost}" Width="Auto" />
-                    <DataGridTextColumn Header="IsOpen" Binding="{Binding IsOpen}" Width="Auto" />
-                </DataGrid.Columns>
-            </DataGrid>
+                        <DataGridTextColumn Header="PosLoss" Binding="{Binding PosLoss}" Width="Auto" />
+
+                        <DataGridTextColumn Header="CurrentCost" Binding="{Binding CurrentCost}" Width="Auto" />
+                        <DataGridTextColumn Header="RealisedCost" Binding="{Binding RealisedCost}" Width="Auto" />
+                        <DataGridTextColumn Header="IsOpen" Binding="{Binding IsOpen}" Width="Auto" />
+                    </DataGrid.Columns>
+                </DataGrid>
+
+
+            </DockPanel>
+
+            <DockPanel LastChildFill="True" Grid.Row="1" Margin="0,190,20,0">
+                <TextBlock Text="Open Orders" Margin="790,00,30,0"
+               Background="SandyBrown"
+               Foreground="White"
+               FontSize="20"
+               FontWeight="SemiBold"
+               TextAlignment="Center"
+               HorizontalAlignment="Stretch"
+               DockPanel.Dock="Top" />
+                <DataGrid x:Name="Orders" Grid.Row="1" Height="150" RowHeaderWidth="30" Margin="790,00,30,0" VerticalAlignment="Top" ItemsSource="{Binding OrdersInfo, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
+                    <DataGrid.Resources>
+
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#4A4A4A"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Padding" Value="5"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="BorderBrush" Value="#6A6A6A"/>
+
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="DataGridColumnHeader">
+                                        <Border Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                Padding="{TemplateBinding Padding}"
+                                                Margin="2,0,2,0">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns> 
+                        <DataGridTextColumn Header="Order Status" Binding="{Binding OrdStatus}" Width="Auto" /> 
+                        <DataGridTextColumn Header="Symbol" Binding="{Binding Symbol}" Width="Auto" />
+                        <DataGridTextColumn Header="Side" Binding="{Binding Side}" Width="Auto" /> 
+                        <DataGridTextColumn Header="Order Type" Binding="{Binding OrdType}" Width="Auto" /> 
+                        <DataGridTextColumn Header="Average Price" Binding="{Binding AvgPx}" Width="Auto" />
+                        <DataGridTextColumn Header="Order Quantity" Binding="{Binding OrderQty}" Width="Auto" />
+                        <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="Auto" />
+                        <DataGridTextColumn Header="Display Quantity" Binding="{Binding DisplayQty}" Width="Auto" />
+                        <DataGridTextColumn Header="Stop Price" Binding="{Binding StopPx}" Width="Auto" />
+                        <DataGridTextColumn Header="Peg Offset Value" Binding="{Binding PegOffsetValue}" Width="Auto" />
+                        <DataGridTextColumn Header="Currency" Binding="{Binding Currency}" Width="Auto" />
+                        <DataGridTextColumn Header="Settl Currency" Binding="{Binding SettlCurrency}" Width="Auto" />
+                        <DataGridTextColumn Header="Time in Force" Binding="{Binding TimeInForce}" Width="Auto" />
+                        <DataGridTextColumn Header="Working Indicator" Binding="{Binding WorkingIndicator}" Width="Auto" />
+                        <DataGridTextColumn Header="Leaves Quantity" Binding="{Binding LeavesQty}" Width="Auto" />
+                        <DataGridTextColumn Header="Cumulative Quantity" Binding="{Binding CumQty}" Width="Auto" />
+                        <DataGridTextColumn Header="Text" Binding="{Binding Text}" Width="Auto" />
+                        <DataGridTextColumn Header="Transaction Time" Binding="{Binding TransactTime}" Width="Auto" />
+                        <DataGridTextColumn Header="Timestamp" Binding="{Binding Timestamp}" Width="Auto" />
+                        <DataGridTextColumn Header="Account" Binding="{Binding Account}" Width="Auto" />
+                        <DataGridTextColumn Header="Order ID" Binding="{Binding OrderID}" Width="Auto" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
 
 
 

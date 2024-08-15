@@ -29,6 +29,7 @@ namespace BitmexGUI.Services.Implementations
         public event Action<SettledPrice> SettledPriceUpdated;
         public event Action<Account> AccountInfo;
         public event Action<Position> PositionUpdated;
+        public event Action<Order> OrderUpdated;
         public BitmexAPI(string ID, string key, string urlRest, string urlWss) : base(ID, key, urlRest, urlWss)
         {
             ApiID = ConfigurationManager.AppSettings["ID"];
@@ -67,7 +68,7 @@ namespace BitmexGUI.Services.Implementations
 
         public async void GetPositionWSS()
         {
-            string BITMEX_URL = "wss://testnet.bitmex.com/realtime";
+            string BITMEX_URL = ConfigurationManager.AppSettings["BaseWSSBitmexTestnet"];
 
 
             string verb = "GET";
@@ -122,7 +123,7 @@ namespace BitmexGUI.Services.Implementations
                 {
                     string resp = Encoding.ASCII.GetString(buffer, 0, result.Count);
                     //MessageBox.Show(resp);
-                    System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], resp + "\n");
+                    //System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], resp + "\n");
 
                     ProcessResponsePosition(resp);
                 }
@@ -270,12 +271,21 @@ namespace BitmexGUI.Services.Implementations
                                             position.RealisedCost = long.Parse(positionData["realisedCost"].ToString());
                                         break;
                                    case "posComm":
+                                        
                                         if (!string.IsNullOrEmpty(positionData["posComm"].ToString()))
                                             position.PosComm = long.Parse(positionData["posComm"].ToString());
                                         break;
                                     case "isOpen":
                                         if (!string.IsNullOrEmpty(positionData["isOpen"].ToString()))
                                             position.IsOpen = bool.Parse(positionData["isOpen"].ToString());
+                                        break;
+                                    case "markValue":
+                                        if (!string.IsNullOrEmpty(positionData["markValue"].ToString()))
+                                            position.MarkValue = long.Parse(positionData["markValue"].ToString());
+                                        break;
+                                    case "rebalancedPnl":
+                                        if (!string.IsNullOrEmpty(positionData["rebalancedPnl"].ToString()))
+                                            position.RebalancedPnl = long.Parse(positionData["rebalancedPnl"].ToString());
                                         break;
 
 
@@ -433,7 +443,210 @@ namespace BitmexGUI.Services.Implementations
 
         }
 
-         
+        public async void GetOrdersWSS()
+        {
+            string BITMEX_URL = ConfigurationManager.AppSettings["BaseWSSBitmexTestnet"];
+
+
+            string verb = "GET";
+            string path = "/realtime";
+            string signature = GenerateSignature(ApiKey, verb, path, expires, "");
+
+            ClientWebSocket BitmexHttpClientWSS = new System.Net.WebSockets.ClientWebSocket();
+
+
+
+            CancellationTokenSource source = new CancellationTokenSource();
+            CancellationToken token = source.Token;
+
+            await BitmexHttpClientWSS.ConnectAsync(new Uri(BITMEX_URL), token);
+            if (BitmexHttpClientWSS.State == WebSocketState.Open)
+            {
+                var auth_message = new
+                {
+                    op = "authKeyExpires",
+                    args = new object[] { ApiID, expires, signature }
+                };
+
+                string dataJson = JsonConvert.SerializeObject(auth_message);
+                await SendMessageAsync(dataJson, BitmexHttpClientWSS);
+
+
+                var subscribe_message = new
+                {
+                    op = "subscribe",
+                    args = new string[] { "order" }
+        
+                };
+
+                string dataJsonSub = JsonConvert.SerializeObject(subscribe_message);
+                await SendMessageAsync(dataJsonSub, BitmexHttpClientWSS);
+            }
+
+            int size = 5000;
+            var buffer = new byte[size];
+
+            while (BitmexHttpClientWSS.State == WebSocketState.Open)
+            {
+
+
+
+                var result = await BitmexHttpClientWSS.ReceiveAsync(buffer, token);
+
+                if (result.MessageType == WebSocketMessageType.Close)
+                {
+                    await BitmexHttpClientWSS.CloseAsync(WebSocketCloseStatus.NormalClosure, null, token);
+                }
+                else
+                {
+                    string resp = Encoding.ASCII.GetString(buffer, 0, result.Count);
+                  
+                    System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], resp + "\n");
+
+                    ProcessResponseOrder(resp);
+                }
+            }
+
+
+
+
+
+        }
+        private void ProcessResponseOrder(string response)
+        {
+
+            List<string> OrderFields = new List<string>();
+
+            JObject jsonObject = JObject.Parse(response);
+
+            // Define the fields you expect to handle.
+
+            Type OrderType = typeof(Order);
+
+            // Retrieve all properties of the Position class
+            PropertyInfo[] properties = OrderType.GetProperties();
+
+
+
+            foreach (var property in jsonObject.Properties())
+            {
+                if (property.Name == "data")
+                {
+                    foreach (var data in jsonObject["data"])
+                    {
+                        JObject orderData = JObject.Parse(data.ToString());
+
+                        foreach (var prop in orderData.Properties())
+                        {
+                            OrderFields.Add(prop.Name);
+                        }
+                        // Initialize a Position object
+                        var order = new Order();
+
+                        // Process only the fields that are present in the current message
+                        foreach (string field in OrderFields)
+                        {
+
+                            switch (field)
+                            {
+                                case "orderID":
+                                    if (!string.IsNullOrEmpty(orderData["orderID"].ToString()))
+                                        order.OrderID = orderData["orderID"].ToString();
+                                    break;
+                                case "account":
+                                    if (!string.IsNullOrEmpty(orderData["account"].ToString()))
+                                        order.Account = int.Parse(orderData["account"].ToString());
+                                    break;
+                                case "symbol":
+                                    if (!string.IsNullOrEmpty(orderData["symbol"].ToString()))
+                                        order.Symbol = orderData["symbol"].ToString();
+                                    break;
+                                case "side":
+                                    if (!string.IsNullOrEmpty(orderData["side"].ToString()))
+                                        order.Side = orderData["side"].ToString();
+                                    break;
+                                case "orderQty":
+                                    if (!string.IsNullOrEmpty(orderData["orderQty"].ToString()))
+                                        order.OrderQty = int.Parse(orderData["orderQty"].ToString());
+                                    break;
+                                case "price":
+                                    if (!string.IsNullOrEmpty(orderData["price"].ToString()))
+                                        order.Price = decimal.Parse(orderData["price"].ToString());
+                                    break;
+                                case "displayQty":
+                                    if (!string.IsNullOrEmpty(orderData["displayQty"].ToString()))
+                                        order.DisplayQty = int.Parse(orderData["displayQty"].ToString());
+                                    break;
+                                case "stopPx":
+                                    if (!string.IsNullOrEmpty(orderData["stopPx"].ToString()))
+                                        order.StopPx = decimal.Parse(orderData["stopPx"].ToString());
+                                    break;
+                                case "pegOffsetValue":
+                                    if (!string.IsNullOrEmpty(orderData["pegOffsetValue"].ToString()))
+                                        order.PegOffsetValue = decimal.Parse(orderData["pegOffsetValue"].ToString());
+                                    break;
+                                case "currency":
+                                    if (!string.IsNullOrEmpty(orderData["currency"].ToString()))
+                                        order.Currency = orderData["currency"].ToString();
+                                    break;
+                                case "settlCurrency":
+                                    if (!string.IsNullOrEmpty(orderData["settlCurrency"].ToString()))
+                                        order.SettlCurrency = orderData["settlCurrency"].ToString();
+                                    break;
+                                case "ordType":
+                                    if (!string.IsNullOrEmpty(orderData["ordType"].ToString()))
+                                        order.OrdType = orderData["ordType"].ToString();
+                                    break;
+                                case "timeInForce":
+                                    if (!string.IsNullOrEmpty(orderData["timeInForce"].ToString()))
+                                        order.TimeInForce = orderData["timeInForce"].ToString();
+                                    break;
+                                case "ordStatus":
+                                    if (!string.IsNullOrEmpty(orderData["ordStatus"].ToString()))
+                                        order.OrdStatus = orderData["ordStatus"].ToString();
+                                    break;
+                                case "workingIndicator":
+                                    if (!string.IsNullOrEmpty(orderData["workingIndicator"].ToString()))
+                                        order.WorkingIndicator = bool.Parse(orderData["workingIndicator"].ToString());
+                                    break;
+                                case "leavesQty":
+                                    if (!string.IsNullOrEmpty(orderData["leavesQty"].ToString()))
+                                        order.LeavesQty = int.Parse(orderData["leavesQty"].ToString());
+                                    break;
+                                case "cumQty":
+                                    if (!string.IsNullOrEmpty(orderData["cumQty"].ToString()))
+                                        order.CumQty = int.Parse(orderData["cumQty"].ToString());
+                                    break;
+                                case "avgPx":
+                                    if (!string.IsNullOrEmpty(orderData["avgPx"].ToString()))
+                                        order.AvgPx = decimal.Parse(orderData["avgPx"].ToString());
+                                    break;
+                                case "text":
+                                    if (!string.IsNullOrEmpty(orderData["text"].ToString()))
+                                        order.Text = orderData["text"].ToString();
+                                    break;
+                                case "transactTime":
+                                    if (!string.IsNullOrEmpty(orderData["transactTime"].ToString()))
+                                        order.TransactTime = DateTime.Parse(orderData["transactTime"].ToString());
+                                    break;
+                                case "timestamp":
+                                    if (!string.IsNullOrEmpty(orderData["timestamp"].ToString()))
+                                        order.Timestamp = DateTime.Parse(orderData["timestamp"].ToString());
+                                    break;
+                            }
+
+                        }
+
+                        // Check if the Position object has the required fields before invoking the event
+                        if (!string.IsNullOrEmpty(order.OrderID))
+                        {
+                            OrderUpdated?.Invoke(order);
+                        }
+                    }
+                }
+            }
+
+        }
 
     }
 }
