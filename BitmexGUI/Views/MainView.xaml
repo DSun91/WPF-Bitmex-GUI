@@ -110,7 +110,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Label Content="Bitmex Trading GUI" Grid.Row="0" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Height="49" Margin="338,20,0,0" VerticalAlignment="Top" Width="317" FontFamily="Franklin Gothic Book" FontSize="36" FontWeight="Bold" Cursor="AppStarting" FontStyle="Italic"/>
+            <Label Content="Bitmex Trading GUI" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Height="49" Margin="237,0,0,0" VerticalAlignment="Center" Width="317" FontFamily="Franklin Gothic Book" FontSize="36" FontWeight="Bold" Cursor="AppStarting" FontStyle="Italic"/>
 
 
 
@@ -175,9 +175,8 @@
                            FontSize="20"
                            FontWeight="SemiBold"
                            TextAlignment="Center"
-                           HorizontalAlignment="Stretch"
-                           DockPanel.Dock="Top" />
-                <DataGrid x:Name="Positions" Grid.Row="1" Height="150" RowHeaderWidth="30" Margin="790,00,30,0" ItemsSource="{Binding PositionsInfo, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
+                           DockPanel.Dock="Top" Height="27" />
+                <DataGrid x:Name="Positions"  Height="150" RowHeaderWidth="30" Margin="790,00,30,0" ItemsSource="{Binding PositionsInfo, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
                     <DataGrid.Resources>
 
                         <Style TargetType="DataGridColumnHeader">
@@ -194,7 +193,7 @@
                                                 BorderBrush="{TemplateBinding BorderBrush}"
                                                 BorderThickness="{TemplateBinding BorderThickness}"
                                                 Padding="{TemplateBinding Padding}"
-                                                Margin="2,0,2,0">   
+                                                Margin="2,0,2,0">
                                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                                         </Border>
                                     </ControlTemplate>
@@ -240,7 +239,7 @@
                TextAlignment="Center"
                HorizontalAlignment="Stretch"
                DockPanel.Dock="Top" />
-                <DataGrid x:Name="Orders" Grid.Row="1" Height="150" RowHeaderWidth="30" Margin="790,00,30,0" VerticalAlignment="Top" ItemsSource="{Binding OrdersInfo, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
+                <DataGrid x:Name="Orders" Height="150" RowHeaderWidth="30" Margin="790,00,30,0" VerticalAlignment="Top" ItemsSource="{Binding OrdersInfo, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
                     <DataGrid.Resources>
 
                         <Style TargetType="DataGridColumnHeader">
@@ -265,11 +264,11 @@
                             </Setter>
                         </Style>
                     </DataGrid.Resources>
-                    <DataGrid.Columns> 
-                        <DataGridTextColumn Header="Order Status" Binding="{Binding OrdStatus}" Width="Auto" /> 
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Order Status" Binding="{Binding OrdStatus}" Width="Auto" />
                         <DataGridTextColumn Header="Symbol" Binding="{Binding Symbol}" Width="Auto" />
-                        <DataGridTextColumn Header="Side" Binding="{Binding Side}" Width="Auto" /> 
-                        <DataGridTextColumn Header="Order Type" Binding="{Binding OrdType}" Width="Auto" /> 
+                        <DataGridTextColumn Header="Side" Binding="{Binding Side}" Width="Auto" />
+                        <DataGridTextColumn Header="Order Type" Binding="{Binding OrdType}" Width="Auto" />
                         <DataGridTextColumn Header="Average Price" Binding="{Binding AvgPx}" Width="Auto" />
                         <DataGridTextColumn Header="Order Quantity" Binding="{Binding OrderQty}" Width="Auto" />
                         <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="Auto" />

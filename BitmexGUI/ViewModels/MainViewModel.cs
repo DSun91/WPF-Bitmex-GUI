@@ -176,8 +176,7 @@ namespace BitmexGUI.ViewModels
 
 
         private void OnOrderReceived(Order newOrderData)
-        {
-            MessageBox.Show("new order received");
+        { MessageBox.Show("new order received");
             if (newOrderData != null)
             {
                
@@ -196,7 +195,7 @@ namespace BitmexGUI.ViewModels
                     var existingOrder = OrdersInfo.FirstOrDefault(p => p.OrderID.Equals(newOrderData.OrderID));
                     if (existingOrder != null)
                     {
-                        MessageBox.Show(newOrderData.OrderID+" "+ existingOrder.OrderID);
+                        
                         OrdersInfo.Remove(existingOrder);
                         OpenordersInfoUpdated?.Invoke();
                     }
