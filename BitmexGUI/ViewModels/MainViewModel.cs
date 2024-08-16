@@ -74,7 +74,16 @@ namespace BitmexGUI.ViewModels
         private ObservableCollection<Position> _positionData = new ObservableCollection<Position>();
         private ObservableCollection<Order> _orderData = new ObservableCollection<Order>();
         private ObservableCollection<Order> _historicorderData = new ObservableCollection<Order>();
-
+        private ObservableCollection<CandlestickData> _scaledpriceData = new ObservableCollection<CandlestickData>();
+        public ObservableCollection<CandlestickData> ScaledPriceData
+        {
+            get => _scaledpriceData;
+            set
+            {
+                _scaledpriceData = value;
+                OnPropertyChanged(nameof(ScaledPriceData));
+            }
+        }
         public ObservableCollection<CandlestickData> PriceData
         {
             get => _priceData;
@@ -176,7 +185,7 @@ namespace BitmexGUI.ViewModels
 
 
         private void OnOrderReceived(Order newOrderData)
-        { MessageBox.Show("new order received");
+        {  
             if (newOrderData != null)
             {
                
@@ -518,16 +527,45 @@ namespace BitmexGUI.ViewModels
             BalanceUpdated?.Invoke();
         }
 
-        
+        private CandlestickData ScaledCandle(CandlestickData priceData, ObservableCollection<CandlestickData> PriceData)
+        {
+            var allValues = PriceData.SelectMany(data => new[] { data.Open, data.High, data.Low, data.Close });
+            CandlestickChart.minOriginal = allValues.Min();
+            CandlestickChart.maxOriginal = allValues.Max();
+            double padding = (CandlestickChart.maxOriginal - CandlestickChart.minOriginal) * 0.2;
+            CandlestickChart.minOriginal -= padding;
+            CandlestickChart.maxOriginal += padding;
 
 
+            //MessageBox.Show(_ViewModel.SettledPriceData.Count.ToString());
+            CandlestickData temp = new CandlestickData();
+
+            temp.Open = CandlestickChart.MapToScale(priceData.Open);
+            temp.High = CandlestickChart.MapToScale(priceData.High);
+            temp.Low = CandlestickChart.MapToScale(priceData.Low);
+            temp.Close = CandlestickChart.MapToScale(priceData.Close);
+            temp.Timestamp = priceData.Timestamp;
+            temp.Posx = priceData.Posx;
+            return temp;
+        }
+
+        public Action ScaledPriceDataUpdated;
 
 
         private void OnPriceUpdatedBinance(CandlestickData priceData)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
+                ScaledPriceData.Clear();
 
+
+                CandlestickData temp = new CandlestickData();
+                foreach (var priceData in PriceData)
+                {
+                    temp = ScaledCandle(priceData, PriceData);
+
+                    ScaledPriceData.Add(temp);
+                }
 
                 var timestamp = priceData.Timestamp;
 
@@ -552,6 +590,13 @@ namespace BitmexGUI.ViewModels
 
                     }
                     PriceDataUpdated?.Invoke(); // Trigger the event
+                    var indexScaled = ScaledPriceData.IndexOf(ScaledCandle(priceData, PriceData));
+                    if (index >= 0)
+                    {
+                        ScaledPriceData[index] = ScaledCandle(existingData, PriceData); ; // Update the item in the ObservableCollection
+
+                    }
+                    ScaledPriceDataUpdated?.Invoke();
                 }
                 else
                 {
@@ -565,9 +610,19 @@ namespace BitmexGUI.ViewModels
                         PriceData.Remove(PriceData.First());
                     }
                     NewPricedataAdded?.Invoke();
+
+                    ScaledPriceData.Add(ScaledCandle(priceData, PriceData));
+
+                    while (PriceData.Count > _maxCandlesLoading)
+                    {
+                        PriceData.Remove(PriceData.First());
+                    }
+
+
+
                 }
 
-               
+
             });
         }
         private void OnPriceUpdatedBitmex(SettledPrice setpriceData)

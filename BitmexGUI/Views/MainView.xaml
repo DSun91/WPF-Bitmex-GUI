@@ -9,21 +9,24 @@
         Title="MainWindow" Height="800" Width="1500">
     <Window.Resources>
         <ResourceDictionary>
+            <local:PositionConverter  x:Key="PositionConverter"/>
+            <local:PositionConverterx  x:Key="PositionConverterx"/>
+            <local:ColorConverter   x:Key="ColorConverter"/>
             <Style TargetType="Button">
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="border" 
-                        CornerRadius="8" 
-                        Background="AliceBlue" 
-                        BorderBrush="#ccc" 
-                        BorderThickness="1">
+                     CornerRadius="8" 
+                     Background="AliceBlue" 
+                     BorderBrush="#ccc" 
+                     BorderThickness="1">
                                 <ContentPresenter x:Name="contentPresenter" 
-                                      ContentTemplate="{TemplateBinding ContentTemplate}" 
-                                      Content="{TemplateBinding Content}" 
-                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                      Margin="{TemplateBinding Padding}" 
-                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                   ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                   Content="{TemplateBinding Content}" 
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                   Margin="{TemplateBinding Padding}" 
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsPressed" Value="True">
@@ -47,10 +50,10 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="TextBox">
                             <Border Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="5"
-                                    Padding="{TemplateBinding Padding}">
+                                 BorderBrush="{TemplateBinding BorderBrush}"
+                                 BorderThickness="{TemplateBinding BorderThickness}"
+                                 CornerRadius="5"
+                                 Padding="{TemplateBinding Padding}">
                                 <ScrollViewer x:Name="PART_ContentHost"/>
                             </Border>
                         </ControlTemplate>
@@ -73,6 +76,7 @@
                 </Style.Triggers>
             </Style>
             <local:StringToDoubleConverter x:Key="StringToDoubleConverter"/>
+
         </ResourceDictionary>
     </Window.Resources>
     <DockPanel>
@@ -108,75 +112,130 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="19*" />
+                <ColumnDefinition Width="1480*"/>
             </Grid.ColumnDefinitions>
-            <Label Content="Bitmex Trading GUI" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Height="49" Margin="237,0,0,0" VerticalAlignment="Center" Width="317" FontFamily="Franklin Gothic Book" FontSize="36" FontWeight="Bold" Cursor="AppStarting" FontStyle="Italic"/>
+            <Label Content="Bitmex Trading GUI" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Height="49" Margin="218,0,0,0" VerticalAlignment="Center" Width="317" FontFamily="Franklin Gothic Book" FontSize="36" FontWeight="Bold" Cursor="AppStarting" FontStyle="Italic" Grid.Column="1"/>
 
 
 
-            <Canvas x:Name="DrawingCanvas" Grid.Row="1" Background="AliceBlue" Width="674" HorizontalAlignment="Left" Margin="66,0,0,0" Height="363" VerticalAlignment="Center" />
-            <Label Content="Balance" Grid.Row="2" HorizontalAlignment="Left" VerticalContentAlignment="Top" Height="32" Margin="103,18,811,0" VerticalAlignment="Top" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" />
-            <TextBox x:Name="CurrentBalance" IsEnabled="False" Text="{Binding CurrentBalance,UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"  Grid.Row="2"  HorizontalAlignment="Left" Height="25" Margin="183,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" FontFamily="Book Antiqua" FontSize="14" />
-            <ComboBox x:Name="CmbCurrency" Grid.Row="2" SelectedItem="{Binding SelectedCurrency}" ItemsSource="{Binding Currencies}" HorizontalAlignment="Left" SelectedIndex="0" Height="25" Margin="299,22,0,0" VerticalAlignment="Top" Width="75">
+            <Canvas x:Name="DrawingCanvas" Grid.Row="1" Background="AliceBlue" Width="674" HorizontalAlignment="Left" Margin="67,0,0,0" Height="363" VerticalAlignment="Center" >
+
+                <!-- Red lines -->
+                <ItemsControl ItemsSource="{Binding OrderLines}">
+                    <!-- Override the default panel to a Canvas -->
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Line  
+                         Canvas.Top="0" 
+                         X1="0"  
+                         X2="500"
+                         Y1="{Binding Price}"   
+                         Y2="{Binding Price}" 
+                         Stroke="Red"
+                         StrokeThickness="1"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+
+                <ItemsControl ItemsSource="{Binding ScaledPriceData}">
+                    <!-- Override the default panel to a Canvas -->
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Canvas>
+                                <Line  
+                             Canvas.Top="0" 
+                             X1="{Binding Posx}"  
+                             X2="{Binding Posx}"
+                             Y1="{Binding High}"   
+                             Y2="{Binding Low}" 
+                             Stroke="Black"
+                              StrokeThickness="1"/>
+                                <Rectangle 
+                            Canvas.Left="{Binding Converter={StaticResource PositionConverterx}}"
+                             Canvas.Top="{Binding Converter={StaticResource PositionConverter}}"
+                             Width="{Binding Width}"
+                             Height="{Binding Height}"  
+                             Fill= "{Binding Converter={StaticResource ColorConverter}}"
+                             Panel.ZIndex="0"/>
+                            </Canvas>
+                        </DataTemplate>
+
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+            </Canvas>
+
+            <Label Content="Balance" Grid.Row="2" HorizontalAlignment="Left" VerticalContentAlignment="Top" Height="32" Margin="84,18,0,0" VerticalAlignment="Top" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.Column="1" />
+            <TextBox x:Name="CurrentBalance" IsEnabled="False" Text="{Binding CurrentBalance,UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"  Grid.Row="2"  HorizontalAlignment="Left" Height="25" Margin="164,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" FontFamily="Book Antiqua" FontSize="14" Grid.Column="1" />
+            <ComboBox x:Name="CmbCurrency" Grid.Row="2" SelectedItem="{Binding SelectedCurrency}" ItemsSource="{Binding Currencies}" HorizontalAlignment="Left" SelectedIndex="0" Height="25" Margin="280,22,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1">
 
             </ComboBox>
-            <Button x:Name="ResetButton" Content="Reset" Grid.Row="1" HorizontalAlignment="Left" Height="40" Margin="17,10,0,0" VerticalAlignment="Top" Width="40" Click="ResetButton_Click"/>
-            <Button Content="" Grid.Row="1" HorizontalAlignment="Left" Height="40" Margin="17,60,0,0" VerticalAlignment="Top" Width="40"/>
-            <Button Content="" Grid.Row="1" HorizontalAlignment="Left" Height="40" Margin="17,110,0,0"  VerticalAlignment="Top" Width="40"/>
-            <Button Content="" Grid.Row="1" HorizontalAlignment="Left" Height="40" Margin="17,160,0,0"  VerticalAlignment="Top" Width="40"/>
+            <Button x:Name="ResetButton" Content="Reset" Grid.Row="1" HorizontalAlignment="Left" Height="40" Margin="17,10,0,0" VerticalAlignment="Top" Width="40" Click="ResetButton_Click" Grid.ColumnSpan="2"/>
+            <Button x:Name="TimeFrame" Content="TF" Grid.Row="1" HorizontalAlignment="Left" Height="40" Margin="17,60,0,0" VerticalAlignment="Top" Width="40" Grid.ColumnSpan="2"/>
+            <Button Content="" Grid.Row="1" HorizontalAlignment="Left" Height="40" Margin="17,110,0,0"  VerticalAlignment="Top" Width="40" Grid.ColumnSpan="2"/>
+            <Button Content="" Grid.Row="1" HorizontalAlignment="Left" Height="40" Margin="17,160,0,0"  VerticalAlignment="Top" Width="40" Grid.ColumnSpan="2"/>
+            <Slider x:Name="AmountSlider" Grid.Row="2" TickFrequency="5" Minimum="0" Maximum="{Binding CurrentBalance, Converter={StaticResource StringToDoubleConverter}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"     HorizontalAlignment="Left"  Height="20" Margin="450,41,0,0" VerticalAlignment="Top" Width="353" ValueChanged="AmountSlider_ValueChanged" Grid.Column="1" Grid.RowSpan="2"  />
+            <Label Content="Balance entry amount:" Grid.Row="2" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="34" Margin="470,9,0,0" VerticalAlignment="Top" Width="193" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.Column="1"/>
+            <Label x:Name="BalancePercent" Grid.Row="2" Content="%" HorizontalAlignment="Left" Height="24" Margin="803,37,0,0"  VerticalAlignment="Top" Width="112" FontWeight="Bold" Grid.Column="1" Grid.RowSpan="2"/>
+            <TextBox x:Name="EntryAmount" Grid.Row="2" Text="{Binding EntryAmount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  HorizontalAlignment="Left" Height="26" Margin="664,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" FontFamily="Book Antiqua" FontSize="14" Grid.Column="1" />
+
+
+            <Button x:Name="BitmexSettled" Content="Bitmex Settled" Grid.Row="3" HorizontalAlignment="Left" Height="26" Margin="296,24,0,0" VerticalAlignment="Top" Width="89" Click="BitmexSettled_Click" Grid.Column="1" />
+            <Label Content="Entry price: " Grid.Row="3" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="39" Margin="52,21,0,0" VerticalAlignment="Top" Width="130" FontFamily="Sitka Heading" FontSize="18"  FontWeight="Bold" Grid.Column="1" Grid.RowSpan="2"/>
+            <TextBox x:Name="Entryprice" Text="{Binding EntryPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="3" HorizontalAlignment="Left" Height="25" Margin="161,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="132" FontFamily="Book Antiqua" FontSize="14" Grid.Column="1"  />
+            <Label Content="Nominal value : " Grid.Row="3" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="38" Margin="426,17,0,0" VerticalAlignment="Top" Width="175" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.Column="1"/>
+            <TextBox x:Name="PositionValue" Grid.Row="3" IsEnabled="False" Text="{Binding PositionValue ,Mode=OneWay}" HorizontalAlignment="Left" Height="26" Margin="569,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="118" FontFamily="Book Antiqua" FontSize="14" Grid.Column="1" />
+            <Label Content="Order Cost: " Grid.Row="3" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="38" Margin="716,17,0,0" VerticalAlignment="Top" Width="146" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.Column="1"/>
+            <TextBox x:Name="OrderCost" Grid.Row="3" IsEnabled="False" Text="{Binding OrderCost, Mode=OneWay}" HorizontalAlignment="Left" Height="26" Margin="819,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="119" FontFamily="Book Antiqua" FontSize="14" Grid.Column="1" />
+            <Label Content="Quantity: " Grid.Row="4" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="38" Margin="716,0,0,0" VerticalAlignment="Center" Width="146" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.Column="1"/>
 
 
 
+            <TextBox x:Name="Quantity" Grid.Row="4" IsEnabled="False" Text="{Binding Quantity, Mode=OneWay}" HorizontalAlignment="Left" Height="26" Margin="819,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="119" FontFamily="Book Antiqua" FontSize="14" Grid.Column="1" />
+            <Label Content="Actual Value: " Grid.Row="4" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="38" Margin="705,48,0,0" VerticalAlignment="Top" Width="157" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.RowSpan="3" Grid.Column="1"/>
+            <Label Content="Leverage:" Grid.Row="4" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="40" Margin="73,10,0,0" VerticalAlignment="Top" Width="130" FontFamily="Sitka Heading" FontSize="18"  FontWeight="Bold" Grid.Column="1" Grid.RowSpan="2" />
+            <Slider x:Name="SliderLeverage"  Grid.Row="4" TickFrequency="5"  SmallChange="1" Minimum="1" Maximum="100" Value="{Binding SliderLeverage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  TickPlacement="Both" HorizontalAlignment="Left" Height="28" Margin="163,0,0,0" VerticalAlignment="Center" Width="190" Grid.Column="1"  />
+            <Label x:Name="LeverageMultiplier" Grid.Row="4" Content="{Binding SliderLeverage,StringFormat='Value: X{{0:0.00}}'}" HorizontalAlignment="Left" Height="28" Margin="368,0,0,0" VerticalAlignment="Center" Width="67" FontWeight="Bold" Grid.Column="1"/>
+            <Label x:Name="LeverageMultiplier_Copy" Grid.Row="4" Content="X" HorizontalAlignment="Left" Height="28" Margin="353,0,0,0"  VerticalAlignment="Center" Width="18" FontWeight="Bold" Grid.Column="1"/>
+            <Label Content="Liquidation Price: " Grid.Row="4" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="40" Margin="410,0,0,0" VerticalAlignment="Center" Width="158" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.Column="1"/>
+            <TextBox Text="" Grid.Row="4" IsEnabled="False" BorderBrush="OrangeRed" BorderThickness="1" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="26" Margin="569,10,0,0" VerticalAlignment="Top" Width="118" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.Column="1"/>
 
+            <TextBox x:Name="ActualPositionValue" Grid.Row="5" IsEnabled="False" Text="{Binding ActualPositionValue, Mode=OneWay}" HorizontalAlignment="Left" Height="26" Margin="819,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="119" FontFamily="Book Antiqua" FontSize="14" Grid.Column="1" />
+            <Button Content="Stop Limit Buy" Grid.Row="5" HorizontalAlignment="Left" Height="30" Margin="227,0,0,0" VerticalAlignment="Center" Width="95" Command="{Binding CreateNewOrderCommand}" Grid.Column="1"/>
+            <Label Content="Entry Fee: " Grid.Row="5" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="39" Margin="469,0,0,0" VerticalAlignment="Top" Width="92" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.RowSpan="2" Grid.Column="1"/>
+            <TextBox Text="" Grid.Row="5" IsEnabled="False" BorderBrush="OrangeRed" BorderThickness="1" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="26" Margin="569,0,0,0" VerticalAlignment="Top" Width="118" FontFamily="Sitka Heading" FontSize="18"  FontWeight="Bold" Grid.Column="1"/>
+            <Button Content="Buy Limit" Grid.Row="5" HorizontalAlignment="Left" Height="30" Margin="27,0,0,0" VerticalAlignment="Center" Width="95" Command="{Binding CreateNewOrderCommand}" Grid.Column="1"/>
+            <Button Content="Buy Market" Grid.Row="5" HorizontalAlignment="Left" Height="30" Margin="127,0,0,0" VerticalAlignment="Center" Width="95" Grid.Column="1"/>
 
-            <Slider x:Name="AmountSlider" Grid.Row="2" TickFrequency="5" Minimum="0" Maximum="{Binding CurrentBalance, Converter={StaticResource StringToDoubleConverter}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"     HorizontalAlignment="Left"  Height="20" Margin="469,41,0,0" VerticalAlignment="Top" Width="353" ValueChanged="AmountSlider_ValueChanged"  />
-            <Label Content="Balance entry amount:" Grid.Row="2" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="34" Margin="489,9,0,0" VerticalAlignment="Top" Width="193" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
-            <Label x:Name="BalancePercent" Grid.Row="2" Content="%" HorizontalAlignment="Left" Height="24" Margin="822,37,0,0"  VerticalAlignment="Top" Width="112" FontWeight="Bold"/>
-            <TextBox x:Name="EntryAmount" Grid.Row="2" Text="{Binding EntryAmount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  HorizontalAlignment="Left" Height="26" Margin="683,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" FontFamily="Book Antiqua" FontSize="14" />
+            <Button Content="Sell Limit" Grid.Row="6" HorizontalAlignment="Left" Height="30" Margin="27,0,0,0" VerticalAlignment="Center" Width="95" Grid.Column="1"/>
+            <Button Content="Stop Limit Sell"   Grid.Row="6" HorizontalAlignment="Left" Height="30" Margin="228,0,0,0" VerticalAlignment="Center" Width="94" Grid.Column="1"/>
+            <Button Content="Sell Market"   Grid.Row="6" HorizontalAlignment="Left" Height="30" Margin="127,0,0,0" VerticalAlignment="Center" Width="94" Grid.Column="1"/>
+            <Button Content="Limit TP+SL Buy" Grid.Row="5" HorizontalAlignment="Left" Height="30" Margin="326,0,0,0" VerticalAlignment="Center" Width="95" Command="{Binding CreateNewOrderCommand}" Grid.Column="1"/>
+            <Button Content="Limit TP+SL Sell"   Grid.Row="6" HorizontalAlignment="Left" Height="30" Margin="327,0,0,0" VerticalAlignment="Center" Width="94" Grid.Column="1"/>
 
-
-            <Button x:Name="BitmexSettled" Content="Bitmex Settled" Grid.Row="3" HorizontalAlignment="Left" Height="26" Margin="315,24,0,0" VerticalAlignment="Top" Width="89" Click="BitmexSettled_Click" />
-            <Label Content="Entry price: " Grid.Row="3" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="39" Margin="71,21,0,0" VerticalAlignment="Top" Width="130" FontFamily="Sitka Heading" FontSize="18"  FontWeight="Bold"/>
-            <TextBox x:Name="Entryprice" Text="{Binding EntryPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="3" HorizontalAlignment="Left" Height="25" Margin="180,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="132" FontFamily="Book Antiqua" FontSize="14"  />
-            <Label Content="Nominal value : " Grid.Row="3" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="38" Margin="445,17,0,0" VerticalAlignment="Top" Width="175" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
-            <TextBox x:Name="PositionValue" Grid.Row="3" IsEnabled="False" Text="{Binding PositionValue ,Mode=OneWay}" HorizontalAlignment="Left" Height="26" Margin="588,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="119" FontFamily="Book Antiqua" FontSize="14" />
-            <Label Content="Order Cost: " Grid.Row="3" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="38" Margin="735,17,0,0" VerticalAlignment="Top" Width="146" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
-            <TextBox x:Name="OrderCost" Grid.Row="3" IsEnabled="False" Text="{Binding OrderCost, Mode=OneWay}" HorizontalAlignment="Left" Height="26" Margin="838,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="119" FontFamily="Book Antiqua" FontSize="14" />
-            <Label Content="Quantity: " Grid.Row="4" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="38" Margin="735,0,0,0" VerticalAlignment="Center" Width="146" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
-
-
-
-            <TextBox x:Name="Quantity" Grid.Row="4" IsEnabled="False" Text="{Binding Quantity, Mode=OneWay}" HorizontalAlignment="Left" Height="26" Margin="838,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="119" FontFamily="Book Antiqua" FontSize="14" />
-            <Label Content="Actual Value: " Grid.Row="4" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="38" Margin="724,48,0,0" VerticalAlignment="Top" Width="157" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.RowSpan="3"/>
-            <Label Content="Leverage:" Grid.Row="4" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="40" Margin="92,10,0,0" VerticalAlignment="Top" Width="130" FontFamily="Sitka Heading" FontSize="18"  FontWeight="Bold" />
-            <Slider x:Name="SliderLeverage"  Grid.Row="4" TickFrequency="5"  SmallChange="1" Minimum="1" Maximum="100" Value="{Binding SliderLeverage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  TickPlacement="Both" HorizontalAlignment="Left" Height="28" Margin="182,0,0,0" VerticalAlignment="Center" Width="190"  />
-            <Label x:Name="LeverageMultiplier" Grid.Row="4" Content="{Binding SliderLeverage,StringFormat='Value: X{{0:0.00}}'}" HorizontalAlignment="Left" Height="28" Margin="387,0,0,0" VerticalAlignment="Center" Width="67" FontWeight="Bold"/>
-            <Label x:Name="LeverageMultiplier_Copy" Grid.Row="4" Content="X" HorizontalAlignment="Left" Height="28" Margin="372,0,0,0"  VerticalAlignment="Center" Width="18" FontWeight="Bold"/>
-            <Label Content="Liquidation Price: " Grid.Row="4" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="40" Margin="429,0,0,0" VerticalAlignment="Center" Width="158" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
-            <TextBox Text="" Grid.Row="4" IsEnabled="False" BorderBrush="OrangeRed" BorderThickness="2" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="26" Margin="587,10,0,0" VerticalAlignment="Top" Width="119" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
-
-            <TextBox x:Name="ActualPositionValue" Grid.Row="5" IsEnabled="False" Text="{Binding ActualPositionValue, Mode=OneWay}" HorizontalAlignment="Left" Height="26" Margin="838,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="119" FontFamily="Book Antiqua" FontSize="14" />
-            <Button Content="Stop Limit Buy" Grid.Row="5" HorizontalAlignment="Left" Height="30" Margin="246,0,0,0" VerticalAlignment="Center" Width="95" Command="{Binding CreateNewOrderCommand}"/>
-            <Label Content="Entry Fee: " Grid.Row="5" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="39" Margin="488,0,0,0" VerticalAlignment="Top" Width="92" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.RowSpan="3"/>
-            <TextBox Text="" Grid.Row="5" IsEnabled="False" BorderBrush="OrangeRed" BorderThickness="2" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="26" Margin="588,0,0,0" VerticalAlignment="Top" Width="121" FontFamily="Sitka Heading" FontSize="18"  FontWeight="Bold"/>
-            <Button Content="Buy Limit" Grid.Row="5" HorizontalAlignment="Left" Height="30" Margin="46,0,0,0" VerticalAlignment="Center" Width="95" Command="{Binding CreateNewOrderCommand}"/>
-            <Button Content="Buy Market" Grid.Row="5" HorizontalAlignment="Left" Height="30" Margin="146,0,0,0" VerticalAlignment="Center" Width="95"/>
-
-            <Button Content="Sell Limit" Grid.Row="6" HorizontalAlignment="Left" Height="30" Margin="46,0,0,0" VerticalAlignment="Center" Width="95"/>
-            <Button Content="Stop Limit Sell"   Grid.Row="6" HorizontalAlignment="Left" Height="30" Margin="247,0,0,0" VerticalAlignment="Center" Width="94"/>
-            <Button Content="Sell Market"   Grid.Row="6" HorizontalAlignment="Left" Height="30" Margin="146,0,0,0" VerticalAlignment="Center" Width="94"/>
-            <Button Content="Limit TP+SL Buy" Grid.Row="5" HorizontalAlignment="Left" Height="30" Margin="345,0,0,0" VerticalAlignment="Center" Width="95" Command="{Binding CreateNewOrderCommand}"/>
-            <Button Content="Limit TP+SL Sell"   Grid.Row="6" HorizontalAlignment="Left" Height="30" Margin="346,0,0,0" VerticalAlignment="Center" Width="94"/>
-
-            <DockPanel LastChildFill="True" Grid.Row="1" Margin="0,00,20,0" VerticalAlignment="Top">
-                <TextBlock Text="Open Positions" Margin="790,00,30,0"
-                           Background="SandyBrown"
-                           Foreground="White"
-                           FontSize="20"
-                           FontWeight="SemiBold"
-                           TextAlignment="Center"
-                           DockPanel.Dock="Top" Height="27" />
-                <DataGrid x:Name="Positions"  Height="150" RowHeaderWidth="30" Margin="790,00,30,0" ItemsSource="{Binding PositionsInfo, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
+            <DockPanel LastChildFill="True" Grid.Row="1" Width="650" Margin="781,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1">
+                <TextBlock Text="Open Positions" Margin="0,00,00,0"
+                        Background="SandyBrown"
+                        Foreground="White"
+                        FontSize="20"
+                        FontWeight="SemiBold"
+                        TextAlignment="Center"
+                        DockPanel.Dock="Top" Height="27" />
+                <DataGrid x:Name="Positions"  Height="150" RowHeaderWidth="30" Margin="0,0,0,0" ItemsSource="{Binding PositionsInfo, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
                     <DataGrid.Resources>
 
                         <Style TargetType="DataGridColumnHeader">
@@ -190,10 +249,10 @@
                                 <Setter.Value>
                                     <ControlTemplate TargetType="DataGridColumnHeader">
                                         <Border Background="{TemplateBinding Background}"
-                                                BorderBrush="{TemplateBinding BorderBrush}"
-                                                BorderThickness="{TemplateBinding BorderThickness}"
-                                                Padding="{TemplateBinding Padding}"
-                                                Margin="2,0,2,0">
+                                             BorderBrush="{TemplateBinding BorderBrush}"
+                                             BorderThickness="{TemplateBinding BorderThickness}"
+                                             Padding="{TemplateBinding Padding}"
+                                             Margin="2,0,2,0">
                                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                                         </Border>
                                     </ControlTemplate>
@@ -230,16 +289,16 @@
 
             </DockPanel>
 
-            <DockPanel LastChildFill="True" Grid.Row="1" Margin="0,190,20,0">
-                <TextBlock Text="Open Orders" Margin="790,00,30,0"
-               Background="SandyBrown"
-               Foreground="White"
-               FontSize="20"
-               FontWeight="SemiBold"
-               TextAlignment="Center"
-               HorizontalAlignment="Stretch"
-               DockPanel.Dock="Top" />
-                <DataGrid x:Name="Orders" Height="150" RowHeaderWidth="30" Margin="790,00,30,0" VerticalAlignment="Top" ItemsSource="{Binding OrdersInfo, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
+            <DockPanel LastChildFill="True" Grid.Row="1" Width="650" HorizontalAlignment="Left" Margin="781,190,0,30" Grid.Column="1">
+                <TextBlock Text="Open Orders" Margin="0,00,0,0"
+            Background="SandyBrown"
+            Foreground="White"
+            FontSize="20"
+            FontWeight="SemiBold"
+            TextAlignment="Center"
+            HorizontalAlignment="Stretch"
+            DockPanel.Dock="Top" />
+                <DataGrid x:Name="Orders" Height="150" RowHeaderWidth="30" Margin="0,00,0,0" VerticalAlignment="Top" ItemsSource="{Binding OrdersInfo, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
                     <DataGrid.Resources>
 
                         <Style TargetType="DataGridColumnHeader">
@@ -253,10 +312,10 @@
                                 <Setter.Value>
                                     <ControlTemplate TargetType="DataGridColumnHeader">
                                         <Border Background="{TemplateBinding Background}"
-                                                BorderBrush="{TemplateBinding BorderBrush}"
-                                                BorderThickness="{TemplateBinding BorderThickness}"
-                                                Padding="{TemplateBinding Padding}"
-                                                Margin="2,0,2,0">
+                                             BorderBrush="{TemplateBinding BorderBrush}"
+                                             BorderThickness="{TemplateBinding BorderThickness}"
+                                             Padding="{TemplateBinding Padding}"
+                                             Margin="2,0,2,0">
                                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                                         </Border>
                                     </ControlTemplate>

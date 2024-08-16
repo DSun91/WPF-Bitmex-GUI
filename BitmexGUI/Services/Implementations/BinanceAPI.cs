@@ -105,6 +105,7 @@ namespace BitmexGUI.Services.Implementations
                 // Add to the SortedDictionary
                 if (!PriceData.Contains(InitData))
                 {
+                    InitData.Posx = 20 * PriceData.Count;
                     PriceData.Add(InitData);
                     CachedPriceData.Add(InitData);
                 }

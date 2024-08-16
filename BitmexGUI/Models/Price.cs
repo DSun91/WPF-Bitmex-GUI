@@ -14,6 +14,13 @@ namespace BitmexGUI.Models
         public double Low { get; set; }
         public double Close { get; set; }
         public DateTime Timestamp { get; set; }
+
+        public double Posx { get; set; }
+
+        public double Height => Math.Abs(Open - Close);
+
+        public double Width { get; set; } = 10;
+
     }
 
     public class SettledPrice
