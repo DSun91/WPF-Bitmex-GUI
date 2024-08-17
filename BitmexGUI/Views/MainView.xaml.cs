@@ -45,10 +45,10 @@ namespace BitmexGUI.Views
         private MainViewModel viewModel;
         // Target range
         private CandlestickChart CandleStickView;
+        public event Action<OrderLine> OrderLinesUpdated;
 
 
-       
-         
+
         public MainWindow()
         {
             
@@ -64,33 +64,27 @@ namespace BitmexGUI.Views
             CandleStickView = new CandlestickChart(ViewModel, DrawingCanvas,Candles_inView, CachedCandleSize);
 
             DrawingCanvas.MouseRightButtonDown += DrawingCanvas_MouseRightButtonDown;
-            DrawingCanvas.MouseWheel += DrawingCanvas_MouseWheel;
+            //DrawingCanvas.MouseWheel += DrawingCanvas_MouseWheel;
+            
+
+            this.OrderLinesUpdated += (updatedLine) =>
+            {
+                if (DataContext is MainViewModel viewModel)
+                {
+                    viewModel.HandleOrderLineUpdate(updatedLine);
+                }
+            };
             this.Loaded += MainWindow_Loaded;
-
-            viewModel.NewPricedataAdded += rere;
-
-            
-
-            
-
-
         }
-       
-        private void rere()
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            //foreach (UIElement element in DrawingCanvas.Children)
-            //{
-            //    element.Visibility = Visibility.Collapsed;
-            //}
-           
-
-            //foreach (UIElement element in DrawingCanvas.Children)
-            //{
-            //    element.Visibility = Visibility.Visible; 
-
-            //}
-
+            viewModel.GetBalances();
+            viewModel.StartPriceFeed();
+            
         }
+
+
         private bool isDragging = false;
         private Point clickPosition;
         private void MyLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -111,10 +105,12 @@ namespace BitmexGUI.Views
                 var mousePos = e.GetPosition(DrawingCanvas); 
               
             }
-            //foreach (OrderLine x in ViewModel.OrdersLines)
-            //{
-            //    MessageBox.Show(x.Price.ToString());
-            //}
+            
+            foreach (OrderLine x in ViewModel.OrdersLines)
+            {
+              
+                OrderLinesUpdated?.Invoke(x);
+            }
         }
     private void MyLabel_MouseMove(object sender, MouseEventArgs e)
         {
@@ -137,10 +133,7 @@ namespace BitmexGUI.Views
                 {
                     var index = ViewModel.OrdersLines.IndexOf(existingLine);
 
-                    
-                    
-                   // MessageBox.Show(existingLine.OrderID+"  "+ existingLine.Price.ToString()+" "+ top);
-                  
+                     
                    OrderLine tempLine = new OrderLine 
                    {
                       OrderID=existingLine.OrderID,
@@ -163,7 +156,7 @@ namespace BitmexGUI.Views
 
             }
         }
-        public event Action<OrderLine> OrderLinesUpdated;
+        
         private void DrawingCanvas_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             
@@ -195,23 +188,7 @@ namespace BitmexGUI.Views
             CandleStickView.RefreshCanvas();
         }
 
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            viewModel.StartPriceFeed();
-            viewModel.GetBalances(); 
-            
-            
-        }
-
-        private void SetupElementsValues()
-        {
-            var account = viewModel.AccountInfos.FirstOrDefault(x => x.CurrencyName.Equals(viewModel.SelectedCurrency, StringComparison.OrdinalIgnoreCase));
-            AmountSlider.Minimum = 0;
-            AmountSlider.Maximum = account?.Balance ?? 0.1 ;
-
-
-
-        }
+       
 
         //private ObservableCollection<string> Currencies=new ObservableCollection<string>();
 

@@ -143,4 +143,31 @@ namespace BitmexGUI.Views
             throw new NotImplementedException();
         }
     }
+
+
+    public class ColorConverterOrderTag : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is OrderLine data)
+            {
+                // Return Red if Open < Close, Green otherwise
+                if(data.Side.ToLower().Contains("sell"))
+                {
+                    return Brushes.Red;
+                }
+                else
+                {
+                    return Brushes.LightGreen;
+                }
+               
+            }
+            return Brushes.Transparent; // Default if something goes wrong
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

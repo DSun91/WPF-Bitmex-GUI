@@ -23,7 +23,7 @@ namespace BitmexGUI.Services.Implementations
     {
         public static double minOriginal = 0;
         public static double maxOriginal = 70000;
-        public event Action<OrderLine> OrderLinesUpdated;
+         
         // Target range
         public static double minTarget = 0;
         public static double maxTarget = 400;

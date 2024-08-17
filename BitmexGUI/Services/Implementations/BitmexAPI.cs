@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -568,87 +569,108 @@ namespace BitmexGUI.Services.Implementations
                             switch (field)
                             {
                                 case "orderID":
-                                    if (!string.IsNullOrEmpty(orderData["orderID"].ToString()))
+                                    if (orderData.ContainsKey(field))
+                                        if (!string.IsNullOrEmpty(orderData["orderID"].ToString()))
                                         order.OrderID = orderData["orderID"].ToString();
                                     break;
                                 case "account":
-                                    if (!string.IsNullOrEmpty(orderData["account"].ToString()))
+                                    if (orderData.ContainsKey(field))
+                                        if (!string.IsNullOrEmpty(orderData["account"].ToString()))
                                         order.Account = int.Parse(orderData["account"].ToString());
                                     break;
                                 case "symbol":
-                                    if (!string.IsNullOrEmpty(orderData["symbol"].ToString()))
+                                    if (orderData.ContainsKey(field))
+                                        if (!string.IsNullOrEmpty(orderData["symbol"].ToString()))
                                         order.Symbol = orderData["symbol"].ToString();
                                     break;
                                 case "side":
-                                    if (!string.IsNullOrEmpty(orderData["side"].ToString()))
+                                    if (orderData.ContainsKey(field))
+                                        if (!string.IsNullOrEmpty(orderData["side"].ToString()))
                                         order.Side = orderData["side"].ToString();
                                     break;
                                 case "orderQty":
-                                    if (!string.IsNullOrEmpty(orderData["orderQty"].ToString()))
+                                    if (orderData.ContainsKey(field))
+                                        if (!string.IsNullOrEmpty(orderData["orderQty"].ToString()))
                                         order.OrderQty = int.Parse(orderData["orderQty"].ToString());
                                     break;
                                 case "price":
-                                    if (!string.IsNullOrEmpty(orderData["price"].ToString()))
+                                    if (orderData.ContainsKey(field))
+                                        if (!string.IsNullOrEmpty(orderData["price"].ToString()))
                                         order.Price = decimal.Parse(orderData["price"].ToString());
                                     break;
                                 case "displayQty":
-                                    if (!string.IsNullOrEmpty(orderData["displayQty"].ToString()))
+                                    if (orderData.ContainsKey(field))
+                                        if (!string.IsNullOrEmpty(orderData["displayQty"].ToString()))
                                         order.DisplayQty = int.Parse(orderData["displayQty"].ToString());
                                     break;
                                 case "stopPx":
-                                    if (!string.IsNullOrEmpty(orderData["stopPx"].ToString()))
+                                    if (orderData.ContainsKey(field))
+                                        if (!string.IsNullOrEmpty(orderData["stopPx"].ToString()))
                                         order.StopPx = decimal.Parse(orderData["stopPx"].ToString());
                                     break;
                                 case "pegOffsetValue":
-                                    if (!string.IsNullOrEmpty(orderData["pegOffsetValue"].ToString()))
+                                    if (orderData.ContainsKey(field))
+                                        if (!string.IsNullOrEmpty(orderData["pegOffsetValue"].ToString()))
                                         order.PegOffsetValue = decimal.Parse(orderData["pegOffsetValue"].ToString());
                                     break;
                                 case "currency":
-                                    if (!string.IsNullOrEmpty(orderData["currency"].ToString()))
+                                    if (orderData.ContainsKey(field))
+                                        if (!string.IsNullOrEmpty(orderData["currency"].ToString()))
                                         order.Currency = orderData["currency"].ToString();
                                     break;
                                 case "settlCurrency":
-                                    if (!string.IsNullOrEmpty(orderData["settlCurrency"].ToString()))
+                                    if (orderData.ContainsKey(field))
+                                        if (!string.IsNullOrEmpty(orderData["settlCurrency"].ToString()))
                                         order.SettlCurrency = orderData["settlCurrency"].ToString();
                                     break;
                                 case "ordType":
-                                    if (!string.IsNullOrEmpty(orderData["ordType"].ToString()))
+                                    if (orderData.ContainsKey(field))
+                                        if (!string.IsNullOrEmpty(orderData["ordType"].ToString()))
                                         order.OrdType = orderData["ordType"].ToString();
                                     break;
                                 case "timeInForce":
-                                    if (!string.IsNullOrEmpty(orderData["timeInForce"].ToString()))
+                                    if (orderData.ContainsKey(field))
+                                        if (!string.IsNullOrEmpty(orderData["timeInForce"].ToString()))
                                         order.TimeInForce = orderData["timeInForce"].ToString();
                                     break;
                                 case "ordStatus":
-                                    if (!string.IsNullOrEmpty(orderData["ordStatus"].ToString()))
+                                    if (orderData.ContainsKey(field))
+                                        if (!string.IsNullOrEmpty(orderData["ordStatus"].ToString()))
                                         order.OrdStatus = orderData["ordStatus"].ToString();
                                     break;
                                 case "workingIndicator":
-                                    if (!string.IsNullOrEmpty(orderData["workingIndicator"].ToString()))
+                                    if (orderData.ContainsKey(field))
+                                        if (!string.IsNullOrEmpty(orderData["workingIndicator"].ToString()))
                                         order.WorkingIndicator = bool.Parse(orderData["workingIndicator"].ToString());
                                     break;
                                 case "leavesQty":
-                                    if (!string.IsNullOrEmpty(orderData["leavesQty"].ToString()))
+                                    if (orderData.ContainsKey(field))
+                                        if (!string.IsNullOrEmpty(orderData["leavesQty"].ToString()))
                                         order.LeavesQty = int.Parse(orderData["leavesQty"].ToString());
                                     break;
                                 case "cumQty":
-                                    if (!string.IsNullOrEmpty(orderData["cumQty"].ToString()))
+                                    if (orderData.ContainsKey(field))
+                                        if (!string.IsNullOrEmpty(orderData["cumQty"].ToString()))
                                         order.CumQty = int.Parse(orderData["cumQty"].ToString());
                                     break;
                                 case "avgPx":
-                                    if (!string.IsNullOrEmpty(orderData["avgPx"].ToString()))
-                                        order.AvgPx = decimal.Parse(orderData["avgPx"].ToString());
+                                    if (orderData.ContainsKey(field))
+                                        if (!string.IsNullOrEmpty(orderData["avgPx"].ToString()))
+                                            order.AvgPx = decimal.Parse(orderData["avgPx"].ToString()); 
                                     break;
                                 case "text":
+                                    if (orderData.ContainsKey(field))
                                     if (!string.IsNullOrEmpty(orderData["text"].ToString()))
                                         order.Text = orderData["text"].ToString();
                                     break;
                                 case "transactTime":
+                                    if (orderData.ContainsKey(field))
                                     if (!string.IsNullOrEmpty(orderData["transactTime"].ToString()))
                                         order.TransactTime = DateTime.Parse(orderData["transactTime"].ToString());
                                     break;
                                 case "timestamp":
-                                    if (!string.IsNullOrEmpty(orderData["timestamp"].ToString()))
+                                    if (orderData.ContainsKey(field))
+                                        if (!string.IsNullOrEmpty(orderData["timestamp"].ToString()))
                                         order.Timestamp = DateTime.Parse(orderData["timestamp"].ToString());
                                     break;
                             }
@@ -662,6 +684,57 @@ namespace BitmexGUI.Services.Implementations
                         }
                     }
                 }
+            }
+
+        }
+
+        public async void AmmendOrder(Order Order)
+        {
+            HttpClient client = new HttpClient();
+            string FunctionUrl = "/api/v1/order";
+            string url = "https:" + BaseUrl.Split(":")[1] + FunctionUrl;
+            string Verb = "PUT";
+
+
+
+       
+            var data = new
+            {
+                orderID = Order.OrderID, 
+                price = Order.Price,
+                
+            };
+
+
+            string dataJson = JsonConvert.SerializeObject(data);
+
+            string signature = GenerateSignature(ApiKey, Verb, FunctionUrl, expires, dataJson);
+
+            var headers = new HttpRequestMessage(HttpMethod.Put, url);
+
+            headers.Headers.Add("api-expires", expires.ToString());
+            headers.Headers.Add("api-key", ApiID);
+            headers.Headers.Add("api-signature", signature);
+
+            headers.Content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+
+            try
+            {
+                HttpResponseMessage response = await client.SendAsync(headers);
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    MessageBox.Show("Order Price Changed Successfully!");
+                }
+                else
+                {
+                    string responseString = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show(responseString);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
 
         }

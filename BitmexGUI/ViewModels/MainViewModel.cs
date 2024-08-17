@@ -99,15 +99,38 @@ namespace BitmexGUI.ViewModels
             BitmexApi.AccountInfo += OnWalletInfoReceived;
             BitmexApi.PositionUpdated += OnPositionUpdate;
             BitmexApi.OrderUpdated += OnOrderReceived;
-            
-            
-            
+
+
             //BitmexApi.SetLeverage("XBTUSDT",5.4);
 
 
 
         }
 
+
+
+
+        public void HandleOrderLineUpdate(OrderLine updatedOrderLine)
+        {
+            var existingOrder= OrdersInfo.FirstOrDefault(p => p.OrderID.Equals(updatedOrderLine.OrderID));
+
+            if (existingOrder != null) 
+            { 
+                double NewPrice = (double)CandlestickChart.InvMapToScale(double.Parse(updatedOrderLine.Price.ToString()));
+
+                var diff = NewPrice - (double)existingOrder.Price; 
+
+                if (Math.Abs(diff) > 0) 
+                {
+                    //MessageBox.Show(diff.ToString());
+                    existingOrder.Price = (decimal)Math.Round(NewPrice,0);
+                     
+                    BitmexApi.AmmendOrder(existingOrder);
+                }
+                 
+            }
+             
+        }
         public Action OrderLineUpdated;
         private void UpdateorderLines(Order newOrderData)
         {

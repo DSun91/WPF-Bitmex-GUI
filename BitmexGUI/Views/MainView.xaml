@@ -16,7 +16,7 @@
             <local:PriceConverterInvMapOrderline  x:Key="PriceConverterInvMapOrderline"/>
             <local:ColorConverter   x:Key="ColorConverter"/>
             <local:LocalViewModel x:Key="LocalViewModel"/>
-
+            <local:ColorConverterOrderTag x:Key="ColorConverterOrderTag"/>
             <Style TargetType="Button">
                 <Setter Property="Template">
                     <Setter.Value>
@@ -191,23 +191,29 @@
                         <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Canvas>
-                                <Label 
+                                <Label
                                    x:Name="PriceTag"
-                                    Tag="{Binding OrderID}"
+                                   Tag="{Binding OrderID}"
                                    Canvas.Top="{Binding Price}"
-                                   Canvas.Left="550"
-                                   Content="{Binding Price, Converter={StaticResource PriceConverterInvMapOrderline}}" 
+                                   Canvas.Left="550" 
                                    Height="25"
-                                   Width="70"
+                                   Width="100"
                                    HorizontalContentAlignment="Center"
                                    VerticalAlignment="Center"
                                    FontSize = "12"
+                                   FontStyle="Italic"
                                    Foreground = "Black"
                                    FontWeight = "Bold"
-                                   Background = "Gold"
+                                   Background = "{Binding Converter={StaticResource ColorConverterOrderTag}}"
                                    MouseLeftButtonDown="MyLabel_MouseLeftButtonDown"
                                    MouseMove = "MyLabel_MouseMove"
-                                   MouseLeftButtonUp="MyLabel_MouseLeftButtonUp"    />
+                                   MouseLeftButtonUp="MyLabel_MouseLeftButtonUp"  >
+                                    <TextBlock>
+                                        <Run Text="{Binding Side}"/>
+                                        <Run Text=" : "/>
+                                        <Run Text="{Binding Price, Converter={StaticResource PriceConverterInvMapOrderline}}" />
+                                    </TextBlock>
+                                </Label>
                                 <Line  
                                  x:Name="OrderLine"
                                  Canvas.Top="0" 
@@ -215,7 +221,7 @@
                                  X2="700"
                                  Y1="{Binding Price}"   
                                  Y2="{Binding Price}" 
-                                 Stroke="Red"
+                                 Stroke="{Binding Converter={StaticResource ColorConverterOrderTag}}"
                                  StrokeThickness="2"/>
                                 
                             </Canvas>
