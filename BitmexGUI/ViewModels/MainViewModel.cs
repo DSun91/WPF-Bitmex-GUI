@@ -75,6 +75,9 @@ namespace BitmexGUI.ViewModels
         private double _positionValue;
         private double _entryPrice;
 
+
+
+
         public MainViewModel(int InitialCandlesNumber)
         {
 
@@ -110,9 +113,9 @@ namespace BitmexGUI.ViewModels
         {
             
             
-            var a = CandlestickChart.MapToScale(double.Parse(newOrderData.Price.Value.ToString()),"fromhere");
-           
-            OrdersLines neworderLine = new OrdersLines
+            var a = CandlestickChart.MapToScale(double.Parse(newOrderData.Price.Value.ToString()));
+
+            OrderLine neworderLine = new OrderLine
             {
                 OrderID = newOrderData.OrderID,
                 Price = (decimal)a,
@@ -120,12 +123,12 @@ namespace BitmexGUI.ViewModels
                 Side = newOrderData.Side
 
             };
-            var existingOrderLine = OrderLines.FirstOrDefault(p => p.OrderID.Equals(newOrderData.OrderID));
+            var existingOrderLine = OrdersLines.FirstOrDefault(p => p.OrderID.Equals(newOrderData.OrderID));
             if (existingOrderLine != null)
             {
-                OrderLines.Remove(existingOrderLine);
+                OrdersLines.Remove(existingOrderLine);
             }
-            OrderLines.Add(neworderLine);
+            OrdersLines.Add(neworderLine);
             OrderLineUpdated?.Invoke();
 
 
@@ -134,10 +137,10 @@ namespace BitmexGUI.ViewModels
         private void RemoveorderLines(Order newOrderData)
         {
 
-            var existingOrderLine = OrderLines.FirstOrDefault(p => p.OrderID.Equals(newOrderData.OrderID));
+            var existingOrderLine = OrdersLines.FirstOrDefault(p => p.OrderID.Equals(newOrderData.OrderID));
             if (existingOrderLine != null)
             {
-                OrderLines.Remove(existingOrderLine);
+                OrdersLines.Remove(existingOrderLine);
             }
             OrderLineUpdated?.Invoke();
         }
@@ -540,7 +543,7 @@ namespace BitmexGUI.ViewModels
             BalanceUpdated?.Invoke();
         }
 
-        private CandlestickData ScaleCandle(CandlestickData priceData, ObservableCollection<CandlestickData> PriceData)
+        private CandlestickData ScaleCandle(CandlestickData priceData)
         {
             var allValues = PriceData.SelectMany(data => new[] { data.Open, data.High, data.Low, data.Close });
             CandlestickChart.minOriginal = allValues.Min();
@@ -565,26 +568,31 @@ namespace BitmexGUI.ViewModels
         public Action ScaledPriceDataUpdated;
 
 
+        private void RefreshScaledPriceData()
+        {
+            ScaledPriceData.Clear();
+
+
+            CandlestickData temp = new CandlestickData();
+            foreach (var priceData in PriceData)
+            {
+                temp = ScaleCandle(priceData);
+
+                ScaledPriceData.Add(temp);
+                if (ScaledPriceData.Count >= int.Parse(ConfigurationManager.AppSettings["MaxCacheCandles"].ToString()))
+                {
+                    BitmexApi.GetPositionWSS();
+                    BitmexApi.GetOrdersWSS();
+                }
+            }
+        }
+
         private void OnPriceUpdatedBinance(CandlestickData priceData)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                ScaledPriceData.Clear();
 
-
-                CandlestickData temp = new CandlestickData();
-                foreach (var priceData in PriceData)
-                {
-                    temp = ScaleCandle(priceData, PriceData);
-
-                    ScaledPriceData.Add(temp);
-                    if (ScaledPriceData.Count >= int.Parse(ConfigurationManager.AppSettings["MaxCacheCandles"].ToString()))
-                    {
-                        BitmexApi.GetPositionWSS();
-                        BitmexApi.GetOrdersWSS();
-                    }
-                }
-
+                RefreshScaledPriceData();
 
                 var timestamp = priceData.Timestamp;
 
@@ -606,41 +614,40 @@ namespace BitmexGUI.ViewModels
                     if (index >= 0)
                     {
                         PriceData[index] = existingData; // Update the item in the ObservableCollection
+                        ScaledPriceData[index] = ScaleCandle(existingData);
 
                     }
                     PriceDataUpdated?.Invoke(); // Trigger the event
 
-
-                    var indexScaled = ScaledPriceData.IndexOf(ScaleCandle(priceData, PriceData));
-                    if (index >= 0)
-                    {
-                        ScaledPriceData[index] = ScaleCandle(existingData, PriceData); ; // Update the item in the ObservableCollection
-
-                    }
-                    ScaledPriceDataUpdated?.Invoke();
+                     
                 }
                 else
                 {
-                   
+                    
                     // Add new entry
                     _priceDataDictionary[timestamp.ToString()] = priceData;
-                    priceData.Posx = 20 * PriceData.Count;
+                    priceData.Posx = CandlestickChart.interspace * PriceData.Count;
+
+
                     PriceData.Add(priceData);
-                    
-                    while (PriceData.Count > _maxCandlesLoading)
+                    ScaledPriceData.Add(ScaleCandle(priceData));
+
+
+
+                    if (PriceData.Count > _maxCandlesLoading)
                     {
                         PriceData.Remove(PriceData.First());
+                        ScaledPriceData.Remove(ScaledPriceData.First());
+
+                        for (int i = 0; i < PriceData.Count; i++)
+                        {
+                            PriceData[i].Posx = CandlestickChart.interspace * i;
+                            ScaledPriceData[i].Posx = CandlestickChart.interspace * i;
+                        }
                     }
                     NewPricedataAdded?.Invoke();
 
-                    ScaledPriceData.Add(ScaleCandle(priceData, PriceData));
-
-                    while (PriceData.Count > _maxCandlesLoading)
-                    {
-                        PriceData.Remove(PriceData.First());
-                    }
-
-
+                   
 
                 }
 

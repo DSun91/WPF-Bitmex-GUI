@@ -47,8 +47,8 @@ namespace BitmexGUI.Views
         private CandlestickChart CandleStickView;
 
 
-        
-
+       
+         
         public MainWindow()
         {
             
@@ -58,8 +58,7 @@ namespace BitmexGUI.Views
             int.TryParse(ConfigurationManager.AppSettings["CandlesInView"],out Candles_inView);
             viewModel = new MainViewModel(CachedCandleSize); 
             DataContext = viewModel;
-            viewModel.StartPriceFeed();
-             
+            viewModel.StartPriceFeed(); 
             viewModel.BalanceUpdated += OnBalanceInfoUpdated;
             viewModel.PriceDataUpdated += OnPriceDataUpdated;
             CandleStickView = new CandlestickChart(ViewModel, DrawingCanvas,Candles_inView, CachedCandleSize);
@@ -67,16 +66,38 @@ namespace BitmexGUI.Views
             DrawingCanvas.MouseLeftButtonDown += DrawingCanvas_MouseLeftButtonDown;
             DrawingCanvas.MouseWheel += DrawingCanvas_MouseWheel;
             this.Loaded += MainWindow_Loaded;
+
+            viewModel.NewPricedataAdded += rere;
+
             
+
+            
+
+
         }
        
+        private void rere()
+        {
+            //foreach (UIElement element in DrawingCanvas.Children)
+            //{
+            //    element.Visibility = Visibility.Collapsed;
+            //}
+           
+
+            //foreach (UIElement element in DrawingCanvas.Children)
+            //{
+            //    element.Visibility = Visibility.Visible; 
+
+            //}
+
+        }
         private void DrawingCanvas_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             
             if (e.Delta > 0)
             {
                 CandleStickView.candleWidth += 1;
-                CandleStickView.interspace += 1;
+                CandlestickChart.interspace += 1;
                 CandleStickView.InView -=1;
             }
 
@@ -85,7 +106,7 @@ namespace BitmexGUI.Views
             {
                 
                 CandleStickView.candleWidth -= 0.5;
-                CandleStickView.interspace -= 0.5;
+                CandlestickChart.interspace -= 0.5;
                 CandleStickView.InView += 5;
             }
 
@@ -93,9 +114,9 @@ namespace BitmexGUI.Views
             {
                 CandleStickView.candleWidth = 0.1;
             }
-            if (CandleStickView.interspace < 0.1)
+            if (CandlestickChart.interspace < 0.1)
             {
-                CandleStickView.interspace = 0.1;
+                CandlestickChart.interspace = 0.1;
             }
              
             CandleStickView.RefreshCanvas();

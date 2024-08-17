@@ -9,9 +9,13 @@
         Title="MainWindow" Height="800" Width="1500">
     <Window.Resources>
         <ResourceDictionary>
+            <local:MainWindow  x:Key="MainWindow"/>
             <local:PositionConverter  x:Key="PositionConverter"/>
-            <local:PositionConverterx  x:Key="PositionConverterx"/>
+            <local:PositionConverterCandlestickX  x:Key="PositionConverterCandlestickX"/>
+            <local:PriceConverterMapOrderline  x:Key="PriceConverterMapOrderline"/>
+            <local:PriceConverterInvMapOrderline  x:Key="PriceConverterInvMapOrderline"/>
             <local:ColorConverter   x:Key="ColorConverter"/>
+            <local:LocalViewModel x:Key="LocalViewModel"/>
             <Style TargetType="Button">
                 <Setter Property="Template">
                     <Setter.Value>
@@ -61,7 +65,11 @@
                 </Setter>
             </Style>
 
-
+            <Style x:Key="GridLineStyle" TargetType="Line">
+                <Setter Property="Stroke" Value="LightBlue"/>
+                <Setter Property="StrokeThickness" Value="2"/>
+                <Setter Property="StrokeDashArray" Value="2,2"/>
+            </Style>
             <!-- Style for DataGridCell to Illuminate Updating Cells -->
             <Style TargetType="DataGridCell">
                 <Style.Triggers>
@@ -119,10 +127,12 @@
 
 
 
-            <Canvas x:Name="DrawingCanvas" Grid.Row="1" Background="AliceBlue" Width="674" HorizontalAlignment="Left" Margin="67,0,0,0" Height="363" VerticalAlignment="Center" >
+            <Canvas x:Name="DrawingCanvas" Grid.Row="1" Background="AliceBlue" Width="700" HorizontalAlignment="Left" Margin="67,0,0,0" Height="400" VerticalAlignment="Center" >
 
-                <!-- Red lines -->
-                <ItemsControl ItemsSource="{Binding OrderLines}">
+                <ItemsControl ItemsSource="{Binding HorizontalLines}">
+                    <ItemsControl.DataContext>
+                        <StaticResource ResourceKey="LocalViewModel"/>
+                    </ItemsControl.DataContext>
                     <!-- Override the default panel to a Canvas -->
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -132,15 +142,78 @@
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Line  
-                         Canvas.Top="0" 
-                         X1="0"  
-                         X2="700"
-                         Y1="{Binding Price}"   
-                         Y2="{Binding Price}" 
-                         Stroke="Red"
-                         StrokeThickness="2"/>
+                            <Canvas>
+                                <Line X1="0" X2="700"   Stroke="LightBlue" StrokeThickness="2" StrokeDashArray="2" 
+                                    Y1="{Binding }" Y2="{Binding}"
+                                     />             
+                            </Canvas>
                         </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <ItemsControl ItemsSource="{Binding VerticalLines}">
+                    <ItemsControl.DataContext>
+                        <StaticResource ResourceKey="LocalViewModel"/>
+                    </ItemsControl.DataContext>
+                    <!-- Override the default panel to a Canvas -->
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Canvas>
+                                <Line X1="{Binding }" X2="{Binding}"  Stroke="LightBlue" StrokeThickness="2" StrokeDashArray="2" 
+                                Y1="0" Y2="400"
+                                 />     
+                            </Canvas>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+
+                <!-- Vertical Lines -->
+               
+
+                <!-- Red lines -->
+                <ItemsControl ItemsSource="{Binding OrdersLines}">
+                    <!-- Override the default panel to a Canvas -->
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    
+                        <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Canvas>
+                                <Label 
+                                   x:Name="PriceTag"
+                                   Canvas.Top="{Binding Price}"
+                                   Canvas.Left="550"
+                                   Content="{Binding Price, Converter={StaticResource PriceConverterInvMapOrderline}}" 
+                                   Height="25"
+                                   Width="70"
+                                   HorizontalContentAlignment="Center"
+                                    VerticalAlignment="Center"
+                                   FontSize = "12"
+                                   Foreground = "Black"
+                                   FontWeight = "Bold"
+                                   Background = "Gold"/>
+                                <Line  
+                                 x:Name="OrderLine"
+                                 Canvas.Top="0" 
+                                 X1="0"  
+                                 X2="700"
+                                 Y1="{Binding Price}"   
+                                 Y2="{Binding Price}" 
+                                 Stroke="Red"
+                                 StrokeThickness="2"/>
+                                
+                            </Canvas>
+                            </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
@@ -156,21 +229,23 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Canvas>
-                                <Line  
-                             Canvas.Top="0" 
-                             X1="{Binding Posx}"  
-                             X2="{Binding Posx}"
-                             Y1="{Binding High}"   
-                             Y2="{Binding Low}" 
-                             Stroke="Black"
-                              StrokeThickness="1"/>
+                                <Line
+                                     x:Name="Wick"
+                                     Canvas.Top="0" 
+                                     X1="{Binding Posx}"  
+                                     X2="{Binding Posx}"
+                                     Y1="{Binding High}"   
+                                     Y2="{Binding Low}" 
+                                     Stroke="Black"
+                                     StrokeThickness="1"/>
                                 <Rectangle 
-                            Canvas.Left="{Binding Converter={StaticResource PositionConverterx}}"
-                             Canvas.Top="{Binding Converter={StaticResource PositionConverter}}"
-                             Width="{Binding Width}"
-                             Height="{Binding Height}"  
-                             Fill= "{Binding Converter={StaticResource ColorConverter}}"
-                             Panel.ZIndex="0"/>
+                                     x:Name="Body"
+                                     Canvas.Left="{Binding Converter={StaticResource PositionConverterCandlestickX}}"
+                                     Canvas.Top="{Binding Converter={StaticResource PositionConverter}}"
+                                     Width="{Binding Width}"
+                                     Height="{Binding Height}"  
+                                     Fill= "{Binding Converter={StaticResource ColorConverter}}"
+                                     Panel.ZIndex="0"/>
                             </Canvas>
                         </DataTemplate>
 

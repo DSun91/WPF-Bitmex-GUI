@@ -1,4 +1,5 @@
 ﻿using BitmexGUI.Models;
+using BitmexGUI.Services.Implementations;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -29,7 +30,7 @@ namespace BitmexGUI.Views
             throw new NotImplementedException();
         }
     }
-    public class PositionConverterx : IValueConverter
+    public class PositionConverterCandlestickX : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -46,7 +47,66 @@ namespace BitmexGUI.Views
             throw new NotImplementedException();
         }
     }
+    public class PositionConverterOrderlineY : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is OrderLine data)
+            {
 
+                return data.Price-20;
+            }
+            return 0;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class PriceConverterMapOrderline : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value  is decimal data )
+            {
+
+                return CandlestickChart.MapToScale(double.Parse(data.ToString())).ToString();
+            }
+            return 0;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class PriceConverterInvMapOrderline : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            
+
+
+            if (value is decimal data)
+            {
+                 
+                return CandlestickChart.InvMapToScale(double.Parse(data.ToString())).ToString();
+
+            }
+            else
+            {
+                return 0;
+            }
+          
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
     public class ColorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
