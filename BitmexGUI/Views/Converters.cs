@@ -12,7 +12,26 @@ using System.Windows.Media;
 
 namespace BitmexGUI.Views
 {
+    public class StringToDoubleConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string stringValue && double.TryParse(stringValue, out double result))
+            {
+                return result;
+            }
+            return 0.0; // Default value or handle as needed
+        }
 
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is double doubleValue)
+            {
+                return doubleValue.ToString(culture);
+            }
+            return string.Empty; // Default value or handle as needed
+        }
+    }
     public class PositionConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -71,7 +90,7 @@ namespace BitmexGUI.Views
             if (value  is decimal data )
             {
 
-                return CandlestickChart.MapToScale(double.Parse(data.ToString())).ToString();
+                return Math.Round(CandlestickChart.MapToScale(double.Parse(data.ToString())),2).ToString();
             }
             return 0;
         }
@@ -92,7 +111,7 @@ namespace BitmexGUI.Views
             if (value is decimal data)
             {
                  
-                return CandlestickChart.InvMapToScale(double.Parse(data.ToString())).ToString();
+                return Math.Round(CandlestickChart.InvMapToScale(double.Parse(data.ToString())),2).ToString();
 
             }
             else

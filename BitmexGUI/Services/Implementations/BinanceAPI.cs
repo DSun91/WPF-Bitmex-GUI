@@ -115,7 +115,7 @@ namespace BitmexGUI.Services.Implementations
                 }
 
             }
-
+            
         }
 
         public void UpdateRestEndpoint(string newEndpoint)

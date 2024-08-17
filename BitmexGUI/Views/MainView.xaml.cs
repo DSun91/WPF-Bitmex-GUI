@@ -58,12 +58,12 @@ namespace BitmexGUI.Views
             int.TryParse(ConfigurationManager.AppSettings["CandlesInView"],out Candles_inView);
             viewModel = new MainViewModel(CachedCandleSize); 
             DataContext = viewModel;
-            viewModel.StartPriceFeed(); 
+            
             viewModel.BalanceUpdated += OnBalanceInfoUpdated;
             viewModel.PriceDataUpdated += OnPriceDataUpdated;
             CandleStickView = new CandlestickChart(ViewModel, DrawingCanvas,Candles_inView, CachedCandleSize);
 
-            DrawingCanvas.MouseLeftButtonDown += DrawingCanvas_MouseLeftButtonDown;
+            DrawingCanvas.MouseRightButtonDown += DrawingCanvas_MouseRightButtonDown;
             DrawingCanvas.MouseWheel += DrawingCanvas_MouseWheel;
             this.Loaded += MainWindow_Loaded;
 
@@ -91,6 +91,79 @@ namespace BitmexGUI.Views
             //}
 
         }
+        private bool isDragging = false;
+        private Point clickPosition;
+        private void MyLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Label label)
+            {
+                isDragging = true;
+                clickPosition = e.GetPosition(label);
+                label.CaptureMouse(); // Capture the mouse to receive mouse events even when the cursor is outside the label
+            }
+        }
+        private void MyLabel_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Label label)
+            { 
+                isDragging = false;
+                label.ReleaseMouseCapture(); // Release the mouse capture when dragging is finished
+                var mousePos = e.GetPosition(DrawingCanvas); 
+              
+            }
+            //foreach (OrderLine x in ViewModel.OrdersLines)
+            //{
+            //    MessageBox.Show(x.Price.ToString());
+            //}
+        }
+    private void MyLabel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragging && sender is Label label)
+            {
+                var mousePos = e.GetPosition(DrawingCanvas);
+
+
+                double top = mousePos.Y - clickPosition.Y;
+
+                if (top < 0) top = 0;
+
+
+                if (top + label.ActualHeight > DrawingCanvas.ActualHeight)
+                    top = DrawingCanvas.ActualHeight - label.ActualHeight;
+
+                var existingLine = ViewModel.OrdersLines.FirstOrDefault(p => p.OrderID.Equals(label.Tag));
+
+                if (existingLine != null)
+                {
+                    var index = ViewModel.OrdersLines.IndexOf(existingLine);
+
+                    
+                    
+                   // MessageBox.Show(existingLine.OrderID+"  "+ existingLine.Price.ToString()+" "+ top);
+                  
+                   OrderLine tempLine = new OrderLine 
+                   {
+                      OrderID=existingLine.OrderID,
+                      Price= (decimal)top,
+                      Side=existingLine.Side,
+                      Symbol=existingLine.Symbol 
+                   };
+
+                    if (index >= 0)
+                    {
+                        ViewModel.OrdersLines[index] = tempLine; // Update the item in the ObservableCollection
+                        
+                    }
+                     
+
+                }
+                 
+                Canvas.SetTop(label, top);
+
+
+            }
+        }
+        public event Action<OrderLine> OrderLinesUpdated;
         private void DrawingCanvas_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             
@@ -124,7 +197,7 @@ namespace BitmexGUI.Views
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            
+            viewModel.StartPriceFeed();
             viewModel.GetBalances(); 
             
             
@@ -187,7 +260,7 @@ namespace BitmexGUI.Views
 
         //}
 
-        private void DrawingCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void DrawingCanvas_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             // Get the position of the mouse click relative to the Canvas
             Point clickPosition = e.GetPosition(DrawingCanvas);

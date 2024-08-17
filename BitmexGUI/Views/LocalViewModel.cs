@@ -35,5 +35,59 @@ namespace BitmexGUI.Views
 
             }
         }
+        //    private void MyLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        //    {
+        //        if (sender is Label label)
+        //        {
+        //            isDragging = true;
+        //            clickPosition = e.GetPosition(label);
+        //            label.CaptureMouse(); // Capture the mouse to receive mouse events even when the cursor is outside the label
+        //        }
+        //    }
+        //    private void MyLabel_MouseMove(object sender, MouseEventArgs e)
+        //    {
+        //        if (isDragging && sender is Label label)
+        //        {
+        //            var mousePos = e.GetPosition(DrawingCanvas);
+
+
+        //            double top = mousePos.Y - clickPosition.Y;
+
+        //            if (top < 0) top = 0;
+
+
+        //            if (top + label.ActualHeight > DrawingCanvas.ActualHeight)
+        //                top = DrawingCanvas.ActualHeight - label.ActualHeight;
+
+        //            var existingLine = ViewModel.OrderLines.FirstOrDefault(p => p.OrderID.Equals(label.Tag));
+
+        //            if (existingLine != null)
+        //            {
+        //                existingLine.Price = (decimal)InvMapToScale(top);
+        //                OrderLinesUpdated?.Invoke(existingLine);
+
+
+        //            }
+
+
+        //            //foreach (Line labelelem in DrawingCanvas.Children.OfType<Line>())
+        //            //{
+        //            //    if (labelelem.Name.ToLower().Contains("Orderline".ToLower()))
+        //            //    {
+
+        //            //        double y = Canvas.GetTop(labelelem);
+        //            //        Canvas.SetTop(labelelem, top);
+        //            //        //MessageBox.Show(labelelem.Name.ToString()+" "+ top);
+        //            //        //MessageBox.Show(x.ToString() + " " + y.ToString());
+        //            //    }
+
+
+        //            //}
+
+        //            Canvas.SetTop(label, top);
+
+
+        //        }
+        //    }
     }
 }

@@ -63,27 +63,33 @@ namespace BitmexGUI.Services.Abstract
 
         }
 
+        
         public async void GetPriceWSS()
         {
-            System.Net.WebSockets.ClientWebSocket BitmexHttpClientWSS = new System.Net.WebSockets.ClientWebSocket();
-
+            System.Net.WebSockets.ClientWebSocket HttpClientPriceWSS = new System.Net.WebSockets.ClientWebSocket();
 
 
             CancellationTokenSource source = new CancellationTokenSource();
             CancellationToken token = source.Token;
 
-            await BitmexHttpClientWSS.ConnectAsync(new Uri(UrlWss), token);
+           
 
 
             int size = 5000;
             var buffer = new byte[size];
 
-            while (BitmexHttpClientWSS.State == WebSocketState.Open)
+            if(HttpClientPriceWSS.State != WebSocketState.Connecting &&  HttpClientPriceWSS.State != WebSocketState.Open)
             {
-                var result = await BitmexHttpClientWSS.ReceiveAsync(buffer, token);
+                await HttpClientPriceWSS.ConnectAsync(new Uri(UrlWss), token);
+            }
+
+
+            while (HttpClientPriceWSS.State == WebSocketState.Open)
+            {
+                var result = await HttpClientPriceWSS.ReceiveAsync(buffer, token);
                 if (result.MessageType == WebSocketMessageType.Close)
                 {
-                    await BitmexHttpClientWSS.CloseAsync(WebSocketCloseStatus.NormalClosure, null, token);
+                    await HttpClientPriceWSS.CloseAsync(WebSocketCloseStatus.NormalClosure, null, token);
                 }
                 else
                 {

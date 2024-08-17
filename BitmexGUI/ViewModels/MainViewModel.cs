@@ -112,13 +112,11 @@ namespace BitmexGUI.ViewModels
         private void UpdateorderLines(Order newOrderData)
         {
             
-            
-            var a = CandlestickChart.MapToScale(double.Parse(newOrderData.Price.Value.ToString()));
-
+             
             OrderLine neworderLine = new OrderLine
             {
                 OrderID = newOrderData.OrderID,
-                Price = (decimal)a,
+                Price = (decimal)CandlestickChart.MapToScale(double.Parse(newOrderData.Price.ToString())),
                 Symbol = newOrderData.Symbol,
                 Side = newOrderData.Side
 
@@ -548,7 +546,7 @@ namespace BitmexGUI.ViewModels
             var allValues = PriceData.SelectMany(data => new[] { data.Open, data.High, data.Low, data.Close });
             CandlestickChart.minOriginal = allValues.Min();
             CandlestickChart.maxOriginal = allValues.Max();
-            double padding = (CandlestickChart.maxOriginal - CandlestickChart.minOriginal) * 0.2;
+            double padding = (CandlestickChart.maxOriginal - CandlestickChart.minOriginal) * double.Parse(ConfigurationManager.AppSettings["ScaleFactor"].ToString());
             CandlestickChart.minOriginal -= padding;
             CandlestickChart.maxOriginal += padding;
 
@@ -573,16 +571,17 @@ namespace BitmexGUI.ViewModels
             ScaledPriceData.Clear();
 
 
-            CandlestickData temp = new CandlestickData();
+            
             foreach (var priceData in PriceData)
             {
-                temp = ScaleCandle(priceData);
+                CandlestickData temp = ScaleCandle(priceData);
 
                 ScaledPriceData.Add(temp);
                 if (ScaledPriceData.Count >= int.Parse(ConfigurationManager.AppSettings["MaxCacheCandles"].ToString()))
                 {
                     BitmexApi.GetPositionWSS();
                     BitmexApi.GetOrdersWSS();
+                    
                 }
             }
         }
@@ -668,28 +667,28 @@ namespace BitmexGUI.ViewModels
             });
         }
 
-        public void UpdateInitialCandles(int newInitialCandlesNumber)
-        {
+        //public void UpdateInitialCandles(int newInitialCandlesNumber)
+        //{
 
-            BinanceApi.UpdateRestEndpoint($"https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval={TimeFrame}&limit={newInitialCandlesNumber}");
+        //    BinanceApi.UpdateRestEndpoint($"https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval={TimeFrame}&limit={newInitialCandlesNumber}");
 
-            //MessageBox.Show(_binanceApi.UrlRest);
+        //    //MessageBox.Show(_binanceApi.UrlRest);
 
-            PriceData = new ObservableCollection<CandlestickData>();
+        //    PriceData = new ObservableCollection<CandlestickData>();
 
-            _priceDataDictionary=new Dictionary<string,CandlestickData>();
+        //    _priceDataDictionary=new Dictionary<string,CandlestickData>();
 
              
 
-            for (int i = BinanceApi.CachedPriceData.Count- newInitialCandlesNumber; i < BinanceApi.CachedPriceData.Count;i++)
-            {
-                PriceData.Add(BinanceApi.CachedPriceData[i]);
-                _priceDataDictionary.TryAdd(BinanceApi.CachedPriceData[i].Timestamp.ToString(), BinanceApi.CachedPriceData[i]);
-            }
-            
+        //    for (int i = BinanceApi.CachedPriceData.Count- newInitialCandlesNumber; i < BinanceApi.CachedPriceData.Count;i++)
+        //    {
+        //        PriceData.Add(BinanceApi.CachedPriceData[i]);
+        //        _priceDataDictionary.TryAdd(BinanceApi.CachedPriceData[i].Timestamp.ToString(), BinanceApi.CachedPriceData[i]);
+        //    }
 
-            //_binanceApi.GetPriceREST(PriceData,_priceDataDictionary); 
-        }
+            
+        //    //_binanceApi.GetPriceREST(PriceData,_priceDataDictionary); 
+        //}
 
 
          

@@ -16,6 +16,7 @@
             <local:PriceConverterInvMapOrderline  x:Key="PriceConverterInvMapOrderline"/>
             <local:ColorConverter   x:Key="ColorConverter"/>
             <local:LocalViewModel x:Key="LocalViewModel"/>
+
             <Style TargetType="Button">
                 <Setter Property="Template">
                     <Setter.Value>
@@ -179,6 +180,7 @@
 
                 <!-- Red lines -->
                 <ItemsControl ItemsSource="{Binding OrdersLines}">
+                    
                     <!-- Override the default panel to a Canvas -->
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -191,17 +193,21 @@
                             <Canvas>
                                 <Label 
                                    x:Name="PriceTag"
+                                    Tag="{Binding OrderID}"
                                    Canvas.Top="{Binding Price}"
                                    Canvas.Left="550"
                                    Content="{Binding Price, Converter={StaticResource PriceConverterInvMapOrderline}}" 
                                    Height="25"
                                    Width="70"
                                    HorizontalContentAlignment="Center"
-                                    VerticalAlignment="Center"
+                                   VerticalAlignment="Center"
                                    FontSize = "12"
                                    Foreground = "Black"
                                    FontWeight = "Bold"
-                                   Background = "Gold"/>
+                                   Background = "Gold"
+                                   MouseLeftButtonDown="MyLabel_MouseLeftButtonDown"
+                                   MouseMove = "MyLabel_MouseMove"
+                                   MouseLeftButtonUp="MyLabel_MouseLeftButtonUp"    />
                                 <Line  
                                  x:Name="OrderLine"
                                  Canvas.Top="0" 
