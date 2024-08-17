@@ -19,7 +19,7 @@ namespace BitmexGUI.Models
 
         public double Height => Math.Abs(Open - Close);
 
-        public double Width { get; set; } = 10;
+        public double Width { get; set; }
 
     }
 

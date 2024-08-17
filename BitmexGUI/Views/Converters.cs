@@ -56,7 +56,7 @@ namespace BitmexGUI.Views
             if (value is CandlestickData data)
             {
 
-                return (data.Posx - 5);
+                return (data.Posx - data.Width/2);
             }
             return 0;
         }

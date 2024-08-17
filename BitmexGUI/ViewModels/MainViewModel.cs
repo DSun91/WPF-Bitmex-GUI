@@ -62,7 +62,7 @@ namespace BitmexGUI.ViewModels
         public event Action OpenordersInfoUpdated;
         public event Action HistoricOrderdataUpdated;
         private Dictionary<string, CandlestickData> _priceDataDictionary = new Dictionary<string, CandlestickData>(); 
-        private readonly int _maxCandlesLoading;
+        
         private readonly BinanceAPI BinanceApi;
         private readonly BitmexAPI BitmexApi;
         private string TimeFrame= ConfigurationManager.AppSettings["Timeframe"];
@@ -82,7 +82,7 @@ namespace BitmexGUI.ViewModels
         {
 
 
-            int.TryParse(ConfigurationManager.AppSettings["MaxCacheCandles"], out _maxCandlesLoading);
+            
 
 
             BinanceEndpointRest += $"/klines?symbol={BinanceInstrument}&interval={TimeFrame}&limit={InitialCandlesNumber}";
@@ -99,16 +99,14 @@ namespace BitmexGUI.ViewModels
             BitmexApi.AccountInfo += OnWalletInfoReceived;
             BitmexApi.PositionUpdated += OnPositionUpdate;
             BitmexApi.OrderUpdated += OnOrderReceived;
-
+            
 
             //BitmexApi.SetLeverage("XBTUSDT",5.4);
 
 
 
         }
-
-
-
+         
 
         public void HandleOrderLineUpdate(OrderLine updatedOrderLine)
         {
@@ -569,7 +567,15 @@ namespace BitmexGUI.ViewModels
             var allValues = PriceData.SelectMany(data => new[] { data.Open, data.High, data.Low, data.Close });
             CandlestickChart.minOriginal = allValues.Min();
             CandlestickChart.maxOriginal = allValues.Max();
-            double padding = (CandlestickChart.maxOriginal - CandlestickChart.minOriginal) * double.Parse(ConfigurationManager.AppSettings["ScaleFactor"].ToString());
+
+
+            var allValuesOrders= OrdersInfo.SelectMany(data => new[] {data.Price});
+            var minOrderVal = allValuesOrders.Min();
+            var manOrderVal = allValuesOrders.Max();
+
+
+            
+            double padding = (CandlestickChart.maxOriginal - CandlestickChart.minOriginal) * CandlestickChart.ScaleFactor;
             CandlestickChart.minOriginal -= padding;
             CandlestickChart.maxOriginal += padding;
 
@@ -582,6 +588,7 @@ namespace BitmexGUI.ViewModels
             temp.Low = CandlestickChart.MapToScale(priceData.Low);
             temp.Close = CandlestickChart.MapToScale(priceData.Close);
             temp.Timestamp = priceData.Timestamp;
+            temp.Width= priceData.Width;
             temp.Posx = priceData.Posx;
             return temp;
         }
@@ -600,7 +607,7 @@ namespace BitmexGUI.ViewModels
                 CandlestickData temp = ScaleCandle(priceData);
 
                 ScaledPriceData.Add(temp);
-                if (ScaledPriceData.Count >= int.Parse(ConfigurationManager.AppSettings["MaxCacheCandles"].ToString()))
+                if (ScaledPriceData.Count >= CandlestickChart.MaxCandlesDisplay)
                 {
                     BitmexApi.GetPositionWSS();
                     BitmexApi.GetOrdersWSS();
@@ -649,14 +656,14 @@ namespace BitmexGUI.ViewModels
                     // Add new entry
                     _priceDataDictionary[timestamp.ToString()] = priceData;
                     priceData.Posx = CandlestickChart.interspace * PriceData.Count;
-
+                 
 
                     PriceData.Add(priceData);
                     ScaledPriceData.Add(ScaleCandle(priceData));
 
 
 
-                    if (PriceData.Count > _maxCandlesLoading)
+                    if (PriceData.Count > CandlestickChart.MaxCandlesDisplay)
                     {
                         PriceData.Remove(PriceData.First());
                         ScaledPriceData.Remove(ScaledPriceData.First());

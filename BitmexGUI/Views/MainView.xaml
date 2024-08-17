@@ -129,51 +129,34 @@
 
 
             <Canvas x:Name="DrawingCanvas" Grid.Row="1" Background="AliceBlue" Width="700" HorizontalAlignment="Left" Margin="67,0,0,0" Height="400" VerticalAlignment="Center" >
+                
 
-                <ItemsControl ItemsSource="{Binding HorizontalLines}">
-                    <ItemsControl.DataContext>
-                        <StaticResource ResourceKey="LocalViewModel"/>
-                    </ItemsControl.DataContext>
-                    <!-- Override the default panel to a Canvas -->
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <Canvas />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
+                    <ItemsControl ItemsSource="{Binding GridData}">
+                        <ItemsControl.DataContext>
+                            <StaticResource ResourceKey="LocalViewModel"/>
+                        </ItemsControl.DataContext>
+                        <!-- Override the default panel to a Canvas -->
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
 
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Canvas>
-                                <Line X1="0" X2="700"   Stroke="LightBlue" StrokeThickness="2" StrokeDashArray="2" 
-                                    Y1="{Binding }" Y2="{Binding}"
-                                     />             
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Canvas>
+                                <Line X1="{Binding X1}" X2="{Binding X2}"   Stroke="LightBlue" StrokeThickness="2" StrokeDashArray="2" 
+                                      Y1="{Binding Y1}" Y2="{Binding Y2}"
+                                       />   
                             </Canvas>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                   
+                
+              
 
-                <ItemsControl ItemsSource="{Binding VerticalLines}">
-                    <ItemsControl.DataContext>
-                        <StaticResource ResourceKey="LocalViewModel"/>
-                    </ItemsControl.DataContext>
-                    <!-- Override the default panel to a Canvas -->
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <Canvas />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Canvas>
-                                <Line X1="{Binding }" X2="{Binding}"  Stroke="LightBlue" StrokeThickness="2" StrokeDashArray="2" 
-                                Y1="0" Y2="400"
-                                 />     
-                            </Canvas>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-
+               
 
                 <!-- Vertical Lines -->
                
@@ -236,8 +219,7 @@
                         <ItemsPanelTemplate>
                             <Canvas />
                         </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-
+                    </ItemsControl.ItemsPanel> 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Canvas>
@@ -257,7 +239,8 @@
                                      Width="{Binding Width}"
                                      Height="{Binding Height}"  
                                      Fill= "{Binding Converter={StaticResource ColorConverter}}"
-                                     Panel.ZIndex="0"/>
+                                     Panel.ZIndex="0"
+                                     MouseWheel="Candles_MouseWheel"/>
                             </Canvas>
                         </DataTemplate>
 

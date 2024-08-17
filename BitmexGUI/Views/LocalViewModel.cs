@@ -1,40 +1,72 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BitmexGUI.Views
 {
-    
-    internal class LocalViewModel
+    public class GridData
     {
-         
-        public ObservableCollection<double> HorizontalLines { get; set; }
-        public ObservableCollection<double> VerticalLines { get; set; }
+        public double X1 { get; set; }
+        public double Y1 { get; set; }
+
+        public double X2 { get; set; }
+        public double Y2 { get; set; }
+    }
+    internal class LocalViewModel:INotifyPropertyChanged
+    {
+
+        private ObservableCollection<GridData> _gridData;
+        public ObservableCollection<GridData> GridData
+        {
+            get => _gridData;
+            set
+            {
+                _gridData = value;
+                OnPropertyChanged(nameof(GridData));
+            }
+        }
 
         public LocalViewModel()
         {
+            InitializeGrid();
+        }
 
+        private void InitializeGrid()
+        {
             int GridSpacing = 50;
             double canvasHeight = 400; // Example height
-            double canvasWidth = 700;  // Example width
+            double canvasWidth = 700; // Example width
+            GridData = new ObservableCollection<GridData>();
 
-            HorizontalLines = new ObservableCollection<double>();
-            for (double y = 0; y <= canvasHeight; y += GridSpacing)
-            {
-                HorizontalLines.Add(y);
-                
-            }
-
-            VerticalLines = new ObservableCollection<double>();
+            // Vertical lines
             for (double x = 0; x <= canvasWidth; x += GridSpacing)
             {
-                VerticalLines.Add(x);
+                GridData.Add(new GridData { X1 = x, Y1 = 0, X2 = x, Y2 = canvasHeight });
+            }
 
+            // Horizontal lines
+            for (double y = 0; y <= canvasHeight; y += GridSpacing)
+            {
+                GridData.Add(new GridData { X1 = 0, Y1 = y, X2 = canvasWidth, Y2 = y });
             }
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+}
+
+
+
+        
+ 
         //    private void MyLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         //    {
         //        if (sender is Label label)
@@ -89,5 +121,4 @@ namespace BitmexGUI.Views
 
         //        }
         //    }
-    }
-}
+ 

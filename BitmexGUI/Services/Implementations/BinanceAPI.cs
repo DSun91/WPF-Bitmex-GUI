@@ -67,7 +67,8 @@ namespace BitmexGUI.Services.Implementations
                 High = double.Parse(KandleStick["h"].ToString()),
                 Low = double.Parse(KandleStick["l"].ToString()),
                 Close = double.Parse(KandleStick["c"].ToString()),
-                Timestamp = DateTimeOffset.FromUnixTimeMilliseconds(long.Parse(KandleStick["t"].ToString())).DateTime
+                Timestamp = DateTimeOffset.FromUnixTimeMilliseconds(long.Parse(KandleStick["t"].ToString())).DateTime,
+                Width=CandlestickChart.candleWidth
             };
              
             PriceUpdated?.Invoke(priceData);
@@ -100,6 +101,7 @@ namespace BitmexGUI.Services.Implementations
                 InitData.High = highPrice;
                 InitData.Low = lowPrice;
                 InitData.Close = closePrice;
+                InitData.Width = CandlestickChart.candleWidth;
                 // Store the prices in a list 
 
                 // Add to the SortedDictionary

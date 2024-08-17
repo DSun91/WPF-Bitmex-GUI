@@ -39,8 +39,7 @@ namespace BitmexGUI.Views
 
 
 
-        private int CachedCandleSize;  
-        private int Candles_inView;
+        
         private MainViewModel ViewModel => (MainViewModel)DataContext;
         private MainViewModel viewModel;
         // Target range
@@ -54,18 +53,17 @@ namespace BitmexGUI.Views
             
              
             InitializeComponent();
-            int.TryParse(ConfigurationManager.AppSettings["MaxCacheCandles"].ToString(), out CachedCandleSize);
-            int.TryParse(ConfigurationManager.AppSettings["CandlesInView"],out Candles_inView);
-            viewModel = new MainViewModel(CachedCandleSize); 
+             
+            viewModel = new MainViewModel(CandlestickChart.MaxCandlesDisplay); 
             DataContext = viewModel;
             
-            viewModel.BalanceUpdated += OnBalanceInfoUpdated;
-            viewModel.PriceDataUpdated += OnPriceDataUpdated;
-            CandleStickView = new CandlestickChart(ViewModel, DrawingCanvas,Candles_inView, CachedCandleSize);
+            
+            CandleStickView = new CandlestickChart();
 
             DrawingCanvas.MouseRightButtonDown += DrawingCanvas_MouseRightButtonDown;
-            //DrawingCanvas.MouseWheel += DrawingCanvas_MouseWheel;
-            
+            DrawingCanvas.MouseWheel += DrawingCanvas_MouseHeelEventaaaa;
+
+
 
             this.OrderLinesUpdated += (updatedLine) =>
             {
@@ -80,8 +78,9 @@ namespace BitmexGUI.Views
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             viewModel.GetBalances();
-            viewModel.StartPriceFeed();
             
+            viewModel.StartPriceFeed();
+
         }
 
 
@@ -157,86 +156,59 @@ namespace BitmexGUI.Views
             }
         }
         
-        private void DrawingCanvas_MouseWheel(object sender, MouseWheelEventArgs e)
+        private void Candles_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            
-            if (e.Delta > 0)
+            Rectangle rect=sender as Rectangle;
+
+            if (rect != null)
             {
-                CandleStickView.candleWidth += 1;
-                CandlestickChart.interspace += 1;
-                CandleStickView.InView -=1;
+                 
+                if (e.Delta > 0)
+                {
+
+                    rect.Width += 0.1;
+
+                }
+                if (e.Delta < 0)
+                {
+
+
+                    rect.Width -= 0.1;
+
+                }
             }
+            
+          
 
             // If the mouse wheel delta is negative, move the box down.
-            if (e.Delta < 0)
-            {
-                
-                CandleStickView.candleWidth -= 0.5;
-                CandlestickChart.interspace -= 0.5;
-                CandleStickView.InView += 5;
-            }
-
-            if (CandleStickView.candleWidth<0.1)
-            {
-                CandleStickView.candleWidth = 0.1;
-            }
-            if (CandlestickChart.interspace < 0.1)
-            {
-                CandlestickChart.interspace = 0.1;
-            }
+          
              
-            CandleStickView.RefreshCanvas();
+          
+              
         }
 
        
+         
+         
 
-        //private ObservableCollection<string> Currencies=new ObservableCollection<string>();
 
-        private void OnBalanceInfoUpdated()
+ 
+        private void DrawingCanvas_MouseHeelEventaaaa(object sender, MouseWheelEventArgs e)
         {
+            // Get the position of the mouse click relative to the Canvas
+            if (e.Delta > 0)
+            {
 
-          
-            //Currencies.Clear();
+                CandlestickChart.ScaleFactor += 0.1;
 
-            //// Populate the list with new currency names
-            //foreach (var accountInfo in viewModel.AccountInfos)
-            //{
-            //    if (!Currencies.Contains(accountInfo.CurrencyName))
-            //    {
-            //        Currencies.Add(accountInfo.CurrencyName);
-            //    }
-            //}
-
-            //// Set the updated list as the ItemsSource for the ComboBox
-            //CmbCurrency.ItemsSource = Currencies;
-
-            //string currencyname = CmbCurrency.Items[0].ToString();
+            }
 
 
 
-            //var account = viewModel.AccountInfos.FirstOrDefault(account => account.CurrencyName.Equals(currencyname, StringComparison.OrdinalIgnoreCase));
 
-            //CurrentBalance.Text = account?.Balance.ToString() ?? "No balance available";  // default message if no account is found
 
 
         }
-
-        private void OnPriceDataUpdated()
-        {
-
-            CandleStickView.RefreshCanvas();
-
-
-        }
-
-        //private void OnPriceDataAdded()
-        //{
-
-        //    //MessageBox.Show("new data added");
-
-
-        //}
-
         private void DrawingCanvas_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             // Get the position of the mouse click relative to the Canvas
@@ -291,8 +263,8 @@ namespace BitmexGUI.Views
 
         private void ResetButton_Click(object sender, RoutedEventArgs e)
         {
-            CandleStickView.InView = Candles_inView;
-            CandleStickView.RefreshCanvas();
+             
+          
         }
 
         private void BitmexSettled_Click(object sender, RoutedEventArgs e)
