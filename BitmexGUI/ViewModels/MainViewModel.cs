@@ -41,7 +41,7 @@ namespace BitmexGUI.ViewModels
 
         public void Execute(object parameter) => _execute();
     }
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel :OservableCollections
     {
         private readonly string IdBinance = "";
         private readonly string ApiKeyBinance = "";
@@ -67,105 +67,9 @@ namespace BitmexGUI.ViewModels
         private readonly BitmexAPI BitmexApi;
         private string TimeFrame= ConfigurationManager.AppSettings["Timeframe"];
 
-        private ObservableCollection<CandlestickData> _priceData = new ObservableCollection<CandlestickData>();
-        private ObservableCollection<SettledPrice> _settledPriceData = new ObservableCollection<SettledPrice>();
-        private ObservableCollection<Account> _accountData = new ObservableCollection<Account>();
-        private ObservableCollection<Instrument> _instrumentData = new ObservableCollection<Instrument>();
-        private ObservableCollection<Position> _positionData = new ObservableCollection<Position>();
-        private ObservableCollection<Order> _orderData = new ObservableCollection<Order>();
-        private ObservableCollection<Order> _historicorderData = new ObservableCollection<Order>();
-        private ObservableCollection<CandlestickData> _scaledpriceData = new ObservableCollection<CandlestickData>();
-        private ObservableCollection<OrdersLines> _orderLines = new ObservableCollection<OrdersLines>();
-
-        public ObservableCollection<OrdersLines> OrderLines
-        {
-            get => _orderLines;
-            set
-            {
-                _orderLines = value;
-                OnPropertyChanged(nameof(OrderLines));
-            }
-        }
-
-   
-
        
 
-        public ObservableCollection<CandlestickData> ScaledPriceData
-        {
-            get => _scaledpriceData;
-            set
-            {
-                _scaledpriceData = value;
-                OnPropertyChanged(nameof(ScaledPriceData));
-            }
-        }
-        public ObservableCollection<CandlestickData> PriceData
-        {
-            get => _priceData;
-            set
-            {
-                _priceData = value;
-                OnPropertyChanged(nameof(PriceData));
-            }
-        }
-        public ObservableCollection<SettledPrice> SettledPriceData
-        {
-            get => _settledPriceData;
-            set
-            {
-                _settledPriceData = value;
-                OnPropertyChanged(nameof(SettledPriceData));
-            }
-        }
-        public ObservableCollection<Account> AccountInfos
-        {
-            get => _accountData;
-            set
-            {
-                _accountData = value;
-                OnPropertyChanged(nameof(AccountInfos));
-            }
-        }
-        public ObservableCollection<Instrument> InstrumentInfo
-        {
-            get => _instrumentData;
-            set
-            {
-                _instrumentData = value;
-                OnPropertyChanged(nameof(InstrumentInfo));
-            }
-        }
-        public ObservableCollection<Order> OrdersInfo
-        {
-            get => _orderData;
-            set
-            {
-                _orderData = value;
-                OnPropertyChanged(nameof(OrdersInfo));
-            }
-        }
-
-        public ObservableCollection<Order> HistoricOrdersInfo
-        {
-            get => _historicorderData;
-            set
-            {
-                _historicorderData = value;
-                OnPropertyChanged(nameof(HistoricOrdersInfo));
-            }
-        }
-
-        public ObservableCollection<Position> PositionsInfo
-        {
-            get => _positionData;
-            set
-            {
-                _positionData = value;
-                OnPropertyChanged();
-            }
-        }
-
+   
         private double _entryAmount;
         private double _sliderLeverage;
         private double _positionValue;
@@ -204,10 +108,7 @@ namespace BitmexGUI.ViewModels
         public Action OrderLineUpdated;
         private void UpdateorderLines(Order newOrderData)
         {
-            //MessageBox.Show(newOrderData.Price.ToString()+" from update");
-
-
-            //MessageBox.Show(newOrderData.Price.Value.ToString());
+            
             
             var a = CandlestickChart.MapToScale(double.Parse(newOrderData.Price.Value.ToString()),"fromhere");
            
@@ -475,7 +376,7 @@ namespace BitmexGUI.ViewModels
         }
 
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        // this takes the function CreateNewOrder
         private ICommand _createNewOrderCommand;
         public ICommand CreateNewOrderCommand
         {
@@ -488,7 +389,7 @@ namespace BitmexGUI.ViewModels
                 return _createNewOrderCommand;
             }
         }
-        
+
         private double _orderCost;
 
 
@@ -784,16 +685,6 @@ namespace BitmexGUI.ViewModels
         }
 
 
-
-        
-        
-
-
          
-
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }
