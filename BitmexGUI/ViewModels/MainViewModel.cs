@@ -75,6 +75,22 @@ namespace BitmexGUI.ViewModels
         private ObservableCollection<Order> _orderData = new ObservableCollection<Order>();
         private ObservableCollection<Order> _historicorderData = new ObservableCollection<Order>();
         private ObservableCollection<CandlestickData> _scaledpriceData = new ObservableCollection<CandlestickData>();
+        private ObservableCollection<OrdersLines> _orderLines = new ObservableCollection<OrdersLines>();
+
+        public ObservableCollection<OrdersLines> OrderLines
+        {
+            get => _orderLines;
+            set
+            {
+                _orderLines = value;
+                OnPropertyChanged(nameof(OrderLines));
+            }
+        }
+
+   
+
+       
+
         public ObservableCollection<CandlestickData> ScaledPriceData
         {
             get => _scaledpriceData;
@@ -176,42 +192,139 @@ namespace BitmexGUI.ViewModels
             BitmexApi.AccountInfo += OnWalletInfoReceived;
             BitmexApi.PositionUpdated += OnPositionUpdate;
             BitmexApi.OrderUpdated += OnOrderReceived;
+            
+            
+            
             //BitmexApi.SetLeverage("XBTUSDT",5.4);
 
 
 
         }
 
+        public Action OrderLineUpdated;
+        private void UpdateorderLines(Order newOrderData)
+        {
+            //MessageBox.Show(newOrderData.Price.ToString()+" from update");
 
 
+            //MessageBox.Show(newOrderData.Price.Value.ToString());
+            
+            var a = CandlestickChart.MapToScale(double.Parse(newOrderData.Price.Value.ToString()),"fromhere");
+           
+            OrdersLines neworderLine = new OrdersLines
+            {
+                OrderID = newOrderData.OrderID,
+                Price = (decimal)a,
+                Symbol = newOrderData.Symbol,
+                Side = newOrderData.Side
+
+            };
+            var existingOrderLine = OrderLines.FirstOrDefault(p => p.OrderID.Equals(newOrderData.OrderID));
+            if (existingOrderLine != null)
+            {
+                OrderLines.Remove(existingOrderLine);
+            }
+            OrderLines.Add(neworderLine);
+            OrderLineUpdated?.Invoke();
+
+
+        }
+
+        private void RemoveorderLines(Order newOrderData)
+        {
+
+            var existingOrderLine = OrderLines.FirstOrDefault(p => p.OrderID.Equals(newOrderData.OrderID));
+            if (existingOrderLine != null)
+            {
+                OrderLines.Remove(existingOrderLine);
+            }
+            OrderLineUpdated?.Invoke();
+        }
         private void OnOrderReceived(Order newOrderData)
-        {  
+        {
             if (newOrderData != null)
             {
-               
 
-                string orderStatus = newOrderData.OrdStatus.ToLower();
- 
+                //MessageBox.Show(newOrderData.Price.ToString());
+                // Check if OrdStatus is present
 
-                if (newOrderData.OrdStatus.ToLower().Contains("new"))
+                var ordStatusProperty = newOrderData.GetType().GetTypeInfo().GetDeclaredProperty("OrdStatus");
+
+                if (ordStatusProperty != null)
                 {
-                    OrdersInfo.Add(newOrderData);
-                    OpenordersInfoUpdated?.Invoke();
-                }
-                else
-                {
-                    
-                    var existingOrder = OrdersInfo.FirstOrDefault(p => p.OrderID.Equals(newOrderData.OrderID));
-                    if (existingOrder != null)
+                    // OrdStatus exists and is not null or empty
+                    if (!string.IsNullOrEmpty(newOrderData.OrdStatus))
                     {
-                        
-                        OrdersInfo.Remove(existingOrder);
-                        OpenordersInfoUpdated?.Invoke();
+
+                        string orderStatus = newOrderData.OrdStatus.ToLower();
+
+                        if (orderStatus.Contains("new") || orderStatus.Contains("partiallyfilled"))
+                        {
+                            var existingOrder = OrdersInfo.FirstOrDefault(p => p.OrderID.Equals(newOrderData.OrderID));
+
+                            if (existingOrder != null)
+                            {
+                                OrdersInfo.Remove(existingOrder);
+                            }
+
+
+                            UpdateorderLines(newOrderData);
+                            OrdersInfo.Add(newOrderData);
+                        }
+                        else
+                        {
+                            var existingOrder = OrdersInfo.FirstOrDefault(p => p.OrderID.Equals(newOrderData.OrderID));
+                            if (existingOrder != null)
+                            {
+                                RemoveorderLines(existingOrder);
+                                OrdersInfo.Remove(existingOrder);
+                            }
+                        }
                     }
-                    HistoricOrdersInfo.Add(newOrderData);
-                    HistoricOrderdataUpdated?.Invoke();
+                    else
+                    {
+
+                        // OrdStatus does not exist, so update the existing order
+                        var existingOrder = OrdersInfo.FirstOrDefault(p => p.OrderID.Equals(newOrderData.OrderID));
+
+                        if (existingOrder != null)
+                        {
+
+                            Order TempOrder = new Order();
+
+                            int index = OrdersInfo.IndexOf(existingOrder);
+                            // Iterate over all properties of newOrderData and update existingOrder with differing values
+                            foreach (var prop in typeof(Order).GetProperties())
+                            {
+                                var newValue = prop.GetValue(newOrderData);
+                                var existingValue = prop.GetValue(existingOrder);
+
+                                // Only update the property if the new value is different and not null
+                                if (newValue != null && !newValue.Equals(existingValue))
+                                {
+                                    prop.SetValue(TempOrder, newValue);
+                                }
+                                else
+                                {
+                                    prop.SetValue(TempOrder, existingValue);
+                                }
+
+                            }
+                            OrdersInfo[index] = TempOrder;
+                            UpdateorderLines(TempOrder);
+                        }
+                        else
+                        {
+                            // If no existing order is found, add the new order to OrdersInfo
+                            OrdersInfo.Add(newOrderData);
+                            UpdateorderLines(newOrderData);
+                        }
+                    }
                 }
 
+
+                // Always update historic orders
+                HistoricOrdersInfo.Add(newOrderData);
             }
         }
 
@@ -442,8 +555,7 @@ namespace BitmexGUI.ViewModels
         {
             BinanceApi.GetPriceWSS();
             BitmexApi.GetPriceWSS();
-            BitmexApi.GetPositionWSS();
-            BitmexApi.GetOrdersWSS();
+           
         }
 
 
@@ -527,7 +639,7 @@ namespace BitmexGUI.ViewModels
             BalanceUpdated?.Invoke();
         }
 
-        private CandlestickData ScaledCandle(CandlestickData priceData, ObservableCollection<CandlestickData> PriceData)
+        private CandlestickData ScaleCandle(CandlestickData priceData, ObservableCollection<CandlestickData> PriceData)
         {
             var allValues = PriceData.SelectMany(data => new[] { data.Open, data.High, data.Low, data.Close });
             CandlestickChart.minOriginal = allValues.Min();
@@ -562,10 +674,16 @@ namespace BitmexGUI.ViewModels
                 CandlestickData temp = new CandlestickData();
                 foreach (var priceData in PriceData)
                 {
-                    temp = ScaledCandle(priceData, PriceData);
+                    temp = ScaleCandle(priceData, PriceData);
 
                     ScaledPriceData.Add(temp);
+                    if (ScaledPriceData.Count >= int.Parse(ConfigurationManager.AppSettings["MaxCacheCandles"].ToString()))
+                    {
+                        BitmexApi.GetPositionWSS();
+                        BitmexApi.GetOrdersWSS();
+                    }
                 }
+
 
                 var timestamp = priceData.Timestamp;
 
@@ -590,10 +708,12 @@ namespace BitmexGUI.ViewModels
 
                     }
                     PriceDataUpdated?.Invoke(); // Trigger the event
-                    var indexScaled = ScaledPriceData.IndexOf(ScaledCandle(priceData, PriceData));
+
+
+                    var indexScaled = ScaledPriceData.IndexOf(ScaleCandle(priceData, PriceData));
                     if (index >= 0)
                     {
-                        ScaledPriceData[index] = ScaledCandle(existingData, PriceData); ; // Update the item in the ObservableCollection
+                        ScaledPriceData[index] = ScaleCandle(existingData, PriceData); ; // Update the item in the ObservableCollection
 
                     }
                     ScaledPriceDataUpdated?.Invoke();
@@ -603,6 +723,7 @@ namespace BitmexGUI.ViewModels
                    
                     // Add new entry
                     _priceDataDictionary[timestamp.ToString()] = priceData;
+                    priceData.Posx = 20 * PriceData.Count;
                     PriceData.Add(priceData);
                     
                     while (PriceData.Count > _maxCandlesLoading)
@@ -611,7 +732,7 @@ namespace BitmexGUI.ViewModels
                     }
                     NewPricedataAdded?.Invoke();
 
-                    ScaledPriceData.Add(ScaledCandle(priceData, PriceData));
+                    ScaledPriceData.Add(ScaleCandle(priceData, PriceData));
 
                     while (PriceData.Count > _maxCandlesLoading)
                     {

@@ -21,7 +21,7 @@ namespace BitmexGUI.Services.Implementations
     internal class CandlestickChart : AbstractCharts
     {
         public static double minOriginal = 0;
-        public static double maxOriginal = 0;
+        public static double maxOriginal = 70000;
         public event Action<OrdersLines> OrderLinesUpdated;
         // Target range
         public static double minTarget = 0;
@@ -53,7 +53,7 @@ namespace BitmexGUI.Services.Implementations
 
             //DrawingCanvas.Children.Clear();
             //ReleaseMouseCaptureIfNeeded();
-            //DrawGrid();
+            DrawGrid();
             //DrawBorder();
 
             //lock (ViewModel.PriceData)
@@ -334,9 +334,15 @@ namespace BitmexGUI.Services.Implementations
         //    }
 
 
-        public static double MapToScale(double originalValue)
+        public static double MapToScale(double originalValue,string fromewhere="")
         {
             //return maxTarget - ((originalValue - minOriginal) / (maxOriginal - minOriginal)) * (maxTarget - minTarget);
+            if(fromewhere.Length > 0)
+            {
+               
+                //MessageBox.Show((maxTarget - ((originalValue - minOriginal) * (maxTarget - minTarget)) / (maxOriginal - minOriginal) + minTarget).ToString());
+            }
+            
             return maxTarget - ((originalValue - minOriginal) * (maxTarget - minTarget)) / (maxOriginal - minOriginal) + minTarget;
         }
 
@@ -345,43 +351,43 @@ namespace BitmexGUI.Services.Implementations
             return ((maxTarget - Value) / (maxTarget - minTarget)) * (maxOriginal - minOriginal) + minOriginal;
         }
 
-        //    private void DrawGrid()
-        //    {
-        //        // Clear existing grid lines if any
+        private void DrawGrid()
+        {
+            // Clear existing grid lines if any
 
-        //        int GridSpacing = 50;
-        //        // Horizontal lines
-        //        for (double y = 0; y <= DrawingCanvas.Height; y += GridSpacing)
-        //        {
-        //            Line horizontalLine = new Line
-        //            {
-        //                X1 = 0,
-        //                Y1 = y,
-        //                X2 = DrawingCanvas.Width,
-        //                Y2 = y,
-        //                Stroke = Brushes.LightBlue,
-        //                StrokeThickness = 2,
-        //                StrokeDashArray = new DoubleCollection { 2, 2 } // Dotted line
-        //            };
-        //            DrawingCanvas.Children.Add(horizontalLine);
-        //        }
+            int GridSpacing = 50;
+            // Horizontal lines
+            for (double y = 0; y <= DrawingCanvas.Height; y += GridSpacing)
+            {
+                Line horizontalLine = new Line
+                {
+                    X1 = 0,
+                    Y1 = y,
+                    X2 = DrawingCanvas.Width,
+                    Y2 = y,
+                    Stroke = Brushes.LightBlue,
+                    StrokeThickness = 2,
+                    StrokeDashArray = new DoubleCollection { 2, 2 } // Dotted line
+                };
+                DrawingCanvas.Children.Add(horizontalLine);
+            }
 
-        //        // Vertical lines
-        //        for (double x = 0; x <= DrawingCanvas.Width; x += GridSpacing)
-        //        {
-        //            Line verticalLine = new Line
-        //            {
-        //                X1 = x,
-        //                Y1 = 0,
-        //                X2 = x,
-        //                Y2 = DrawingCanvas.Height,
-        //                Stroke = Brushes.LightBlue,
-        //                StrokeThickness = 2,
-        //                StrokeDashArray = new DoubleCollection { 2, 2 } // Dotted line
-        //            };
-        //            DrawingCanvas.Children.Add(verticalLine);
-        //        }
-        //    }
+            // Vertical lines
+            for (double x = 0; x <= DrawingCanvas.Width; x += GridSpacing)
+            {
+                Line verticalLine = new Line
+                {
+                    X1 = x,
+                    Y1 = 0,
+                    X2 = x,
+                    Y2 = DrawingCanvas.Height,
+                    Stroke = Brushes.LightBlue,
+                    StrokeThickness = 2,
+                    StrokeDashArray = new DoubleCollection { 2, 2 } // Dotted line
+                };
+                DrawingCanvas.Children.Add(verticalLine);
+            }
+        }
 
         //    private void DrawBorder()
         //    {

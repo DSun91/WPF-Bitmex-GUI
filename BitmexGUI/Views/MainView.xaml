@@ -135,11 +135,11 @@
                             <Line  
                          Canvas.Top="0" 
                          X1="0"  
-                         X2="500"
+                         X2="700"
                          Y1="{Binding Price}"   
                          Y2="{Binding Price}" 
                          Stroke="Red"
-                         StrokeThickness="1"/>
+                         StrokeThickness="2"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

@@ -61,10 +61,10 @@ namespace BitmexGUI.Views
             viewModel.StartPriceFeed();
              
             viewModel.BalanceUpdated += OnBalanceInfoUpdated;
-           
+            viewModel.PriceDataUpdated += OnPriceDataUpdated;
             CandleStickView = new CandlestickChart(ViewModel, DrawingCanvas,Candles_inView, CachedCandleSize);
 
-            
+            DrawingCanvas.MouseLeftButtonDown += DrawingCanvas_MouseLeftButtonDown;
             DrawingCanvas.MouseWheel += DrawingCanvas_MouseWheel;
             this.Loaded += MainWindow_Loaded;
             
@@ -150,50 +150,50 @@ namespace BitmexGUI.Views
 
         }
 
-        //private void OnPriceDataUpdated()
-        //{
- 
-        //    CandleStickView.RefreshCanvas();
-            
-            
-        //}
+        private void OnPriceDataUpdated()
+        {
+
+            CandleStickView.RefreshCanvas();
+
+
+        }
 
         //private void OnPriceDataAdded()
         //{
 
         //    //MessageBox.Show("new data added");
-            
+
 
         //}
 
-        //private void DrawingCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    // Get the position of the mouse click relative to the Canvas
-        //    Point clickPosition = e.GetPosition(DrawingCanvas);
+        private void DrawingCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            // Get the position of the mouse click relative to the Canvas
+            Point clickPosition = e.GetPosition(DrawingCanvas);
 
-        //    // Extract X and Y coordinates
-        //    double x = clickPosition.X;
-        //    double y = clickPosition.Y;
+            // Extract X and Y coordinates
+            double x = clickPosition.X;
+            double y = clickPosition.Y;
 
-        //    Line priceLine = new Line
-        //    {
-        //        X1 = 0,
-        //        Y1 = y,
-        //        X2 = DrawingCanvas.Width,
-        //        Y2 = y,
-        //        Stroke = Brushes.Blue,
-        //        StrokeThickness = 2,
-        //        StrokeDashArray = new DoubleCollection { 2, 2 }
-        //    };
-        //    DrawingCanvas.Children.Add(priceLine);
-        //    Entryprice.Text = Math.Round(CandleStickView.InvMapToScale(y), 3).ToString();
+            Line priceLine = new Line
+            {
+                X1 = 0,
+                Y1 = y,
+                X2 = DrawingCanvas.Width,
+                Y2 = y,
+                Stroke = Brushes.Blue,
+                StrokeThickness = 2,
+                StrokeDashArray = new DoubleCollection { 2, 2 }
+            };
+            DrawingCanvas.Children.Add(priceLine);
+            Entryprice.Text = Math.Round(CandlestickChart.InvMapToScale(y), 3).ToString();
 
-        //}
+        }
 
         //private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         //{
         //    Slider slider = sender as Slider;
-            
+
 
         //    // Check if viewModel is not null
         //    if (viewModel == null) return; // Early exit if viewModel is null
@@ -203,8 +203,8 @@ namespace BitmexGUI.Views
         //        if (newInitialCandles != CachedCandleSize)
         //        {
         //            viewModel.UpdateInitialCandles(newInitialCandles);
-                    
-                    
+
+
         //            // Optionally, you might want to refresh or reset the candlestick view as well
         //            CandleStickView.RefreshCanvas();
         //        }
