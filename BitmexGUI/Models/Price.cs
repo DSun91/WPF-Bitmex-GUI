@@ -17,9 +17,12 @@ namespace BitmexGUI.Models
 
         public double Posx { get; set; }
 
-        public double Height => Math.Abs(Open - Close);
+        public double Height => Math.Abs(Open - Close)+1;
 
         public double Width { get; set; }
+        public double CenterY => Math.Abs(High - Low)/2;
+
+        public double CenterX => Width/2;
 
     }
 

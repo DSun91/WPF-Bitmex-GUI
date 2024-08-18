@@ -28,7 +28,7 @@ namespace BitmexGUI.Services.Implementations
         public static double minTarget = 0;
         public static double maxTarget = 500;
 
-        public static int MaxCandlesDisplay = 70;
+        public static int MaxCandlesDisplay = 50;
         //public event Action OrderLinesUpdated;
         public static double ScaleFactor =0.5;
         public static double interspace = 6; // Increased for better visibility

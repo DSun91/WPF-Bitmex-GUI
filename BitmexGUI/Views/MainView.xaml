@@ -66,6 +66,14 @@
                 </Setter>
             </Style>
 
+            <Style TargetType="Label">
+                <Setter Property="Foreground" Value="Black"/>  
+                <Setter Property="FontFamily" Value="Book Antiqua"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontStyle" Value="Italic"/>
+                <Setter Property="FontWeight" Value="DemiBold"/> 
+            </Style>
+
             <Style x:Key="GridLineStyle" TargetType="Line">
                 <Setter Property="Stroke" Value="LightBlue"/>
                 <Setter Property="StrokeThickness" Value="2"/>
@@ -106,7 +114,7 @@
         </Menu>
 
         <!-- Main content area -->
-        <Grid Margin="1,0,0,0">
+        <Grid Margin="1,0,0,0" Background="Transparent">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -128,7 +136,7 @@
 
 
 
-            <Canvas x:Name="DrawingCanvas" Grid.Row="1" Background="AliceBlue" Width="700" HorizontalAlignment="Left" Margin="67,0,0,0" Height="400" VerticalAlignment="Center" >
+            <Canvas x:Name="DrawingCanvas" Grid.Row="1" Background="Transparent" Width="700" HorizontalAlignment="Left" Margin="67,0,0,0" Height="400" VerticalAlignment="Center" >
                 
 
                     <ItemsControl ItemsSource="{Binding GridData}">
@@ -145,23 +153,14 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Canvas>
-                                <Line X1="{Binding X1}" X2="{Binding X2}"   Stroke="LightBlue" StrokeThickness="2" StrokeDashArray="2" 
+                                <Line X1="{Binding X1}" X2="{Binding X2}"   Stroke="Black" StrokeThickness="1" StrokeDashArray="1" 
                                       Y1="{Binding Y1}" Y2="{Binding Y2}"
                                        />   
                             </Canvas>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                   
+                    </ItemsControl> 
                 
-              
-
-               
-
-                <!-- Vertical Lines -->
-               
-
-                <!-- Red lines -->
                 <ItemsControl ItemsSource="{Binding OrdersLines}">
                     
                     <!-- Override the default panel to a Canvas -->
@@ -240,7 +239,9 @@
                                      Height="{Binding Height}"  
                                      Fill= "{Binding Converter={StaticResource ColorConverter}}"
                                      Panel.ZIndex="0"
-                                     MouseWheel="Candles_MouseWheel"/>
+                                     MouseLeftButtonDown="Canvas_MouseLeftButtonDown"
+                                     MouseMove = "Canvas_MouseMove"
+                                     MouseLeftButtonUp="Canvas_MouseLeftButtonUp"/>
                             </Canvas>
                         </DataTemplate>
 
@@ -249,7 +250,7 @@
 
             </Canvas>
 
-            <Label Content="Balance" Grid.Row="2" HorizontalAlignment="Left" VerticalContentAlignment="Top" Height="32" Margin="84,18,0,0" VerticalAlignment="Top" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.Column="1" />
+            <Label Content="Balance:" Grid.Row="2" HorizontalAlignment="Left" VerticalContentAlignment="Top" Height="32" Margin="84,18,0,0" VerticalAlignment="Top" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.Column="1" />
             <TextBox x:Name="CurrentBalance" IsEnabled="False" Text="{Binding CurrentBalance,UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"  Grid.Row="2"  HorizontalAlignment="Left" Height="25" Margin="164,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" FontFamily="Book Antiqua" FontSize="14" Grid.Column="1" />
             <ComboBox x:Name="CmbCurrency" Grid.Row="2" SelectedItem="{Binding SelectedCurrency}" ItemsSource="{Binding Currencies}" HorizontalAlignment="Left" SelectedIndex="0" Height="25" Margin="280,22,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1">
 
@@ -280,7 +281,7 @@
             <Label Content="Leverage:" Grid.Row="4" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="40" Margin="73,10,0,0" VerticalAlignment="Top" Width="130" FontFamily="Sitka Heading" FontSize="18"  FontWeight="Bold" Grid.Column="1" Grid.RowSpan="2" />
             <Slider x:Name="SliderLeverage"  Grid.Row="4" TickFrequency="5"  SmallChange="1" Minimum="1" Maximum="100" Value="{Binding SliderLeverage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  TickPlacement="Both" HorizontalAlignment="Left" Height="28" Margin="163,0,0,0" VerticalAlignment="Center" Width="190" Grid.Column="1"  />
             <Label x:Name="LeverageMultiplier" Grid.Row="4" Content="{Binding SliderLeverage,StringFormat='Value: X{{0:0.00}}'}" HorizontalAlignment="Left" Height="28" Margin="368,0,0,0" VerticalAlignment="Center" Width="67" FontWeight="Bold" Grid.Column="1"/>
-            <Label x:Name="LeverageMultiplier_Copy" Grid.Row="4" Content="X" HorizontalAlignment="Left" Height="28" Margin="353,0,0,0"  VerticalAlignment="Center" Width="18" FontWeight="Bold" Grid.Column="1"/>
+            <Label x:Name="LeverageMultiplier_Copy" Grid.Row="4" Content="X" HorizontalAlignment="Left" Height="28" Margin="345,0,0,0"  VerticalAlignment="Center" Width="23" FontWeight="Bold" Grid.Column="1"/>
             <Label Content="Liquidation Price: " Grid.Row="4" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="40" Margin="410,0,0,0" VerticalAlignment="Center" Width="158" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.Column="1"/>
             <TextBox Text="" Grid.Row="4" IsEnabled="False" BorderBrush="OrangeRed" BorderThickness="1" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="26" Margin="569,10,0,0" VerticalAlignment="Top" Width="118" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.Column="1"/>
 

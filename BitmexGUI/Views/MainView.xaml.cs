@@ -24,7 +24,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System;
 using System.Globalization;
-using System.Windows.Data;
+using System.Windows.Data; 
 
 
 namespace BitmexGUI.Views
@@ -61,10 +61,10 @@ namespace BitmexGUI.Views
             CandleStickView = new CandlestickChart();
 
             DrawingCanvas.MouseRightButtonDown += DrawingCanvas_MouseRightButtonDown;
-            DrawingCanvas.MouseWheel += DrawingCanvas_MouseHeelEventaaaa;
-
-
-
+            DrawingCanvas.MouseWheel += DrawingCanvas_MouseWheelEvents;
+            DrawingCanvas.MouseLeftButtonDown += Canvas_MouseLeftButtonDown;
+            DrawingCanvas.MouseMove += Canvas_MouseMove;
+            DrawingCanvas.MouseLeftButtonUp += Canvas_MouseLeftButtonUp;
             this.OrderLinesUpdated += (updatedLine) =>
             {
                 if (DataContext is MainViewModel viewModel)
@@ -85,13 +85,18 @@ namespace BitmexGUI.Views
 
 
         private bool isDragging = false;
-        private Point clickPosition;
+        private Point clickPositionLabel;
+
+
+    
+        /// //////////////////////////////////////////////  ORDER LINE DRAGGING
+       
         private void MyLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (sender is Label label)
             {
                 isDragging = true;
-                clickPosition = e.GetPosition(label);
+                clickPositionLabel = e.GetPosition(label);
                 label.CaptureMouse(); // Capture the mouse to receive mouse events even when the cursor is outside the label
             }
         }
@@ -101,8 +106,7 @@ namespace BitmexGUI.Views
             { 
                 isDragging = false;
                 label.ReleaseMouseCapture(); // Release the mouse capture when dragging is finished
-                var mousePos = e.GetPosition(DrawingCanvas); 
-              
+                  
             }
             
             foreach (OrderLine x in ViewModel.OrdersLines)
@@ -111,95 +115,130 @@ namespace BitmexGUI.Views
                 OrderLinesUpdated?.Invoke(x);
             }
         }
-    private void MyLabel_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (isDragging && sender is Label label)
+        private void MyLabel_MouseMove(object sender, MouseEventArgs e)
             {
-                var mousePos = e.GetPosition(DrawingCanvas);
-
-
-                double top = mousePos.Y - clickPosition.Y;
-
-                if (top < 0) top = 0;
-
-
-                if (top + label.ActualHeight > DrawingCanvas.ActualHeight)
-                    top = DrawingCanvas.ActualHeight - label.ActualHeight;
-
-                var existingLine = ViewModel.OrdersLines.FirstOrDefault(p => p.OrderID.Equals(label.Tag));
-
-                if (existingLine != null)
+                if (isDragging && sender is Label label)
                 {
-                    var index = ViewModel.OrdersLines.IndexOf(existingLine);
+                    var mousePos = e.GetPosition(DrawingCanvas);
 
-                     
-                   OrderLine tempLine = new OrderLine 
-                   {
-                      OrderID=existingLine.OrderID,
-                      Price= (decimal)top,
-                      Side=existingLine.Side,
-                      Symbol=existingLine.Symbol 
-                   };
 
-                    if (index >= 0)
+                    double top = mousePos.Y - clickPositionLabel.Y;
+
+                    if (top < 0) top = 0;
+
+
+                    if (top + label.ActualHeight > DrawingCanvas.ActualHeight)
+                        top = DrawingCanvas.ActualHeight - label.ActualHeight;
+
+                    var existingLine = ViewModel.OrdersLines.FirstOrDefault(p => p.OrderID.Equals(label.Tag));
+
+                    if (existingLine != null)
                     {
-                        ViewModel.OrdersLines[index] = tempLine; // Update the item in the ObservableCollection
-                        
-                    }
+                        var index = ViewModel.OrdersLines.IndexOf(existingLine);
+
                      
+                       OrderLine tempLine = new OrderLine 
+                       {
+                          OrderID=existingLine.OrderID,
+                          Price= (decimal)top,
+                          Side=existingLine.Side,
+                          Symbol=existingLine.Symbol 
+                       };
+
+                        if (index >= 0)
+                        {
+                            ViewModel.OrdersLines[index] = tempLine; // Update the item in the ObservableCollection
+                        
+                        }
+                     
+
+                    }
+                 
+                    Canvas.SetTop(label, top);
+
 
                 }
-                 
-                Canvas.SetTop(label, top);
+            }
 
+        /// //////////////////////////////////////////////  ORDER LINE DRAGGING
 
+        /// //////////////////////////////////////////////  CANDLESTICK DRAGGING
+        private Point clickPositionCanvas;
+        private bool isMoving = false;
+        private void Canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Rectangle canvas)
+            {
+                isMoving = true;
+                clickPositionCanvas = e.GetPosition(canvas);
+               
+                canvas.CaptureMouse(); // Capture the mouse to receive mouse events even when the cursor is outside the label
+               
             }
         }
         
-        private void Candles_MouseWheel(object sender, MouseWheelEventArgs e)
+        private void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
-            Rectangle rect=sender as Rectangle;
-
-            if (rect != null)
+            if (isMoving && sender is Rectangle canvas)
             {
-                 
-                if (e.Delta > 0)
+                var mousePos = e.GetPosition(DrawingCanvas);
+
+                
+
+                double direction = mousePos.X - clickPositionCanvas.X;
+
+                if(direction >0 ) 
+                {
+                    for (int i=0 ;i < viewModel.PriceData.Count;i++)
+                    {
+                        viewModel.PriceData[i].Posx = viewModel.PriceData[i].Posx + 1;
+
+                    }
+                    viewModel.RefreshScaledPriceData();
+                }
+                else
                 {
 
-                    rect.Width += 0.1;
-
                 }
-                if (e.Delta < 0)
-                {
 
+           
 
-                    rect.Width -= 0.1;
-
-                }
             }
-            
-          
-
-            // If the mouse wheel delta is negative, move the box down.
-          
-             
-          
-              
         }
 
-       
-         
-         
+        private void Canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Canvas Canvas)
+            {
+                isMoving = false;
+                Canvas.ReleaseMouseCapture(); // Release the mouse capture when dragging is finished
+                 
+
+            }
+
+        }  //    foreach (OrderLine x in ViewModel.OrdersLines)
 
 
- 
-        private void DrawingCanvas_MouseHeelEventaaaa(object sender, MouseWheelEventArgs e)
+        /// //////////////////////////////////////////////  CANDLESTICK FRAGGING <summary>
+        
+
+
+
+        private void DrawingCanvas_MouseWheelEvents(object sender, MouseWheelEventArgs e)
         {
             // Get the position of the mouse click relative to the Canvas
+            if (e.Delta < 0)
+            {
+
+                CandlestickChart.ScaleFactor += 0.1; 
+                viewModel.RefreshScaledPriceData();
+
+            }
             if (e.Delta > 0)
             {
 
-                CandlestickChart.ScaleFactor += 0.1;
+                CandlestickChart.ScaleFactor -= 0.1;
+                viewModel.RefreshScaledPriceData();
 
             }
 
@@ -233,26 +272,7 @@ namespace BitmexGUI.Views
 
         }
 
-        //private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        //{
-        //    Slider slider = sender as Slider;
-
-
-        //    // Check if viewModel is not null
-        //    if (viewModel == null) return; // Early exit if viewModel is null
-        //    if (slider != null)
-        //    {
-        //        int newInitialCandles = (int)Math.Round(slider.Value, 0);
-        //        if (newInitialCandles != CachedCandleSize)
-        //        {
-        //            viewModel.UpdateInitialCandles(newInitialCandles);
-
-
-        //            // Optionally, you might want to refresh or reset the candlestick view as well
-        //            CandleStickView.RefreshCanvas();
-        //        }
-        //    }
-        //}
+      
 
         private void AmountSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {

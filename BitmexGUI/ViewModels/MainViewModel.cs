@@ -17,6 +17,7 @@ using System.Windows.Input;
 using Microsoft.VisualBasic;
 using System;
 using System.Reflection;
+using System.Windows.Controls;
 
 namespace BitmexGUI.ViewModels
 {
@@ -113,14 +114,15 @@ namespace BitmexGUI.ViewModels
             var existingOrder= OrdersInfo.FirstOrDefault(p => p.OrderID.Equals(updatedOrderLine.OrderID));
 
             if (existingOrder != null) 
-            { 
+            {
+               
                 double NewPrice = (double)CandlestickChart.InvMapToScale(double.Parse(updatedOrderLine.Price.ToString()));
 
                 var diff = NewPrice - (double)existingOrder.Price; 
 
                 if (Math.Abs(diff) > 0) 
                 {
-                    //MessageBox.Show(diff.ToString());
+                    
                     existingOrder.Price = (decimal)Math.Round(NewPrice,0);
                      
                     BitmexApi.AmmendOrder(existingOrder);
@@ -562,25 +564,44 @@ namespace BitmexGUI.ViewModels
             BalanceUpdated?.Invoke();
         }
 
+
+        private void UpdateOrderLinesRescale(ObservableCollection<Order> Orderinfos)
+        {
+            for (int j = 0; j < Orderinfos.Count; j++)
+            { 
+                OrderLine tempOrdlIne = new OrderLine
+                {
+                    OrderID = OrdersLines[j].OrderID,
+                    Price = (decimal)CandlestickChart.MapToScale((double)Orderinfos[j].Price),
+                    Side = OrdersLines[j].Side,
+                    Symbol = OrdersLines[j].Symbol
+                };
+               
+                var index = OrdersLines.IndexOf(OrdersLines[j]);
+                if (index >= 0)
+                {
+                    OrdersLines[index] = tempOrdlIne;
+                }
+
+
+            }
+        }
+
+        
         private CandlestickData ScaleCandle(CandlestickData priceData)
         {
             var allValues = PriceData.SelectMany(data => new[] { data.Open, data.High, data.Low, data.Close });
-            CandlestickChart.minOriginal = allValues.Min();
-            CandlestickChart.maxOriginal = allValues.Max();
-
-
-            var allValuesOrders= OrdersInfo.SelectMany(data => new[] {data.Price});
-            var minOrderVal = allValuesOrders.Min();
-            var manOrderVal = allValuesOrders.Max();
-
-
-            
+            var minVal = allValues.Min();
+            var maxVal = allValues.Max();
+            double currentPrice = 0.0;
+             
+            CandlestickChart.minOriginal = minVal;
+            CandlestickChart.maxOriginal = maxVal;
             double padding = (CandlestickChart.maxOriginal - CandlestickChart.minOriginal) * CandlestickChart.ScaleFactor;
             CandlestickChart.minOriginal -= padding;
             CandlestickChart.maxOriginal += padding;
-
-
-            //MessageBox.Show(_ViewModel.SettledPriceData.Count.ToString());
+            
+            UpdateOrderLinesRescale(OrdersInfo); 
             CandlestickData temp = new CandlestickData();
 
             temp.Open = CandlestickChart.MapToScale(priceData.Open);
@@ -596,7 +617,7 @@ namespace BitmexGUI.ViewModels
         public Action ScaledPriceDataUpdated;
 
 
-        private void RefreshScaledPriceData()
+        public void RefreshScaledPriceData()
         {
             ScaledPriceData.Clear();
 
