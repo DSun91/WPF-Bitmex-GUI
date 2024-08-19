@@ -110,7 +110,11 @@ namespace BitmexGUI.ViewModels
 
         }
          
-
+        public void CancelOrder(string OrderID)
+        {
+             
+            BitmexApi.CancelOrder(OrderID);
+        }
        
         public Action OrderLineUpdated;
         private void UpdateorderLines(Order newOrderData)

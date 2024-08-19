@@ -79,56 +79,61 @@ namespace BitmexGUI.Services.Implementations
 
             CancellationTokenSource source = new CancellationTokenSource();
             CancellationToken token = source.Token;
-
-            if (BitmexHttpClientOrdersWSS.State != WebSocketState.Connecting && BitmexHttpClientOrdersWSS.State != WebSocketState.Open)
+            try
             {
-                await BitmexHttpClientPositionsWSS.ConnectAsync(new Uri(BITMEX_URL), token);
-            }
-
-             
-            if (BitmexHttpClientPositionsWSS.State == WebSocketState.Open)
-            {
-                var auth_message = new
+                if (BitmexHttpClientOrdersWSS.State != WebSocketState.Connecting && BitmexHttpClientOrdersWSS.State != WebSocketState.Open)
                 {
-                    op = "authKeyExpires",
-                    args = new object[] { ApiID, expires, signature }
-                };
-
-                string dataJson = JsonConvert.SerializeObject(auth_message);
-                await SendMessageAsync(dataJson, BitmexHttpClientPositionsWSS);
-
-
-                var subscribe_message = new
-                {
-                    op = "subscribe",
-                    args = new object[] { "position" }
-                };
-
-                string dataJsonSub = JsonConvert.SerializeObject(subscribe_message);
-                await SendMessageAsync(dataJsonSub, BitmexHttpClientPositionsWSS);
-            }
-
-            int size = 5000;
-            var buffer = new byte[size];
-
-            while (BitmexHttpClientPositionsWSS.State == WebSocketState.Open)
-            { 
-
-                var result = await BitmexHttpClientPositionsWSS.ReceiveAsync(buffer, token);
-
-                if (result.MessageType == WebSocketMessageType.Close)
-                {
-                    await BitmexHttpClientPositionsWSS.CloseAsync(WebSocketCloseStatus.NormalClosure, null, token);
+                    await BitmexHttpClientPositionsWSS.ConnectAsync(new Uri(BITMEX_URL), token);
                 }
-                else
-                {
-                    string resp = Encoding.ASCII.GetString(buffer, 0, result.Count);
-                    //MessageBox.Show(resp);
-                    System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"],"Positions: "+ resp + "\n");
 
-                    ProcessResponsePosition(resp);
+
+                if (BitmexHttpClientPositionsWSS.State == WebSocketState.Open)
+                {
+                    var auth_message = new
+                    {
+                        op = "authKeyExpires",
+                        args = new object[] { ApiID, expires, signature }
+                    };
+
+                    string dataJson = JsonConvert.SerializeObject(auth_message);
+                    await SendMessageAsync(dataJson, BitmexHttpClientPositionsWSS);
+
+
+                    var subscribe_message = new
+                    {
+                        op = "subscribe",
+                        args = new object[] { "position" }
+                    };
+
+                    string dataJsonSub = JsonConvert.SerializeObject(subscribe_message);
+                    await SendMessageAsync(dataJsonSub, BitmexHttpClientPositionsWSS);
                 }
+
+                int size = 5000;
+                var buffer = new byte[size];
+
+                while (BitmexHttpClientPositionsWSS.State == WebSocketState.Open)
+                {
+
+                    var result = await BitmexHttpClientPositionsWSS.ReceiveAsync(buffer, token);
+
+                    if (result.MessageType == WebSocketMessageType.Close)
+                    {
+                        await BitmexHttpClientPositionsWSS.CloseAsync(WebSocketCloseStatus.NormalClosure, null, token);
+                    }
+                    else
+                    {
+                        string resp = Encoding.ASCII.GetString(buffer, 0, result.Count);
+                        //MessageBox.Show(resp);
+                        System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], "Positions: " + resp + "\n");
+
+                        ProcessResponsePosition(resp);
+                    }
+                }
+
             }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+
 
 
 
@@ -444,34 +449,60 @@ namespace BitmexGUI.Services.Implementations
 
         }
 
+     
 
         private ClientWebSocket BitmexHttpClientOrdersWSS = new System.Net.WebSockets.ClientWebSocket();
 
 
-        public async void GetOrdersREST()
+        public async void CancelOrder(string OrderID)
         {
+
+
+            HttpClient client = new HttpClient();
+            string FunctionUrl = "/api/v1/order";
+            string url = "https:" + BaseUrl.Split(":")[1] + FunctionUrl;
+            string Verb = "DELETE";
+
+
+
             
-
-
-            string verb = "GET";
-            string path = "/api/v1/order";
-
-            string BITMEX_URL = "https://testnet.bitmex.com/api/v1/order" ;
-
-            string signature = GenerateSignature(ApiKey, verb, path, expires, "");
-
-            using (HttpClient client = new HttpClient())
+            var data = new
             {
-                client.DefaultRequestHeaders.Add("api-expires", expires.ToString());
-                client.DefaultRequestHeaders.Add("api-key", ApiID);
-                client.DefaultRequestHeaders.Add("api-signature", signature);
+                orderID = OrderID 
+                
+            };
 
-                HttpResponseMessage response = client.GetAsync(BITMEX_URL).Result;
-                string responseBody = response.Content.ReadAsStringAsync().Result;
 
-               // MessageBox.Show(responseBody);
-                ProcessResponseOrder(responseBody);
+            string dataJson = JsonConvert.SerializeObject(data);
+
+            string signature = GenerateSignature(ApiKey, Verb, FunctionUrl, expires, dataJson);
+
+            var headers = new HttpRequestMessage(HttpMethod.Delete, url);
+            headers.Headers.Add("api-expires", expires.ToString());
+            headers.Headers.Add("api-key", ApiID);
+            headers.Headers.Add("api-signature", signature);
+
+            headers.Content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+
+            try
+            {
+                HttpResponseMessage response = await client.SendAsync(headers);
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    MessageBox.Show("Order Deleted Successfully!");
+                }
+                else
+                {
+                    string responseString = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show(responseString);
+                }
+
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
 
         }
 

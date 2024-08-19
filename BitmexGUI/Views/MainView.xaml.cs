@@ -45,6 +45,7 @@ namespace BitmexGUI.Views
         // Target range
         private CandlestickChart CandleStickView;
         public event Action<string> OrderLinesUpdated;
+        public event Action<string> CancelOrder;
 
 
         public string vale;
@@ -76,6 +77,16 @@ namespace BitmexGUI.Views
                 }
             };
             this.Loaded += MainWindow_Loaded;
+
+
+             this.CancelOrder += (OrderCanceled) =>
+            {
+                if (DataContext is MainViewModel viewModel)
+                {
+                    viewModel.CancelOrder(OrderCanceled);
+                }
+            };
+             
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -225,7 +236,7 @@ namespace BitmexGUI.Views
         }  //    foreach (OrderLine x in ViewModel.OrdersLines)
 
 
-        /// //////////////////////////////////////////////  CANDLESTICK FRAGGING <summary>
+        /// //////////////////////////////////////////////  CANDLESTICK DRAGGING <summary>
         
 
 
@@ -238,6 +249,7 @@ namespace BitmexGUI.Views
 
                 CandlestickChart.ScaleFactor += 0.1; 
                 viewModel.RefreshScaledPriceData();
+               
 
             }
             if (e.Delta > 0)
@@ -286,7 +298,7 @@ namespace BitmexGUI.Views
             EntryAmount.Text=Math.Round(sld.Value,2).ToString();
             BalancePercent.Content=Math.Round(sld.Value * 100 / viewModel.AccountInfos[0].Balance, 2).ToString()+" %";
         }
-
+        
         private void ResetButton_Click(object sender, RoutedEventArgs e)
         {
              
@@ -300,7 +312,20 @@ namespace BitmexGUI.Views
           
 
         }
-      
+
+        private void CancleOpenOrder(object sender, RoutedEventArgs e)
+        {
+            Button Btn=sender as Button;
+
+            if (Btn != null)
+            {
+                CancelOrder?.Invoke(Btn.Tag.ToString());
+            }
+             
+
+
+        }
+
     }
     
 }

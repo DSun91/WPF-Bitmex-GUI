@@ -17,6 +17,7 @@
             <local:ColorConverter   x:Key="ColorConverter"/>
             <local:LocalViewModel x:Key="LocalViewModel"/>
             <local:ColorConverterOrderTag x:Key="ColorConverterOrderTag"/>
+            <local:PriceConverterMapSettledPrice x:Key="PriceConverterMapSettledPrice"/>
             <Style TargetType="Button">
                 <Setter Property="Template">
                     <Setter.Value>
@@ -161,9 +162,7 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl> 
                 
-                <ItemsControl ItemsSource="{Binding OrdersLines}">
-                    
-                    <!-- Override the default panel to a Canvas -->
+                <ItemsControl ItemsSource="{Binding OrdersLines}"> 
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Canvas />
@@ -179,10 +178,10 @@
                                    Canvas.Top="{Binding Price}"
                                    Canvas.Left="550" 
                                    Height="25"
-                                   Width="100"
-                                   HorizontalContentAlignment="Center"
+                                   Width="120"
+                                   HorizontalContentAlignment="Left"
                                    VerticalAlignment="Center"
-                                   FontSize = "12"
+                                   FontSize = "13"
                                    FontStyle="Italic"
                                    Foreground = "Black"
                                    FontWeight = "Bold"
@@ -196,6 +195,26 @@
                                         <Run Text="{Binding Price, Converter={StaticResource PriceConverterInvMapOrderline}}" />
                                     </TextBlock>
                                 </Label>
+                                <Button
+                                    x:Name="CancelOrder"
+                                    Content="X"
+                                    Tag="{Binding OrderID}"
+                                    Canvas.Top="{Binding Price}"
+                                    Canvas.Left="645"
+                                    Width="25"
+                                    Height="25"
+                                    FontSize="14"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Right"
+                                    Background="Transparent" Click="CancleOpenOrder">
+                                    
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                             
+                                        </Style>
+                                    </Button.Style>
+                                </Button> 
+
                                 <Line  
                                  x:Name="OrderLine"
                                  Canvas.Top="0" 
@@ -230,7 +249,7 @@
                                      Y1="{Binding High}"   
                                      Y2="{Binding Low}" 
                                      Stroke="Black"
-                                     StrokeThickness="1"/>
+                                     StrokeThickness="1"/> 
                                 <Rectangle 
                                      x:Name="Body"
                                      Canvas.Left="{Binding Converter={StaticResource PositionConverterCandlestickX}}"
@@ -248,6 +267,8 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
+
+               
             </Canvas>
 
             <Label Content="Balance:" Grid.Row="2" HorizontalAlignment="Left" VerticalContentAlignment="Top" Height="32" Margin="84,18,0,0" VerticalAlignment="Top" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.Column="1" />

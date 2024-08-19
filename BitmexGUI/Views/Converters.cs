@@ -1,7 +1,9 @@
 ﻿using BitmexGUI.Models;
 using BitmexGUI.Services.Implementations;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -12,6 +14,24 @@ using System.Windows.Media;
 
 namespace BitmexGUI.Views
 {
+   
+       
+    public class PriceConverterMapSettledPrice : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is double data)
+            {
+                return Math.Round(CandlestickChart.MapToScale(double.Parse(data.ToString())), 2).ToString();
+            }
+            return 0;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
     public class StringToDoubleConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -88,8 +108,7 @@ namespace BitmexGUI.Views
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value  is decimal data )
-            {
-
+            { 
                 return Math.Round(CandlestickChart.MapToScale(double.Parse(data.ToString())),2).ToString();
             }
             return 0;
@@ -100,6 +119,7 @@ namespace BitmexGUI.Views
             throw new NotImplementedException();
         }
     }
+   
 
     public class PriceConverterInvMapOrderline : IValueConverter
     {
@@ -173,5 +193,8 @@ namespace BitmexGUI.Views
         {
             throw new NotImplementedException();
         }
+
     }
+
+   
 }
