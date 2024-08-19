@@ -14,8 +14,8 @@ This project is a WPF (Windows Presentation Foundation) application designed wit
 - **Candlestick Charts**: Custom-built candlestick charts that allow users to select entry prices directly by clicking on the chart.
 - **Leverage Selection**: Easily select any range of leverage offered by the exchange.
 - **Real-Time Price Data**: 
-  - Market value (black tick) fetched via a WebSocket connection to Binance API.
-  - Stable live price value (purple tick) offered by BitMEX.
+  - Market value fetched via a WebSocket connection to Binance API.
+  - Stable live price value offered by BitMEX.
 - **Responsive UI**: Designed for efficiency and ease of use, allowing traders to focus on strategy rather than navigating a complex interface.
 
 ## Screenshots
