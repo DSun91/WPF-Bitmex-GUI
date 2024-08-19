@@ -187,9 +187,9 @@
                                    Foreground = "Black"
                                    FontWeight = "Bold"
                                    Background = "{Binding Converter={StaticResource ColorConverterOrderTag}}"
-                                   MouseLeftButtonDown="MyLabel_MouseLeftButtonDown"
-                                   MouseMove = "MyLabel_MouseMove"
-                                   MouseLeftButtonUp="MyLabel_MouseLeftButtonUp"  >
+                                   MouseLeftButtonDown="OrderTag_MouseLeftButtonDown"
+                                   MouseMove = "OrderTag_MouseMove"
+                                   MouseLeftButtonUp="OrderTag_MouseLeftButtonUp"  >
                                     <TextBlock>
                                         <Run Text="{Binding Side}"/>
                                         <Run Text=" : "/>
@@ -239,9 +239,9 @@
                                      Height="{Binding Height}"  
                                      Fill= "{Binding Converter={StaticResource ColorConverter}}"
                                      Panel.ZIndex="0"
-                                     MouseLeftButtonDown="Canvas_MouseLeftButtonDown"
-                                     MouseMove = "Canvas_MouseMove"
-                                     MouseLeftButtonUp="Canvas_MouseLeftButtonUp"/>
+                                     MouseLeftButtonDown="VerticalZoom_MouseLeftButtonDown"
+                                     MouseMove = "VerticalZoom_MouseMove"
+                                     MouseLeftButtonUp="VerticalZoom_MouseLeftButtonUp"/>
                             </Canvas>
                         </DataTemplate>
 

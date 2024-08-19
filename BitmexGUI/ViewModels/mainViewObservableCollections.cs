@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace BitmexGUI.ViewModels
 {
-    public class OservableCollections: INotifyPropertyChanged
+    public class mainViewProperties: INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

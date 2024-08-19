@@ -156,9 +156,13 @@ namespace BitmexGUI.Views
                 {
                     return Brushes.Red;
                 }
-                else
+                if (data.Side.ToLower().Contains("buy"))
                 {
                     return Brushes.LightGreen;
+                }
+                else
+                {
+                    return "Error!";
                 }
                
             }

@@ -72,7 +72,7 @@ namespace BitmexGUI.Services.Implementations
         {
             string BITMEX_URL = ConfigurationManager.AppSettings["BaseWSSBitmexTestnet"];
 
-
+            
             string verb = "GET";
             string path = "/realtime";
             string signature = GenerateSignature(ApiKey, verb, path, expires, "");
@@ -124,7 +124,7 @@ namespace BitmexGUI.Services.Implementations
                 {
                     string resp = Encoding.ASCII.GetString(buffer, 0, result.Count);
                     //MessageBox.Show(resp);
-                    //System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], resp + "\n");
+                    System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"],"Positions: "+ resp + "\n");
 
                     ProcessResponsePosition(resp);
                 }
@@ -447,6 +447,34 @@ namespace BitmexGUI.Services.Implementations
 
         private ClientWebSocket BitmexHttpClientOrdersWSS = new System.Net.WebSockets.ClientWebSocket();
 
+
+        public async void GetOrdersREST()
+        {
+            
+
+
+            string verb = "GET";
+            string path = "/api/v1/order";
+
+            string BITMEX_URL = "https://testnet.bitmex.com/api/v1/order" ;
+
+            string signature = GenerateSignature(ApiKey, verb, path, expires, "");
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add("api-expires", expires.ToString());
+                client.DefaultRequestHeaders.Add("api-key", ApiID);
+                client.DefaultRequestHeaders.Add("api-signature", signature);
+
+                HttpResponseMessage response = client.GetAsync(BITMEX_URL).Result;
+                string responseBody = response.Content.ReadAsStringAsync().Result;
+
+               // MessageBox.Show(responseBody);
+                ProcessResponseOrder(responseBody);
+            }
+
+        }
+
         public async void GetOrdersWSS()
         {
             string BITMEX_URL = ConfigurationManager.AppSettings["BaseWSSBitmexTestnet"];
@@ -466,33 +494,34 @@ namespace BitmexGUI.Services.Implementations
             if (BitmexHttpClientOrdersWSS.State != WebSocketState.Connecting && BitmexHttpClientOrdersWSS.State != WebSocketState.Open)
             {
                 await BitmexHttpClientOrdersWSS.ConnectAsync(new Uri(BITMEX_URL), token);
-            }
-            
-            
-
-            
-            if (BitmexHttpClientOrdersWSS.State == WebSocketState.Open)
-            {
-                var auth_message = new
+                if (BitmexHttpClientOrdersWSS.State == WebSocketState.Open)
                 {
-                    op = "authKeyExpires",
-                    args = new object[] { ApiID, expires, signature }
-                };
+                    var auth_message = new
+                    {
+                        op = "authKeyExpires",
+                        args = new object[] { ApiID, expires, signature }
+                    };
 
-                string dataJson = JsonConvert.SerializeObject(auth_message);
-                await SendMessageAsync(dataJson, BitmexHttpClientOrdersWSS);
+                    string dataJson = JsonConvert.SerializeObject(auth_message);
+                    await SendMessageAsync(dataJson, BitmexHttpClientOrdersWSS);
 
 
-                var subscribe_message = new
-                {
-                    op = "subscribe",
-                    args = new string[] { "order" }
-        
-                };
+                    var subscribe_message = new
+                    {
+                        op = "subscribe",
+                        args = new string[] { "order" }
 
-                string dataJsonSub = JsonConvert.SerializeObject(subscribe_message);
-                await SendMessageAsync(dataJsonSub, BitmexHttpClientOrdersWSS);
+                    };
+
+                    string dataJsonSub = JsonConvert.SerializeObject(subscribe_message);
+                    await SendMessageAsync(dataJsonSub, BitmexHttpClientOrdersWSS);
+                }
+
             }
+
+
+
+
 
             int size = 5000;
             var buffer = new byte[size];
@@ -512,7 +541,7 @@ namespace BitmexGUI.Services.Implementations
                 {
                     string resp = Encoding.ASCII.GetString(buffer, 0, result.Count);
                   
-                    System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], resp + "\n");
+                    System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], "GetOrdersWSS in Bitmex "+resp + "\n");
 
                     ProcessResponseOrder(resp);
                 }
@@ -715,7 +744,10 @@ namespace BitmexGUI.Services.Implementations
                 HttpResponseMessage response = await client.SendAsync(headers);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    MessageBox.Show("Order Price Changed Successfully!");
+                    //MessageBox.Show("Order Price Changed Successfully!");
+                    string responseString = await response.Content.ReadAsStringAsync();
+                    //MessageBox.Show(responseString);
+                    //GetOrdersREST();
                 }
                 else
                 {
