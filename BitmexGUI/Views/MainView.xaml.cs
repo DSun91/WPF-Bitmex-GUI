@@ -184,12 +184,12 @@ namespace BitmexGUI.Views
 
         /// //////////////////////////////////////////////  CANDLESTICK DRAGGING
         private Point clickPositionCanvas;
-        private bool isMoving = false;
+        private bool isrescaling = false;
         private void VerticalZoom_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (sender is Rectangle canvas)
+            if (sender is Canvas canvas)
             {
-                isMoving = true;
+                isrescaling = true;
                 clickPositionCanvas = e.GetPosition(canvas);
                
                 canvas.CaptureMouse(); // Capture the mouse to receive mouse events even when the cursor is outside the label
@@ -199,29 +199,30 @@ namespace BitmexGUI.Views
         
         private void VerticalZoom_MouseMove(object sender, MouseEventArgs e)
         {
-            if (isMoving && sender is Rectangle canvas)
+            if (isrescaling && sender is Canvas canvas)
             {
                 var mousePos = e.GetPosition(DrawingCanvas);
 
-                
 
-                double direction = mousePos.X - clickPositionCanvas.X;
 
-                if(direction >0 ) 
-                {
-                    for (int i=0 ;i < viewModel.PriceData.Count;i++)
-                    {
-                        viewModel.PriceData[i].Posx = viewModel.PriceData[i].Posx + 1;
+                double deltaX = mousePos.X - clickPositionCanvas.X;
+                double deltaY = mousePos.Y - clickPositionCanvas.Y;
 
-                    }
-                    viewModel.RefreshScaledPriceData();
-                }
-                else
-                {
+                // Adjust the margin of MainRenderingCanvas based on the mouse movement
+                // If dragging right (positive deltaX), increase the left margin and decrease the right margin
+                // If dragging left (negative deltaX), decrease the left margin and increase the right margin
+                MainRenderingCanvas.Margin = new Thickness(
+                    MainRenderingCanvas.Margin.Left + deltaX,
+                    MainRenderingCanvas.Margin.Top + deltaY,
+                    MainRenderingCanvas.Margin.Right - deltaX,
+                    MainRenderingCanvas.Margin.Bottom - deltaY
+                );
 
-                }
+                // Update the click position for the next movement
+                clickPositionCanvas = mousePos;
 
-           
+                // Optionally, refresh or redraw your data as needed
+                viewModel.RefreshScaledPriceData();
 
             }
         }
@@ -230,7 +231,7 @@ namespace BitmexGUI.Views
         {
             if (sender is Canvas Canvas)
             {
-                isMoving = false;
+                isrescaling = false;
                 Canvas.ReleaseMouseCapture(); // Release the mouse capture when dragging is finished
                  
 
@@ -247,19 +248,29 @@ namespace BitmexGUI.Views
         private void DrawingCanvas_MouseWheelEvents(object sender, MouseWheelEventArgs e)
         {
             // Get the position of the mouse click relative to the Canvas
-            if (e.Delta < 0)
+            if (e.Delta > 0)
             {
-
-                CandlestickChart.candleWidth += 1.0; 
+               
+                CandlestickChart.ScaleFactor -= 0.1;
+                //CandlestickChart.CandlesToView -= 1;
+                //CandlestickChart.candleWidth += 0.1;
+                //CandlestickChart.CandlesInterspace += 0.1;
                 viewModel.RefreshScaledPriceData();
+                 
+                
                
 
             }
-            if (e.Delta > 0)
+            if (e.Delta < 0)
             {
-
-                CandlestickChart.candleWidth -= 1.0;
+                
+                //CandlestickChart.CandlesToView += 1;
+                //CandlestickChart.candleWidth -= 0.1;
+                //CandlestickChart.CandlesInterspace -= 0.1;
+                CandlestickChart.ScaleFactor += 0.1;
                 viewModel.RefreshScaledPriceData();
+                
+                
 
             } 
         }

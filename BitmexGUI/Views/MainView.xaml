@@ -139,12 +139,13 @@
             <Label Content="Bitmex Trading GUI" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Height="49" Margin="218,0,0,0" VerticalAlignment="Center" Width="317" FontFamily="Franklin Gothic Book" FontSize="36" FontWeight="Bold" Cursor="AppStarting" FontStyle="Italic" Grid.Column="1"/>
 
             <Canvas x:Name="DrawingCanvas" Grid.Row="1" Background="Transparent" Width="700" HorizontalAlignment="Left" Margin="67,0,0,0" Height="400" VerticalAlignment="Center" >
-                <Border BorderBrush="Black" BorderThickness="2" Width="702" Height="402" Background="Transparent" CornerRadius="8">
-                    <Canvas>
-                        <Canvas.Clip>
-                            <RectangleGeometry Rect="0,0,700,400"
-                            RadiusX="8" RadiusY="8"/>
-                        </Canvas.Clip>
+                <Canvas.Clip>
+                    <RectangleGeometry Rect="0,0,700,400"
+                    RadiusX="8" RadiusY="8"/>
+                </Canvas.Clip>
+                <Border BorderBrush="Black" BorderThickness="2" Width="700" Height="400" Background="Transparent" CornerRadius="8" >
+                    <Canvas x:Name="MainRenderingCanvas" Margin="0,0,0,0" >
+                        
                         <ItemsControl ItemsSource="{Binding GridData}">
                             <ItemsControl.DataContext>
                                 <StaticResource ResourceKey="LocalViewModel"/>
