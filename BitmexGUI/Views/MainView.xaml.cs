@@ -250,7 +250,7 @@ namespace BitmexGUI.Views
             if (e.Delta < 0)
             {
 
-                CandlestickChart.ScaleFactor += 0.1; 
+                CandlestickChart.candleWidth += 1.0; 
                 viewModel.RefreshScaledPriceData();
                
 
@@ -258,7 +258,7 @@ namespace BitmexGUI.Views
             if (e.Delta > 0)
             {
 
-                CandlestickChart.ScaleFactor -= 0.1;
+                CandlestickChart.candleWidth -= 1.0;
                 viewModel.RefreshScaledPriceData();
 
             } 

@@ -683,7 +683,7 @@ namespace BitmexGUI.ViewModels
             {
                 CandlestickData scaledCandle = ScaleCandle(PriceData[i]);
                 scaledCandle.Posx = (i-ToSkip) * CandlestickChart.CandlesInterspace;
-
+                scaledCandle.Width = CandlestickChart.candleWidth;
                 ScaledPriceData.Add(scaledCandle);
 
                 if (!MainWindow.isDraggingOrderLine)
