@@ -138,141 +138,147 @@
             </Grid.ColumnDefinitions> 
             <Label Content="Bitmex Trading GUI" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Height="49" Margin="218,0,0,0" VerticalAlignment="Center" Width="317" FontFamily="Franklin Gothic Book" FontSize="36" FontWeight="Bold" Cursor="AppStarting" FontStyle="Italic" Grid.Column="1"/>
 
-
-
             <Canvas x:Name="DrawingCanvas" Grid.Row="1" Background="Transparent" Width="700" HorizontalAlignment="Left" Margin="67,0,0,0" Height="400" VerticalAlignment="Center" >
-                
+                <Border BorderBrush="Black" BorderThickness="2" Width="702" Height="402" Background="Transparent" CornerRadius="8">
+                    <Canvas>
+                        <Canvas.Clip>
+                            <RectangleGeometry Rect="0,0,700,400"
+                            RadiusX="8" RadiusY="8"/>
+                        </Canvas.Clip>
+                        <ItemsControl ItemsSource="{Binding GridData}">
+                            <ItemsControl.DataContext>
+                                <StaticResource ResourceKey="LocalViewModel"/>
+                            </ItemsControl.DataContext>
+                            <!-- Override the default panel to a Canvas -->
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Canvas />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
 
-                    <ItemsControl ItemsSource="{Binding GridData}">
-                        <ItemsControl.DataContext>
-                            <StaticResource ResourceKey="LocalViewModel"/>
-                        </ItemsControl.DataContext>
-                        <!-- Override the default panel to a Canvas -->
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <Canvas />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Canvas>
+                                        <Line X1="{Binding X1}" X2="{Binding X2}"   Stroke="Black" StrokeThickness="1" StrokeDashArray="1" 
+     Y1="{Binding Y1}" Y2="{Binding Y2}"
+      />
+                                    </Canvas>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
 
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Canvas>
-                                <Line X1="{Binding X1}" X2="{Binding X2}"   Stroke="Black" StrokeThickness="1" StrokeDashArray="1" 
-                                      Y1="{Binding Y1}" Y2="{Binding Y2}"
-                                       />   
-                            </Canvas>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl> 
-                
-                <ItemsControl ItemsSource="{Binding OrdersLines}"> 
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <Canvas />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    
-                        <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Canvas>
-                                <Label
-                                   x:Name="PriceTag"
-                                   Tag="{Binding OrderID}"
-                                   Canvas.Top="{Binding Price}"
-                                   Canvas.Left="550" 
-                                   Height="25"
-                                   Width="120"
-                                   HorizontalContentAlignment="Left"
-                                   VerticalAlignment="Center"
-                                   FontSize = "13"
-                                   FontStyle="Italic"
-                                   Foreground = "Black"
-                                   FontWeight = "Bold"
-                                   Background = "{Binding Converter={StaticResource ColorConverterOrderTag}}"
-                                   MouseLeftButtonDown="OrderTag_MouseLeftButtonDown"
-                                   MouseMove = "OrderTag_MouseMove"
-                                   MouseLeftButtonUp="OrderTag_MouseLeftButtonUp"  >
-                                    <TextBlock>
-                                        <Run Text="{Binding Side}"/>
-                                        <Run Text=" : "/>
-                                        <Run Text="{Binding Price, Converter={StaticResource PriceConverterInvMapOrderline}}" />
-                                    </TextBlock>
-                                </Label>
-                                <Button
-                                    x:Name="CancelOrder"
-                                    Content="X"
-                                    Tag="{Binding OrderID}"
-                                    Canvas.Top="{Binding Price}"
-                                    Canvas.Left="645"
-                                    Width="25"
-                                    Height="25"
-                                    FontSize="14"
-                                    VerticalAlignment="Center"
-                                    HorizontalAlignment="Right"
-                                    Background="Transparent" Click="CancleOpenOrder">
-                                    
-                                    <Button.Style>
-                                        <Style TargetType="Button">
-                                             
-                                        </Style>
-                                    </Button.Style>
-                                </Button> 
+                        <ItemsControl ItemsSource="{Binding OrdersLines}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Canvas />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
 
-                                <Line  
-                                 x:Name="OrderLine"
-                                 Canvas.Top="0" 
-                                 X1="0"  
-                                 X2="700"
-                                 Y1="{Binding Price}"   
-                                 Y2="{Binding Price}" 
-                                 Stroke="{Binding Converter={StaticResource ColorConverterOrderTag}}"
-                                 StrokeThickness="2"/>
-                                
-                            </Canvas>
-                            </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Canvas>
+                                        <Label
+  x:Name="PriceTag"
+  Tag="{Binding OrderID}"
+  Canvas.Top="{Binding Price}"
+  Canvas.Left="550" 
+  Height="25"
+  Width="120"
+  HorizontalContentAlignment="Left"
+  VerticalAlignment="Center"
+  FontSize = "13"
+  FontStyle="Italic"
+  Foreground = "Black"
+  FontWeight = "Bold"
+  Background = "{Binding Converter={StaticResource ColorConverterOrderTag}}"
+  MouseLeftButtonDown="OrderTag_MouseLeftButtonDown"
+  MouseMove = "OrderTag_MouseMove"
+  MouseLeftButtonUp="OrderTag_MouseLeftButtonUp"  >
+                                            <TextBlock>
+       <Run Text="{Binding Side}"/>
+       <Run Text=" : "/>
+       <Run Text="{Binding Price, Converter={StaticResource PriceConverterInvMapOrderline}}" />
+                                            </TextBlock>
+                                        </Label>
+                                        <Button
+   x:Name="CancelOrder"
+   Content="X"
+   Tag="{Binding OrderID}"
+   Canvas.Top="{Binding Price}"
+   Canvas.Left="645"
+   Width="25"
+   Height="25"
+   FontSize="14"
+   VerticalAlignment="Center"
+   HorizontalAlignment="Right"
+   Background="Transparent" Click="CancleOpenOrder">
 
+                                            <Button.Style>
+                                                <Style TargetType="Button">
 
-                <ItemsControl ItemsSource="{Binding ScaledPriceData}">
-                    <!-- Override the default panel to a Canvas -->
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <Canvas />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel> 
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Canvas>
-                                <Line
-                                     x:Name="Wick"
-                                     Canvas.Top="0" 
-                                     X1="{Binding Posx}"  
-                                     X2="{Binding Posx}"
-                                     Y1="{Binding High}"   
-                                     Y2="{Binding Low}" 
-                                     Stroke="Black"
-                                     StrokeThickness="1"/> 
-                                <Rectangle 
-                                     x:Name="Body"
-                                     Canvas.Left="{Binding Converter={StaticResource PositionConverterCandlestickX}}"
-                                     Canvas.Top="{Binding Converter={StaticResource PositionConverter}}"
-                                     Width="{Binding Width}"
-                                     Height="{Binding Height}"  
-                                     Fill= "{Binding Converter={StaticResource ColorConverter}}"
-                                     Panel.ZIndex="0"
-                                     MouseLeftButtonDown="VerticalZoom_MouseLeftButtonDown"
-                                     MouseMove = "VerticalZoom_MouseMove"
-                                     MouseLeftButtonUp="VerticalZoom_MouseLeftButtonUp"/>
-                            </Canvas>
-                        </DataTemplate>
+                                                </Style>
+                                            </Button.Style>
+                                        </Button>
 
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                                        <Line  
+x:Name="OrderLine"
+Canvas.Top="0" 
+X1="0"  
+X2="700"
+Y1="{Binding Price}"   
+Y2="{Binding Price}" 
+Stroke="{Binding Converter={StaticResource ColorConverterOrderTag}}"
+StrokeThickness="2"/>
+
+                                    </Canvas>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
 
 
-               
+                        <ItemsControl ItemsSource="{Binding ScaledPriceData}">
+                            <!-- Override the default panel to a Canvas -->
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Canvas />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Canvas>
+                                        <Line
+                            x:Name="Wick"
+                            Canvas.Top="0" 
+                            X1="{Binding Posx}"  
+                            X2="{Binding Posx}"
+                            Y1="{Binding High}"   
+                            Y2="{Binding Low}" 
+                            Stroke="Black"
+                            StrokeThickness="1"/>
+                                        <Rectangle 
+                            x:Name="Body"
+                            Canvas.Left="{Binding Converter={StaticResource PositionConverterCandlestickX}}"
+                            Canvas.Top="{Binding Converter={StaticResource PositionConverter}}"
+                            Width="{Binding Width}"
+                            Height="{Binding Height}"  
+                            Fill= "{Binding Converter={StaticResource ColorConverter}}"
+                            Panel.ZIndex="0"
+                            MouseLeftButtonDown="VerticalZoom_MouseLeftButtonDown"
+                            MouseMove = "VerticalZoom_MouseMove"
+                            MouseLeftButtonUp="VerticalZoom_MouseLeftButtonUp"/>
+                                    </Canvas>
+                                </DataTemplate>
+
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Canvas>
+                   
+                </Border>
+ 
             </Canvas>
+
+
+
 
             <Label Content="Balance:" Grid.Row="2" HorizontalAlignment="Left" VerticalContentAlignment="Top" Height="32" Margin="84,18,0,0" VerticalAlignment="Top" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.Column="1" />
             <TextBox x:Name="CurrentBalance" IsEnabled="False" Text="{Binding CurrentBalance,UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"  Grid.Row="2"  HorizontalAlignment="Left" Height="25" Margin="164,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" FontFamily="Book Antiqua" FontSize="14" Grid.Column="1" />

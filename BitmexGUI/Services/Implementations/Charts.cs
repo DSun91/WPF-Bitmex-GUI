@@ -30,7 +30,7 @@ namespace BitmexGUI.Services.Implementations
 
         public static int MaxCandlesDisplay = 50;
         //public event Action OrderLinesUpdated;
-        public static double ScaleFactor =0.5;
+        public static double ScaleFactor =1.5;
         public static double interspace = 6; // Increased for better visibility
         public static double candleWidth =5; // Increased for better visibility
         double xOffset = 20; 

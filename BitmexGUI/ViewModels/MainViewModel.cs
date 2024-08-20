@@ -457,51 +457,51 @@ namespace BitmexGUI.ViewModels
 
             string orderside = Side.ToLower().Replace(" ", "");
 
-            MessageBox.Show(orderside);
+            
             if (orderside.Contains("buylimit"))
             {
                
                 BitmexApi.CreateOrder(ConfigurationManager.AppSettings["BitMexSymbol"].ToString(),
-                                   Quantity * 1000000,
-                                   Math.Round(EntryPrice, 0),
-                                   "Limit",
-                                   "GoodTillCancel",
-                                   "Buy",
-                                   SliderLeverage);
+                                       Quantity * 1000000,
+                                       Math.Round(EntryPrice, 0),
+                                       "Limit",
+                                       "GoodTillCancel",
+                                       "Buy",
+                                       SliderLeverage);
             }
 
             else if (orderside.Contains("selllimit"))
             {
                 
                 BitmexApi.CreateOrder(ConfigurationManager.AppSettings["BitMexSymbol"].ToString(),
-                                   Quantity * 1000000,
-                                   Math.Round(EntryPrice, 0),
-                                   "Limit",
-                                   "GoodTillCancel",
-                                   "Sell",
-                                   SliderLeverage);
+                                       Quantity * 1000000,
+                                       Math.Round(EntryPrice, 0),
+                                       "Limit",
+                                       "GoodTillCancel",
+                                       "Sell",
+                                       SliderLeverage);
             }
 
             else if (orderside.Contains("buymarket"))
             {
                 BitmexApi.CreateOrder(ConfigurationManager.AppSettings["BitMexSymbol"].ToString(),
-                                   Quantity * 1000000,
-                                   Math.Round(EntryPrice, 0),
-                                   "Limit",
-                                   "GoodTillCancel",
-                                   "Buy",
-                                   SliderLeverage);
+                                       Quantity * 1000000,
+                                       Math.Round(EntryPrice, 0),
+                                       "Market",
+                                       "ImmediateOrCancel",
+                                       "Buy",
+                                       SliderLeverage);
             }
 
             else if (orderside.Contains("sellmarket"))
             {
                 BitmexApi.CreateOrder(ConfigurationManager.AppSettings["BitMexSymbol"].ToString(),
-                                   Quantity * 1000000,
-                                   Math.Round(EntryPrice, 0),
-                                   "Limit",
-                                   "GoodTillCancel",
-                                   "Sell",
-                                   SliderLeverage);
+                                       -Quantity * 1000000,
+                                       Math.Round(EntryPrice, 0),
+                                       "Market",
+                                       "ImmediateOrCancel",
+                                       "Sell",
+                                       SliderLeverage);
             }
 
 

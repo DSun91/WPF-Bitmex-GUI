@@ -401,23 +401,42 @@ namespace BitmexGUI.Services.Implementations
             string Verb = "POST";
 
 
-
-            if(leverage > 0) 
+            string dataJson = "";
+            if (leverage > 0) 
             {
                 SetLeverage(Symbol, leverage);
             }
 
-            var data = new  {
-                                symbol= Symbol,
-                                orderQty = Qty,
-                                price = Price,
-                                ordType = Type,
-                                timeInForce = TimeInForce,
-                                side = side
-                             };
+            if(!Type.ToLower().Contains("market"))
+            {
+                dataJson = JsonConvert.SerializeObject(new
+                {
+                    symbol = Symbol,
+                    orderQty = Qty,
+                    price = Price,
+                    ordType = Type,
+                    timeInForce = TimeInForce,
+                    side = side
+                });
+            }
+            else
+            {
+                dataJson = JsonConvert.SerializeObject(new
+                {
+                    symbol = Symbol,
+                    orderQty = Qty, 
+                    ordType = Type,
+                    timeInForce = TimeInForce,
+                    side = side
+                });
+            }
+           
 
+            
+           
 
-            string dataJson = JsonConvert.SerializeObject(data);
+             
+
 
             string signature = GenerateSignature(ApiKey, Verb, FunctionUrl, expires, dataJson);
 
@@ -426,7 +445,7 @@ namespace BitmexGUI.Services.Implementations
             headers.Headers.Add("api-key", ApiID);
             headers.Headers.Add("api-signature", signature);
 
-            headers.Content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+            headers.Content = new StringContent(dataJson, Encoding.UTF8, "application/json");
 
             try
             {
