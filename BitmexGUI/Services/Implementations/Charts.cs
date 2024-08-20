@@ -28,10 +28,13 @@ namespace BitmexGUI.Services.Implementations
         public static double minTarget = 0;
         public static double maxTarget = 500;
 
-        public static int MaxCandlesDisplay = 50;
+        public static int CachedCandles = 50;
+
+        public static int CandlesToView = 15;
+
         //public event Action OrderLinesUpdated;
         public static double ScaleFactor =1.5;
-        public static double interspace = 6; // Increased for better visibility
+        public static double CandlesInterspace = 6; // Increased for better visibility
         public static double candleWidth =5; // Increased for better visibility
         double xOffset = 20; 
         public int InView;

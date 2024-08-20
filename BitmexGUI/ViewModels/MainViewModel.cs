@@ -49,7 +49,7 @@ namespace BitmexGUI.ViewModels
             this.execute(parameter);
         }
     }
-    public class MainViewModel :mainViewProperties 
+    public class MainViewModel : mainViewProperties
     {
         private readonly string IdBinance = "";
         private readonly string ApiKeyBinance = "";
@@ -69,16 +69,16 @@ namespace BitmexGUI.ViewModels
         public event Action PositionsdatsUpdated;
         public event Action OpenordersInfoUpdated;
         public event Action HistoricOrderdataUpdated;
-        private Dictionary<string, CandlestickData> _priceDataDictionary = new Dictionary<string, CandlestickData>(); 
-        
+        private Dictionary<string, CandlestickData> _priceDataDictionary = new Dictionary<string, CandlestickData>();
+
         private readonly BinanceAPI BinanceApi;
         private readonly BitmexAPI BitmexApi;
-        private string TimeFrame= ConfigurationManager.AppSettings["Timeframe"];
-        
+        private string TimeFrame = ConfigurationManager.AppSettings["Timeframe"];
 
-       
-        
-   
+
+
+
+
         private double _entryAmount;
         private double _sliderLeverage;
         private double _positionValue;
@@ -91,7 +91,7 @@ namespace BitmexGUI.ViewModels
         {
 
 
-            
+
 
 
             BinanceEndpointRest += $"/klines?symbol={BinanceInstrument}&interval={TimeFrame}&limit={InitialCandlesNumber}";
@@ -108,25 +108,25 @@ namespace BitmexGUI.ViewModels
             BitmexApi.AccountInfo += OnWalletInfoReceived;
             BitmexApi.PositionUpdated += OnPositionUpdate;
             BitmexApi.OrderUpdated += OnOrderReceived;
-            
+
 
             //BitmexApi.SetLeverage("XBTUSDT",5.4);
 
 
 
         }
-         
+
         public void CancelOrder(string OrderID)
         {
-             
+
             BitmexApi.CancelOrder(OrderID);
         }
-       
+
         public Action OrderLineUpdated;
         private void UpdateorderLines(Order newOrderData)
         {
-            
-             
+
+
             OrderLine neworderLine = new OrderLine
             {
                 OrderID = newOrderData.OrderID,
@@ -272,7 +272,7 @@ namespace BitmexGUI.ViewModels
                     CurrentQty = newPositionData.CurrentQty.HasValue ? newPositionData.CurrentQty.Value : existingPosition.CurrentQty,
                     CurrentCost = newPositionData.CurrentCost.HasValue ? newPositionData.CurrentCost.Value : existingPosition.CurrentCost,
                     RealisedCost = newPositionData.RealisedCost.HasValue ? newPositionData.RealisedCost.Value : existingPosition.RealisedCost,
-                    PosComm = newPositionData.PosComm.HasValue ? newPositionData.PosComm.Value: existingPosition.PosComm,
+                    PosComm = newPositionData.PosComm.HasValue ? newPositionData.PosComm.Value : existingPosition.PosComm,
                     MarkValue = newPositionData.MarkValue.HasValue ? newPositionData.MarkValue.Value : existingPosition.MarkValue,
                     RebalancedPnl = newPositionData.RebalancedPnl.HasValue ? newPositionData.RebalancedPnl.Value : existingPosition.RebalancedPnl
                 };
@@ -280,9 +280,9 @@ namespace BitmexGUI.ViewModels
                 int index = PositionsInfo.IndexOf(existingPosition);
                 PositionsInfo[index] = updatedPosition;
                 //MessageBox.Show("updated pos has commision " + newPositionData.Symbol + " " + updatedPosition.MarkValue + " " + updatedPosition.RebalancedPnl + " " + updatedPosition.AvgEntryPrice);
-                if (updatedPosition.MarkValue==0 && updatedPosition.RebalancedPnl==0)
+                if (updatedPosition.MarkValue == 0 && updatedPosition.RebalancedPnl == 0)
                 {
-                    
+
                     PositionsInfo.RemoveAt(index);
                     PositionsdatsUpdated?.Invoke();
                 }
@@ -290,7 +290,7 @@ namespace BitmexGUI.ViewModels
             }
             else if (Math.Abs((decimal)newPositionData.CurrentQty) > 0)
             {
-                 
+
                 PositionsInfo.Add(newPositionData);
                 PositionsdatsUpdated?.Invoke();
             }
@@ -358,7 +358,7 @@ namespace BitmexGUI.ViewModels
 
         private void CalculateQuantity()
         {
-            Quantity = (Math.Round(1000 * EntryAmount * SliderLeverage / EntryPrice)/1000);
+            Quantity = (Math.Round(1000 * EntryAmount * SliderLeverage / EntryPrice) / 1000);
             CalculateActualPositionValue();
         }
 
@@ -372,7 +372,7 @@ namespace BitmexGUI.ViewModels
                 {
                     _positionValue = value;
                     OnPropertyChanged();
-                    
+
                 }
             }
         }
@@ -386,7 +386,7 @@ namespace BitmexGUI.ViewModels
                 {
                     _entryPrice = value;
                     CalculateOrderCost();
-                    OnPropertyChanged(); 
+                    OnPropertyChanged();
                 }
             }
         }
@@ -413,12 +413,12 @@ namespace BitmexGUI.ViewModels
         {
             get => _orderCost;
             set
-            { 
+            {
                 _orderCost = value;
                 OnPropertyChanged();
-                 
-                 
-                    
+
+
+
             }
         }
 
@@ -431,7 +431,7 @@ namespace BitmexGUI.ViewModels
             set
             {
                 _quantity = value;
-                OnPropertyChanged(); 
+                OnPropertyChanged();
             }
         }
 
@@ -449,7 +449,7 @@ namespace BitmexGUI.ViewModels
 
         private void CalculateActualPositionValue()
         {
-            ActualPositionValue = Math.Round(Quantity * EntryPrice,2);
+            ActualPositionValue = Math.Round(Quantity * EntryPrice, 2);
         }
 
         public void CreateNewOrder(string Side)
@@ -457,10 +457,10 @@ namespace BitmexGUI.ViewModels
 
             string orderside = Side.ToLower().Replace(" ", "");
 
-            
+
             if (orderside.Contains("buylimit"))
             {
-               
+
                 BitmexApi.CreateOrder(ConfigurationManager.AppSettings["BitMexSymbol"].ToString(),
                                        Quantity * 1000000,
                                        Math.Round(EntryPrice, 0),
@@ -472,7 +472,7 @@ namespace BitmexGUI.ViewModels
 
             else if (orderside.Contains("selllimit"))
             {
-                
+
                 BitmexApi.CreateOrder(ConfigurationManager.AppSettings["BitMexSymbol"].ToString(),
                                        Quantity * 1000000,
                                        Math.Round(EntryPrice, 0),
@@ -512,7 +512,7 @@ namespace BitmexGUI.ViewModels
         {
             BinanceApi.GetPriceWSS();
             BitmexApi.GetPositionWSS();
-            
+
         }
 
 
@@ -520,7 +520,7 @@ namespace BitmexGUI.ViewModels
 
         public event Action currencieslist;
 
-        private List<string> _currencies=new List<string>();
+        private List<string> _currencies = new List<string>();
 
 
         private string _currentBalance;
@@ -530,7 +530,7 @@ namespace BitmexGUI.ViewModels
             set
             {
                 _currency = value.ToUpper();
-                
+
                 UpdateCurrentBalance();
                 OnPropertyChanged();
             }
@@ -549,7 +549,7 @@ namespace BitmexGUI.ViewModels
             }
         }
         private void UpdateCurrentBalance()
-        { 
+        {
             var account = AccountInfos.FirstOrDefault(x => x.CurrencyName.Equals(SelectedCurrency, StringComparison.OrdinalIgnoreCase));
             if (account != null)
             {
@@ -561,7 +561,7 @@ namespace BitmexGUI.ViewModels
             }
         }
 
-        
+
 
         public void GetBalances()
         {
@@ -573,12 +573,12 @@ namespace BitmexGUI.ViewModels
             get => _currencies;
             set
             {
-                _currencies = value; 
+                _currencies = value;
                 OnPropertyChanged(nameof(Currencies));
             }
         }
 
-        
+
 
         private void OnWalletInfoReceived(Account accountInfo)
         {
@@ -586,20 +586,20 @@ namespace BitmexGUI.ViewModels
             {
                 if (accountInfo != null)
                 {
-                    
+
                     AccountInfos.Add(accountInfo);
                     Currencies.Add(accountInfo.CurrencyName);
                     OnPropertyChanged(nameof(Currencies));
                 }
             });
-            
+
             BalanceUpdated?.Invoke();
         }
 
 
         private void UpdateOrderLinesRescale(ObservableCollection<Order> Orderinfos)
         {
-            OrdersLines.Clear(); 
+            OrdersLines.Clear();
 
             for (int j = 0; j < Orderinfos.Count; j++)
             {
@@ -613,26 +613,26 @@ namespace BitmexGUI.ViewModels
                     Symbol = Orderinfos[j].Symbol
                 };
                 OrdersLines.Add(tempOrdlIne);
-                 
+
 
 
             }
         }
 
-        
+
         private CandlestickData ScaleCandle(CandlestickData priceData)
         {
             var allValues = PriceData.SelectMany(data => new[] { data.Open, data.High, data.Low, data.Close });
             var minVal = allValues.Min();
             var maxVal = allValues.Max();
-          
-             
+
+
             CandlestickChart.minOriginal = minVal;
             CandlestickChart.maxOriginal = maxVal;
             double padding = (CandlestickChart.maxOriginal - CandlestickChart.minOriginal) * CandlestickChart.ScaleFactor;
             CandlestickChart.minOriginal -= padding;
             CandlestickChart.maxOriginal += padding;
-            
+
             //UpdateOrderLinesRescale(OrdersInfo); 
             CandlestickData temp = new CandlestickData();
 
@@ -643,7 +643,7 @@ namespace BitmexGUI.ViewModels
             temp.Low = CandlestickChart.MapToScale(priceData.Low);
             temp.Close = CandlestickChart.MapToScale(priceData.Close);
             temp.Timestamp = priceData.Timestamp;
-            temp.Width= priceData.Width;
+            temp.Width = priceData.Width;
             temp.Posx = priceData.Posx;
             return temp;
         }
@@ -677,27 +677,104 @@ namespace BitmexGUI.ViewModels
         public void RefreshScaledPriceData()
         {
             ScaledPriceData.Clear();
-             
-            foreach (var priceData in PriceData)
+
+            int ToSkip = CandlestickChart.CachedCandles - CandlestickChart.CandlesToView;
+            for (int i = ToSkip; i < PriceData.Count; i++)
             {
-                CandlestickData temp = ScaleCandle(priceData);
+                CandlestickData scaledCandle = ScaleCandle(PriceData[i]);
+                scaledCandle.Posx = (i-ToSkip) * CandlestickChart.CandlesInterspace;
 
+                ScaledPriceData.Add(scaledCandle);
 
-                if (MainWindow.isDraggingOrderLine == false)
+                if (!MainWindow.isDraggingOrderLine)
                 {
-                     UpdateOrderLinesRescale(OrdersInfo);
+                    UpdateOrderLinesRescale(OrdersInfo);
                 }
-               
-                ScaledPriceData.Add(temp);
-                if (ScaledPriceData.Count >= CandlestickChart.MaxCandlesDisplay)
+
+                if (ScaledPriceData.Count >= CandlestickChart.CachedCandles)
                 {
-                    
                     BitmexApi.GetOrdersWSS();
-                    
+
                 }
             }
         }
 
+        
+
+        private void AppendPriceData(DateTime timestamp, CandlestickData priceData)
+        {
+            if (_priceDataDictionary.ContainsKey(timestamp.ToString()))
+            {
+
+                // Update existing entry
+                var existingData = _priceDataDictionary[timestamp.ToString()];
+                // Assuming PriceData has properties like Open, High, Low, Close
+                existingData.Open = priceData.Open;
+                existingData.High = priceData.High;
+                existingData.Low = priceData.Low;
+                existingData.Close = priceData.Close;
+
+                // Notify collection that an item has been updated
+                int index = PriceData.IndexOf(existingData);
+
+                if (index >= 0)
+                {
+
+                    PriceData[index] = existingData; // Update the item in the ObservableCollection
+
+
+                }
+            }
+        }
+        private void AppendScaledPriceData(DateTime timestamp, CandlestickData priceData)
+        {
+            var ScaledPriceExisting = ScaledPriceData.FirstOrDefault(data => data.Timestamp.Equals(timestamp));
+            int indexScaledPrice = ScaledPriceData.IndexOf(ScaledPriceExisting);
+            if (indexScaledPrice > 0)
+            { 
+                ScaledPriceData[indexScaledPrice] = ScaleCandle(priceData);
+                ScaledPriceData[indexScaledPrice].Posx = ScaledPriceExisting.Posx;
+            }
+
+        }
+
+        private void AddNewPriceData(DateTime timestamp, CandlestickData priceData)
+        {
+            _priceDataDictionary[timestamp.ToString()] = priceData;
+            priceData.Posx = CandlestickChart.CandlesInterspace * PriceData.Count;
+
+            PriceData.Add(priceData);
+            
+            if (PriceData.Count > CandlestickChart.CachedCandles)
+            {
+                PriceData.Remove(PriceData.First()); 
+
+                for (int i = 0; i < PriceData.Count; i++)
+                {
+                    PriceData[i].Posx = CandlestickChart.CandlesInterspace * i;
+
+
+                }
+            }
+        }
+
+        private void AddNewScaledPriceData(DateTime timestamp, CandlestickData priceData)
+        {
+            _priceDataDictionary[timestamp.ToString()] = priceData;
+            priceData.Posx = CandlestickChart.CandlesInterspace * PriceData.Count;
+
+            ScaledPriceData.Add(ScaleCandle(priceData));
+
+            if (ScaledPriceData.Count > CandlestickChart.CandlesToView)
+            { 
+                ScaledPriceData.Remove(ScaledPriceData.First());
+                 
+                for (int i = 0; i < ScaledPriceData.Count; i++)
+                {
+                    ScaledPriceData[i].Posx = CandlestickChart.CandlesInterspace * i;
+                }
+            }
+        }
         private void OnPriceUpdatedBinance(CandlestickData priceData)
         {
             Application.Current.Dispatcher.Invoke(() =>
@@ -708,58 +785,27 @@ namespace BitmexGUI.ViewModels
                 var timestamp = priceData.Timestamp;
 
 
-
+                
                 if (_priceDataDictionary.ContainsKey(timestamp.ToString()) && priceData != null)
                 {
 
-                    // Update existing entry
-                    var existingData = _priceDataDictionary[timestamp.ToString()];
-                    // Assuming PriceData has properties like Open, High, Low, Close
-                    existingData.Open = priceData.Open;
-                    existingData.High = priceData.High;
-                    existingData.Low = priceData.Low;
-                    existingData.Close = priceData.Close;
+                    AppendPriceData(timestamp, priceData);
+                    AppendScaledPriceData(timestamp, priceData);
 
-                    // Notify collection that an item has been updated
-                    var index = PriceData.IndexOf(existingData);
-                    if (index >= 0)
-                    {
-                        PriceData[index] = existingData; // Update the item in the ObservableCollection
-                        ScaledPriceData[index] = ScaleCandle(existingData);
 
-                    }
                     PriceDataUpdated?.Invoke(); // Trigger the event
 
                      
                 }
                 else
                 {
-                    
+
                     // Add new entry
-                    _priceDataDictionary[timestamp.ToString()] = priceData;
-                    priceData.Posx = CandlestickChart.interspace * PriceData.Count;
-                 
-
-                    PriceData.Add(priceData);
-                    ScaledPriceData.Add(ScaleCandle(priceData));
-
-
-
-                    if (PriceData.Count > CandlestickChart.MaxCandlesDisplay)
-                    {
-                        PriceData.Remove(PriceData.First());
-                        ScaledPriceData.Remove(ScaledPriceData.First());
-
-                        for (int i = 0; i < PriceData.Count; i++)
-                        {
-                            PriceData[i].Posx = CandlestickChart.interspace * i;
-                            ScaledPriceData[i].Posx = CandlestickChart.interspace * i;
-                        }
-                    }
+                    AddNewPriceData( timestamp,  priceData);
+                    AddNewScaledPriceData(timestamp, priceData);
                     NewPricedataAdded?.Invoke();
 
-                   
-
+                     
                 }
 
 

@@ -107,7 +107,7 @@ namespace BitmexGUI.Services.Implementations
                 // Add to the SortedDictionary
                 if (!PriceData.Contains(InitData))
                 {
-                    InitData.Posx =CandlestickChart.interspace * PriceData.Count;
+                    InitData.Posx =CandlestickChart.CandlesInterspace * PriceData.Count;
                     PriceData.Add(InitData);
                     CachedPriceData.Add(InitData);
                 }

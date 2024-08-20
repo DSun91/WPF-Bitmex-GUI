@@ -58,7 +58,7 @@ namespace BitmexGUI.Views
              
             InitializeComponent();
              
-            viewModel = new MainViewModel(CandlestickChart.MaxCandlesDisplay); 
+            viewModel = new MainViewModel(CandlestickChart.CachedCandles); 
             DataContext = viewModel;
             
             
@@ -131,7 +131,7 @@ namespace BitmexGUI.Views
             OrderLinesUpdated?.Invoke(AmendingOrderID);
         }
         
-        private void OrderTag_MouseMove(object sender, MouseEventArgs e)
+        private void OrderTag_MouseMove(object sender, MouseEventArgs e) 
             {
                 if (isDraggingOrderLine && sender is Label label)
                 {
@@ -239,11 +239,11 @@ namespace BitmexGUI.Views
         }  //    foreach (OrderLine x in ViewModel.OrdersLines)
 
 
-        /// //////////////////////////////////////////////  CANDLESTICK DRAGGING <summary>
-        
+        /// //////////////////////////////////////////////  CANDLESTICK DRAGGING  
 
 
 
+        /// ////////////////////////////////////////////// MOUSEWHEEL VERTICAL ZOOM
         private void DrawingCanvas_MouseWheelEvents(object sender, MouseWheelEventArgs e)
         {
             // Get the position of the mouse click relative to the Canvas
@@ -261,14 +261,10 @@ namespace BitmexGUI.Views
                 CandlestickChart.ScaleFactor -= 0.1;
                 viewModel.RefreshScaledPriceData();
 
-            }
-
-
-
-
-
-
+            } 
         }
+
+        /// ////////////////////////////////////////////// MOUSEWHEEL VERTICAL ZOOM
         private void DrawingCanvas_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             // Get the position of the mouse click relative to the Canvas
@@ -292,9 +288,7 @@ namespace BitmexGUI.Views
             Entryprice.Text = Math.Round(CandlestickChart.InvMapToScale(y), 3).ToString();
 
         }
-
-      
-
+         
         private void AmountSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Slider sld = sender as Slider;
