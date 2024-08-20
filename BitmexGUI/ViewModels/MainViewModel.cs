@@ -24,14 +24,8 @@ namespace BitmexGUI.ViewModels
 {
     public class RelayCommand : ICommand
     {
-        private readonly Action _execute;
-        private readonly Func<bool> _canExecute;
-
-        public RelayCommand(Action execute, Func<bool> canExecute = null)
-        {
-            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
-            _canExecute = canExecute;
-        }
+        private Action<object> execute;
+        private Func<object, bool> canExecute;
 
         public event EventHandler CanExecuteChanged
         {
@@ -39,9 +33,21 @@ namespace BitmexGUI.ViewModels
             remove { CommandManager.RequerySuggested -= value; }
         }
 
-        public bool CanExecute(object parameter) => _canExecute == null || _canExecute();
+        public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
+        {
+            this.execute = execute;
+            this.canExecute = canExecute;
+        }
 
-        public void Execute(object parameter) => _execute();
+        public bool CanExecute(object parameter)
+        {
+            return this.canExecute == null || this.canExecute(parameter);
+        }
+
+        public void Execute(object parameter)
+        {
+            this.execute(parameter);
+        }
     }
     public class MainViewModel :mainViewProperties 
     {
@@ -394,7 +400,7 @@ namespace BitmexGUI.ViewModels
             {
                 if (_createNewOrderCommand == null)
                 {
-                    _createNewOrderCommand = new RelayCommand(CreateNewOrder);
+                    _createNewOrderCommand = new RelayCommand(x => CreateNewOrder(x.ToString()));
                 }
                 return _createNewOrderCommand;
             }
@@ -446,18 +452,58 @@ namespace BitmexGUI.ViewModels
             ActualPositionValue = Math.Round(Quantity * EntryPrice,2);
         }
 
-        public void CreateNewOrder()
+        public void CreateNewOrder(string Side)
         {
 
-            //MessageBox.Show($"Order Cost: {actualtradeAmount * SliderLeverage}, fee {actualtradeAmount * SliderLeverage * 0.00015},total spent {actualtradeAmount + 2 * (actualtradeAmount * SliderLeverage * 0.00015)}");
+            string orderside = Side.ToLower().Replace(" ", "");
 
-            BitmexApi.CreateOrder(ConfigurationManager.AppSettings["BitMexSymbol"].ToString(),
-                                   Quantity*1000000,
+            MessageBox.Show(orderside);
+            if (orderside.Contains("buylimit"))
+            {
+               
+                BitmexApi.CreateOrder(ConfigurationManager.AppSettings["BitMexSymbol"].ToString(),
+                                   Quantity * 1000000,
                                    Math.Round(EntryPrice, 0),
                                    "Limit",
                                    "GoodTillCancel",
                                    "Buy",
                                    SliderLeverage);
+            }
+
+            else if (orderside.Contains("selllimit"))
+            {
+                
+                BitmexApi.CreateOrder(ConfigurationManager.AppSettings["BitMexSymbol"].ToString(),
+                                   Quantity * 1000000,
+                                   Math.Round(EntryPrice, 0),
+                                   "Limit",
+                                   "GoodTillCancel",
+                                   "Sell",
+                                   SliderLeverage);
+            }
+
+            else if (orderside.Contains("buymarket"))
+            {
+                BitmexApi.CreateOrder(ConfigurationManager.AppSettings["BitMexSymbol"].ToString(),
+                                   Quantity * 1000000,
+                                   Math.Round(EntryPrice, 0),
+                                   "Limit",
+                                   "GoodTillCancel",
+                                   "Buy",
+                                   SliderLeverage);
+            }
+
+            else if (orderside.Contains("sellmarket"))
+            {
+                BitmexApi.CreateOrder(ConfigurationManager.AppSettings["BitMexSymbol"].ToString(),
+                                   Quantity * 1000000,
+                                   Math.Round(EntryPrice, 0),
+                                   "Limit",
+                                   "GoodTillCancel",
+                                   "Sell",
+                                   SliderLeverage);
+            }
+
 
 
         }

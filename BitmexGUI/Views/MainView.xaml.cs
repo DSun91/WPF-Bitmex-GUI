@@ -97,7 +97,10 @@ namespace BitmexGUI.Views
 
         }
 
-
+        public void test(string testing)
+        {
+            MessageBox.Show("here");
+        }
         public static bool isDraggingOrderLine = false;
       
         private Point clickPositionLabel;
