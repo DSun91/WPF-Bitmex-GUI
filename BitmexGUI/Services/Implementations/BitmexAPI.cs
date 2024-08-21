@@ -192,8 +192,8 @@ namespace BitmexGUI.Services.Implementations
 
             // Retrieve all properties of the Position class
             PropertyInfo[] properties = positionType.GetProperties();
-             
-           
+
+            int normalized = 1000000;
 
             foreach (var property in jsonObject.Properties())
             {
@@ -246,7 +246,7 @@ namespace BitmexGUI.Services.Implementations
                                         break;
                                     case "realisedPnl":
                                         if (!string.IsNullOrEmpty(positionData["realisedPnl"].ToString()))
-                                            position.RealisedPnl = long.Parse(positionData["realisedPnl"].ToString());
+                                            position.RealisedPnl = float.Parse(positionData["realisedPnl"].ToString()) / normalized;
                                         break;
                                     case "posLoss": 
                                         if (!string.IsNullOrEmpty(positionData["posLoss"].ToString()))
@@ -254,7 +254,7 @@ namespace BitmexGUI.Services.Implementations
                                         break;
                                     case "unrealisedPnl":
                                         if (!string.IsNullOrEmpty(positionData["unrealisedPnl"].ToString()))
-                                            position.UnrealisedPnl = long.Parse(positionData["unrealisedPnl"].ToString());
+                                            position.UnrealisedPnl = float.Parse(positionData["unrealisedPnl"].ToString()) / normalized;
                                         break;
                                     case "commission":
                                         if (!string.IsNullOrEmpty(positionData["commission"].ToString()))
@@ -266,15 +266,15 @@ namespace BitmexGUI.Services.Implementations
                                         break;
                                     case "currentQty":
                                         if (!string.IsNullOrEmpty(positionData["currentQty"].ToString()))
-                                            position.CurrentQty = int.Parse(positionData["currentQty"].ToString());
+                                            position.CurrentQty = float.Parse(positionData["currentQty"].ToString()) / normalized;
                                         break;
                                     case "currentCost":
                                         if (!string.IsNullOrEmpty(positionData["currentCost"].ToString()))
-                                            position.CurrentCost = long.Parse(positionData["currentCost"].ToString());
+                                            position.CurrentCost = float.Parse(positionData["currentCost"].ToString()) / normalized;
                                         break; 
                                     case "realisedCost":
                                         if (!string.IsNullOrEmpty(positionData["realisedCost"].ToString()))
-                                            position.RealisedCost = long.Parse(positionData["realisedCost"].ToString());
+                                            position.RealisedCost = float.Parse(positionData["realisedCost"].ToString()) / normalized;
                                         break;
                                    case "posComm":
                                         
@@ -292,6 +292,14 @@ namespace BitmexGUI.Services.Implementations
                                     case "rebalancedPnl":
                                         if (!string.IsNullOrEmpty(positionData["rebalancedPnl"].ToString()))
                                             position.RebalancedPnl = long.Parse(positionData["rebalancedPnl"].ToString());
+                                        break;
+                                    case "homeNotional":
+                                        if (!string.IsNullOrEmpty(positionData["homeNotional"].ToString()))
+                                            position.HomeNotional = float.Parse(positionData["homeNotional"].ToString());
+                                        break;
+                                    case "foreignNotional":
+                                        if (!string.IsNullOrEmpty(positionData["foreignNotional"].ToString()))
+                                            position.ForeignNotional = float.Parse(positionData["foreignNotional"].ToString());
                                         break;
 
 

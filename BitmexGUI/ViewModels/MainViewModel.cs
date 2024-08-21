@@ -89,7 +89,7 @@ namespace BitmexGUI.ViewModels
 
         public MainViewModel(int InitialCandlesNumber)
         {
-
+            
 
 
 
@@ -111,9 +111,7 @@ namespace BitmexGUI.ViewModels
 
 
             //BitmexApi.SetLeverage("XBTUSDT",5.4);
-
-
-
+             
         }
 
         public void CancelOrder(string OrderID)
@@ -122,7 +120,14 @@ namespace BitmexGUI.ViewModels
             BitmexApi.CancelOrder(OrderID);
         }
 
+        public void ClosePosition(string OrderID)
+        {
+             
+        }
+
+
         public Action OrderLineUpdated;
+        public Action PositionLineUpdated;
         private void UpdateorderLines(Order newOrderData)
         {
 
@@ -244,17 +249,38 @@ namespace BitmexGUI.ViewModels
             }
         }
 
+        private void UpdatepositionLines(Position newPositionData)
+        {
+             
+            PositionLine newpositionLine = new PositionLine
+            {
+                AccountID = newPositionData.AccountID,
+                AvgEntryPrice = (decimal)CandlestickChart.MapToScale(double.Parse(newPositionData.AvgEntryPrice.ToString())),
+                Symbol = newPositionData.Symbol,
+                BreakEvenPrice = (decimal)CandlestickChart.MapToScale(double.Parse(newPositionData.BreakEvenPrice.ToString())),
+                UnrealisedPnl= (int)newPositionData.UnrealisedPnl,
+                LiquidationPrice = (decimal)newPositionData.LiquidationPrice
 
+            };
+            var existingPositionLine = PositionsLines.FirstOrDefault(p => p.AccountID.Equals(newPositionData.AccountID)&& p.Symbol.Equals(newPositionData.Symbol));
+            if (existingPositionLine != null)
+            {
+                PositionsLines.Remove(existingPositionLine);
+            }
+            
+            PositionsLines.Add(newpositionLine);
+            PositionLineUpdated?.Invoke();
+
+
+        }
         private void OnPositionUpdate(Position newPositionData)
         {
             var existingPosition = PositionsInfo.FirstOrDefault(p => p.AccountID == newPositionData.AccountID && p.Symbol == newPositionData.Symbol);
 
-            // MessageBox.Show("new pos has commision "+ newPositionData.Symbol+ " "+newPositionData.PosComm.HasValue.ToString()+" "+ newPositionData.PosComm+" "+ newPositionData.CurrentQty);
-            //MessageBox.Show("new pos has commision " + newPositionData.Symbol + " " + newPositionData.PosComm.HasValue.ToString() + " " + newPositionData.MarkPrice + " " + newPositionData.AvgEntryPrice);
-            //PositionsInfo.Clear();
-
+             
             if (existingPosition != null)
             {
+               
                 //MessageBox.Show("existing pos has commision " + existingPosition.PosComm.HasValue.ToString());
                 // Create a new Position object with updated data
                 var updatedPosition = new Position
@@ -274,9 +300,11 @@ namespace BitmexGUI.ViewModels
                     RealisedCost = newPositionData.RealisedCost.HasValue ? newPositionData.RealisedCost.Value : existingPosition.RealisedCost,
                     PosComm = newPositionData.PosComm.HasValue ? newPositionData.PosComm.Value : existingPosition.PosComm,
                     MarkValue = newPositionData.MarkValue.HasValue ? newPositionData.MarkValue.Value : existingPosition.MarkValue,
-                    RebalancedPnl = newPositionData.RebalancedPnl.HasValue ? newPositionData.RebalancedPnl.Value : existingPosition.RebalancedPnl
+                    RebalancedPnl = newPositionData.RebalancedPnl.HasValue ? newPositionData.RebalancedPnl.Value : existingPosition.RebalancedPnl,
+                    HomeNotional= newPositionData.HomeNotional.HasValue ? newPositionData.HomeNotional.Value : existingPosition.HomeNotional,
+                    ForeignNotional = newPositionData.ForeignNotional.HasValue ? newPositionData.ForeignNotional.Value : existingPosition.ForeignNotional
                 };
-
+                UpdatepositionLines(updatedPosition);
                 int index = PositionsInfo.IndexOf(existingPosition);
                 PositionsInfo[index] = updatedPosition;
                 //MessageBox.Show("updated pos has commision " + newPositionData.Symbol + " " + updatedPosition.MarkValue + " " + updatedPosition.RebalancedPnl + " " + updatedPosition.AvgEntryPrice);
@@ -286,6 +314,8 @@ namespace BitmexGUI.ViewModels
                     PositionsInfo.RemoveAt(index);
                     PositionsdatsUpdated?.Invoke();
                 }
+
+                
 
             }
             else if (Math.Abs((decimal)newPositionData.CurrentQty) > 0)
@@ -393,7 +423,8 @@ namespace BitmexGUI.ViewModels
 
 
         // this takes the function CreateNewOrder
-        private ICommand _createNewOrderCommand;
+        private ICommand _createNewOrderCommand; 
+        
         public ICommand CreateNewOrderCommand
         {
             get
@@ -405,57 +436,11 @@ namespace BitmexGUI.ViewModels
                 return _createNewOrderCommand;
             }
         }
-
-        private double _orderCost;
-
-
-        public double OrderCost
-        {
-            get => _orderCost;
-            set
-            {
-                _orderCost = value;
-                OnPropertyChanged();
-
-
-
-            }
-        }
-
-        private double _quantity;
-
-
-        public double Quantity
-        {
-            get => _quantity;
-            set
-            {
-                _quantity = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private double _actualpositionvalue;
-
-        public double ActualPositionValue
-        {
-            get => _actualpositionvalue;
-            set
-            {
-                _actualpositionvalue = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private void CalculateActualPositionValue()
-        {
-            ActualPositionValue = Math.Round(Quantity * EntryPrice, 2);
-        }
-
         public void CreateNewOrder(string Side)
         {
 
             string orderside = Side.ToLower().Replace(" ", "");
+
 
 
             if (orderside.Contains("buylimit"))
@@ -508,10 +493,109 @@ namespace BitmexGUI.ViewModels
 
         }
 
+        private ICommand _closePositionMarketCommand;
+        public ICommand ClosePositionMarketCommand
+        {
+            get
+            {
+                if (_closePositionMarketCommand == null)
+                {
+                    _closePositionMarketCommand = new RelayCommand(x => ClosePositionMarket(x.ToString()));
+                }
+                return _closePositionMarketCommand;
+            }
+        }
+
+        public void ClosePositionMarket(string Symbol)
+        {
+            MessageBox.Show(Symbol);
+        }
+
+
+        private ICommand _closePositionLimitCommand;
+        public ICommand ClosePositionLimitCommand
+        {
+            get
+            {
+                if (_closePositionLimitCommand == null)
+                {
+                    _closePositionLimitCommand = new RelayCommand(x => ClosePositionLimit(x.ToString()));
+                }
+                return _closePositionLimitCommand;
+            }
+        }
+
+        public void ClosePositionLimit(string Symbol)
+        {
+            MessageBox.Show(Symbol);
+        }
+        private double _orderCost;
+
+
+        public double OrderCost
+        {
+            get => _orderCost;
+            set
+            {
+                _orderCost = value;
+                OnPropertyChanged();
+
+
+
+            }
+        }
+
+        private double _quantity;
+
+
+        public double Quantity
+        {
+            get => _quantity;
+            set
+            {
+                _quantity = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<CurrentClosePrice> _currentClose=new ObservableCollection<CurrentClosePrice>();
+
+
+        public ObservableCollection<CurrentClosePrice> CurrentClose
+        {
+            get => _currentClose;
+            set
+            {
+                _currentClose = value;
+                OnPropertyChanged(nameof(CurrentClose));
+            }
+        }
+
+      
+
+        private double _actualpositionvalue;
+
+        public double ActualPositionValue
+        {
+            get => _actualpositionvalue;
+            set
+            {
+                _actualpositionvalue = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private void CalculateActualPositionValue()
+        {
+            ActualPositionValue = Math.Round(Quantity * EntryPrice, 2);
+        }
+
+        
         public void StartPriceFeed()
         {
             BinanceApi.GetPriceWSS();
             BitmexApi.GetPositionWSS();
+            BitmexApi.GetPriceWSS();
 
         }
 
@@ -786,8 +870,17 @@ namespace BitmexGUI.ViewModels
 
                 var timestamp = priceData.Timestamp;
 
+                CurrentClosePrice crt = new CurrentClosePrice
+                {
+                    PriceValue= priceData.Close, 
+                    Symbol=priceData.Symbol,
 
-                
+                };
+
+                CurrentClose.Clear();
+                CurrentClose.Add(crt);
+                //MessageBox.Show(CurrentClose[0].ToString());
+
                 if (_priceDataDictionary.ContainsKey(timestamp.ToString()) && priceData != null)
                 {
 
@@ -816,14 +909,16 @@ namespace BitmexGUI.ViewModels
         private void OnPriceUpdatedBitmex(SettledPrice setpriceData)
         {
             Application.Current.Dispatcher.Invoke(() =>
-            {
-
+            { 
 
                 var timestamp = setpriceData.Timestamp;
-                 
+                SettledPriceData.Clear();
+             
                 SettledPriceData.Add(setpriceData);
 
-                SettledPriceDataUpdated?.Invoke();  
+                SettledPriceDataUpdated?.Invoke();
+                  
+            
             });
         }
 

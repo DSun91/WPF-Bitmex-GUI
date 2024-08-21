@@ -7,7 +7,7 @@
         xmlns:viewmodels="clr-namespace:BitmexGUI.ViewModels"
         xmlns:local="clr-namespace:BitmexGUI.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="1500">
+        Title="MainWindow" Height="800" Width="1400">
     <Window.Resources>
 
         <ResourceDictionary>
@@ -19,8 +19,9 @@
             <local:PriceConverterInvMapOrderline  x:Key="PriceConverterInvMapOrderline"/>
             <local:ColorConverter   x:Key="ColorConverter"/>
             <local:LocalViewModel x:Key="LocalViewModel"/>
-            <local:ColorConverterOrderTag x:Key="ColorConverterOrderTag"/>
+            <local:ColorConverterOrderTag x:Key="ColorConverterOrderTag"/> 
             <local:PriceConverterMapSettledPrice x:Key="PriceConverterMapSettledPrice"/>
+            <local:PriceConverterMapLabel x:Key="PriceConverterMapLabel"/>
             <Style TargetType="Button">
                 <Setter Property="Template">
                     <Setter.Value>
@@ -138,12 +139,12 @@
             </Grid.ColumnDefinitions>
             <Label Content="Bitmex Trading GUI" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Height="49" Margin="218,0,0,0" VerticalAlignment="Center" Width="317" FontFamily="Franklin Gothic Book" FontSize="36" FontWeight="Bold" Cursor="AppStarting" FontStyle="Italic" Grid.Column="1"/>
 
-            <Canvas x:Name="DrawingCanvas" Grid.Row="1" Background="Transparent" Width="700" HorizontalAlignment="Left" Margin="67,0,0,0" Height="400" VerticalAlignment="Center" >
+            <Canvas x:Name="DrawingCanvas" Grid.Row="1" Background="Transparent" Width="700" HorizontalAlignment="Left" Margin="70,0,0,0" Height="400" VerticalAlignment="Center" >
                 <Canvas.Clip>
                     <RectangleGeometry Rect="0,0,700,400"
                     RadiusX="8" RadiusY="8"/>
                 </Canvas.Clip>
-                <Border BorderBrush="Black" BorderThickness="2" Width="700" Height="400" Background="Transparent" CornerRadius="8" >
+                <Border BorderBrush="Black" BorderThickness="2" Width="700" Height="400" Background="Transparent" CornerRadius="8" Margin="0,0,0,0">
                     <Canvas x:Name="MainRenderingCanvas" Margin="0,0,0,0" >
                         
                         <ItemsControl ItemsSource="{Binding GridData}">
@@ -182,17 +183,15 @@
                                               x:Name="PriceTag"
                                               Tag="{Binding OrderID}"
                                               Canvas.Top="{Binding Price}"
-                                              Canvas.Left="550" 
-                                              Height="35"
+                                              Canvas.Left="430" 
+                                              Height="25"
                                               Width="120"
                                               HorizontalContentAlignment="Left"
-                                              VerticalAlignment="Center"
+                                              VerticalAlignment="Top"
                                               FontSize = "13"
                                               FontStyle="Italic"
                                               Foreground = "Black"
-                                              FontWeight = "Bold"
-                                              BorderThickness = "2"
-                                              BorderBrush="Bisque"
+                                              FontWeight = "Bold"  
                                               Background = "{Binding Converter={StaticResource ColorConverterOrderTag}}"
                                               MouseRightButtonDown="OrderTag_MouseLeftButtonDown"
                                               MouseMove = "OrderTag_MouseMove"
@@ -208,14 +207,15 @@
                                            Content="X"
                                            Tag="{Binding OrderID}"
                                            Canvas.Top="{Binding Price}"
-                                           Canvas.Left="645"
+                                           Canvas.Left="525"
                                            Width="25"
                                            Height="25"
                                            FontSize="14"
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="Right"
+                                            BorderBrush="Transparent"
                                            Background="Transparent" Click="CancleOpenOrder">
-
+                                           
                                             <Button.Style>
                                                 <Style TargetType="Button">
 
@@ -227,16 +227,20 @@
                                             x:Name="OrderLine"
                                             Canvas.Top="0" 
                                             X1="0"  
-                                            X2="700"
+                                            X2="550"
                                             Y1="{Binding Price}"   
                                             Y2="{Binding Price}" 
                                             Stroke="{Binding Converter={StaticResource ColorConverterOrderTag}}"
-                                            StrokeThickness="2"/>
+                                            StrokeThickness="2"
+                                            />
 
                                     </Canvas>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
+
+
+                      
 
 
                         <ItemsControl ItemsSource="{Binding ScaledPriceData}">
@@ -269,6 +273,137 @@
                                     </Canvas>
                                 </DataTemplate>
 
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+
+                        <ItemsControl ItemsSource="{Binding SettledPriceData}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Canvas />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Canvas>
+                                        <Label
+                                          x:Name="BitmxClose" 
+                                          Canvas.Top="{Binding SettledPriceValue,Converter={StaticResource PriceConverterMapLabel}}"
+                                          Canvas.Left="630" 
+                                          Height="25"
+                                          Width="65"
+                                          HorizontalContentAlignment="Left"
+                                          VerticalAlignment="Center"
+                                          FontSize = "13"
+                                          FontStyle="Italic"
+                                          Foreground = "Purple"
+                                          FontWeight = "Bold"
+                                          BorderThickness = "1"
+                                          BorderBrush="Purple"
+                                          Background = "Transparent" >
+                                            <TextBlock>  
+                                               <Run Text="{Binding SettledPriceValue }" />
+                                            </TextBlock>
+                                        </Label>
+                                        <Line  
+                                        x:Name="settled"
+                                        Canvas.Top="0" 
+                                        X1="0"  
+                                        X2="550"
+                                        Y1="{Binding SettledPriceValue,Converter={StaticResource PriceConverterMapOrderline}}"   
+                                        Y2="{Binding SettledPriceValue,Converter={StaticResource PriceConverterMapOrderline}}" 
+                                        Stroke="Purple"
+                                        StrokeThickness="1"
+                                        StrokeDashArray="2" />       
+                                    </Canvas>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <ItemsControl ItemsSource="{Binding CurrentClose}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Canvas />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Canvas>
+                                        <Label
+                                           x:Name="candleClose" 
+                                           Canvas.Top="{Binding PriceValue,Converter={StaticResource PriceConverterMapLabel}}"
+                                           Canvas.Left="560" 
+                                           Height="25"
+                                           Width="65"
+                                           HorizontalContentAlignment="Left"
+                                           VerticalAlignment="Center"
+                                           FontSize = "13"
+                                           FontStyle="Italic"
+                                           Foreground = "Black"
+                                           FontWeight = "Bold"
+                                           BorderThickness = "1"
+                                           BorderBrush="Black"
+                                           Background = "Transparent" >
+                                            <TextBlock>  
+                                             <Run Text="{Binding PriceValue }" />
+                                            </TextBlock>
+                                        </Label>
+                                        <Line  
+                                         x:Name="qwe"
+                                         Canvas.Top="0" 
+                                         X1="0"  
+                                         X2="550"
+                                         Y1="{Binding PriceValue,Converter={StaticResource PriceConverterMapOrderline}}"   
+                                         Y2="{Binding PriceValue,Converter={StaticResource PriceConverterMapOrderline}}" 
+                                         Stroke="Black"
+                                         StrokeThickness="1"
+                                         StrokeDashArray="3" />
+                                    </Canvas>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <ItemsControl ItemsSource="{Binding PositionsLines}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Canvas />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Canvas>
+                                        <Label
+                        x:Name="BreakEvenPr" 
+                        Canvas.Top="{Binding BreakEvenPrice}"
+                        Canvas.Left="50" 
+                        Height="25"
+                        Width="170"
+                        HorizontalContentAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize = "13"
+                        FontStyle="Italic"
+                        Foreground = "White"
+                        FontWeight = "Bold" 
+                        Background = "Salmon">
+                                            <TextBlock>
+                         <Run Text="{Binding Symbol}"/>
+                         <Run Text=" BE: "/>
+                         <Run Text="{Binding BreakEvenPrice, Converter={StaticResource PriceConverterInvMapOrderline}}" />
+                                            </TextBlock>
+                                        </Label>
+                                        <Line  
+                  x:Name="BreakEven"
+                  Canvas.Top="0" 
+                  X1="0"  
+                  X2="550"
+                  Y1="{Binding BreakEvenPrice}"   
+                  Y2="{Binding BreakEvenPrice}" 
+                  Stroke="Salmon"
+                  StrokeThickness="1"/>
+                                    </Canvas>
+                                </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </Canvas>
@@ -328,7 +463,7 @@
             <Button Content="Limit TP+SL Buy" x:Name="LimitTPSLBuy" Grid.Row="5" Command="{Binding CreateNewOrderCommand}" CommandParameter="{Binding ElementName=LimitTPSLBuy, Path=Name}" HorizontalAlignment="Left" Height="30" Margin="326,0,0,0" VerticalAlignment="Center" Width="95"   Grid.Column="1"/>
             <Button Content="Limit TP+SL Sell" x:Name="LimitTPSLSell" Grid.Row="6" Command="{Binding CreateNewOrderCommand}" CommandParameter="{Binding ElementName=LimitTPSLSell, Path=Name}" HorizontalAlignment="Left" Height="30" Margin="327,0,0,0" VerticalAlignment="Center" Width="94" Grid.Column="1"/>
 
-            <DockPanel LastChildFill="True" Grid.Row="1" Width="650" Margin="781,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1">
+            <DockPanel LastChildFill="True" Grid.Row="1" Width="650" Margin="790,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1">
                 <TextBlock Text="Open Positions" Margin="0,00,00,0"
                         Background="SandyBrown"
                         Foreground="White"
@@ -336,16 +471,14 @@
                         FontWeight="SemiBold"
                         TextAlignment="Center"
                         DockPanel.Dock="Top" Height="27" />
-                <DataGrid x:Name="Positions"  Height="150" RowHeaderWidth="30" Margin="0,0,0,0" ItemsSource="{Binding PositionsInfo, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
-                    <DataGrid.Resources>
-
+                <DataGrid x:Name="Positions" Height="150" CanUserAddRows="False"  RowHeaderWidth="30" Margin="0,0,0,0" ItemsSource="{Binding PositionsInfo, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" Width="651">
+                    <DataGrid.Resources> 
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="Background" Value="#4A4A4A"/>
                             <Setter Property="Foreground" Value="White"/>
                             <Setter Property="Padding" Value="5"/>
                             <Setter Property="BorderThickness" Value="0"/>
-                            <Setter Property="BorderBrush" Value="#6A6A6A"/>
-
+                            <Setter Property="BorderBrush" Value="#6A6A6A"/> 
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="DataGridColumnHeader">
@@ -360,6 +493,7 @@
                                 </Setter.Value>
                             </Setter>
                         </Style>
+                        
                     </DataGrid.Resources>
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Account ID" Binding="{Binding AccountID}" Width="Auto" />
@@ -376,21 +510,47 @@
 
                         <DataGridTextColumn Header="LiquidationPrice" Binding="{Binding LiquidationPrice}" Width="Auto" />
                         <DataGridTextColumn Header="RealisedPnl" Binding="{Binding RealisedPnl}" Width="Auto" />
+                        <DataGridTextColumn Header="ForeignNotional" Binding="{Binding ForeignNotional}" Width="Auto" />
+                        <DataGridTextColumn Header="HomeNotional" Binding="{Binding HomeNotional}" Width="Auto" />
+                        
 
-
-
+                        
                         <DataGridTextColumn Header="PosLoss" Binding="{Binding PosLoss}" Width="Auto" />
 
                         <DataGridTextColumn Header="CurrentCost" Binding="{Binding CurrentCost}" Width="Auto" />
                         <DataGridTextColumn Header="RealisedCost" Binding="{Binding RealisedCost}" Width="Auto" />
                         <DataGridTextColumn Header="IsOpen" Binding="{Binding IsOpen}" Width="Auto" />
+                        
+                        <DataGridTemplateColumn Header="Close" Width="Auto">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Button x:Name="CloseLimit" Content=" Close Limit " Command="{Binding DataContext.ClosePositionLimitCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding Symbol}" Margin="1,1">
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                </Style>
+                                            </Button.Style>
+                                        </Button>
+                                        <Button x:Name="CloseMarket" Content=" Close Market " Command="{Binding DataContext.ClosePositionMarketCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding Symbol}" Margin="1,1">
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                            </Style>
+                                        </Button.Style>
+                                            </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        
+                        
                     </DataGrid.Columns>
+                    
                 </DataGrid>
 
 
             </DockPanel>
 
-            <DockPanel LastChildFill="True" Grid.Row="1" Width="650" HorizontalAlignment="Left" Margin="781,190,0,30" Grid.Column="1">
+            <DockPanel LastChildFill="True" Grid.Row="1" Width="650" HorizontalAlignment="Left" Margin="790,190,0,30" Grid.Column="1">
                 <TextBlock Text="Open Orders" Margin="0,00,0,0"
             Background="SandyBrown"
             Foreground="White"
@@ -399,7 +559,7 @@
             TextAlignment="Center"
             HorizontalAlignment="Stretch"
             DockPanel.Dock="Top" />
-                <DataGrid x:Name="Orders" Height="150" RowHeaderWidth="30" Margin="0,00,0,0" VerticalAlignment="Top" ItemsSource="{Binding OrdersInfo, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
+                <DataGrid x:Name="Orders" Height="150" CanUserAddRows="False" RowHeaderWidth="30" Margin="0,00,0,0" VerticalAlignment="Top" ItemsSource="{Binding OrdersInfo, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
                     <DataGrid.Resources>
 
                         <Style TargetType="DataGridColumnHeader">

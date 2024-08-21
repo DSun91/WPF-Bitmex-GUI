@@ -14,10 +14,16 @@ namespace BitmexGUI.Models
         public string Side { get; set; }
         public string Symbol { get; set; }
     }
-    public class PositionsLines
+    public class PositionLine
     {
         public int AccountID { get; set; }
         public string Symbol { get; set; }
-        public decimal Price { get; set; }
+        public decimal AvgEntryPrice { get; set; }
+
+        public decimal BreakEvenPrice { get; set; }
+         
+        public int UnrealisedPnl { get; set; }
+
+        public decimal LiquidationPrice { get; set; }
     }
 }

@@ -25,8 +25,8 @@ namespace BitmexGUI.ViewModels
         private ObservableCollection<Order> _historicorderData = new ObservableCollection<Order>();
         private ObservableCollection<CandlestickData> _scaledpriceData = new ObservableCollection<CandlestickData>();
         private ObservableCollection<OrderLine> _orderLines = new ObservableCollection<OrderLine>();
+        private ObservableCollection<PositionLine> _positionLine = new ObservableCollection<PositionLine>();
 
-        
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -42,7 +42,15 @@ namespace BitmexGUI.ViewModels
             }
         }
 
-
+        public ObservableCollection<PositionLine> PositionsLines
+        {
+            get => _positionLine;
+            set
+            {
+                _positionLine = value;
+                OnPropertyChanged(nameof(PositionsLines));
+            }
+        }
 
 
 

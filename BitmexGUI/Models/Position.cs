@@ -20,7 +20,7 @@ namespace BitmexGUI.Models
         public float? Leverage { get; set; }
         public bool CrossMargin { get; set; }
         public float? DeleveragePercentile { get; set; }
-        public long? RebalancedPnl { get; set; }
+        public float? RebalancedPnl { get; set; }
         public long? PrevRealisedPnl { get; set; }
         public long? PrevUnrealisedPnl { get; set; }
         public long? OpeningQty { get; set; }
@@ -30,11 +30,11 @@ namespace BitmexGUI.Models
         public long? OpenOrderSellQty { get; set; }
         public long? OpenOrderSellCost { get; set; }
         public long? OpenOrderSellPremium { get; set; }
-        public long? CurrentQty { get; set; }
-        public long? CurrentCost { get; set; }
+        public float? CurrentQty { get; set; }
+        public float? CurrentCost { get; set; }
         public long CurrentComm { get; set; }
-        public long? RealisedCost { get; set; }
-        public long? UnrealisedCost { get; set; }
+        public float? RealisedCost { get; set; }
+        public float? UnrealisedCost { get; set; }
         public long? GrossOpenPremium { get; set; }
         public bool IsOpen { get; set; }
         public float? MarkPrice { get; set; }
@@ -52,8 +52,8 @@ namespace BitmexGUI.Models
         public long? PosInit { get; set; }
         public long? InitMargin { get; set; }
         public long? MaintMargin { get; set; }
-        public long? RealisedPnl { get; set; }
-        public long? UnrealisedPnl { get; set; }
+        public float? RealisedPnl { get; set; }
+        public float? UnrealisedPnl { get; set; }
         public float? UnrealisedPnlPcnt { get; set; }
         public float? UnrealisedRoePcnt { get; set; }
         public float? AvgCostPrice { get; set; }

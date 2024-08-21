@@ -45,8 +45,7 @@ namespace BitmexGUI.Views
         // Target range
         private CandlestickChart CandleStickView;
         public event Action<string> OrderLinesUpdated;
-        public event Action<string> CancelOrder;
-
+        public event Action<string> CancelOrder; 
 
         public string vale;
 
@@ -76,7 +75,9 @@ namespace BitmexGUI.Views
             DrawingCanvas.MouseMove += MoveCanvas_MouseMove;
             DrawingCanvas.MouseLeftButtonUp += MoveCanvas_MouseLeftButtonUp;
 
-            
+            this.Loaded += MainWindow_Loaded;
+
+
             this.OrderLinesUpdated += (AmendingOrderID) =>
             {
                 if (DataContext is MainViewModel viewModel)
@@ -84,7 +85,7 @@ namespace BitmexGUI.Views
                     viewModel.HandleOrderLineUpdate(AmendingOrderID);
                 }
             };
-            this.Loaded += MainWindow_Loaded;
+            
 
 
              this.CancelOrder += (OrderCanceled) =>
@@ -94,7 +95,10 @@ namespace BitmexGUI.Views
                     viewModel.CancelOrder(OrderCanceled);
                 }
             };
-             
+
+
+          
+
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -105,10 +109,17 @@ namespace BitmexGUI.Views
 
         }
 
-       
-    
+        private void test(object sender, RoutedEventArgs e)
+        {
+            Button Btn = sender as Button;
+
+            MessageBox.Show("test");
+
+
+        }
+
         /// //////////////////////////////////////////////  ORDER LINE DRAGGING
-       
+
         private void OrderTag_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (sender is Label label)
@@ -357,6 +368,9 @@ namespace BitmexGUI.Views
 
 
         }
+
+       
+
 
     }
     

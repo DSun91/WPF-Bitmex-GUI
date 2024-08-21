@@ -107,9 +107,13 @@ namespace BitmexGUI.Views
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value  is decimal data )
+            if (value is decimal decimalValue)
             { 
-                return Math.Round(CandlestickChart.MapToScale(double.Parse(data.ToString())),2).ToString();
+                return (Math.Round(CandlestickChart.MapToScale(double.Parse(decimalValue.ToString())),2) ) ;
+            }
+            else if (value is double doubleValue)
+            {
+                return (Math.Round(CandlestickChart.MapToScale(doubleValue), 2) );
             }
             return 0;
         }
@@ -119,7 +123,26 @@ namespace BitmexGUI.Views
             throw new NotImplementedException();
         }
     }
-   
+    public class PriceConverterMapLabel : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is decimal decimalValue)
+            {
+                return (Math.Round(CandlestickChart.MapToScale(double.Parse(decimalValue.ToString())), 2) - 12.5);
+            }
+            else if (value is double doubleValue)
+            {
+                return (Math.Round(CandlestickChart.MapToScale(doubleValue), 2) - 12.5);
+            }
+            return 0;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 
     public class PriceConverterInvMapOrderline : IValueConverter
     {
