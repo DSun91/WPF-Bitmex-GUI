@@ -52,6 +52,12 @@ namespace BitmexGUI.Views
 
         private string AmendingOrderID;
 
+        private Point clickPositionCanvas;
+        private bool isDraggingCanvas = false;
+        public static bool isDraggingOrderLine = false; 
+        private Point clickPositionLabel;
+
+
         public MainWindow()
         {
             
@@ -64,11 +70,13 @@ namespace BitmexGUI.Views
             
             CandleStickView = new CandlestickChart();
 
-            DrawingCanvas.MouseRightButtonDown += DrawingCanvas_MouseRightButtonDown;
+            DrawingCanvas.MouseDown += DrawingCanvas_MouseRightButtonDown;
             DrawingCanvas.MouseWheel += DrawingCanvas_MouseWheelEvents;
-            DrawingCanvas.MouseLeftButtonDown += VerticalZoom_MouseLeftButtonDown;
-            DrawingCanvas.MouseMove += VerticalZoom_MouseMove;
-            DrawingCanvas.MouseLeftButtonUp += VerticalZoom_MouseLeftButtonUp;
+            DrawingCanvas.MouseLeftButtonDown += MoveCanvas_MouseLeftButtonDown;
+            DrawingCanvas.MouseMove += MoveCanvas_MouseMove;
+            DrawingCanvas.MouseLeftButtonUp += MoveCanvas_MouseLeftButtonUp;
+
+            
             this.OrderLinesUpdated += (AmendingOrderID) =>
             {
                 if (DataContext is MainViewModel viewModel)
@@ -97,15 +105,7 @@ namespace BitmexGUI.Views
 
         }
 
-        public void test(string testing)
-        {
-            MessageBox.Show("here");
-        }
-        public static bool isDraggingOrderLine = false;
-      
-        private Point clickPositionLabel;
-
-
+       
     
         /// //////////////////////////////////////////////  ORDER LINE DRAGGING
        
@@ -113,7 +113,9 @@ namespace BitmexGUI.Views
         {
             if (sender is Label label)
             {
+                isDraggingCanvas = false;
                 isDraggingOrderLine = true;
+                
                 clickPositionLabel = e.GetPosition(label);
                 label.CaptureMouse(); // Capture the mouse to receive mouse events even when the cursor is outside the label
             }
@@ -135,7 +137,7 @@ namespace BitmexGUI.Views
             {
                 if (isDraggingOrderLine && sender is Label label)
                 {
-                    var mousePos = e.GetPosition(DrawingCanvas);
+                    var mousePos = e.GetPosition(MainRenderingCanvas);
 
 
                     double top = mousePos.Y - clickPositionLabel.Y;
@@ -183,13 +185,13 @@ namespace BitmexGUI.Views
         /// //////////////////////////////////////////////  ORDER LINE DRAGGING
 
         /// //////////////////////////////////////////////  CANDLESTICK DRAGGING
-        private Point clickPositionCanvas;
-        private bool isrescaling = false;
-        private void VerticalZoom_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        
+        private void MoveCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (sender is Canvas canvas)
             {
-                isrescaling = true;
+                isDraggingCanvas = true;
+                isDraggingOrderLine = false;
                 clickPositionCanvas = e.GetPosition(canvas);
                
                 canvas.CaptureMouse(); // Capture the mouse to receive mouse events even when the cursor is outside the label
@@ -197,10 +199,11 @@ namespace BitmexGUI.Views
             }
         }
         
-        private void VerticalZoom_MouseMove(object sender, MouseEventArgs e)
+        private void MoveCanvas_MouseMove(object sender, MouseEventArgs e)
         {
-            if (isrescaling && sender is Canvas canvas)
+            if (isDraggingCanvas && !isDraggingOrderLine && sender is Canvas canvas)
             {
+                
                 var mousePos = e.GetPosition(DrawingCanvas);
 
 
@@ -211,27 +214,42 @@ namespace BitmexGUI.Views
                 // Adjust the margin of MainRenderingCanvas based on the mouse movement
                 // If dragging right (positive deltaX), increase the left margin and decrease the right margin
                 // If dragging left (negative deltaX), decrease the left margin and increase the right margin
-                MainRenderingCanvas.Margin = new Thickness(
-                    MainRenderingCanvas.Margin.Left + deltaX,
+                    MainRenderingCanvas.Margin = new Thickness(
+                    MainRenderingCanvas.Margin.Left,
                     MainRenderingCanvas.Margin.Top + deltaY,
-                    MainRenderingCanvas.Margin.Right - deltaX,
+                    MainRenderingCanvas.Margin.Right,
                     MainRenderingCanvas.Margin.Bottom - deltaY
                 );
+                
+                if (deltaX>0 && CandlestickChart.CandlesToView < CandlestickChart.CachedCandles)
+                {
+                    
+                    int deltaCandles =(int)Math.Ceiling(Math.Abs(deltaX) / CandlestickChart.candleWidth);
+
+                   
+                    CandlestickChart.CandlesToView += deltaCandles;
+                }
+                if (deltaX < 0 && CandlestickChart.CandlesToView>0)
+                {
+                    int deltaCandles = (int)Math.Ceiling(Math.Abs(deltaX) / CandlestickChart.candleWidth);
+
+                    CandlestickChart.CandlesToView -= deltaCandles;
+                }
 
                 // Update the click position for the next movement
-                clickPositionCanvas = mousePos;
+                
 
                 // Optionally, refresh or redraw your data as needed
                 viewModel.RefreshScaledPriceData();
-
+                clickPositionCanvas = mousePos;
             }
         }
 
-        private void VerticalZoom_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void MoveCanvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (sender is Canvas Canvas)
             {
-                isrescaling = false;
+                isDraggingCanvas = false;
                 Canvas.ReleaseMouseCapture(); // Release the mouse capture when dragging is finished
                  
 
@@ -251,10 +269,10 @@ namespace BitmexGUI.Views
             if (e.Delta > 0)
             {
                
-                CandlestickChart.ScaleFactor -= 0.1;
-                //CandlestickChart.CandlesToView -= 1;
-                //CandlestickChart.candleWidth += 0.1;
-                //CandlestickChart.CandlesInterspace += 0.1;
+                //CandlestickChart.ScaleFactor -= 0.01;
+                CandlestickChart.candleWidth += 0.2;
+                CandlestickChart.CandlesInterspace += 0.2;
+
                 viewModel.RefreshScaledPriceData();
                  
                 
@@ -265,9 +283,10 @@ namespace BitmexGUI.Views
             {
                 
                 //CandlestickChart.CandlesToView += 1;
-                //CandlestickChart.candleWidth -= 0.1;
-                //CandlestickChart.CandlesInterspace -= 0.1;
-                CandlestickChart.ScaleFactor += 0.1;
+                CandlestickChart.candleWidth -= 0.2;
+                CandlestickChart.CandlesInterspace -= 0.2;
+                //CandlestickChart.ScaleFactor += 0.01;
+                
                 viewModel.RefreshScaledPriceData();
                 
                 
@@ -279,24 +298,29 @@ namespace BitmexGUI.Views
         private void DrawingCanvas_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             // Get the position of the mouse click relative to the Canvas
-            Point clickPosition = e.GetPosition(DrawingCanvas);
 
-            // Extract X and Y coordinates
-            double x = clickPosition.X;
-            double y = clickPosition.Y;
-
-            Line priceLine = new Line
+            if (e.ChangedButton == MouseButton.Middle && e.ButtonState == MouseButtonState.Pressed)
             {
-                X1 = 0,
-                Y1 = y,
-                X2 = DrawingCanvas.Width,
-                Y2 = y,
-                Stroke = Brushes.Blue,
-                StrokeThickness = 2,
-                StrokeDashArray = new DoubleCollection { 2, 2 }
-            };
-            DrawingCanvas.Children.Add(priceLine);
-            Entryprice.Text = Math.Round(CandlestickChart.InvMapToScale(y), 3).ToString();
+                Point clickPosition = e.GetPosition(MainRenderingCanvas);
+
+                // Extract X and Y coordinates
+                double x = clickPosition.X;
+                double y = clickPosition.Y;
+
+                Line priceLine = new Line
+                {
+                    X1 = 0,
+                    Y1 = y,
+                    X2 = DrawingCanvas.Width,
+                    Y2 = y,
+                    Stroke = Brushes.Blue,
+                    StrokeThickness = 2,
+                    StrokeDashArray = new DoubleCollection { 2, 2 }
+                };
+                MainRenderingCanvas.Children.Add(priceLine);
+                Entryprice.Text = Math.Round(CandlestickChart.InvMapToScale(y), 3).ToString();
+            }
+          
 
         }
          

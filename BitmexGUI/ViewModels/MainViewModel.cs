@@ -622,7 +622,8 @@ namespace BitmexGUI.ViewModels
 
         private CandlestickData ScaleCandle(CandlestickData priceData)
         {
-            var allValues = PriceData.SelectMany(data => new[] { data.Open, data.High, data.Low, data.Close });
+            int maxCandlesInView =(int) Math.Ceiling(700/(CandlestickChart.CandlesInterspace- CandlestickChart.candleWidth));
+            var allValues = PriceData.Skip(CandlestickChart.CachedCandles - CandlestickChart.CandlesToView).Take(maxCandlesInView).SelectMany(data => new[] { data.Open, data.High, data.Low, data.Close });
             var minVal = allValues.Min();
             var maxVal = allValues.Max();
 
@@ -633,15 +634,15 @@ namespace BitmexGUI.ViewModels
             CandlestickChart.minOriginal -= padding;
             CandlestickChart.maxOriginal += padding;
 
-            //UpdateOrderLinesRescale(OrdersInfo); 
+           
             CandlestickData temp = new CandlestickData();
 
 
 
-            temp.Open = CandlestickChart.MapToScale(priceData.Open);
-            temp.High = CandlestickChart.MapToScale(priceData.High);
-            temp.Low = CandlestickChart.MapToScale(priceData.Low);
-            temp.Close = CandlestickChart.MapToScale(priceData.Close);
+            temp.Open = CandlestickChart.MapToScale(priceData.Open)+CandlestickChart.VericalOffset;
+            temp.High = CandlestickChart.MapToScale(priceData.High) + CandlestickChart.VericalOffset;
+            temp.Low = CandlestickChart.MapToScale(priceData.Low) + CandlestickChart.VericalOffset;
+            temp.Close = CandlestickChart.MapToScale(priceData.Close) + CandlestickChart.VericalOffset;
             temp.Timestamp = priceData.Timestamp;
             temp.Width = priceData.Width;
             temp.Posx = priceData.Posx;
@@ -692,7 +693,7 @@ namespace BitmexGUI.ViewModels
                     UpdateOrderLinesRescale(OrdersInfo);
                 }
 
-                if (ScaledPriceData.Count >= CandlestickChart.CachedCandles)
+                if (ScaledPriceData.Count >= CandlestickChart.CandlesToView)
                 {
                     BitmexApi.GetOrdersWSS();
 

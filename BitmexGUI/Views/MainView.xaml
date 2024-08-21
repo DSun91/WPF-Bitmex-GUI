@@ -183,7 +183,7 @@
                                               Tag="{Binding OrderID}"
                                               Canvas.Top="{Binding Price}"
                                               Canvas.Left="550" 
-                                              Height="25"
+                                              Height="35"
                                               Width="120"
                                               HorizontalContentAlignment="Left"
                                               VerticalAlignment="Center"
@@ -191,10 +191,12 @@
                                               FontStyle="Italic"
                                               Foreground = "Black"
                                               FontWeight = "Bold"
+                                              BorderThickness = "2"
+                                              BorderBrush="Bisque"
                                               Background = "{Binding Converter={StaticResource ColorConverterOrderTag}}"
-                                              MouseLeftButtonDown="OrderTag_MouseLeftButtonDown"
+                                              MouseRightButtonDown="OrderTag_MouseLeftButtonDown"
                                               MouseMove = "OrderTag_MouseMove"
-                                              MouseLeftButtonUp="OrderTag_MouseLeftButtonUp"  >
+                                              MouseRightButtonUp="OrderTag_MouseLeftButtonUp"  >
                                             <TextBlock>
                                                <Run Text="{Binding Side}"/>
                                                <Run Text=" : "/>
@@ -263,10 +265,7 @@
                                         Width="{Binding Width}"
                                         Height="{Binding Height}"  
                                         Fill= "{Binding Converter={StaticResource ColorConverter}}"
-                                        Panel.ZIndex="0"
-                                        MouseLeftButtonDown="VerticalZoom_MouseLeftButtonDown"
-                                        MouseMove = "VerticalZoom_MouseMove"
-                                        MouseLeftButtonUp="VerticalZoom_MouseLeftButtonUp"/>
+                                        Panel.ZIndex="0"/>
                                     </Canvas>
                                 </DataTemplate>
 

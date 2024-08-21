@@ -27,7 +27,7 @@ namespace BitmexGUI.Services.Implementations
         // Target range
         public static double minTarget = 0;
         public static double maxTarget = 400; 
-        public static int CachedCandles = 150; 
+        public static int CachedCandles = 1000; 
         public static int CandlesToView = 75; 
         public static double ScaleFactor =0.1;
         public static double CandlesInterspace = 6; // Increased for better visibility

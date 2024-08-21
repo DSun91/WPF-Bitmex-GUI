@@ -37,21 +37,21 @@ namespace BitmexGUI.Views
 
         private void InitializeGrid()
         {
-            int GridSpacing = 25;
-            double canvasHeight = 1200; // Example height
-            double canvasWidth = 1200; // Example width
+            int GridSpacing = 50;
+            double canvasHeight = 700; // Example height
+            double canvasWidth = 700; // Example width
             GridData = new ObservableCollection<GridData>();
 
             // Vertical lines
-            for (double x = -1200; x <= canvasWidth; x += GridSpacing)
+            for (double x = -canvasWidth; x <= canvasWidth; x += GridSpacing)
             {
-                GridData.Add(new GridData { X1 = x, Y1 = -1200, X2 = x, Y2 = 1200 });
+                GridData.Add(new GridData { X1 = x, Y1 = -canvasWidth, X2 = x, Y2 = canvasWidth });
             }
 
             // Horizontal lines
-            for (double y = -1200; y <= canvasHeight; y += GridSpacing)
+            for (double y = -canvasHeight; y <= canvasHeight; y += GridSpacing)
             {
-                GridData.Add(new GridData { X1 = -1200, Y1 = y, X2 = 1200, Y2 = y });
+                GridData.Add(new GridData { X1 = -canvasHeight, Y1 = y, X2 = canvasHeight, Y2 = y });
             }
         }
 
