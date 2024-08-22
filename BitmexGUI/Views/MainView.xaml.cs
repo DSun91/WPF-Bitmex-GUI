@@ -231,7 +231,20 @@ namespace BitmexGUI.Views
                     MainRenderingCanvas.Margin.Right,
                     MainRenderingCanvas.Margin.Bottom - deltaY
                 );
-                
+
+                TicksCanvasSettled.Margin = new Thickness(
+                   TicksCanvasSettled.Margin.Left,
+                   TicksCanvasSettled.Margin.Top + deltaY,
+                   TicksCanvasSettled.Margin.Right,
+                   TicksCanvasSettled.Margin.Bottom - deltaY
+               );
+
+                TicksCanvasMarket.Margin = new Thickness(
+                   TicksCanvasMarket.Margin.Left,
+                   TicksCanvasMarket.Margin.Top + deltaY,
+                   TicksCanvasMarket.Margin.Right,
+                   TicksCanvasMarket.Margin.Bottom - deltaY
+               );
                 if (deltaX>0 && CandlestickChart.CandlesToView < CandlestickChart.CachedCandles)
                 {
                     
@@ -273,7 +286,7 @@ namespace BitmexGUI.Views
 
 
 
-        /// ////////////////////////////////////////////// MOUSEWHEEL VERTICAL ZOOM
+        /// ////////////////////////////////////////////// MOUSEWHEEL horizontal ZOOM
         private void DrawingCanvas_MouseWheelEvents(object sender, MouseWheelEventArgs e)
         {
             // Get the position of the mouse click relative to the Canvas
@@ -305,7 +318,7 @@ namespace BitmexGUI.Views
             } 
         }
 
-        /// ////////////////////////////////////////////// MOUSEWHEEL VERTICAL ZOOM
+        /// ////////////////////////////////////////////// MOUSEWHEEL horizontal ZOOM
         private void DrawingCanvas_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             // Get the position of the mouse click relative to the Canvas

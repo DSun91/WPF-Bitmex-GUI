@@ -706,7 +706,7 @@ namespace BitmexGUI.ViewModels
 
         private CandlestickData ScaleCandle(CandlestickData priceData)
         {
-            int maxCandlesInView =(int) Math.Ceiling(700/(CandlestickChart.CandlesInterspace- CandlestickChart.candleWidth));
+            int maxCandlesInView =(int) Math.Ceiling(100/(CandlestickChart.CandlesInterspace- CandlestickChart.candleWidth));
             var allValues = PriceData.Skip(CandlestickChart.CachedCandles - CandlestickChart.CandlesToView).Take(maxCandlesInView).SelectMany(data => new[] { data.Open, data.High, data.Low, data.Close });
             var minVal = allValues.Min();
             var maxVal = allValues.Max();
