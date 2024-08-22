@@ -69,7 +69,8 @@ namespace BitmexGUI.Views
             
             CandleStickView = new CandlestickChart();
 
-            DrawingCanvas.MouseDown += DrawingCanvas_MouseRightButtonDown;
+            DrawingCanvas.MouseDown += DrawingCanvas_MouseMiddleButtonDown;
+            DrawingCanvas.MouseUp += DrawingCanvas_MouseMiddleButtonUp;
             DrawingCanvas.MouseWheel += DrawingCanvas_MouseWheelEvents;
             DrawingCanvas.MouseLeftButtonDown += MoveCanvas_MouseLeftButtonDown;
             DrawingCanvas.MouseMove += MoveCanvas_MouseMove;
@@ -262,8 +263,12 @@ namespace BitmexGUI.Views
 
                 // Update the click position for the next movement
                 
-
+                if(CandlestickChart.CandlesToView> CandlestickChart.CachedCandles)
+                {
+                    CandlestickChart.CandlesToView= CandlestickChart.CachedCandles-1;
+                }
                 // Optionally, refresh or redraw your data as needed
+                 
                 viewModel.RefreshScaledPriceData();
                 clickPositionCanvas = mousePos;
             }
@@ -296,7 +301,7 @@ namespace BitmexGUI.Views
                 //CandlestickChart.ScaleFactor -= 0.01;
                 CandlestickChart.candleWidth += 0.2;
                 CandlestickChart.CandlesInterspace += 0.2;
-
+              
                 viewModel.RefreshScaledPriceData();
                  
                 
@@ -310,7 +315,12 @@ namespace BitmexGUI.Views
                 CandlestickChart.candleWidth -= 0.2;
                 CandlestickChart.CandlesInterspace -= 0.2;
                 //CandlestickChart.ScaleFactor += 0.01;
-                
+                if (CandlestickChart.candleWidth<0.1)
+                {
+                    CandlestickChart.candleWidth = 0.1;
+                    CandlestickChart.CandlesInterspace = 0.1;
+
+                }
                 viewModel.RefreshScaledPriceData();
                 
                 
@@ -319,35 +329,56 @@ namespace BitmexGUI.Views
         }
 
         /// ////////////////////////////////////////////// MOUSEWHEEL horizontal ZOOM
-        private void DrawingCanvas_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            // Get the position of the mouse click relative to the Canvas
+        private VisualHost _lineVisualHost;
 
+        private void DrawingCanvas_MouseMiddleButtonDown(object sender, MouseButtonEventArgs e)
+        {
             if (e.ChangedButton == MouseButton.Middle && e.ButtonState == MouseButtonState.Pressed)
             {
-                Point clickPosition = e.GetPosition(MainRenderingCanvas);
+                // Remove previous line if it exists
+                if (_lineVisualHost != null)
+                {
+                    MainRenderingCanvas.Children.Remove(_lineVisualHost);
+                    _lineVisualHost = null;
+                }
 
-                // Extract X and Y coordinates
-                double x = clickPosition.X;
+                Point clickPosition = e.GetPosition(MainRenderingCanvas);
                 double y = clickPosition.Y;
 
-                Line priceLine = new Line
+                // Create a new DrawingVisual and render the line
+                DrawingVisual visual = new DrawingVisual();
+                using (DrawingContext dc = visual.RenderOpen())
                 {
-                    X1 = 0,
-                    Y1 = y,
-                    X2 = DrawingCanvas.Width,
-                    Y2 = y,
-                    Stroke = Brushes.Blue,
-                    StrokeThickness = 2,
-                    StrokeDashArray = new DoubleCollection { 2, 2 }
-                };
-                MainRenderingCanvas.Children.Add(priceLine);
+                    Pen linePen = new Pen(Brushes.Blue, 1)
+                    {
+                        DashStyle = new DashStyle(new double[] { 2, 2 }, 0)
+                    };
+                    dc.DrawLine(linePen, new Point(0, y), new Point(MainRenderingCanvas.Width, y));
+                }
+
+                // Add the visual to the canvas and store it in the field
+                _lineVisualHost = new VisualHost { Visual = visual };
+                MainRenderingCanvas.Children.Add(_lineVisualHost);
+
+                // Display the price
                 Entryprice.Text = Math.Round(CandlestickChart.InvMapToScale(y), 3).ToString();
             }
-          
-
         }
-         
+
+        private void DrawingCanvas_MouseMiddleButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Middle)
+            {
+                // Remove the visual when the middle mouse button is released
+                if (_lineVisualHost != null)
+                {
+                    MainRenderingCanvas.Children.Remove(_lineVisualHost);
+                    _lineVisualHost = null;
+                }
+
+                
+            }
+        }
         private void AmountSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Slider sld = sender as Slider;
@@ -386,5 +417,16 @@ namespace BitmexGUI.Views
 
 
     }
-    
+    class VisualHost : FrameworkElement
+    {
+        public DrawingVisual Visual { get; set; }
+
+        protected override void OnRender(DrawingContext drawingContext)
+        {
+            if (Visual != null)
+            {
+                drawingContext.DrawDrawing(Visual.Drawing);
+            }
+        }
+    }
 }

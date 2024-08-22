@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  
         xmlns:viewmodels="clr-namespace:BitmexGUI.ViewModels"
-        xmlns:local="clr-namespace:BitmexGUI.Views"
+        xmlns:local="clr-namespace:BitmexGUI.Views" xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1400">
     <Window.Resources>
@@ -22,6 +22,7 @@
             <local:ColorConverterOrderTag x:Key="ColorConverterOrderTag"/> 
             <local:PriceConverterMapSettledPrice x:Key="PriceConverterMapSettledPrice"/>
             <local:PriceConverterMapLabel x:Key="PriceConverterMapLabel"/>
+            <local:CommandParameterConverter x:Key="CommandParameterConverter"/>
             <Style TargetType="Button">
                 <Setter Property="Template">
                     <Setter.Value>
@@ -149,7 +150,7 @@
                         <Canvas x:Name="MainRenderingCanvas" Margin="72,0,0,0" Width="550" HorizontalAlignment="Left">
                             <Canvas.Clip>
                                 <RectangleGeometry Rect="0,-500,550,1800"
-        RadiusX="8" RadiusY="8"/>
+                                   RadiusX="8" RadiusY="8"/>
                             </Canvas.Clip>
                             <ItemsControl ItemsSource="{Binding GridData}">
                                 <ItemsControl.DataContext>
@@ -389,8 +390,7 @@
                                               FontSize = "13"
                                               FontStyle="Italic"
                                               Foreground = "Purple"
-                                              FontWeight = "Bold"
-                                              
+                                              FontWeight = "Bold" 
                                               Background = "Transparent" >
                                                 <TextBlock>  
                        <Run Text="{Binding SettledPriceValue }" />
@@ -499,7 +499,7 @@
             <Button Content="Limit TP+SL Buy" x:Name="LimitTPSLBuy" Grid.Row="5" Command="{Binding CreateNewOrderCommand}" CommandParameter="{Binding ElementName=LimitTPSLBuy, Path=Name}" HorizontalAlignment="Left" Height="30" Margin="326,0,0,0" VerticalAlignment="Center" Width="95"   Grid.Column="1"/>
             <Button Content="Limit TP+SL Sell" x:Name="LimitTPSLSell" Grid.Row="6" Command="{Binding CreateNewOrderCommand}" CommandParameter="{Binding ElementName=LimitTPSLSell, Path=Name}" HorizontalAlignment="Left" Height="30" Margin="327,0,0,0" VerticalAlignment="Center" Width="94" Grid.Column="1"/>
 
-            <DockPanel LastChildFill="True" Grid.Row="1" Width="650" Margin="790,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1">
+            <DockPanel LastChildFill="True" Grid.Row="1" Width="550" Margin="790,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1">
                 <TextBlock Text="Open Positions" Margin="0,00,00,0"
                         Background="SandyBrown"
                         Foreground="White"
@@ -507,7 +507,7 @@
                         FontWeight="SemiBold"
                         TextAlignment="Center"
                         DockPanel.Dock="Top" Height="27" />
-                <DataGrid x:Name="Positions" Height="150" CanUserAddRows="False"  RowHeaderWidth="30" Margin="0,0,0,0" ItemsSource="{Binding PositionsInfo, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" Width="651">
+                <DataGrid x:Name="Positions" Height="150" CanUserAddRows="False"  RowHeaderWidth="30" Margin="0,0,0,0" ItemsSource="{Binding PositionsInfo, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False"  >
                     <DataGrid.Resources> 
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="Background" Value="#4A4A4A"/>
@@ -561,18 +561,42 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                        <Button x:Name="CloseLimit" Content=" Close Limit " Command="{Binding DataContext.ClosePositionLimitCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding Symbol}" Margin="1,1">
+                                        <Button x:Name="CloseLimit" Content=" Close Limit " Command="{Binding DataContext.ClosePositionCommand, RelativeSource={RelativeSource AncestorType=Window}}"  Margin="1,1">
                                             <Button.Style>
                                                 <Style TargetType="Button">
                                                 </Style>
                                             </Button.Style>
+                                            <Button.CommandParameter>
+                                                <MultiBinding Converter="{StaticResource CommandParameterConverter}">
+                                                    <Binding Path="Symbol"/>
+                                                    <!-- Original Symbol -->
+                                                    <Binding>
+                                                        <Binding.Source>
+                                                            <system:String>Limit</system:String>
+                                                        </Binding.Source>
+                                                    </Binding>
+                                                    <!-- Bind to another property or hardcoded value -->
+                                                </MultiBinding>
+                                            </Button.CommandParameter>
                                         </Button>
-                                        <Button x:Name="CloseMarket" Content=" Close Market " Command="{Binding DataContext.ClosePositionMarketCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding Symbol}" Margin="1,1">
-                                        <Button.Style>
+                                        <Button x:Name="CloseMarket" Content=" Close Market " Command="{Binding DataContext.ClosePositionCommand, RelativeSource={RelativeSource AncestorType=Window}}"   Margin="1,1">
+                                            <Button.Style>
                                             <Style TargetType="Button">
                                             </Style>
                                         </Button.Style>
-                                            </Button>
+                                            <Button.CommandParameter>
+                                                <MultiBinding Converter="{StaticResource CommandParameterConverter}">
+                                                    <Binding Path="Symbol"/>
+                                                    <!-- Original Symbol -->
+                                                    <Binding>
+                                                        <Binding.Source>
+                                                            <system:String>Market</system:String>
+                                                        </Binding.Source>
+                                                    </Binding>
+                                                    <!-- Bind to another property or hardcoded value -->
+                                                </MultiBinding>
+                                            </Button.CommandParameter>
+                                        </Button>
                                     </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
@@ -586,7 +610,7 @@
 
             </DockPanel>
 
-            <DockPanel LastChildFill="True" Grid.Row="1" Width="650" HorizontalAlignment="Left" Margin="790,190,0,30" Grid.Column="1">
+            <DockPanel LastChildFill="True" Grid.Row="1" Width="550" HorizontalAlignment="Left" Margin="790,190,0,30" Grid.Column="1">
                 <TextBlock Text="Open Orders" Margin="0,00,0,0"
             Background="SandyBrown"
             Foreground="White"

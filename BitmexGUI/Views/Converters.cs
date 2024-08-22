@@ -219,5 +219,26 @@ namespace BitmexGUI.Views
 
     }
 
-   
+    public class CommandParameterConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            // Example: Concatenate or create a custom object
+            if (values[0] != null && values[1] != null)
+            {
+                string symbol = values[0].ToString();
+                string type = values[1].ToString();
+
+                // Combine or modify the value as needed
+                return Tuple.Create(symbol, type); ; // Or return a custom object
+            }
+            return null;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 }

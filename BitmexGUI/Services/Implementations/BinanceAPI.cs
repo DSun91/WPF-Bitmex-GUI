@@ -27,7 +27,7 @@ namespace BitmexGUI.Services.Implementations
             UrlWss = urlWss;
         }
 
-        override public void ProcessResponseWss(string response)
+        override protected void ProcessPriceResponseWss(string response)
         {
             //MessageBox.Show(response);
             JObject jsonObject = JObject.Parse(response);

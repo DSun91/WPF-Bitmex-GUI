@@ -1,5 +1,6 @@
 ﻿using BitmexGUI.Models;
 using BitmexGUI.Services.Interfaces;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -53,17 +54,10 @@ namespace BitmexGUI.Services.Abstract
              
         }
 
-        public async void GetPriceREST(ObservableCollection<CandlestickData> PriceData)
-        {
+        public async void GetPriceREST() { }
 
-        }
 
-        public async void GetPriceREST()
-        {
 
-        }
-
-        
         public async void GetPriceWSS()
         {
             System.Net.WebSockets.ClientWebSocket HttpClientPriceWSS = new System.Net.WebSockets.ClientWebSocket();
@@ -97,19 +91,19 @@ namespace BitmexGUI.Services.Abstract
 
                     //System.IO.File.AppendAllText(filePath, resp + "\n");
 
-                    ProcessResponseWss(resp);
+                    ProcessPriceResponseWss(resp);
                 }
             }
 
 
         }
-         
-        
-        public virtual void ProcessResponseWss()
+
+
+        protected virtual void ProcessPriceResponseWss()
         {
 
         }
-        public virtual void ProcessResponseWss(string response)
+        protected virtual void ProcessPriceResponseWss(string response)
         {
 
         }
@@ -126,9 +120,19 @@ namespace BitmexGUI.Services.Abstract
         {
             
 
+        } 
+        public virtual void GetWallet()
+        {
+            
         }
 
-        public virtual void GetBalance()
+        public virtual async void SetLeverage(string Symbol, double leverage)
+        {
+            
+
+        }
+
+        public virtual void GetLeverage(string Symbol)
         {
 
         }
