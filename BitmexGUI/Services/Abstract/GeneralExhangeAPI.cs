@@ -1,4 +1,5 @@
 ﻿using BitmexGUI.Models;
+using BitmexGUI.Services.Implementations;
 using BitmexGUI.Services.Interfaces;
 using Newtonsoft.Json;
 using System;
@@ -66,24 +67,23 @@ namespace BitmexGUI.Services.Abstract
             CancellationTokenSource source = new CancellationTokenSource();
             CancellationToken token = source.Token;
 
-           
-
-
+            
             int size = 5000;
             var buffer = new byte[size];
 
             if(HttpClientPriceWSS.State != WebSocketState.Connecting &&  HttpClientPriceWSS.State != WebSocketState.Open)
             {
                 await HttpClientPriceWSS.ConnectAsync(new Uri(UrlWss), token);
+                WebSocketManager.Instance.AddWebSocket(HttpClientPriceWSS);
             }
 
 
-            while (HttpClientPriceWSS.State == WebSocketState.Open)
+            do
             {
                 var result = await HttpClientPriceWSS.ReceiveAsync(buffer, token);
                 if (result.MessageType == WebSocketMessageType.Close)
                 {
-                    await HttpClientPriceWSS.CloseAsync(WebSocketCloseStatus.NormalClosure, null, token);
+                    //await HttpClientPriceWSS.CloseAsync(WebSocketCloseStatus.NormalClosure, null, token);
                 }
                 else
                 {
@@ -94,6 +94,8 @@ namespace BitmexGUI.Services.Abstract
                     ProcessPriceResponseWss(resp);
                 }
             }
+
+            while (HttpClientPriceWSS.State == WebSocketState.Open);
 
 
         }

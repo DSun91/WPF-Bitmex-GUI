@@ -226,11 +226,11 @@ namespace BitmexGUI.Views
             // Example: Concatenate or create a custom object
             if (values[0] != null && values[1] != null)
             {
-                string symbol = values[0].ToString();
-                string type = values[1].ToString();
+                string param1 = values[0].ToString();
+                string param2 = values[1].ToString();
 
                 // Combine or modify the value as needed
-                return Tuple.Create(symbol, type); ; // Or return a custom object
+                return Tuple.Create(param1, param2); ; // Or return a custom object
             }
             return null;
         }

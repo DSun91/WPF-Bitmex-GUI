@@ -62,6 +62,8 @@ namespace BitmexGUI.Models
         public float? MarginCallPrice { get; set; }
         public float? LiquidationPrice { get; set; }
         public float? BankruptPrice { get; set; }
+
+        public float? DeltaEntryCurrent => (float)Math.Round((float)AvgEntryPrice - (float)MarkPrice);
         public DateTime Timestamp { get; set; }
     }
 

@@ -24,7 +24,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System;
 using System.Globalization;
-using System.Windows.Data; 
+using System.Windows.Data;
+using System.Xml;
 
 
 namespace BitmexGUI.Views
@@ -41,83 +42,150 @@ namespace BitmexGUI.Views
 
         
         private MainViewModel ViewModel => (MainViewModel)DataContext;
-        private MainViewModel viewModel;
-        // Target range
+        private MainViewModel viewModel; 
         private CandlestickChart CandleStickView;
         public event Action<string> OrderLinesUpdated;
-        public event Action<string> CancelOrder; 
-
-        public string vale;
-
-        private string AmendingOrderID;
-
+        public event Action<string> CancelOrder;  
+        private string AmendingOrderID; 
         private Point clickPositionCanvas;
         private bool isDraggingCanvas = false;
         public static bool isDraggingOrderLine = false; 
         private Point clickPositionLabel;
-
+        public static Dictionary<string,string> ExchangeTickersMap = new Dictionary<string, string> 
+        { 
+            { "BTCUSDT","XBTUSDT" },
+            { "BTCUSD","XBTUSD" },
+            { "ETHUSDT","ETHUSDT" }
+        };
 
         public MainWindow()
         {
             
              
             InitializeComponent();
-             
-            viewModel = new MainViewModel(CandlestickChart.CachedCandles); 
-            DataContext = viewModel;
-            
-            
-            CandleStickView = new CandlestickChart();
+            LoadTickers();
+            LoadTimeframes();
+            LoadExchanges();
+            ExchangeSelector.SelectedIndex = 0;
+            Ticker.SelectionChanged += Ticker_SelectionChanged;
+            Timeframe.SelectionChanged += Timeframe_SelectionChanged;
 
-            DrawingCanvas.MouseDown += DrawingCanvas_MouseMiddleButtonDown;
-            DrawingCanvas.MouseUp += DrawingCanvas_MouseMiddleButtonUp;
-            DrawingCanvas.MouseWheel += DrawingCanvas_MouseWheelEvents;
-            DrawingCanvas.MouseLeftButtonDown += MoveCanvas_MouseLeftButtonDown;
-            DrawingCanvas.MouseMove += MoveCanvas_MouseMove;
-            DrawingCanvas.MouseLeftButtonUp += MoveCanvas_MouseLeftButtonUp;
 
             this.Loaded += MainWindow_Loaded;
-
-
-            this.OrderLinesUpdated += (AmendingOrderID) =>
-            {
-                if (DataContext is MainViewModel viewModel)
-                {
-                    viewModel.HandleOrderLineUpdate(AmendingOrderID);
-                }
-            };
-            
-
-
-             this.CancelOrder += (OrderCanceled) =>
-            {
-                if (DataContext is MainViewModel viewModel)
-                {
-                    viewModel.CancelOrder(OrderCanceled);
-                }
-            };
-
-
-          
-
+             
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            viewModel.GetBalances();
-            
-            viewModel.StartPriceFeed();
+            TryInitializeViewModel();
 
         }
-
-        private void test(object sender, RoutedEventArgs e)
+        public async Task CloseAllConnectionsAsync()
         {
-            Button Btn = sender as Button;
-
-            MessageBox.Show("test");
-
-
+            await WebSocketManager.Instance.CloseAllWebSocketsAsync(CancellationToken.None);
         }
+        private async Task EnsureAllWebSocketsClosedAsync()
+        {
+            // Assuming WebSocketManager.Instance.GetAllWebSockets() returns a list of WebSocket instances
+            var webSockets = WebSocketManager.Instance.GetAllWebSockets();
+
+            foreach (var webSocket in webSockets)
+            {
+                // Check if each WebSocket is closed
+                if (webSocket.State != WebSocketState.CloseReceived && webSocket.State != WebSocketState.Closed)
+                {
+                    // Optionally, you can force close here
+                    await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Ensuring closure", CancellationToken.None);
+                }
+            }
+
+            // Optionally, add a delay to ensure the WebSockets have had time to close
+            await Task.Delay(1500); // Adjust the delay as needed
+        }
+
+
+        private async void TryInitializeViewModel()
+        {
+           
+            if(Timeframe.SelectedItem != null && Ticker.SelectedItem != null)
+            {
+                await WebSocketManager.Instance.CloseAllWebSocketsAsync(CancellationToken.None);
+                await EnsureAllWebSocketsClosedAsync();
+                viewModel = new MainViewModel(CandlestickChart.CachedCandles, 
+                                              Ticker.SelectedItem.ToString(),
+                                              Timeframe.SelectedItem.ToString(), 
+                                              ExchangeTickersMap[Ticker.SelectedItem.ToString()]);
+                 
+                DataContext = viewModel;
+                CandleStickView = new CandlestickChart();
+                DrawingCanvas.MouseDown += DrawingCanvas_MouseMiddleButtonDown;
+                DrawingCanvas.MouseUp += DrawingCanvas_MouseMiddleButtonUp;
+                DrawingCanvas.MouseWheel += DrawingCanvas_MouseWheelEvents;
+                DrawingCanvas.MouseLeftButtonDown += MoveCanvas_MouseLeftButtonDown;
+                DrawingCanvas.MouseMove += MoveCanvas_MouseMove;
+                DrawingCanvas.MouseLeftButtonUp += MoveCanvas_MouseLeftButtonUp;
+
+                this.OrderLinesUpdated += (AmendingOrderID) =>
+                {
+                    if (DataContext is MainViewModel viewModel)
+                    {
+                        viewModel.HandleOrderLineUpdate(AmendingOrderID);
+                    }
+                };
+
+                 
+                this.CancelOrder += (OrderCanceled) =>
+                {
+                    if (DataContext is MainViewModel viewModel)
+                    {
+                        viewModel.CancelOrder(OrderCanceled);
+                    }
+                };
+
+                viewModel.GetBalances();
+
+                viewModel.StartPriceFeed();
+
+
+
+            }
+        }
+
+        
+
+        private void Ticker_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            TryInitializeViewModel();
+        }
+
+        private void Timeframe_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            TryInitializeViewModel();
+        }
+
+        private void LoadTickers()
+        {
+            Ticker.ItemsSource = new List<string> { "BTCUSDT", "BTCUSD", "ETHUSDT"};
+        }
+
+        private void LoadTimeframes()
+        {
+            Timeframe.ItemsSource = new List<string> { "1m", "5m", "15m","1h","4h","1d","1w" };
+        }
+
+        private void LoadExchanges()
+        {
+            ExchangeSelector.ItemsSource = new List<string> { "Bitmex" };
+        }
+
+        //private void test(object sender, RoutedEventArgs e)
+        //{
+        //    Button Btn = sender as Button;
+
+        //    MessageBox.Show("test");
+
+
+        //}
 
         /// //////////////////////////////////////////////  ORDER LINE DRAGGING
 
@@ -335,6 +403,7 @@ namespace BitmexGUI.Views
         {
             if (e.ChangedButton == MouseButton.Middle && e.ButtonState == MouseButtonState.Pressed)
             {
+                
                 // Remove previous line if it exists
                 if (_lineVisualHost != null)
                 {
@@ -344,16 +413,21 @@ namespace BitmexGUI.Views
 
                 Point clickPosition = e.GetPosition(MainRenderingCanvas);
                 double y = clickPosition.Y;
-
+                var PriceVal = Math.Round(CandlestickChart.InvMapToScale(y), 3).ToString();
                 // Create a new DrawingVisual and render the line
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen())
                 {
                     Pen linePen = new Pen(Brushes.Blue, 1)
                     {
-                        DashStyle = new DashStyle(new double[] { 2, 2 }, 0)
+                        DashStyle = new DashStyle(new double[] { 1, 2 }, 0)
                     };
                     dc.DrawLine(linePen, new Point(0, y), new Point(MainRenderingCanvas.Width, y));
+                    FormattedText ft = new FormattedText(PriceVal, CultureInfo.GetCultureInfo("en-us"), FlowDirection.LeftToRight, new Typeface("Klavika"), 12, Brushes.Blue);
+                    Point textPosition = clickPosition;
+                    textPosition.Y -= 15;
+                    textPosition.X -= 15;
+                    dc.DrawText(ft, textPosition);
                 }
 
                 // Add the visual to the canvas and store it in the field
@@ -361,7 +435,7 @@ namespace BitmexGUI.Views
                 MainRenderingCanvas.Children.Add(_lineVisualHost);
 
                 // Display the price
-                Entryprice.Text = Math.Round(CandlestickChart.InvMapToScale(y), 3).ToString();
+                Entryprice.Text = PriceVal;
             }
         }
 
@@ -383,7 +457,10 @@ namespace BitmexGUI.Views
         {
             Slider sld = sender as Slider;
             EntryAmount.Text=Math.Round(sld.Value,2).ToString();
-            BalancePercent.Content=Math.Round(sld.Value * 100 / viewModel.AccountInfos[0].Balance, 2).ToString()+" %";
+
+            var existingAccountBalance = viewModel.AccountInfos.FirstOrDefault(p => p.CurrencyName == CmbCurrency.SelectedValue);
+
+            BalancePercent.Content=Math.Round(sld.Value * 100 / existingAccountBalance.Balance, 2).ToString()+" %";
         }
         
         private void ResetButton_Click(object sender, RoutedEventArgs e)
@@ -412,10 +489,7 @@ namespace BitmexGUI.Views
 
 
         }
-
-       
-
-
+          
     }
     class VisualHost : FrameworkElement
     {

@@ -1,5 +1,4 @@
 ﻿<Window x:Class="BitmexGUI.Views.MainWindow"
-         
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,11 +6,9 @@
         xmlns:viewmodels="clr-namespace:BitmexGUI.ViewModels"
         xmlns:local="clr-namespace:BitmexGUI.Views" xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="1400">
+        Title="MainWindow" Height="800" Width="1500">
     <Window.Resources>
-
         <ResourceDictionary>
-
             <local:MainWindow  x:Key="MainWindow"/>
             <local:PositionConverter  x:Key="PositionConverter"/>
             <local:PositionConverterCandlestickX  x:Key="PositionConverterCandlestickX"/>
@@ -19,7 +16,7 @@
             <local:PriceConverterInvMapOrderline  x:Key="PriceConverterInvMapOrderline"/>
             <local:ColorConverter   x:Key="ColorConverter"/>
             <local:LocalViewModel x:Key="LocalViewModel"/>
-            <local:ColorConverterOrderTag x:Key="ColorConverterOrderTag"/> 
+            <local:ColorConverterOrderTag x:Key="ColorConverterOrderTag"/>
             <local:PriceConverterMapSettledPrice x:Key="PriceConverterMapSettledPrice"/>
             <local:PriceConverterMapLabel x:Key="PriceConverterMapLabel"/>
             <local:CommandParameterConverter x:Key="CommandParameterConverter"/>
@@ -98,6 +95,63 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
+            <Style TargetType="ComboBox">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ComboBox">
+                            <Grid>
+                                <Border x:Name="Border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1"
+                                CornerRadius="1"
+                                Padding="1">
+                                    <Grid>
+                                        <ContentPresenter Content="{TemplateBinding SelectionBoxItem}"
+                                                  ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                  Margin="1"
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Left"/>
+
+                                        <ToggleButton Grid.Column="2"
+                                              Name="ToggleButton"
+                                              Focusable="False"
+                                              IsChecked="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                              ClickMode="Press"
+                                              Background="Transparent"
+                                              BorderThickness="0"
+                                              HorizontalAlignment="Right"
+                                              VerticalAlignment="Center">
+                                            <Path x:Name="Arrow"
+                                          Data="M 0 0 L 4 4 L 8 0 Z"
+                                          Fill="Black"
+                                          Margin="0,0,0,0"/>
+                                        </ToggleButton>
+                                    </Grid>
+                                </Border>
+
+                                <Popup Name="Popup"
+                               Placement="Bottom"
+                               IsOpen="{TemplateBinding IsDropDownOpen}"
+                               AllowsTransparency="True"
+                               Focusable="False"
+                               PopupAnimation="Slide">
+                                    <Border x:Name="DropDownBorder"
+                                    Background="White"
+                                    BorderBrush="Gray"
+                                    BorderThickness="1"
+                                    CornerRadius="3">
+                                        <ScrollViewer>
+                                            <ItemsPresenter/>
+                                        </ScrollViewer>
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
             <local:StringToDoubleConverter x:Key="StringToDoubleConverter"/>
 
         </ResourceDictionary>
@@ -121,6 +175,7 @@
 
         <!-- Main content area -->
         <Grid Margin="1,0,0,0" Background="Transparent">
+            
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -135,21 +190,33 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="19*" />
-                <ColumnDefinition Width="1480*"/>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Label Content="Bitmex Trading GUI" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Height="49" Margin="218,0,0,0" VerticalAlignment="Center" Width="317" FontFamily="Franklin Gothic Book" FontSize="36" FontWeight="Bold" Cursor="AppStarting" FontStyle="Italic" Grid.Column="1"/>
+            <Image HorizontalAlignment="Left" Height="100" Margin="688,0,0,0" VerticalAlignment="Center" Width="262" Source="Resources/a.jpg" Stretch="Uniform"/>
+            <Image HorizontalAlignment="Left" Height="100" Margin="239,0,0,0" VerticalAlignment="Center" Width="262" Source="Resources/a.jpg" Stretch="Uniform"/>
 
-            <Canvas x:Name="DrawingCanvas" Grid.Row="1" Background="Transparent" Width="700" HorizontalAlignment="Left" Margin="70,0,0,0" Height="400" VerticalAlignment="Center" >
+            <Label Content="Bitmex GUI" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Height="50" Margin="500,27,0,0" VerticalAlignment="Top" Width="198" FontFamily="Franklin Gothic Book" FontSize="36" FontWeight="Bold" Cursor="AppStarting" FontStyle="Italic"/>
+
+            <ComboBox x:Name="ExchangeSelector" HorizontalAlignment="Left" Height="20" Margin="84,46,0,0" Grid.Row="1" VerticalAlignment="Top" Width="72" SelectionChanged="Ticker_SelectionChanged"/>
+            <Label Content="Exchange:" HorizontalAlignment="Left" Margin="10,42,0,0" Grid.Row="1" VerticalAlignment="Top" Width="74"/>
+
+            <ComboBox x:Name="Ticker" HorizontalAlignment="Left" Height="20" Margin="73,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="83" SelectionChanged="Ticker_SelectionChanged"/>
+            <Label Content="Ticker:" HorizontalAlignment="Left" Margin="10,6,0,0" Grid.Row="1" VerticalAlignment="Top" Width="74"/>
+            <ComboBox  x:Name="Timeframe" HorizontalAlignment="Left" Height="20" Margin="100,82,0,0" Grid.Row="1" VerticalAlignment="Top" Width="56" SelectionChanged="Timeframe_SelectionChanged"/>
+            <Label Content="Time-frame:" HorizontalAlignment="Left" Margin="10,77,0,0" Grid.Row="1" VerticalAlignment="Top" Width="85"/>
+
+
+
+            <Canvas x:Name="DrawingCanvas" Grid.Row="1" Background="Transparent" Width="800" HorizontalAlignment="Left" Margin="170,0,0,0" Height="400" VerticalAlignment="Center" >
                 <Canvas.Clip>
-                    <RectangleGeometry Rect="0,0,700,400"
+                    <RectangleGeometry Rect="0,0,800,400"
                     RadiusX="8" RadiusY="8"/>
                 </Canvas.Clip>
-                <Border BorderBrush="Black" BorderThickness="2" Width="700" Height="400" Background="Transparent" CornerRadius="8" Margin="0,0,0,0">
+                <Border BorderBrush="Black" BorderThickness="2" Width="800" Height="400" Background="Transparent" CornerRadius="8" Margin="0,0,0,0">
                     <StackPanel>
-                        <Canvas x:Name="MainRenderingCanvas" Margin="72,0,0,0" Width="550" HorizontalAlignment="Left">
+                        <Canvas x:Name="MainRenderingCanvas" Margin="75,0,0,0" Width="650" HorizontalAlignment="Left">
                             <Canvas.Clip>
-                                <RectangleGeometry Rect="0,-500,550,1800"
+                                <RectangleGeometry Rect="0,-500,650,1800"
                                    RadiusX="8" RadiusY="8"/>
                             </Canvas.Clip>
                             <ItemsControl ItemsSource="{Binding GridData}">
@@ -173,6 +240,125 @@
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
+                            <ItemsControl ItemsSource="{Binding ScaledPriceData}">
+                                <!-- Override the default panel to a Canvas -->
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <Canvas />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Canvas>
+                                            <Line
+                                            x:Name="Wick"
+                                            Canvas.Top="0" 
+                                            X1="{Binding Posx}"  
+                                            X2="{Binding Posx}"
+                                            Y1="{Binding High}"   
+                                            Y2="{Binding Low}" 
+                                            Stroke="Black"
+                                            StrokeThickness="1"/>
+                                            <Rectangle 
+                                            x:Name="Body"
+                                            Canvas.Left="{Binding Converter={StaticResource PositionConverterCandlestickX}}"
+                                            Canvas.Top="{Binding Converter={StaticResource PositionConverter}}"
+                                            Width="{Binding Width}"
+                                            Height="{Binding Height}"  
+                                            Fill= "{Binding Converter={StaticResource ColorConverter}}"
+                                            Panel.ZIndex="0"/>
+                                        </Canvas>
+                                    </DataTemplate>
+
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <ItemsControl ItemsSource="{Binding SettledPriceData}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <Canvas />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Canvas>
+                                            <Line  
+                                                x:Name="settled"
+                                                Canvas.Top="0" 
+                                                X1="5"  
+                                                X2="650"
+                                                Y1="{Binding SettledPriceValue,Converter={StaticResource PriceConverterMapOrderline}}"   
+                                                Y2="{Binding SettledPriceValue,Converter={StaticResource PriceConverterMapOrderline}}" 
+                                                Stroke="Purple"
+                                                StrokeThickness="1"
+                                                StrokeDashArray="2" />
+                                        </Canvas>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <ItemsControl ItemsSource="{Binding CurrentClose}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <Canvas />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Canvas>
+                                            <Line  
+                                                 x:Name="qwe"
+                                                 Canvas.Top="0" 
+                                                 X1="0"  
+                                                 X2="650"
+                                                 Y1="{Binding PriceValue,Converter={StaticResource PriceConverterMapOrderline}}"   
+                                                 Y2="{Binding PriceValue,Converter={StaticResource PriceConverterMapOrderline}}" 
+                                                 Stroke="Black"
+                                                 StrokeThickness="1"
+                                                 StrokeDashArray="3" />
+                                        </Canvas>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <ItemsControl ItemsSource="{Binding PositionsLines}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <Canvas />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Canvas>
+                                            <Label
+                                                x:Name="BreakEvenPr" 
+                                                Canvas.Top="{Binding BreakEvenPrice}"
+                                                Canvas.Left="50" 
+                                                Height="25"
+                                                Width="170"
+                                                HorizontalContentAlignment="Left"
+                                                VerticalAlignment="Top"
+                                                FontSize = "13"
+                                                FontStyle="Italic"
+                                                Foreground = "White"
+                                                FontWeight = "Bold" 
+                                                Background = "Salmon">
+                                                <TextBlock>
+                                                 <Run Text="{Binding Symbol}"/>
+                                                 <Run Text=" BE: "/>
+                                                 <Run Text="{Binding BreakEvenPrice, Converter={StaticResource PriceConverterInvMapOrderline}}" />
+                                                </TextBlock>
+                                            </Label>
+                                            <Line  
+                                                  x:Name="BreakEven"
+                                                  Canvas.Top="0" 
+                                                  X1="0"  
+                                                  X2="650"
+                                                  Y1="{Binding BreakEvenPrice}"   
+                                                  Y2="{Binding BreakEvenPrice}" 
+                                                  Stroke="Salmon"
+                                                  StrokeThickness="1"/>
+                                        </Canvas>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                             <ItemsControl ItemsSource="{Binding OrdersLines}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -184,26 +370,26 @@
                                     <DataTemplate>
                                         <Canvas>
                                             <Label
-                                                  x:Name="PriceTag"
-                                                  Tag="{Binding OrderID}"
-                                                  Canvas.Top="{Binding Price}"
-                                                  Canvas.Left="430" 
-                                                  Height="25"
-                                                  Width="120"
-                                                  HorizontalContentAlignment="Left"
-                                                  VerticalAlignment="Top"
-                                                  FontSize = "13"
-                                                  FontStyle="Italic"
-                                                  Foreground = "Black"
-                                                  FontWeight = "Bold"  
-                                                  Background = "{Binding Converter={StaticResource ColorConverterOrderTag}}"
-                                                  MouseRightButtonDown="OrderTag_MouseLeftButtonDown"
-                                                  MouseMove = "OrderTag_MouseMove"
-                                                  MouseRightButtonUp="OrderTag_MouseLeftButtonUp"  >
+                                              x:Name="PriceTag"
+                                              Tag="{Binding OrderID}"
+                                              Canvas.Top="{Binding Price}"
+                                              Canvas.Left="480" 
+                                              Height="25"
+                                              Width="120"
+                                              HorizontalContentAlignment="Left"
+                                              VerticalAlignment="Top"
+                                              FontSize = "13"
+                                              FontStyle="Italic"
+                                              Foreground = "Black"
+                                              FontWeight = "Bold"  
+                                              Background = "{Binding Converter={StaticResource ColorConverterOrderTag}}"
+                                              MouseRightButtonDown="OrderTag_MouseLeftButtonDown"
+                                              MouseMove = "OrderTag_MouseMove"
+                                              MouseRightButtonUp="OrderTag_MouseLeftButtonUp"  >
                                                 <TextBlock>
-                                                   <Run Text="{Binding Side}"/>
-                                                   <Run Text=" : "/>
-                                                   <Run Text="{Binding Price, Converter={StaticResource PriceConverterInvMapOrderline}}" />
+                                               <Run Text="{Binding Side}"/>
+                                               <Run Text=" : "/>
+                                               <Run Text="{Binding Price, Converter={StaticResource PriceConverterInvMapOrderline}}" />
                                                 </TextBlock>
                                             </Label>
                                             <Button
@@ -211,7 +397,7 @@
                                                Content="X"
                                                Tag="{Binding OrderID}"
                                                Canvas.Top="{Binding Price}"
-                                               Canvas.Left="525"
+                                               Canvas.Left="575"
                                                Width="25"
                                                Height="25"
                                                FontSize="14"
@@ -242,129 +428,9 @@
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-                            <ItemsControl ItemsSource="{Binding ScaledPriceData}">
-                                <!-- Override the default panel to a Canvas -->
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <Canvas />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Canvas>
-                                            <Line
-                                                x:Name="Wick"
-                                                Canvas.Top="0" 
-                                                X1="{Binding Posx}"  
-                                                X2="{Binding Posx}"
-                                                Y1="{Binding High}"   
-                                                Y2="{Binding Low}" 
-                                                Stroke="Black"
-                                                StrokeThickness="1"/>
-                                            <Rectangle 
-                                            x:Name="Body"
-                                            Canvas.Left="{Binding Converter={StaticResource PositionConverterCandlestickX}}"
-                                            Canvas.Top="{Binding Converter={StaticResource PositionConverter}}"
-                                            Width="{Binding Width}"
-                                            Height="{Binding Height}"  
-                                            Fill= "{Binding Converter={StaticResource ColorConverter}}"
-                                            Panel.ZIndex="0"/>
-                                        </Canvas>
-                                    </DataTemplate>
-
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                            <ItemsControl ItemsSource="{Binding SettledPriceData}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <Canvas />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel> 
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Canvas> 
-                                            <Line  
-                                                x:Name="settled"
-                                                Canvas.Top="0" 
-                                                X1="0"  
-                                                X2="550"
-                                                Y1="{Binding SettledPriceValue,Converter={StaticResource PriceConverterMapOrderline}}"   
-                                                Y2="{Binding SettledPriceValue,Converter={StaticResource PriceConverterMapOrderline}}" 
-                                                Stroke="Purple"
-                                                StrokeThickness="1"
-                                                StrokeDashArray="2" />
-                                        </Canvas>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                            <ItemsControl ItemsSource="{Binding CurrentClose}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <Canvas />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel> 
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Canvas> 
-                                            <Line  
-                                                 x:Name="qwe"
-                                                 Canvas.Top="0" 
-                                                 X1="0"  
-                                                 X2="550"
-                                                 Y1="{Binding PriceValue,Converter={StaticResource PriceConverterMapOrderline}}"   
-                                                 Y2="{Binding PriceValue,Converter={StaticResource PriceConverterMapOrderline}}" 
-                                                 Stroke="Black"
-                                                 StrokeThickness="1"
-                                                 StrokeDashArray="3" />
-                                        </Canvas>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                            <ItemsControl ItemsSource="{Binding PositionsLines}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <Canvas />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel> 
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Canvas>
-                                            <Label
-                                                x:Name="BreakEvenPr" 
-                                                Canvas.Top="{Binding BreakEvenPrice}"
-                                                Canvas.Left="50" 
-                                                Height="25"
-                                                Width="170"
-                                                HorizontalContentAlignment="Left"
-                                                VerticalAlignment="Top"
-                                                FontSize = "13"
-                                                FontStyle="Italic"
-                                                Foreground = "White"
-                                                FontWeight = "Bold" 
-                                                Background = "Salmon">      
-                                                <TextBlock>
-                                                 <Run Text="{Binding Symbol}"/>
-                                                 <Run Text=" BE: "/>
-                                                 <Run Text="{Binding BreakEvenPrice, Converter={StaticResource PriceConverterInvMapOrderline}}" />      
-                                                </TextBlock>
-                                            </Label>
-                                            <Line  
-                                                  x:Name="BreakEven"
-                                                  Canvas.Top="0" 
-                                                  X1="0"  
-                                                  X2="550"
-                                                  Y1="{Binding BreakEvenPrice}"   
-                                                  Y2="{Binding BreakEvenPrice}" 
-                                                  Stroke="Salmon"
-                                                  StrokeThickness="1"/>     
-                                        </Canvas>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
                         </Canvas>
-                        
-                        
-                        <Canvas x:Name="TicksCanvasSettled" Margin="625,0,0,0">
+
+                        <Canvas x:Name="TicksCanvasSettled" Margin="725,0,0,0">
                             <Canvas.Clip>
                                 <RectangleGeometry Rect="0,0,150,800"
                                  RadiusX="8" RadiusY="8"/>
@@ -380,35 +446,37 @@
                                     <DataTemplate>
                                         <Canvas>
                                             <Label
-                                              x:Name="BitmxClose" 
-                                              Canvas.Top="{Binding SettledPriceValue,Converter={StaticResource PriceConverterMapLabel}}"
-                                              Canvas.Left="0" 
-                                              Height="25"
-                                              Width="65"
-                                              HorizontalContentAlignment="Left"
-                                              VerticalAlignment="Center"
-                                              FontSize = "13"
-                                              FontStyle="Italic"
-                                              Foreground = "Purple"
-                                              FontWeight = "Bold" 
-                                              Background = "Transparent" >
+                                                  x:Name="BitmxClose" 
+                                                  Canvas.Top="{Binding SettledPriceValue,Converter={StaticResource PriceConverterMapLabel}}"
+                                                  Canvas.Left="5" 
+                                                  Height="25"
+                                                  Width="65"
+                                                  HorizontalContentAlignment="Left"
+                                                  VerticalAlignment="Center"
+                                                  FontSize = "13"
+                                                  FontStyle="Italic"
+                                                  Foreground = "Purple"
+                                                  BorderThickness="1"
+                                                  BorderBrush="Purple"
+                                                  FontWeight = "Bold" 
+                                                  Background = "Transparent" >
                                                 <TextBlock>  
                        <Run Text="{Binding SettledPriceValue }" />
                                                 </TextBlock>
                                             </Label>
-                                            
+
                                         </Canvas>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-                             
+
                         </Canvas>
                         <Canvas x:Name="TicksCanvasMarket" Margin="0,0,0,0" HorizontalAlignment="Left" Width="65">
                             <Canvas.Clip>
                                 <RectangleGeometry Rect="0,0,150,800"
                                   RadiusX="8" RadiusY="8"/>
                             </Canvas.Clip>
-                            
+
                             <ItemsControl ItemsSource="{Binding CurrentClose}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -420,21 +488,22 @@
                                     <DataTemplate>
                                         <Canvas>
                                             <Label
-                        x:Name="candleClose" 
-                        Canvas.Top="{Binding PriceValue,Converter={StaticResource PriceConverterMapLabel}}"
-                        Canvas.Left="5" 
-                        Height="25"
-                        Width="65"
-                        HorizontalContentAlignment="Left"
-                        VerticalAlignment="Center"
-                        FontSize = "13"
-                        FontStyle="Italic"
-                        Foreground = "Black"
-                        FontWeight = "Bold"
-                       
-                        Background = "Transparent" >
+                                                x:Name="candleClose" 
+                                                Canvas.Top="{Binding PriceValue,Converter={StaticResource PriceConverterMapLabel}}"
+                                                Canvas.Left="5" 
+                                                Height="25"
+                                                Width="65"
+                                                HorizontalContentAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                FontSize = "13"
+                                                FontStyle="Italic"
+                                                Foreground = "Black"
+                                                FontWeight = "Bold"
+                                                BorderThickness="1"
+                                                BorderBrush="Black"
+                                                Background = "Transparent" >
                                                 <TextBlock>  
-                         <Run Text="{Binding PriceValue }" />
+                                                  <Run Text="{Binding PriceValue }" />
                                                 </TextBlock>
                                             </Label>
 
@@ -451,55 +520,62 @@
 
 
 
-            <Label Content="Balance:" Grid.Row="2" HorizontalAlignment="Left" VerticalContentAlignment="Top" Height="32" Margin="84,18,0,0" VerticalAlignment="Top" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.Column="1" />
-            <TextBox x:Name="CurrentBalance" IsEnabled="False" Text="{Binding CurrentBalance,UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"  Grid.Row="2"  HorizontalAlignment="Left" Height="25" Margin="164,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" FontFamily="Book Antiqua" FontSize="14" Grid.Column="1" />
-            <ComboBox x:Name="CmbCurrency" Grid.Row="2" SelectedItem="{Binding SelectedCurrency}" ItemsSource="{Binding Currencies}" HorizontalAlignment="Left" SelectedIndex="0" Height="25" Margin="280,22,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1">
-
-            </ComboBox>
-            <Button x:Name="ResetButton" Content="Reset" Grid.Row="1" HorizontalAlignment="Left" Height="40" Margin="17,10,0,0" VerticalAlignment="Top" Width="40" Click="ResetButton_Click" Grid.ColumnSpan="2"/>
-            <Button x:Name="TimeFrame" Content="TF" Grid.Row="1" HorizontalAlignment="Left" Height="40" Margin="17,60,0,0" VerticalAlignment="Top" Width="40" Grid.ColumnSpan="2"/>
-            <Button Content="" Grid.Row="1" HorizontalAlignment="Left" Height="40" Margin="17,110,0,0"  VerticalAlignment="Top" Width="40" Grid.ColumnSpan="2"/>
-            <Button Content="" Grid.Row="1" HorizontalAlignment="Left" Height="40" Margin="17,160,0,0"  VerticalAlignment="Top" Width="40" Grid.ColumnSpan="2"/>
-            <Slider x:Name="AmountSlider" Grid.Row="2" TickFrequency="5" Minimum="0" Maximum="{Binding CurrentBalance, Converter={StaticResource StringToDoubleConverter}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"     HorizontalAlignment="Left"  Height="20" Margin="450,41,0,0" VerticalAlignment="Top" Width="353" ValueChanged="AmountSlider_ValueChanged" Grid.Column="1" Grid.RowSpan="2"  />
-            <Label Content="Balance entry amount:" Grid.Row="2" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="34" Margin="470,9,0,0" VerticalAlignment="Top" Width="193" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.Column="1"/>
-            <Label x:Name="BalancePercent" Grid.Row="2" Content="%" HorizontalAlignment="Left" Height="24" Margin="803,37,0,0"  VerticalAlignment="Top" Width="112" FontWeight="Bold" Grid.Column="1" Grid.RowSpan="2"/>
-            <TextBox x:Name="EntryAmount" Grid.Row="2" Text="{Binding EntryAmount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  HorizontalAlignment="Left" Height="26" Margin="664,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" FontFamily="Book Antiqua" FontSize="14" Grid.Column="1" />
+            <Label Content="Balance:" Grid.Row="2" HorizontalAlignment="Left" VerticalContentAlignment="Top" Height="32" Margin="175,18,0,0" VerticalAlignment="Top" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" />
+            <TextBox x:Name="CurrentBalance" IsEnabled="False" Text="{Binding CurrentBalance,UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"  Grid.Row="2"  HorizontalAlignment="Left" Height="25" Margin="255,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" FontFamily="Book Antiqua" FontSize="14" />
+            <ComboBox x:Name="CmbCurrency" Grid.Row="2" SelectedItem="{Binding SelectedCurrency}" ItemsSource="{Binding Currencies}" HorizontalAlignment="Left" SelectedIndex="0" Height="25" Margin="371,22,0,0" VerticalAlignment="Top" Width="75"/>
+            <Slider x:Name="AmountSlider" Grid.Row="2" TickFrequency="5" Minimum="0" Maximum="{Binding CurrentBalance, Converter={StaticResource StringToDoubleConverter}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"     HorizontalAlignment="Left"  Height="20" Margin="541,41,0,0" VerticalAlignment="Top" Width="353" ValueChanged="AmountSlider_ValueChanged" Grid.RowSpan="2"  />
+            <Label Content="Balance entry:" Grid.Row="2" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="34" VerticalAlignment="Center" Width="193" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Margin="593,0,0,0"/>
+            <Label x:Name="BalancePercent" Grid.Row="2" Content="%" HorizontalAlignment="Left" Height="24" Margin="894,37,0,0"  VerticalAlignment="Top" Width="112" FontWeight="Bold" Grid.RowSpan="2"/>
+            <TextBox x:Name="EntryAmount" Grid.Row="2" Text="{Binding EntryAmount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  HorizontalAlignment="Left" Height="26" Margin="720,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" FontFamily="Book Antiqua" FontSize="14" />
 
 
-            <Button x:Name="BitmexSettled" Content="Bitmex Settled" Grid.Row="3" HorizontalAlignment="Left" Height="26" Margin="296,24,0,0" VerticalAlignment="Top" Width="89" Click="BitmexSettled_Click" Grid.Column="1" />
-            <Label Content="Entry price: " Grid.Row="3" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="39" Margin="52,21,0,0" VerticalAlignment="Top" Width="130" FontFamily="Sitka Heading" FontSize="18"  FontWeight="Bold" Grid.Column="1" Grid.RowSpan="2"/>
-            <TextBox x:Name="Entryprice" Text="{Binding EntryPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="3" HorizontalAlignment="Left" Height="25" Margin="161,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="132" FontFamily="Book Antiqua" FontSize="14" Grid.Column="1"  />
-            <Label Content="Nominal value : " Grid.Row="3" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="38" Margin="426,17,0,0" VerticalAlignment="Top" Width="175" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.Column="1"/>
-            <TextBox x:Name="PositionValue" Grid.Row="3" IsEnabled="False" Text="{Binding PositionValue ,Mode=OneWay}" HorizontalAlignment="Left" Height="26" Margin="569,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="118" FontFamily="Book Antiqua" FontSize="14" Grid.Column="1" />
-            <Label Content="Order Cost: " Grid.Row="3" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="38" Margin="716,17,0,0" VerticalAlignment="Top" Width="146" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.Column="1"/>
-            <TextBox x:Name="OrderCost" Grid.Row="3" IsEnabled="False" Text="{Binding OrderCost, Mode=OneWay}" HorizontalAlignment="Left" Height="26" Margin="819,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="119" FontFamily="Book Antiqua" FontSize="14" Grid.Column="1" />
-            <Label Content="Quantity: " Grid.Row="4" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="38" Margin="716,0,0,0" VerticalAlignment="Center" Width="146" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.Column="1"/>
+            <Button x:Name="BitmexSettled" Content="Bitmex Settled" Grid.Row="3" HorizontalAlignment="Left" Height="26" Margin="387,24,0,0" VerticalAlignment="Top" Width="89" Click="BitmexSettled_Click" />
+            <Label Content="Entry price: " Grid.Row="3" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="39" Margin="143,21,0,0" VerticalAlignment="Top" Width="130" FontFamily="Sitka Heading" FontSize="18"  FontWeight="Bold" Grid.RowSpan="2"/>
+            <TextBox x:Name="Entryprice" Text="{Binding EntryPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="3" HorizontalAlignment="Left" Height="25" Margin="252,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="132" FontFamily="Book Antiqua" FontSize="14"  />
+            <Label Content="Nominal value : " Grid.Row="3" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="38" Margin="517,17,0,0" VerticalAlignment="Top" Width="175" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
+            <TextBox x:Name="PositionValue" Grid.Row="3" IsEnabled="False" Text="{Binding PositionValue ,Mode=OneWay}" HorizontalAlignment="Left" Height="26" Margin="660,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="118" FontFamily="Book Antiqua" FontSize="14" />
+            <Label Content="Order Cost: " Grid.Row="3" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="38" Margin="807,17,0,0" VerticalAlignment="Top" Width="146" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
+            <TextBox x:Name="OrderCost" Grid.Row="3" IsEnabled="False" Text="{Binding OrderCost, Mode=OneWay}" HorizontalAlignment="Left" Height="26" Margin="910,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="119" FontFamily="Book Antiqua" FontSize="14" />
+            <Label Content="Quantity: " Grid.Row="4" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="38" Margin="807,0,0,0" VerticalAlignment="Center" Width="146" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
 
 
 
-            <TextBox x:Name="Quantity" Grid.Row="4" IsEnabled="False" Text="{Binding Quantity, Mode=OneWay}" HorizontalAlignment="Left" Height="26" Margin="821,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="119" FontFamily="Book Antiqua" FontSize="14" Grid.Column="1" />
-            <Label Content="Actual Value: " Grid.Row="4" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="38" Margin="705,48,0,0" VerticalAlignment="Top" Width="157" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.RowSpan="3" Grid.Column="1"/>
-            <Label Content="Leverage:" Grid.Row="4" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="40" Margin="73,10,0,0" VerticalAlignment="Top" Width="130" FontFamily="Sitka Heading" FontSize="18"  FontWeight="Bold" Grid.Column="1" Grid.RowSpan="2" />
-            <Slider x:Name="SliderLeverage"  Grid.Row="4" TickFrequency="5"  SmallChange="1" Minimum="1" Maximum="100" Value="{Binding SliderLeverage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  TickPlacement="Both" HorizontalAlignment="Left" Height="28" Margin="163,0,0,0" VerticalAlignment="Center" Width="190" Grid.Column="1"  />
-            <Label x:Name="LeverageMultiplier" Grid.Row="4" Content="{Binding SliderLeverage,StringFormat='Value: X{{0:0.00}}'}" HorizontalAlignment="Left" Height="28" Margin="368,0,0,0" VerticalAlignment="Center" Width="67" FontWeight="Bold" Grid.Column="1"/>
-            <Label x:Name="LeverageMultiplier_Copy" Grid.Row="4" Content="X" HorizontalAlignment="Left" Height="28" Margin="345,0,0,0"  VerticalAlignment="Center" Width="23" FontWeight="Bold" Grid.Column="1"/>
-            <Label Content="Liquidation Price: " Grid.Row="4" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="40" Margin="410,0,0,0" VerticalAlignment="Center" Width="158" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.Column="1"/>
-            <TextBox Text="" Grid.Row="4" IsEnabled="False" BorderBrush="OrangeRed" BorderThickness="1" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="26" Margin="569,10,0,0" VerticalAlignment="Top" Width="118" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.Column="1"/>
+            <TextBox x:Name="Quantity" Grid.Row="4" IsEnabled="False" Text="{Binding Quantity, Mode=OneWay}" HorizontalAlignment="Left" Height="26" Margin="912,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="119" FontFamily="Book Antiqua" FontSize="14" />
+            <Label Content="Actual Value: " Grid.Row="5" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="38" Margin="796,0,0,0" VerticalAlignment="Top" Width="157" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.RowSpan="2"/>
+            <Label Content="Leverage:" Grid.Row="4" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="40" Margin="164,10,0,0" VerticalAlignment="Top" Width="130" FontFamily="Sitka Heading" FontSize="18"  FontWeight="Bold" Grid.RowSpan="2" />
+            <Slider x:Name="SliderLeverage"  Grid.Row="4" TickFrequency="5"  SmallChange="1" Minimum="1" Maximum="100" Value="{Binding SliderLeverage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  TickPlacement="Both" HorizontalAlignment="Left" Height="28" Margin="254,0,0,0" VerticalAlignment="Center" Width="190"  />
+            <Label x:Name="LeverageMultiplier" Grid.Row="4" Content="{Binding SliderLeverage,StringFormat='Value: X{{0:0.00}}'}" HorizontalAlignment="Left" Height="28" Margin="459,0,0,0" VerticalAlignment="Center" Width="67" FontWeight="Bold"/>
+            <Label x:Name="LeverageMultiplier_Copy" Grid.Row="4" Content="X" HorizontalAlignment="Left" Height="28" Margin="436,0,0,0"  VerticalAlignment="Center" Width="23" FontWeight="Bold"/>
+            <Label Content="Liquidation Price: " Grid.Row="4" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="40" Margin="501,0,0,0" VerticalAlignment="Center" Width="158" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
+            <TextBox Text="" Grid.Row="4" IsEnabled="False" BorderBrush="OrangeRed" BorderThickness="1" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="26" Margin="660,10,0,0" VerticalAlignment="Top" Width="118" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
 
-            <TextBox x:Name="ActualPositionValue" Grid.Row="5" IsEnabled="False" Text="{Binding ActualPositionValue, Mode=OneWay}" HorizontalAlignment="Left" Height="26" Margin="819,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="119" FontFamily="Book Antiqua" FontSize="14" Grid.Column="1" />
-            <Button Content="Stop Limit Buy" Grid.Row="5" HorizontalAlignment="Left" Height="30" Margin="227,0,0,0" VerticalAlignment="Center" Width="95" Command="{Binding CreateNewOrderCommand}" Grid.Column="1"/>
-            <Label Content="Entry Fee: " Grid.Row="5" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="39" Margin="469,0,0,0" VerticalAlignment="Top" Width="92" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.RowSpan="2" Grid.Column="1"/>
-            <TextBox Text="" Grid.Row="5" IsEnabled="False" BorderBrush="OrangeRed" BorderThickness="1" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="26" Margin="569,0,0,0" VerticalAlignment="Top" Width="118" FontFamily="Sitka Heading" FontSize="18"  FontWeight="Bold" Grid.Column="1"/>
-            <Button Content="Buy Limit" x:Name="BuyLimit" Grid.Row="5" Command="{Binding CreateNewOrderCommand}" CommandParameter="{Binding ElementName=BuyLimit, Path=Name}" HorizontalAlignment="Left" Height="30" Margin="27,0,0,0" VerticalAlignment="Center" Width="95" Grid.Column="1"/>
-            <Button Content="Buy Market" x:Name="BuyMarket" Grid.Row="5" Command="{Binding CreateNewOrderCommand}" CommandParameter="{Binding ElementName=BuyMarket, Path=Name}" HorizontalAlignment="Left" Height="30" Margin="127,0,0,0" VerticalAlignment="Center" Width="95" Grid.Column="1"/>
+            <TextBox x:Name="ActualPositionValue" Grid.Row="5" IsEnabled="False" Text="{Binding ActualPositionValue, Mode=OneWay}" HorizontalAlignment="Left" Height="26" Margin="910,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="119" FontFamily="Book Antiqua" FontSize="14" />
+            <Button Content="Stop Limit Buy" Grid.Row="5" HorizontalAlignment="Left" Height="30" Margin="318,0,0,0" VerticalAlignment="Center" Width="95" Command="{Binding CreateNewOrderCommand}"/>
+            <Label Content="Entry Fee: " Grid.Row="5" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="39" Margin="560,0,0,0" VerticalAlignment="Top" Width="92" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" Grid.RowSpan="2"/>
+            <TextBox Text="" Grid.Row="5" IsEnabled="False" BorderBrush="OrangeRed" BorderThickness="1" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="26" VerticalAlignment="Top" Width="118" FontFamily="Sitka Heading" FontSize="18"  FontWeight="Bold" Margin="660,0,0,0"/>
+            <Button Content="Buy Limit" x:Name="BuyLimit" Grid.Row="5" Command="{Binding CreateNewOrderCommand}" HorizontalAlignment="Left" Height="30" Margin="118,0,0,0" VerticalAlignment="Center" Width="95">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource CommandParameterConverter}">
+                        <Binding ElementName="Ticker"  Path="SelectedItem"/>
+                        <Binding>
+                            <Binding.Source>
+                                <system:String>BuyLimit</system:String>
+                            </Binding.Source>
+                        </Binding>
+                        <!-- Bind to another property or hardcoded value -->
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
 
-            <Button Content="Sell Limit" Grid.Row="6" x:Name="SellLimit" Command="{Binding CreateNewOrderCommand}" CommandParameter="{Binding ElementName=SellLimit, Path=Name}" HorizontalAlignment="Left" Height="30" Margin="27,0,0,0" VerticalAlignment="Center" Width="95" Grid.Column="1"/>
-            <Button Content="Stop Limit Sell" x:Name="StopSellLimit" Grid.Row="6" Command="{Binding CreateNewOrderCommand}" CommandParameter="{Binding ElementName=StopSellLimit, Path=Name}" HorizontalAlignment="Left" Height="30" Margin="228,0,0,0" VerticalAlignment="Center" Width="94" Grid.Column="1"/>
-            <Button Content="Sell Market" x:Name="SellMarket" Grid.Row="6" Command="{Binding CreateNewOrderCommand}" CommandParameter="{Binding ElementName=SellMarket, Path=Name}" HorizontalAlignment="Left" Height="30" Margin="127,0,0,0" VerticalAlignment="Center" Width="94" Grid.Column="1"/>
-            <Button Content="Limit TP+SL Buy" x:Name="LimitTPSLBuy" Grid.Row="5" Command="{Binding CreateNewOrderCommand}" CommandParameter="{Binding ElementName=LimitTPSLBuy, Path=Name}" HorizontalAlignment="Left" Height="30" Margin="326,0,0,0" VerticalAlignment="Center" Width="95"   Grid.Column="1"/>
-            <Button Content="Limit TP+SL Sell" x:Name="LimitTPSLSell" Grid.Row="6" Command="{Binding CreateNewOrderCommand}" CommandParameter="{Binding ElementName=LimitTPSLSell, Path=Name}" HorizontalAlignment="Left" Height="30" Margin="327,0,0,0" VerticalAlignment="Center" Width="94" Grid.Column="1"/>
+            <Button Content="Buy Market" x:Name="BuyMarket" Grid.Row="5" Command="{Binding CreateNewOrderCommand}" CommandParameter="{Binding ElementName=BuyMarket, Path=Name}" HorizontalAlignment="Left" Height="30" Margin="218,0,0,0" VerticalAlignment="Center" Width="95"/>
 
-            <DockPanel LastChildFill="True" Grid.Row="1" Width="550" Margin="790,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1">
+            <Button Content="Sell Limit" Grid.Row="6" x:Name="SellLimit" Command="{Binding CreateNewOrderCommand}" CommandParameter="{Binding ElementName=SellLimit, Path=Name}" HorizontalAlignment="Left" Height="30" Margin="118,0,0,0" VerticalAlignment="Center" Width="95"/>
+            <Button Content="Stop Limit Sell" x:Name="StopSellLimit" Grid.Row="6" Command="{Binding CreateNewOrderCommand}" CommandParameter="{Binding ElementName=StopSellLimit, Path=Name}" HorizontalAlignment="Left" Height="30" Margin="319,0,0,0" VerticalAlignment="Center" Width="94"/>
+            <Button Content="Sell Market" x:Name="SellMarket" Grid.Row="6" Command="{Binding CreateNewOrderCommand}" CommandParameter="{Binding ElementName=SellMarket, Path=Name}" HorizontalAlignment="Left" Height="30" Margin="218,0,0,0" VerticalAlignment="Center" Width="94"/>
+            <Button Content="Limit TP+SL Buy" x:Name="LimitTPSLBuy" Grid.Row="5" Command="{Binding CreateNewOrderCommand}" CommandParameter="{Binding ElementName=LimitTPSLBuy, Path=Name}" HorizontalAlignment="Left" Height="30" Margin="417,0,0,0" VerticalAlignment="Center" Width="95"/>
+            <Button Content="Limit TP+SL Sell" x:Name="LimitTPSLSell" Grid.Row="6" Command="{Binding CreateNewOrderCommand}" CommandParameter="{Binding ElementName=LimitTPSLSell, Path=Name}" HorizontalAlignment="Left" Height="30" Margin="418,0,0,0" VerticalAlignment="Center" Width="94"/>
+
+            <DockPanel LastChildFill="True" Grid.Row="1" Width="490" Margin="1000,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1">
                 <TextBlock Text="Open Positions" Margin="0,00,00,0"
                         Background="SandyBrown"
                         Foreground="White"
@@ -508,13 +584,13 @@
                         TextAlignment="Center"
                         DockPanel.Dock="Top" Height="27" />
                 <DataGrid x:Name="Positions" Height="150" CanUserAddRows="False"  RowHeaderWidth="30" Margin="0,0,0,0" ItemsSource="{Binding PositionsInfo, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False"  >
-                    <DataGrid.Resources> 
+                    <DataGrid.Resources>
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="Background" Value="#4A4A4A"/>
                             <Setter Property="Foreground" Value="White"/>
                             <Setter Property="Padding" Value="5"/>
                             <Setter Property="BorderThickness" Value="0"/>
-                            <Setter Property="BorderBrush" Value="#6A6A6A"/> 
+                            <Setter Property="BorderBrush" Value="#6A6A6A"/>
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="DataGridColumnHeader">
@@ -529,7 +605,7 @@
                                 </Setter.Value>
                             </Setter>
                         </Style>
-                        
+
                     </DataGrid.Resources>
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Account ID" Binding="{Binding AccountID}" Width="Auto" />
@@ -548,15 +624,15 @@
                         <DataGridTextColumn Header="RealisedPnl" Binding="{Binding RealisedPnl}" Width="Auto" />
                         <DataGridTextColumn Header="ForeignNotional" Binding="{Binding ForeignNotional}" Width="Auto" />
                         <DataGridTextColumn Header="HomeNotional" Binding="{Binding HomeNotional}" Width="Auto" />
-                        
 
-                        
+
+
                         <DataGridTextColumn Header="PosLoss" Binding="{Binding PosLoss}" Width="Auto" />
 
                         <DataGridTextColumn Header="CurrentCost" Binding="{Binding CurrentCost}" Width="Auto" />
                         <DataGridTextColumn Header="RealisedCost" Binding="{Binding RealisedCost}" Width="Auto" />
                         <DataGridTextColumn Header="IsOpen" Binding="{Binding IsOpen}" Width="Auto" />
-                        
+                        <DataGridTextColumn Header="DeltaPrice" Binding="{Binding DeltaEntryCurrent}" Width="Auto" />
                         <DataGridTemplateColumn Header="Close" Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -581,9 +657,9 @@
                                         </Button>
                                         <Button x:Name="CloseMarket" Content=" Close Market " Command="{Binding DataContext.ClosePositionCommand, RelativeSource={RelativeSource AncestorType=Window}}"   Margin="1,1">
                                             <Button.Style>
-                                            <Style TargetType="Button">
-                                            </Style>
-                                        </Button.Style>
+                                                <Style TargetType="Button">
+                                                </Style>
+                                            </Button.Style>
                                             <Button.CommandParameter>
                                                 <MultiBinding Converter="{StaticResource CommandParameterConverter}">
                                                     <Binding Path="Symbol"/>
@@ -601,16 +677,16 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        
-                        
+
+
                     </DataGrid.Columns>
-                    
+
                 </DataGrid>
 
 
             </DockPanel>
 
-            <DockPanel LastChildFill="True" Grid.Row="1" Width="550" HorizontalAlignment="Left" Margin="790,190,0,30" Grid.Column="1">
+            <DockPanel LastChildFill="True" Grid.Row="1" Width="490" HorizontalAlignment="Left" Margin="1000,190,0,30" Grid.Column="1">
                 <TextBlock Text="Open Orders" Margin="0,00,0,0"
             Background="SandyBrown"
             Foreground="White"
@@ -669,6 +745,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </DockPanel>
+            
 
 
 

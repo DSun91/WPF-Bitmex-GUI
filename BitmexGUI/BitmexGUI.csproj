@@ -9,11 +9,40 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Resources\**" />
+    <EmbeddedResource Remove="Resources\**" />
+    <None Remove="Resources\**" />
+    <Page Remove="Resources\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Views\Resources\a.jpg" />
+    <None Remove="Views\Resources\a.png" />
+    <None Remove="Views\Resources\b.jpg" />
+    <None Remove="Views\Resources\logo.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Logs\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Views\Resources\a.jpg" />
+    <Resource Include="Views\Resources\a.png" />
+    <Resource Include="Views\Resources\b.jpg" />
+    <Resource Include="Views\Resources\logo.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="App.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

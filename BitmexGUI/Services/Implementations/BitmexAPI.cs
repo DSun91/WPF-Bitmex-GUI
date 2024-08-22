@@ -264,9 +264,10 @@ namespace BitmexGUI.Services.Implementations
             CancellationTokenSource source = new CancellationTokenSource();
             CancellationToken token = source.Token;
 
-            if (BitmexHttpClientOrdersWSS.State != WebSocketState.Connecting && BitmexHttpClientOrdersWSS.State != WebSocketState.Open)
+            if (BitmexHttpClientOrdersWSS.State != WebSocketState.Connecting && BitmexHttpClientOrdersWSS.State != WebSocketState.Open && BitmexHttpClientOrdersWSS.State != WebSocketState.Closed)
             {
                 await BitmexHttpClientOrdersWSS.ConnectAsync(new Uri(BITMEX_URL), token);
+                WebSocketManager.Instance.AddWebSocket(BitmexHttpClientOrdersWSS);
                 if (BitmexHttpClientOrdersWSS.State == WebSocketState.Open)
                 {
                     var auth_message = new
@@ -299,26 +300,31 @@ namespace BitmexGUI.Services.Implementations
             int size = 5000;
             var buffer = new byte[size];
 
-            while (BitmexHttpClientOrdersWSS.State == WebSocketState.Open)
+            do
             {
-
-
-
-                var result = await BitmexHttpClientOrdersWSS.ReceiveAsync(buffer, token);
-
-                if (result.MessageType == WebSocketMessageType.Close)
+                try
                 {
-                    await BitmexHttpClientOrdersWSS.CloseAsync(WebSocketCloseStatus.NormalClosure, null, token);
+                    var result = await BitmexHttpClientOrdersWSS.ReceiveAsync(buffer, token);
+
+                    if (result.MessageType == WebSocketMessageType.Close)
+                    {
+                        //await BitmexHttpClientOrdersWSS.CloseAsync(WebSocketCloseStatus.NormalClosure, null, token);
+                    }
+                    else
+                    {
+                        string resp = Encoding.ASCII.GetString(buffer, 0, result.Count);
+
+                        System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], "GetOrdersWSS in Bitmex " + resp + "\n");
+
+                        ProcessResponseOrder(resp);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    string resp = Encoding.ASCII.GetString(buffer, 0, result.Count);
-
-                    System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], "GetOrdersWSS in Bitmex " + resp + "\n");
-
-                    ProcessResponseOrder(resp);
+                    //MessageBox.Show(ex.Message + "  " + ex.StackTrace);
                 }
             }
+            while (BitmexHttpClientOrdersWSS.State == WebSocketState.Open) ;
 
 
 
@@ -500,9 +506,10 @@ namespace BitmexGUI.Services.Implementations
             CancellationToken token = source.Token;
             try
             {
-                if (BitmexHttpClientOrdersWSS.State != WebSocketState.Connecting && BitmexHttpClientOrdersWSS.State != WebSocketState.Open)
+                if (BitmexHttpClientPositionsWSS.State != WebSocketState.Connecting && BitmexHttpClientPositionsWSS.State != WebSocketState.Open)
                 {
                     await BitmexHttpClientPositionsWSS.ConnectAsync(new Uri(BITMEX_URL), token);
+                    WebSocketManager.Instance.AddWebSocket(BitmexHttpClientPositionsWSS);
                 }
 
 
@@ -531,9 +538,8 @@ namespace BitmexGUI.Services.Implementations
                 int size = 5000;
                 var buffer = new byte[size];
 
-                while (BitmexHttpClientPositionsWSS.State == WebSocketState.Open)
+                do
                 {
-
                     var result = await BitmexHttpClientPositionsWSS.ReceiveAsync(buffer, token);
 
                     if (result.MessageType == WebSocketMessageType.Close)
@@ -549,9 +555,13 @@ namespace BitmexGUI.Services.Implementations
                         ProcessResponsePosition(resp);
                     }
                 }
+                while (BitmexHttpClientPositionsWSS.State == WebSocketState.Open);
 
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            catch (Exception ex) 
+            { 
+                //MessageBox.Show(ex.Message+" "+ex.StackTrace); 
+            }
 
 
 

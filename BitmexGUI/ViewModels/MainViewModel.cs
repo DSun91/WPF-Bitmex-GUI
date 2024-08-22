@@ -88,7 +88,7 @@ namespace BitmexGUI.ViewModels
 
 
 
-        public MainViewModel(int InitialCandlesNumber)
+        public MainViewModel(int InitialCandlesNumber, string BinanceInstrument,string TimeFrame,string BitmexInstrument)
         {
             
 
@@ -134,22 +134,28 @@ namespace BitmexGUI.ViewModels
             {
                 if (_createNewOrderCommand == null)
                 {
-                    _createNewOrderCommand = new RelayCommand(x => CreateNewOrder(x.ToString()));
+                    _createNewOrderCommand = new RelayCommand(param =>
+                    {
+                        var parameters = (Tuple<string, string>)param;
+                        string Symbol = parameters.Item1;
+                        string Side = parameters.Item2;
+                        CreateNewOrder(Symbol, Side);
+                    });
                 }
                 return _createNewOrderCommand;
             }
         }
-        public void CreateNewOrder(string Side)
+        public void CreateNewOrder(string Symbol,string Side)
         {
 
             string orderside = Side.ToLower().Replace(" ", "");
 
-
+            MessageBox.Show(Symbol + " " + Side);
 
             if (orderside.Contains("buylimit"))
             {
 
-                BitmexApi.CreateOrder(ConfigurationManager.AppSettings["BitMexSymbol"].ToString(),
+                BitmexApi.CreateOrder(MainWindow.ExchangeTickersMap[Symbol],
                                        Quantity * 1000000,
                                        Math.Round(EntryPrice, 0),
                                        "Limit",
@@ -161,7 +167,7 @@ namespace BitmexGUI.ViewModels
             else if (orderside.Contains("selllimit"))
             {
 
-                BitmexApi.CreateOrder(ConfigurationManager.AppSettings["BitMexSymbol"].ToString(),
+                BitmexApi.CreateOrder(MainWindow.ExchangeTickersMap[Symbol],
                                        Quantity * 1000000,
                                        Math.Round(EntryPrice, 0),
                                        "Limit",
@@ -172,7 +178,7 @@ namespace BitmexGUI.ViewModels
 
             else if (orderside.Contains("buymarket"))
             {
-                BitmexApi.CreateOrder(ConfigurationManager.AppSettings["BitMexSymbol"].ToString(),
+                BitmexApi.CreateOrder(MainWindow.ExchangeTickersMap[Symbol],
                                        Quantity * 1000000,
                                        Math.Round(EntryPrice, 0),
                                        "Market",
@@ -183,7 +189,7 @@ namespace BitmexGUI.ViewModels
 
             else if (orderside.Contains("sellmarket"))
             {
-                BitmexApi.CreateOrder(ConfigurationManager.AppSettings["BitMexSymbol"].ToString(),
+                BitmexApi.CreateOrder(MainWindow.ExchangeTickersMap[Symbol],
                                        -Quantity * 1000000,
                                        Math.Round(EntryPrice, 0),
                                        "Market",
@@ -329,7 +335,7 @@ namespace BitmexGUI.ViewModels
 
         private void UpdatepositionLines(Position newPositionData)
         {
-
+            
             PositionLine newpositionLine = new PositionLine
             {
                 AccountID = newPositionData.AccountID,
@@ -340,6 +346,7 @@ namespace BitmexGUI.ViewModels
                 LiquidationPrice = (decimal)newPositionData.LiquidationPrice
 
             };
+
             var existingPositionLine = PositionsLines.FirstOrDefault(p => p.AccountID.Equals(newPositionData.AccountID) && p.Symbol.Equals(newPositionData.Symbol));
             if (existingPositionLine != null)
             {
@@ -354,7 +361,7 @@ namespace BitmexGUI.ViewModels
         private void OnPositionUpdate(Position newPositionData)
         {
             var existingPosition = PositionsInfo.FirstOrDefault(p => p.AccountID == newPositionData.AccountID && p.Symbol == newPositionData.Symbol);
-
+            
 
             if (existingPosition != null)
             {
@@ -382,13 +389,14 @@ namespace BitmexGUI.ViewModels
                     HomeNotional = newPositionData.HomeNotional.HasValue ? newPositionData.HomeNotional.Value : existingPosition.HomeNotional,
                     ForeignNotional = newPositionData.ForeignNotional.HasValue ? newPositionData.ForeignNotional.Value : existingPosition.ForeignNotional
                 };
-                UpdatepositionLines(updatedPosition);
+                
                 int index = PositionsInfo.IndexOf(existingPosition);
                 PositionsInfo[index] = updatedPosition;
-                //MessageBox.Show("updated pos has commision " + newPositionData.Symbol + " " + updatedPosition.MarkValue + " " + updatedPosition.RebalancedPnl + " " + updatedPosition.AvgEntryPrice);
+                UpdatepositionLines(updatedPosition);
+                 
                 if (updatedPosition.MarkValue == 0 && updatedPosition.RebalancedPnl == 0)
                 {
-
+                    PositionsLines.Clear();
                     PositionsInfo.RemoveAt(index);
                     PositionsdatsUpdated?.Invoke();
                 }
@@ -400,8 +408,11 @@ namespace BitmexGUI.ViewModels
             {
 
                 PositionsInfo.Add(newPositionData);
+                UpdatepositionLines(newPositionData);
                 PositionsdatsUpdated?.Invoke();
             }
+
+            
         }
 
         private ICommand _closePositionCommand;
@@ -425,9 +436,7 @@ namespace BitmexGUI.ViewModels
 
         public void ClosePosition(string Symbol,string Type)
         {
-
              
-
             var existingPosition = PositionsInfo.FirstOrDefault(p => p.Symbol == Symbol);
             if (existingPosition != null)
             {

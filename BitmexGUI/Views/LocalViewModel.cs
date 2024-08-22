@@ -38,7 +38,7 @@ namespace BitmexGUI.Views
         private void InitializeGrid()
         {
             int GridSpacing = 50;
-            double canvasHeight = 1550; // Example height
+            double canvasHeight = 2550; // Example height
             double canvasWidth = 1550; // Example width
             GridData = new ObservableCollection<GridData>();
 
