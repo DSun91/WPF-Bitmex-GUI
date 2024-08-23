@@ -150,7 +150,7 @@ namespace BitmexGUI.ViewModels
 
             string orderside = Side.ToLower().Replace(" ", "");
 
-            MessageBox.Show(Symbol + " " + Side);
+            //MessageBox.Show(MainWindow.ExchangeTickersMap[Symbol]+" "+ Quantity * 1000000);
 
             if (orderside.Contains("buylimit"))
             {
@@ -327,7 +327,80 @@ namespace BitmexGUI.ViewModels
             }
         }
 
+        private void UpdateOrderLinesRescale(ObservableCollection<Order> Orderinfos)
+        {
+            OrdersLines.Clear();
 
+            for (int j = 0; j < Orderinfos.Count; j++)
+            {
+                var Price = (decimal)CandlestickChart.MapToScale((double)Orderinfos[j].Price);
+
+                OrderLine tempOrdlIne = new OrderLine
+                {
+                    OrderID = Orderinfos[j].OrderID,
+                    Price = Price,
+                    Side = Orderinfos[j].Side,
+                    Symbol = Orderinfos[j].Symbol
+                };
+                OrdersLines.Add(tempOrdlIne);
+
+            }
+        }
+
+
+        private CandlestickData ScaleCandle(CandlestickData priceData)
+        {
+            int maxCandlesInView = (int)Math.Ceiling(700 / (CandlestickChart.CandlesInterspace - CandlestickChart.candleWidth));
+            var allValues = PriceData.Skip(CandlestickChart.CachedCandles - CandlestickChart.CandlesToView).Take(CandlestickChart.CachedCandles).SelectMany(data => new[] { data.Open, data.High, data.Low, data.Close });
+            var minVal = allValues.Min();
+            var maxVal = allValues.Max();
+
+
+            CandlestickChart.minOriginal = minVal;
+            CandlestickChart.maxOriginal = maxVal;
+            double padding = (CandlestickChart.maxOriginal - CandlestickChart.minOriginal) * CandlestickChart.ScaleFactor;
+            CandlestickChart.minOriginal -= padding;
+            CandlestickChart.maxOriginal += padding;
+
+
+            CandlestickData temp = new CandlestickData();
+
+
+
+            temp.Open = CandlestickChart.MapToScale(priceData.Open) + CandlestickChart.VericalOffset;
+            temp.High = CandlestickChart.MapToScale(priceData.High) + CandlestickChart.VericalOffset;
+            temp.Low = CandlestickChart.MapToScale(priceData.Low) + CandlestickChart.VericalOffset;
+            temp.Close = CandlestickChart.MapToScale(priceData.Close) + CandlestickChart.VericalOffset;
+            temp.Timestamp = priceData.Timestamp;
+            temp.Width = priceData.Width;
+            temp.Posx = priceData.Posx;
+            return temp;
+        }
+        public void HandleOrderLineUpdate(string AmendingOrderID)
+        {
+           
+
+            var existingOrder = OrdersInfo.FirstOrDefault(p => p.OrderID.Equals(AmendingOrderID));
+            var updatedorderPrice = OrdersLines.FirstOrDefault(p => p.OrderID.Equals(AmendingOrderID));
+            if (existingOrder != null)
+            {
+
+                double NewPrice = (double)CandlestickChart.InvMapToScale(double.Parse(updatedorderPrice.Price.ToString()));
+
+                var diff = NewPrice - (double)existingOrder.Price;
+
+                if (Math.Abs(diff) > 0)
+                {
+
+
+                    existingOrder.Price = (decimal)Math.Round(NewPrice, 2);
+
+                    BitmexApi.AmmendOrder(existingOrder);
+                }
+
+            }
+
+        }
 
         //ORDERS SECTION
 
@@ -343,7 +416,8 @@ namespace BitmexGUI.ViewModels
                 Symbol = newPositionData.Symbol,
                 BreakEvenPrice = (decimal)CandlestickChart.MapToScale(double.Parse(newPositionData.BreakEvenPrice.ToString())),
                 UnrealisedPnl = (int)newPositionData.UnrealisedPnl,
-                LiquidationPrice = (decimal)newPositionData.LiquidationPrice
+                LiquidationPrice = (decimal)newPositionData.LiquidationPrice,
+                DeltaFromBreakEven= (decimal) newPositionData.DeltaFromBreakEven,
 
             };
 
@@ -387,7 +461,7 @@ namespace BitmexGUI.ViewModels
                     MarkValue = newPositionData.MarkValue.HasValue ? newPositionData.MarkValue.Value : existingPosition.MarkValue,
                     RebalancedPnl = newPositionData.RebalancedPnl.HasValue ? newPositionData.RebalancedPnl.Value : existingPosition.RebalancedPnl,
                     HomeNotional = newPositionData.HomeNotional.HasValue ? newPositionData.HomeNotional.Value : existingPosition.HomeNotional,
-                    ForeignNotional = newPositionData.ForeignNotional.HasValue ? newPositionData.ForeignNotional.Value : existingPosition.ForeignNotional
+                    ForeignNotional = newPositionData.ForeignNotional.HasValue ? newPositionData.ForeignNotional.Value : existingPosition.ForeignNotional, 
                 };
                 
                 int index = PositionsInfo.IndexOf(existingPosition);
@@ -701,79 +775,7 @@ namespace BitmexGUI.ViewModels
 
         // PRICES LIVE STREAM SECTION
 
-        private void UpdateOrderLinesRescale(ObservableCollection<Order> Orderinfos)
-        {
-            OrdersLines.Clear();
-
-            for (int j = 0; j < Orderinfos.Count; j++)
-            {
-                var Price = (decimal)CandlestickChart.MapToScale((double)Orderinfos[j].Price);
-
-                OrderLine tempOrdlIne = new OrderLine
-                {
-                    OrderID = Orderinfos[j].OrderID,
-                    Price = Price,
-                    Side = Orderinfos[j].Side,
-                    Symbol = Orderinfos[j].Symbol
-                };
-                OrdersLines.Add(tempOrdlIne);
-                 
-            }
-        }
-
-
-        private CandlestickData ScaleCandle(CandlestickData priceData)
-        {
-            int maxCandlesInView =(int) Math.Ceiling(700/(CandlestickChart.CandlesInterspace- CandlestickChart.candleWidth));
-            var allValues = PriceData.Skip(CandlestickChart.CachedCandles - CandlestickChart.CandlesToView).Take(CandlestickChart.CachedCandles).SelectMany(data => new[] { data.Open, data.High, data.Low, data.Close });
-            var minVal = allValues.Min();
-            var maxVal = allValues.Max();
-
-
-            CandlestickChart.minOriginal = minVal;
-            CandlestickChart.maxOriginal = maxVal;
-            double padding = (CandlestickChart.maxOriginal - CandlestickChart.minOriginal) * CandlestickChart.ScaleFactor;
-            CandlestickChart.minOriginal -= padding;
-            CandlestickChart.maxOriginal += padding;
-
-           
-            CandlestickData temp = new CandlestickData();
-
-
-
-            temp.Open = CandlestickChart.MapToScale(priceData.Open)+CandlestickChart.VericalOffset;
-            temp.High = CandlestickChart.MapToScale(priceData.High) + CandlestickChart.VericalOffset;
-            temp.Low = CandlestickChart.MapToScale(priceData.Low) + CandlestickChart.VericalOffset;
-            temp.Close = CandlestickChart.MapToScale(priceData.Close) + CandlestickChart.VericalOffset;
-            temp.Timestamp = priceData.Timestamp;
-            temp.Width = priceData.Width;
-            temp.Posx = priceData.Posx;
-            return temp;
-        }
-        public void HandleOrderLineUpdate(string AmendingOrderID)
-        {
-
-            var existingOrder = OrdersInfo.FirstOrDefault(p => p.OrderID.Equals(AmendingOrderID));
-            var updatedorderPrice = OrdersLines.FirstOrDefault(p => p.OrderID.Equals(AmendingOrderID));
-            if (existingOrder != null)
-            {
-
-                double NewPrice = (double)CandlestickChart.InvMapToScale(double.Parse(updatedorderPrice.Price.ToString()));
-
-                var diff = NewPrice - (double)existingOrder.Price;
-
-                if (Math.Abs(diff) > 0)
-                {
-
-
-                    existingOrder.Price = (decimal)Math.Round(NewPrice, 0);
-
-                    BitmexApi.AmmendOrder(existingOrder);
-                }
-
-            }
-
-        }
+      
         public Action ScaledPriceDataUpdated;
 
 

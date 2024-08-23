@@ -131,7 +131,7 @@ namespace BitmexGUI.Services.Implementations
                 else
                 {
                     string responseString = await response.Content.ReadAsStringAsync();
-                    MessageBox.Show(responseString);
+                    //MessageBox.Show(responseString);
                 }
 
             }
@@ -202,12 +202,16 @@ namespace BitmexGUI.Services.Implementations
             string Verb = "PUT";
 
 
+            //MessageBox.Show(Order.Symbol);
+            //MessageBox.Show(Order.OrderQty.ToString());
+            //MessageBox.Show(Order.Price.ToString());
+            //MessageBox.Show(Order.StopPx.ToString());
 
 
             var data = new
             {
                 orderID = Order.OrderID,
-                price = Order.Price,
+                price = Math.Round((double)Order.Price) 
 
             };
 
@@ -231,19 +235,19 @@ namespace BitmexGUI.Services.Implementations
                 {
                     //MessageBox.Show("Order Price Changed Successfully!");
                     string responseString = await response.Content.ReadAsStringAsync();
-                    //MessageBox.Show(responseString);
+                    //MessageBox.Show(responseString + " line 238 ");
                     //GetOrdersREST();
                 }
                 else
                 {
                     string responseString = await response.Content.ReadAsStringAsync();
-                    MessageBox.Show(responseString);
+                    //MessageBox.Show(responseString+" line 244 ");
                 }
 
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message+" "+ex.StackTrace);
             }
 
         }

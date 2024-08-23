@@ -109,10 +109,12 @@ namespace BitmexGUI.Views
            
             if(Timeframe.SelectedItem != null && Ticker.SelectedItem != null)
             {
+
                 await WebSocketManager.Instance.CloseAllWebSocketsAsync(CancellationToken.None);
+          
                 await EnsureAllWebSocketsClosedAsync();
-                viewModel = new MainViewModel(CandlestickChart.CachedCandles, 
-                                              Ticker.SelectedItem.ToString(),
+                viewModel = new MainViewModel(CandlestickChart.CachedCandles,
+                                              Ticker.SelectedItem.ToString().Equals("BTCUSD") ? "BTCUSDT" : Ticker.SelectedItem.ToString(),
                                               Timeframe.SelectedItem.ToString(), 
                                               ExchangeTickersMap[Ticker.SelectedItem.ToString()]);
                  

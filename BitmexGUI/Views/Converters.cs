@@ -32,6 +32,10 @@ namespace BitmexGUI.Views
             throw new NotImplementedException();
         }
     }
+
+   
+
+
     public class StringToDoubleConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

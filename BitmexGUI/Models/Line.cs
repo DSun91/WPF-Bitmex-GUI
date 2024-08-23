@@ -25,5 +25,8 @@ namespace BitmexGUI.Models
         public int UnrealisedPnl { get; set; }
 
         public decimal LiquidationPrice { get; set; }
+
+        public decimal DeltaFromBreakEven { get; set; }
+        
     }
 }

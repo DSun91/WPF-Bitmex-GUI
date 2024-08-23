@@ -9,8 +9,8 @@
         Title="MainWindow" Height="800" Width="1500">
     <Window.Resources>
         <ResourceDictionary>
-            <local:MainWindow  x:Key="MainWindow"/>
-            <local:PositionConverter  x:Key="PositionConverter"/>
+            <local:MainWindow  x:Key="MainWindow"/> 
+            <local:PositionConverter  x:Key="PositionConverter"/> 
             <local:PositionConverterCandlestickX  x:Key="PositionConverterCandlestickX"/>
             <local:PriceConverterMapOrderline  x:Key="PriceConverterMapOrderline"/>
             <local:PriceConverterInvMapOrderline  x:Key="PriceConverterInvMapOrderline"/>
@@ -173,9 +173,9 @@
             </MenuItem>
         </Menu>
 
-        <!-- Main content area -->
-        <Grid Margin="1,0,0,0" Background="Transparent">
-            
+        <!-- Main content area Background="Transparent" <Image HorizontalAlignment="Left" Height="100" Margin="688,0,0,0" VerticalAlignment="Center" Width="262" Source="Resources/a.jpg" Stretch="Uniform"/>-->
+        <Grid Margin="1,0,0,0" >
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -192,16 +192,17 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Image HorizontalAlignment="Left" Height="100" Margin="688,0,0,0" VerticalAlignment="Center" Width="262" Source="Resources/a.jpg" Stretch="Uniform"/>
-            <Image HorizontalAlignment="Left" Height="100" Margin="239,0,0,0" VerticalAlignment="Center" Width="262" Source="Resources/a.jpg" Stretch="Uniform"/>
 
+
+
+            <Image HorizontalAlignment="Left" Height="100" Margin="688,0,0,0" VerticalAlignment="Center" Width="262" Source="Resources/logo.jpg" Stretch="Uniform"/>
             <Label Content="Bitmex GUI" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Height="50" Margin="500,27,0,0" VerticalAlignment="Top" Width="198" FontFamily="Franklin Gothic Book" FontSize="36" FontWeight="Bold" Cursor="AppStarting" FontStyle="Italic"/>
 
             <ComboBox x:Name="ExchangeSelector" HorizontalAlignment="Left" Height="20" Margin="84,46,0,0" Grid.Row="1" VerticalAlignment="Top" Width="72" SelectionChanged="Ticker_SelectionChanged"/>
             <Label Content="Exchange:" HorizontalAlignment="Left" Margin="10,42,0,0" Grid.Row="1" VerticalAlignment="Top" Width="74"/>
 
-            <ComboBox x:Name="Ticker" HorizontalAlignment="Left" Height="20" Margin="73,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="83" SelectionChanged="Ticker_SelectionChanged"/>
-            <Label Content="Ticker:" HorizontalAlignment="Left" Margin="10,6,0,0" Grid.Row="1" VerticalAlignment="Top" Width="74"/>
+            <ComboBox x:Name="Ticker" HorizontalAlignment="Left" Height="20" Margin="69,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="87" SelectionChanged="Ticker_SelectionChanged"/>
+            <Label Content="Ticker:" HorizontalAlignment="Left" Margin="10,6,0,0" Grid.Row="1" VerticalAlignment="Top" Width="54"/>
             <ComboBox  x:Name="Timeframe" HorizontalAlignment="Left" Height="20" Margin="100,82,0,0" Grid.Row="1" VerticalAlignment="Top" Width="56" SelectionChanged="Timeframe_SelectionChanged"/>
             <Label Content="Time-frame:" HorizontalAlignment="Left" Margin="10,77,0,0" Grid.Row="1" VerticalAlignment="Top" Width="85"/>
 
@@ -332,7 +333,7 @@
                                                 Canvas.Top="{Binding BreakEvenPrice}"
                                                 Canvas.Left="50" 
                                                 Height="25"
-                                                Width="170"
+                                                Width="140"
                                                 HorizontalContentAlignment="Left"
                                                 VerticalAlignment="Top"
                                                 FontSize = "13"
@@ -342,8 +343,8 @@
                                                 Background = "Salmon">
                                                 <TextBlock>
                                                  <Run Text="{Binding Symbol}"/>
-                                                 <Run Text=" BE: "/>
-                                                 <Run Text="{Binding BreakEvenPrice, Converter={StaticResource PriceConverterInvMapOrderline}}" />
+                                                 <Run Text="BE: "/>
+                                                 <Run Text="{Binding DeltaFromBreakEven}" />
                                                 </TextBlock>
                                             </Label>
                                             <Line  
@@ -355,6 +356,7 @@
                                                   Y2="{Binding BreakEvenPrice}" 
                                                   Stroke="Salmon"
                                                   StrokeThickness="1"/>
+                                           
                                         </Canvas>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -417,7 +419,7 @@
                                                 x:Name="OrderLine"
                                                 Canvas.Top="0" 
                                                 X1="0"  
-                                                X2="550"
+                                                X2="650"
                                                 Y1="{Binding Price}"   
                                                 Y2="{Binding Price}" 
                                                 Stroke="{Binding Converter={StaticResource ColorConverterOrderTag}}"
@@ -461,7 +463,7 @@
                                                   FontWeight = "Bold" 
                                                   Background = "Transparent" >
                                                 <TextBlock>  
-                       <Run Text="{Binding SettledPriceValue }" />
+                                                 <Run Text="{Binding SettledPriceValue }" />
                                                 </TextBlock>
                                             </Label>
 
@@ -625,7 +627,7 @@
                         <DataGridTextColumn Header="ForeignNotional" Binding="{Binding ForeignNotional}" Width="Auto" />
                         <DataGridTextColumn Header="HomeNotional" Binding="{Binding HomeNotional}" Width="Auto" />
 
-
+                        
 
                         <DataGridTextColumn Header="PosLoss" Binding="{Binding PosLoss}" Width="Auto" />
 
@@ -633,6 +635,7 @@
                         <DataGridTextColumn Header="RealisedCost" Binding="{Binding RealisedCost}" Width="Auto" />
                         <DataGridTextColumn Header="IsOpen" Binding="{Binding IsOpen}" Width="Auto" />
                         <DataGridTextColumn Header="DeltaPrice" Binding="{Binding DeltaEntryCurrent}" Width="Auto" />
+                        <DataGridTextColumn Header="DeltaBreakEven" Binding="{Binding DeltaFromBreakEven}" Width="Auto" />
                         <DataGridTemplateColumn Header="Close" Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -745,7 +748,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </DockPanel>
-            
+
 
 
 
