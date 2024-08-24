@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BitmexGUI.Models
+﻿namespace BitmexGUI.Models
 {
     public class OrderLine
     {
@@ -21,12 +15,12 @@ namespace BitmexGUI.Models
         public decimal AvgEntryPrice { get; set; }
 
         public decimal BreakEvenPrice { get; set; }
-         
+
         public int UnrealisedPnl { get; set; }
 
         public decimal LiquidationPrice { get; set; }
 
         public decimal DeltaFromBreakEven { get; set; }
-        
+
     }
 }

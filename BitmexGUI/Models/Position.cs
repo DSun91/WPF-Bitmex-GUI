@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BitmexGUI.Models
+﻿namespace BitmexGUI.Models
 {
     public class Position
     {
@@ -69,7 +63,7 @@ namespace BitmexGUI.Models
 
         // Calculates the difference between BreakEvenPrice and MarkPrice. 
         // A negative value indicates a losing trade, and a positive value indicates a winning trade.
-        public float? DeltaFromBreakEven => CurrentQty<0? (float)Math.Round((float)BreakEvenPrice - (float)MarkPrice, 2): (float)Math.Round((float)MarkPrice - (float)BreakEvenPrice, 2);
+        public float? DeltaFromBreakEven => CurrentQty < 0 ? (float)Math.Round((float)BreakEvenPrice - (float)MarkPrice, 2) : (float)Math.Round((float)MarkPrice - (float)BreakEvenPrice, 2);
 
 
         public DateTime Timestamp { get; set; }

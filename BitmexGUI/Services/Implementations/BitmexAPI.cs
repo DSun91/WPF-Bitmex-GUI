@@ -2,20 +2,13 @@
 using BitmexGUI.Services.Abstract;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Drawing;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Sockets;
 using System.Net.WebSockets;
 using System.Reflection;
 using System.Security.Cryptography;
-using System.Security.Policy;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace BitmexGUI.Services.Implementations
@@ -26,13 +19,13 @@ namespace BitmexGUI.Services.Implementations
         private readonly string ApiKey;
         private readonly string UrlRest;
         private readonly string UrlWss;
-        private string BaseUrl = ConfigurationManager.AppSettings["BaseBitmexUrl"];
-        private int expires = (int)(DateTimeOffset.UtcNow.ToUnixTimeSeconds() + 1800);
+        private string BaseUrl = ConfigurationManager.AppSettings["BaseBitmexUrlTestnet"];
+        string BaseWss = ConfigurationManager.AppSettings["BaseWSSBitmexTestnet"];
         public event Action<SettledPrice> SettledPriceUpdated;
         public event Action<Account> AccountInfo;
         public event Action<Position> PositionUpdated;
         public event Action<Order> OrderUpdated;
-        private ClientWebSocket BitmexHttpClientOrdersWSS = new System.Net.WebSockets.ClientWebSocket(); 
+        private ClientWebSocket BitmexHttpClientOrdersWSS = new System.Net.WebSockets.ClientWebSocket();
         private ClientWebSocket BitmexHttpClientPositionsWSS = new System.Net.WebSockets.ClientWebSocket();
 
         public BitmexAPI(string ID, string key, string urlRest, string urlWss) : base(ID, key, urlRest, urlWss)
@@ -78,7 +71,7 @@ namespace BitmexGUI.Services.Implementations
             string FunctionUrl = "/api/v1/order";
             string url = "https:" + BaseUrl.Split(":")[1] + FunctionUrl;
             string Verb = "POST";
-
+            int expires = (int)(DateTimeOffset.UtcNow.ToUnixTimeSeconds() + 1800);
 
             string dataJson = "";
             if (leverage > 0)
@@ -105,12 +98,12 @@ namespace BitmexGUI.Services.Implementations
                     symbol = Symbol,
                     orderQty = Qty,
                     ordType = Type,
-                    timeInForce ="ImmediateOrCancel" ,
+                    timeInForce = "ImmediateOrCancel",
                     side = side
                 });
             }
 
-             
+
 
             string signature = GenerateSignature(ApiKey, Verb, FunctionUrl, expires, dataJson);
 
@@ -126,7 +119,7 @@ namespace BitmexGUI.Services.Implementations
                 HttpResponseMessage response = await client.SendAsync(headers);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    MessageBox.Show("Order Created Successfully!");
+                    //MessageBox.Show("Order Created Successfully!");
                 }
                 else
                 {
@@ -145,7 +138,7 @@ namespace BitmexGUI.Services.Implementations
         public async void CancelOrder(string OrderID)
         {
 
-
+            int expires = (int)(DateTimeOffset.UtcNow.ToUnixTimeSeconds() + 1800);
             HttpClient client = new HttpClient();
             string FunctionUrl = "/api/v1/order";
             string url = "https:" + BaseUrl.Split(":")[1] + FunctionUrl;
@@ -177,7 +170,7 @@ namespace BitmexGUI.Services.Implementations
                 HttpResponseMessage response = await client.SendAsync(headers);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    MessageBox.Show("Order Deleted Successfully!");
+                    //MessageBox.Show("Order Deleted Successfully!");
                 }
                 else
                 {
@@ -196,6 +189,8 @@ namespace BitmexGUI.Services.Implementations
 
         public async void AmmendOrder(Order Order)
         {
+
+            int expires = (int)(DateTimeOffset.UtcNow.ToUnixTimeSeconds() + 1800);
             HttpClient client = new HttpClient();
             string FunctionUrl = "/api/v1/order";
             string url = "https:" + BaseUrl.Split(":")[1] + FunctionUrl;
@@ -211,7 +206,7 @@ namespace BitmexGUI.Services.Implementations
             var data = new
             {
                 orderID = Order.OrderID,
-                price = Math.Round((double)Order.Price) 
+                price = Math.Round((double)Order.Price)
 
             };
 
@@ -247,16 +242,16 @@ namespace BitmexGUI.Services.Implementations
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message+" "+ex.StackTrace);
+                MessageBox.Show(ex.Message + " " + ex.StackTrace);
             }
 
         }
 
         public async void GetOrdersWSS()
         {
-            string BITMEX_URL = ConfigurationManager.AppSettings["BaseWSSBitmexTestnet"];
 
 
+            int expires = (int)(DateTimeOffset.UtcNow.ToUnixTimeSeconds() + 1800);
             string verb = "GET";
             string path = "/realtime";
             string signature = GenerateSignature(ApiKey, verb, path, expires, "");
@@ -270,7 +265,7 @@ namespace BitmexGUI.Services.Implementations
 
             if (BitmexHttpClientOrdersWSS.State != WebSocketState.Connecting && BitmexHttpClientOrdersWSS.State != WebSocketState.Open && BitmexHttpClientOrdersWSS.State != WebSocketState.Closed)
             {
-                await BitmexHttpClientOrdersWSS.ConnectAsync(new Uri(BITMEX_URL), token);
+                await BitmexHttpClientOrdersWSS.ConnectAsync(new Uri(BaseWss), token);
                 WebSocketManager.Instance.AddWebSocket(BitmexHttpClientOrdersWSS);
                 if (BitmexHttpClientOrdersWSS.State == WebSocketState.Open)
                 {
@@ -310,25 +305,29 @@ namespace BitmexGUI.Services.Implementations
                 {
                     var result = await BitmexHttpClientOrdersWSS.ReceiveAsync(buffer, token);
 
-                    if (result.MessageType == WebSocketMessageType.Close)
+                    if (result.MessageType == WebSocketMessageType.Close && !result.CloseStatus.ToString().ToLower().Contains("normalclos"))
                     {
-                        //await BitmexHttpClientOrdersWSS.CloseAsync(WebSocketCloseStatus.NormalClosure, null, token);
+                        await BitmexHttpClientOrdersWSS.CloseAsync(WebSocketCloseStatus.NormalClosure, null, token);
                     }
                     else
                     {
                         string resp = Encoding.ASCII.GetString(buffer, 0, result.Count);
 
-                        System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], "GetOrdersWSS in Bitmex " + resp + "\n");
 
-                        ProcessResponseOrder(resp);
+                        if (!string.IsNullOrEmpty(resp))
+                        {
+                            System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], "GetOrdersWSS in Bitmex " + resp + "\n");
+                            ProcessResponseOrder(resp);
+                        }
+
                     }
                 }
                 catch (Exception ex)
                 {
-                    //MessageBox.Show(ex.Message + "  " + ex.StackTrace);
+                    MessageBox.Show(ex.Message + "  " + ex.StackTrace);
                 }
             }
-            while (BitmexHttpClientOrdersWSS.State == WebSocketState.Open) ;
+            while (BitmexHttpClientOrdersWSS.State == WebSocketState.Open);
 
 
 
@@ -499,9 +498,9 @@ namespace BitmexGUI.Services.Implementations
         //POSITIONS SECTION
         public async void GetPositionWSS()
         {
-            string BITMEX_URL = ConfigurationManager.AppSettings["BaseWSSBitmexTestnet"];
 
-            
+
+            int expires = (int)(DateTimeOffset.UtcNow.ToUnixTimeSeconds() + 1800);
             string verb = "GET";
             string path = "/realtime";
             string signature = GenerateSignature(ApiKey, verb, path, expires, "");
@@ -512,7 +511,7 @@ namespace BitmexGUI.Services.Implementations
             {
                 if (BitmexHttpClientPositionsWSS.State != WebSocketState.Connecting && BitmexHttpClientPositionsWSS.State != WebSocketState.Open)
                 {
-                    await BitmexHttpClientPositionsWSS.ConnectAsync(new Uri(BITMEX_URL), token);
+                    await BitmexHttpClientPositionsWSS.ConnectAsync(new Uri(BaseWss), token);
                     WebSocketManager.Instance.AddWebSocket(BitmexHttpClientPositionsWSS);
                 }
 
@@ -546,25 +545,29 @@ namespace BitmexGUI.Services.Implementations
                 {
                     var result = await BitmexHttpClientPositionsWSS.ReceiveAsync(buffer, token);
 
-                    if (result.MessageType == WebSocketMessageType.Close)
+                    if (result.MessageType == WebSocketMessageType.Close && !result.CloseStatus.ToString().ToLower().Contains("normalclos"))
                     {
-                        await BitmexHttpClientPositionsWSS.CloseAsync(WebSocketCloseStatus.NormalClosure, null, token);
+                        MessageBox.Show(result.CloseStatus.ToString() + "  " + result.CloseStatusDescription);
+                        await BitmexHttpClientPositionsWSS.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, null, token);
                     }
                     else
                     {
                         string resp = Encoding.ASCII.GetString(buffer, 0, result.Count);
                         //MessageBox.Show(resp);
-                        System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], "Positions: " + resp + "\n");
+                        //System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], "Positions: " + resp + "\n");
+                        if (!string.IsNullOrEmpty(resp))
+                        {
+                            ProcessResponsePosition(resp);
+                        }
 
-                        ProcessResponsePosition(resp);
                     }
                 }
                 while (BitmexHttpClientPositionsWSS.State == WebSocketState.Open);
 
             }
-            catch (Exception ex) 
-            { 
-                //MessageBox.Show(ex.Message+" "+ex.StackTrace); 
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + " " + ex.StackTrace);
             }
 
 
@@ -713,16 +716,16 @@ namespace BitmexGUI.Services.Implementations
         public void ClosePosition(string Type, Position position)
         {
             var side = position.CurrentQty < 0.0 ? "Buy" : "Sell";
-             
+
 
 
             CreateOrder(position.Symbol,
-                        Math.Round((double)position.CurrentQty*1000000),
+                        Math.Round((double)position.CurrentQty * 1000000),
                         Math.Round((double)position.MarkPrice),
                         Type,
                         "GoodTillCancel",
                         side);
-             
+
 
         }
 
@@ -770,7 +773,7 @@ namespace BitmexGUI.Services.Implementations
 
         }
         // LIVE PRICE FEED
-        
+
 
         // WALLET
         public override void GetWallet()
@@ -811,7 +814,7 @@ namespace BitmexGUI.Services.Implementations
 
                         accounts.Add(Account);
 
-                    } 
+                    }
                 }
                 foreach (var account in accounts)
                 {
@@ -822,17 +825,17 @@ namespace BitmexGUI.Services.Implementations
         // WALLET
 
         // LEVERAGE
-        public override async void SetLeverage(string Symbol,double leverage)
+        public override async void SetLeverage(string Symbol, double leverage)
         {
             HttpClient client = new HttpClient();
             string FunctionUrl = "/api/v1/position/leverage";
-            string url ="https:"+ BaseUrl.Split(":")[1] + FunctionUrl;
+            string url = "https:" + BaseUrl.Split(":")[1] + FunctionUrl;
+            int expires = (int)(DateTimeOffset.UtcNow.ToUnixTimeSeconds() + 1800);
             string Verb = "POST";
-
             var data = new
             {
                 symbol = Symbol,
-                leverage =Math.Round(leverage,0)
+                leverage = Math.Round(leverage, 0)
             };
             string dataJson = JsonConvert.SerializeObject(data);
 
@@ -849,7 +852,7 @@ namespace BitmexGUI.Services.Implementations
             string responseString = await response.Content.ReadAsStringAsync();
 
             //MessageBox.Show(responseString);
-             
+
         }
 
         public override void GetLeverage(string Symbol)
@@ -858,6 +861,6 @@ namespace BitmexGUI.Services.Implementations
         }
         // LEVERAGE
 
-         
+
     }
 }

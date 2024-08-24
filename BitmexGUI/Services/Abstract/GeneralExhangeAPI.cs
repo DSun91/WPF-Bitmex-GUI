@@ -1,18 +1,11 @@
 ﻿using BitmexGUI.Models;
 using BitmexGUI.Services.Implementations;
 using BitmexGUI.Services.Interfaces;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
-using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Net.WebSockets;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace BitmexGUI.Services.Abstract
 {
@@ -20,8 +13,8 @@ namespace BitmexGUI.Services.Abstract
     {
         private readonly string ApiID;
         private readonly string ApiKey;
-        protected string  UrlRest;
-        protected string  UrlWss;
+        protected string UrlRest;
+        protected string UrlWss;
         private string LogfilePath = ConfigurationManager.AppSettings["LogFile"];
         public ObservableCollection<CandlestickData> CachedPriceData = new ObservableCollection<CandlestickData>();
 
@@ -40,7 +33,7 @@ namespace BitmexGUI.Services.Abstract
             System.Net.Http.HttpClient BitmexHttpClient = new System.Net.Http.HttpClient();
 
             //BitmexHttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", key);
-            
+
 
             HttpResponseMessage response = await BitmexHttpClient.GetAsync(UrlRest);
 
@@ -52,7 +45,7 @@ namespace BitmexGUI.Services.Abstract
 
             ProcessResponseRest(content, PriceData, _priceDataDictionary);
             //MessageBox.Show(content);
-             
+
         }
 
         public async void GetPriceREST() { }
@@ -67,11 +60,11 @@ namespace BitmexGUI.Services.Abstract
             CancellationTokenSource source = new CancellationTokenSource();
             CancellationToken token = source.Token;
 
-            
+
             int size = 5000;
             var buffer = new byte[size];
 
-            if(HttpClientPriceWSS.State != WebSocketState.Connecting &&  HttpClientPriceWSS.State != WebSocketState.Open)
+            if (HttpClientPriceWSS.State != WebSocketState.Connecting && HttpClientPriceWSS.State != WebSocketState.Open)
             {
                 await HttpClientPriceWSS.ConnectAsync(new Uri(UrlWss), token);
                 WebSocketManager.Instance.AddWebSocket(HttpClientPriceWSS);
@@ -83,6 +76,7 @@ namespace BitmexGUI.Services.Abstract
                 var result = await HttpClientPriceWSS.ReceiveAsync(buffer, token);
                 if (result.MessageType == WebSocketMessageType.Close)
                 {
+                    //MessageBox.Show(result.MessageType.ToString() + " line 86 ");
                     //await HttpClientPriceWSS.CloseAsync(WebSocketCloseStatus.NormalClosure, null, token);
                 }
                 else
@@ -109,7 +103,7 @@ namespace BitmexGUI.Services.Abstract
         {
 
         }
-         
+
         public virtual void ProcessResponseRest()
         {
 
@@ -120,17 +114,17 @@ namespace BitmexGUI.Services.Abstract
         }
         public virtual async void ProcessResponseRest(string response, ObservableCollection<CandlestickData> PriceData, Dictionary<string, CandlestickData> _priceDataDictionary)
         {
-            
 
-        } 
+
+        }
         public virtual void GetWallet()
         {
-            
+
         }
 
         public virtual async void SetLeverage(string Symbol, double leverage)
         {
-            
+
 
         }
 

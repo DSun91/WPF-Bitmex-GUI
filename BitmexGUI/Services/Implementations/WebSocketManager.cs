@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.WebSockets;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Net.WebSockets;
 
 
 namespace BitmexGUI.Services.Implementations
@@ -63,7 +59,7 @@ namespace BitmexGUI.Services.Implementations
                         closeTasks.Add(webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", cancellationToken));
                     }
                 }
-                _webSockets.Clear();
+
             }
 
             try
@@ -82,6 +78,6 @@ namespace BitmexGUI.Services.Implementations
             return _webSockets;
         }
     }
-    
+
 }
- 
+

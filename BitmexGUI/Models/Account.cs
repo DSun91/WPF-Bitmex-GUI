@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BitmexGUI.Models
+﻿namespace BitmexGUI.Models
 {
     public class Account
     {
@@ -24,6 +18,6 @@ namespace BitmexGUI.Models
         public double takerFee { get; set; }
     }
 
-   
+
 
 }

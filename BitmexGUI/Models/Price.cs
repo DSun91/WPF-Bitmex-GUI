@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BitmexGUI.Models
+﻿namespace BitmexGUI.Models
 {
     public class CandlestickData
     {
@@ -17,12 +11,12 @@ namespace BitmexGUI.Models
 
         public double Posx { get; set; }
 
-        public double Height => Math.Abs(Open - Close)+1;
+        public double Height => Math.Abs(Open - Close) + 1;
 
         public double Width { get; set; }
-        public double CenterY => Math.Abs(High - Low)/2;
+        public double CenterY => Math.Abs(High - Low) / 2;
 
-        public double CenterX => Width/2;
+        public double CenterX => Width / 2;
 
     }
 

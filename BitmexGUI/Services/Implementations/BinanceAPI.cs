@@ -1,14 +1,7 @@
 ﻿using BitmexGUI.Models;
 using BitmexGUI.Services.Abstract;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace BitmexGUI.Services.Implementations
 {
@@ -68,9 +61,9 @@ namespace BitmexGUI.Services.Implementations
                 Low = double.Parse(KandleStick["l"].ToString()),
                 Close = double.Parse(KandleStick["c"].ToString()),
                 Timestamp = DateTimeOffset.FromUnixTimeMilliseconds(long.Parse(KandleStick["t"].ToString())).DateTime,
-                Width=CandlestickChart.candleWidth
+                Width = CandlestickChart.candleWidth
             };
-             
+
             PriceUpdated?.Invoke(priceData);
 
         }
@@ -107,7 +100,7 @@ namespace BitmexGUI.Services.Implementations
                 // Add to the SortedDictionary
                 if (!PriceData.Contains(InitData))
                 {
-                    InitData.Posx =CandlestickChart.CandlesInterspace * PriceData.Count;
+                    InitData.Posx = CandlestickChart.CandlesInterspace * PriceData.Count;
                     PriceData.Add(InitData);
                     CachedPriceData.Add(InitData);
                 }
@@ -117,7 +110,7 @@ namespace BitmexGUI.Services.Implementations
                 }
 
             }
-            
+
         }
 
         public void UpdateRestEndpoint(string newEndpoint)
