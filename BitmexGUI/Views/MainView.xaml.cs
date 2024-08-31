@@ -18,10 +18,7 @@ namespace BitmexGUI.Views
 
     public partial class MainWindow : Window
     {
-
-
-
-
+         
         private MainViewModel ViewModel => (MainViewModel)DataContext;
         private MainViewModel viewModel;
         private CandlestickChart CandleStickView;

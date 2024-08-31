@@ -3,7 +3,7 @@
 
 namespace BitmexGUI.Services.Implementations
 {
-    internal class WebSocketManager
+    public class WebSocketManager
     {
         private static WebSocketManager _instance;
         private static readonly object _lock = new object();

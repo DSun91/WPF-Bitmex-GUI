@@ -130,7 +130,7 @@ namespace BitmexGUI.ViewModels
 
         private void PatternCreator()
         {
-            CustomPTR secondWindow = new CustomPTR(25,100,0);
+            CustomPTR secondWindow = new CustomPTR(25,PriceData);
             secondWindow.Show();
         }
 

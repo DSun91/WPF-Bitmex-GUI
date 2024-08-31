@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BitmexGUI.Views"
         mc:Ignorable="d"
-        Title="CustomPTR" Height="550" Width="700">
+        Title="CustomPTR" Height="850" Width="1400">
     <Window.Resources>
-      
+
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -47,7 +47,7 @@
                                            RadiusX="8" RadiusY="8"/>
                         </Canvas.Clip>
                         <ItemsControl ItemsSource="{Binding GridData2}">
-                             
+
                             <!-- Override the default panel to a Canvas -->
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -60,7 +60,7 @@
                                     <Canvas>
                                         <Line X1="{Binding X1}" X2="{Binding X2}"   Stroke="Black" StrokeThickness="1" StrokeDashArray="1" 
                                                  Y1="{Binding Y1}" Y2="{Binding Y2}"
-                                                  />    
+                                                  />
                                     </Canvas>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -71,9 +71,35 @@
             </StackPanel>
 
             <!-- Add content to the Grid -->
-             
+
         </Grid>
-        
+        <TextBlock x:Name="DeltayO" HorizontalAlignment="Left" Margin="68,431,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <TextBlock x:Name="DeltayD" HorizontalAlignment="Left" Margin="68,400,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <TextBlock x:Name="DeltayT" HorizontalAlignment="Left" Margin="68,367,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <DataGrid x:Name="PatternsGrid" HorizontalAlignment="Left" Height="240" Margin="652,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="750" ItemsSource="{Binding ListofPatterns}" AutoGenerateColumns="False">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="P0 TS" Binding="{Binding P0.Timestamp}" Width="Auto" />
+                <DataGridTextColumn Header="P0 Close" Binding="{Binding P0.Close}" Width="Auto" />
+                <DataGridTextColumn Header="P1 TS" Binding="{Binding P1.Timestamp}" Width="Auto" />
+                <DataGridTextColumn Header="P1 Close" Binding="{Binding P1.Close}" Width="Auto" />
+                <DataGridTextColumn Header="P2 TS" Binding="{Binding P2.Timestamp}" Width="Auto" />
+                <DataGridTextColumn Header="P2 Close" Binding="{Binding P2.Close}" Width="Auto" />
+                <DataGridTextColumn Header="P3 TS" Binding="{Binding P3.Timestamp}" Width="Auto" />
+                <DataGridTextColumn Header="P3 Close" Binding="{Binding P3.Close}" Width="Auto" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Content="DeltaY1:" HorizontalAlignment="Left" Height="22" Margin="26,428,0,0" Grid.Row="1" VerticalAlignment="Top" Width="49" FontSize="10"/>
+        <Label Content="DeltaY2:" HorizontalAlignment="Left" Height="22" Margin="26,397,0,0" Grid.Row="1" VerticalAlignment="Top" Width="49" FontSize="10"/>
+        <Label Content="DeltaY3:" HorizontalAlignment="Left" Height="22" Margin="26,364,0,0" Grid.Row="1" VerticalAlignment="Top" Width="49" FontSize="10"/>
+        <TextBlock x:Name="DeltaxO" HorizontalAlignment="Left" Margin="209,431,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <TextBlock x:Name="DeltaxD" HorizontalAlignment="Left" Margin="209,400,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <TextBlock x:Name="DeltaxT" HorizontalAlignment="Left" Margin="209,367,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <Label Content="DeltaX1:" HorizontalAlignment="Left" Height="22" Margin="167,428,0,0" Grid.Row="1" VerticalAlignment="Top" Width="49" FontSize="10"/>
+        <Label Content="DeltaX2:" HorizontalAlignment="Left" Height="22" Margin="167,397,0,0" Grid.Row="1" VerticalAlignment="Top" Width="49" FontSize="10"/>
+        <Label Content="DeltaX3:" HorizontalAlignment="Left" Height="22" Margin="167,364,0,0" Grid.Row="1" VerticalAlignment="Top" Width="49" FontSize="10"/>
+        <Canvas x:Name="PatternsCanvas" HorizontalAlignment="Left" Height="345" Margin="652,316,0,0" Grid.Row="1" VerticalAlignment="Top" Width="681"/>
+
 
     </Grid>
 </Window>

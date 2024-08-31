@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace BitmexGUI.Services.Implementations
 {
-    internal class CandlestickChart : AbstractCharts
+    public class CandlestickChart : AbstractCharts
     {
         public static double minOriginal = 0;
         public static double maxOriginal = 70000;

@@ -38,5 +38,12 @@
 
     }
 
+    public class Pattern
+    {
+        public CandlestickData P0 { get; set; }
+        public CandlestickData P1 { get; set; }
+        public CandlestickData P2 { get; set; }
+        public CandlestickData P3 { get; set; }
 
+    }
 }
