@@ -157,8 +157,10 @@
 
         </ResourceDictionary>
     </Window.Resources>
+    
     <DockPanel>
         <!-- MenuBar -->
+        
         <Menu DockPanel.Dock="Top" Height="20" Background="AliceBlue">
             <MenuItem Header="File">
                 <MenuItem Header="New" />
@@ -173,9 +175,9 @@
                 <MenuItem Header="About" />
             </MenuItem>
         </Menu>
-
-        <!-- Main content area Background="Transparent" <Image HorizontalAlignment="Left" Height="100" Margin="688,0,0,0" VerticalAlignment="Center" Width="262" Source="Resources/a.jpg" Stretch="Uniform"/>-->
-        <Grid Margin="1,0,0,0" x:Name="MainGrid">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <!-- Main content area Background="Transparent" <Image HorizontalAlignment="Left" Height="100" Margin="688,0,0,0" VerticalAlignment="Center" Width="262" Source="Resources/a.jpg" Stretch="Uniform"/>-->
+        <Grid Margin="1,0,0,0" x:Name="MainGrid"  >
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -864,13 +866,18 @@
 
                 </DockPanel>
             </Border>
-            <Button Content="Pattern R." Command="{Binding CreatePatternRecognitionWindow}" HorizontalAlignment="Left" Height="35" Margin="99,129,0,0" Grid.Row="1" VerticalAlignment="Top" Width="57"/>
+                <Button Command="{Binding CreatePatternRecognitionWindow}" HorizontalAlignment="Left" Height="46" Margin="99,129,0,0" Grid.Row="1" VerticalAlignment="Top" Width="57">
+                    <StackPanel>
+                        <Image Source="Resources/a.png" Margin="0,-5" />
+                    </StackPanel>
+                </Button>
 
 
 
 
-            <!-- You can add more controls here to display other data or add user interactions -->
+                <!-- You can add more controls here to display other data or add user interactions -->
         </Grid>
+        </ScrollViewer>
     </DockPanel>
 
 </Window>

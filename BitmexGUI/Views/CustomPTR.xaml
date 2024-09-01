@@ -9,95 +9,88 @@
     <Window.Resources>
 
     </Window.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <!-- Header -->
-        <TextBlock Text="Pattern Recognition" 
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!-- Header -->
+            <TextBlock Text="Pattern Recognition" 
                    FontSize="24" 
                    FontWeight="Bold" 
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Top" 
                    Margin="10"/>
 
-        <!-- Main Grid Content -->
-        <Grid VerticalAlignment="Top" Margin="20,0,0,0" Grid.Row="1" Width="550"
+            <!-- Main Grid Content -->
+            <Grid VerticalAlignment="Top" Margin="20,0,0,0" Grid.Row="1" Width="550"
              HorizontalAlignment="Left" >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <StackPanel Grid.Row="1" Width="550" HorizontalAlignment="Left">
-                <Border CornerRadius="10" BorderThickness="2"
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="1" Width="550" HorizontalAlignment="Left">
+                    <Border CornerRadius="10" BorderThickness="2"
                         BorderBrush="black"
                         VerticalAlignment="Top"
                         HorizontalAlignment="Left">
 
-                    <Canvas x:Name="PatterRecognitionCanvas"
+                        <Canvas x:Name="PatterRecognitionCanvas"
                             Height="346"
                             Width="548"
                             Background="AliceBlue" 
                             HorizontalAlignment="Left"
                             MouseLeftButtonDown="Pattern_MouseLeftButtonDown" 
                             MouseLeftButtonUp="Pattern_MouseLeftButtonUp">
-                        <Canvas.Clip>
-                            <RectangleGeometry Rect="0,0,546,346"
+                            <Canvas.Clip>
+                                <RectangleGeometry Rect="0,0,546,346"
                                            RadiusX="8" RadiusY="8"/>
-                        </Canvas.Clip>
-                        <ItemsControl ItemsSource="{Binding GridData2}">
+                            </Canvas.Clip>
+                            <ItemsControl ItemsSource="{Binding GridData2}">
 
-                            <!-- Override the default panel to a Canvas -->
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <Canvas />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
+                                <!-- Override the default panel to a Canvas -->
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <Canvas />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
 
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Canvas>
-                                        <Line X1="{Binding X1}" X2="{Binding X2}"   Stroke="Black" StrokeThickness="1" StrokeDashArray="1" 
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Canvas>
+                                            <Line X1="{Binding X1}" X2="{Binding X2}"   Stroke="Black" StrokeThickness="1" StrokeDashArray="1" 
                                                  Y1="{Binding Y1}" Y2="{Binding Y2}"
                                                   />
-                                    </Canvas>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+                                        </Canvas>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
 
-                    </Canvas>
-                </Border>
-            </StackPanel>
+                        </Canvas>
+                    </Border>
+                </StackPanel>
 
-            <!-- Add content to the Grid -->
+                <!-- Add content to the Grid -->
+
+            </Grid>
+            <DataGrid x:Name="PatternsGrid" HorizontalAlignment="Left" Height="240" Margin="20,373,0,0" Grid.Row="1" VerticalAlignment="Top" Width="1252" ItemsSource="{Binding ListofPatterns}" AutoGenerateColumns="False">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="P0 TS" Binding="{Binding P0.Timestamp}" Width="Auto" />
+                    <DataGridTextColumn Header="P0 Close" Binding="{Binding P0.Close}" Width="Auto" />
+                    <DataGridTextColumn Header="P1 TS" Binding="{Binding P1.Timestamp}" Width="Auto" />
+                    <DataGridTextColumn Header="P1 Close" Binding="{Binding P1.Close}" Width="Auto" />
+                    <DataGridTextColumn Header="P2 TS" Binding="{Binding P2.Timestamp}" Width="Auto" />
+                    <DataGridTextColumn Header="P2 Close" Binding="{Binding P2.Close}" Width="Auto" />
+                    <DataGridTextColumn Header="P3 TS" Binding="{Binding P3.Timestamp}" Width="Auto" />
+                    <DataGridTextColumn Header="P3 Close" Binding="{Binding P3.Close}" Width="Auto" />
+                    <DataGridTextColumn Header="P4 TS" Binding="{Binding P4.Timestamp}" Width="Auto" />
+                    <DataGridTextColumn Header="P4 Close" Binding="{Binding P4.Close}" Width="Auto" />
+                </DataGrid.Columns>
+            </DataGrid>
 
         </Grid>
-        <TextBlock x:Name="DeltayO" HorizontalAlignment="Left" Margin="68,431,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
-        <TextBlock x:Name="DeltayD" HorizontalAlignment="Left" Margin="68,400,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
-        <TextBlock x:Name="DeltayT" HorizontalAlignment="Left" Margin="68,367,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
-        <DataGrid x:Name="PatternsGrid" HorizontalAlignment="Left" Height="240" Margin="652,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="750" ItemsSource="{Binding ListofPatterns}" AutoGenerateColumns="False">
-
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="P0 TS" Binding="{Binding P0.Timestamp}" Width="Auto" />
-                <DataGridTextColumn Header="P0 Close" Binding="{Binding P0.Close}" Width="Auto" />
-                <DataGridTextColumn Header="P1 TS" Binding="{Binding P1.Timestamp}" Width="Auto" />
-                <DataGridTextColumn Header="P1 Close" Binding="{Binding P1.Close}" Width="Auto" />
-                <DataGridTextColumn Header="P2 TS" Binding="{Binding P2.Timestamp}" Width="Auto" />
-                <DataGridTextColumn Header="P2 Close" Binding="{Binding P2.Close}" Width="Auto" />
-                <DataGridTextColumn Header="P3 TS" Binding="{Binding P3.Timestamp}" Width="Auto" />
-                <DataGridTextColumn Header="P3 Close" Binding="{Binding P3.Close}" Width="Auto" />
-            </DataGrid.Columns>
-        </DataGrid>
-        <Label Content="DeltaY1:" HorizontalAlignment="Left" Height="22" Margin="26,428,0,0" Grid.Row="1" VerticalAlignment="Top" Width="49" FontSize="10"/>
-        <Label Content="DeltaY2:" HorizontalAlignment="Left" Height="22" Margin="26,397,0,0" Grid.Row="1" VerticalAlignment="Top" Width="49" FontSize="10"/>
-        <Label Content="DeltaY3:" HorizontalAlignment="Left" Height="22" Margin="26,364,0,0" Grid.Row="1" VerticalAlignment="Top" Width="49" FontSize="10"/>
-        <TextBlock x:Name="DeltaxO" HorizontalAlignment="Left" Margin="209,431,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
-        <TextBlock x:Name="DeltaxD" HorizontalAlignment="Left" Margin="209,400,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
-        <TextBlock x:Name="DeltaxT" HorizontalAlignment="Left" Margin="209,367,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
-        <Label Content="DeltaX1:" HorizontalAlignment="Left" Height="22" Margin="167,428,0,0" Grid.Row="1" VerticalAlignment="Top" Width="49" FontSize="10"/>
-        <Label Content="DeltaX2:" HorizontalAlignment="Left" Height="22" Margin="167,397,0,0" Grid.Row="1" VerticalAlignment="Top" Width="49" FontSize="10"/>
-        <Label Content="DeltaX3:" HorizontalAlignment="Left" Height="22" Margin="167,364,0,0" Grid.Row="1" VerticalAlignment="Top" Width="49" FontSize="10"/>
-          
-    </Grid>
+    </ScrollViewer>
 </Window>

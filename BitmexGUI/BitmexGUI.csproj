@@ -17,7 +17,9 @@
 
   <ItemGroup>
     <None Remove="Views\Resources\a.jpg" />
+    <None Remove="Views\Resources\a.png" />
     <None Remove="Views\Resources\b.jpg" />
+    <None Remove="Views\Resources\b.png" />
     <None Remove="Views\Resources\logo.jpg" />
   </ItemGroup>
 
@@ -32,7 +34,9 @@
 
   <ItemGroup>
     <Resource Include="Views\Resources\a.jpg" />
+    <Resource Include="Views\Resources\a.png" />
     <Resource Include="Views\Resources\b.jpg" />
+    <Resource Include="Views\Resources\b.png" />
     <Resource Include="Views\Resources\logo.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

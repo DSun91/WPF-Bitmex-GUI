@@ -225,6 +225,7 @@ namespace BitmexGUI.Views
                     canvas.Children.Add(line);
                 }
             }
+            ListofPatterns.Clear();
             FindpatterRecursive(PatternPoint);
             
         }
@@ -250,24 +251,46 @@ namespace BitmexGUI.Views
             get { return _patternList; }
             set { _patternList = value;}
         } 
-        private bool IsSwing(List<CandlestickData> Candles,int index,string SwingHighorLow)
+        private bool IsSwing(List<CandlestickData> Candles,int index,string SwingHighorLow,bool onHighLow=false)
         {
-            if(SwingHighorLow.ToLower().Contains("high"))
+            if(onHighLow)
             {
-                if (Candles[index].High > Candles[index - 1].High && Candles[index].High > Candles[index + 1].High)
+                if (SwingHighorLow.ToLower().Contains("high"))
                 {
-                    return true;
+                    if (Candles[index].High > Candles[index - 1].High && Candles[index].High > Candles[index + 1].High)
+                    {
+                        return true;
+                    }
                 }
+                else
+                {
+                    if (Candles[index].Low < Candles[index - 1].Low && Candles[index].Low < Candles[index + 1].Low)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
             }
             else
             {
-                if (Candles[index].Low < Candles[index - 1].Low && Candles[index].Low < Candles[index + 1].Low)
+                if (SwingHighorLow.ToLower().Contains("high"))
                 {
-                    return true;
+                    if (Candles[index].Close > Candles[index - 1].Close && Candles[index].Close > Candles[index + 1].Close)
+                    {
+                        return true;
+                    }
                 }
-            }
+                else
+                {
+                    if (Candles[index].Close < Candles[index - 1].Close && Candles[index].Close < Candles[index + 1].Close)
+                    {
+                        return true;
+                    }
+                }
 
-            return false;
+                return false;
+            }
         }
         
          
@@ -281,9 +304,7 @@ namespace BitmexGUI.Views
             {
                 deltaY.Add(-PatternPoint[i + 1].Y + PatternPoint[i].Y);
             }
-            DeltayO.Text = Math.Round(deltaY[0]).ToString();
-            DeltayD.Text = Math.Round(deltaY[1]).ToString();
-            DeltayT.Text = Math.Round(deltaY[2]).ToString();
+            
             return deltaY;
         }
 
@@ -296,9 +317,7 @@ namespace BitmexGUI.Views
             {
                 deltaX.Add(PatternPoint[i + 1].X - PatternPoint[i].X);
             }
-            DeltaxO.Text = Math.Round(deltaX[0]).ToString();
-            DeltaxD.Text = Math.Round(deltaX[1]).ToString();
-            DeltaxT.Text = Math.Round(deltaX[2]).ToString();
+          
             return deltaX;
         }
 
@@ -477,7 +496,7 @@ namespace BitmexGUI.Views
                     System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], "PatternP0 " + Candles[patternPoints[0]].Timestamp.ToString() + " : " + Candles[patternPoints[0]].Close.ToString() + "\n");
                     System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], "PatternP1 " + Candles[patternPoints[1]].Timestamp.ToString() + " : " + Candles[patternPoints[1]].Close.ToString() + "\n");
                     System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], "PatternP2 " + Candles[patternPoints[2]].Timestamp.ToString() + " : " + Candles[patternPoints[2]].Close.ToString() + "\n");
-                    System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], "PatternP3 " + Candles[patternPoints[3]].Timestamp.ToString() + " : " + Candles[patternPoints[3]].Close.ToString() + "\n\n");
+                    System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], "PatternP3 " + Candles[patternPoints[3]].Timestamp.ToString() + " : " + Candles[patternPoints[3]].Close.ToString() + "\n");
                     shouldExit = true;
                 }
 
