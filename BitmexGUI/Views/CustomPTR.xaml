@@ -98,8 +98,6 @@
         <Label Content="DeltaX1:" HorizontalAlignment="Left" Height="22" Margin="167,428,0,0" Grid.Row="1" VerticalAlignment="Top" Width="49" FontSize="10"/>
         <Label Content="DeltaX2:" HorizontalAlignment="Left" Height="22" Margin="167,397,0,0" Grid.Row="1" VerticalAlignment="Top" Width="49" FontSize="10"/>
         <Label Content="DeltaX3:" HorizontalAlignment="Left" Height="22" Margin="167,364,0,0" Grid.Row="1" VerticalAlignment="Top" Width="49" FontSize="10"/>
-        <Canvas x:Name="PatternsCanvas" HorizontalAlignment="Left" Height="345" Margin="652,316,0,0" Grid.Row="1" VerticalAlignment="Top" Width="681"/>
-
-
+          
     </Grid>
 </Window>

@@ -303,15 +303,16 @@ namespace BitmexGUI.Views
         }
 
 
+        List<double> deltaY;
+        List<double> deltaX;
 
-     
         private void FindpatterRecursive(List<Point> PatternPoint)
         {
 
             if(PatternPoint.Count > 3) 
             {
-                List<double> deltaY = GetDeltaY();
-                List<double> deltaX = GetDeltaX();
+                deltaY = GetDeltaY();
+                deltaX = GetDeltaX();
 
 
                 List<int> p = new List<int>();
@@ -333,6 +334,59 @@ namespace BitmexGUI.Views
            
         }
 
+        private bool checkCondition(int i,List<CandlestickData> Candles, List<int> p)
+        {
+            List<bool> flag = new List<bool>();
+            
+             
+            for (int j=0;j< p.Count;j++)
+            {
+                double sum = 0;
+                for (int k = j; k < p.Count; k++)
+                {
+                    sum += deltaY[k];
+                }
+                 
+                if (sum > 0)
+                {
+                    if (Candles[i].Close > Candles[p[j]].Close)
+                    {
+                        flag.Add(true);
+                    }
+                    else
+                    {
+                        flag.Add(false);
+                    }
+                    
+                }
+                if(sum<0)
+                {
+                    if (Candles[i].Close < Candles[p[j]].Close)
+                    {
+                        flag.Add(true);
+                    }
+                    else
+                    {
+                        flag.Add(false);
+                    }
+                }
+                if (sum == 0)
+                {
+                    flag.Add(true);
+                }
+                
+            }
+
+            if (!flag.Contains(false))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
         private bool shouldExit = false;
         int itercounter = 0;
         private void ExecuteForLoop(List<CandlestickData> Candles, int initialpoint,ref List<double> deltaY, int N,ref List<int> p)
@@ -341,72 +395,23 @@ namespace BitmexGUI.Views
 
             for (int variable = initialpoint+1; variable < PatternWindow; variable++)
             {
-                if (shouldExit)
-                {
-                    return;
-                }
-                //System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], $"findpatterRecursive variable :{initialpoint}" + "\n");
+                if (shouldExit){return;} 
                 if (itercounter < deltaY.Count)
                 {
 
-                    if (deltaY[itercounter] < 0)
+                    if (deltaY[itercounter] > 0)
                     {
-                        //System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], $"findpatterRecursive deltaY[i] :{deltaY[i]}" + "\n");
-                        //System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], $"Candles[N + variable].Close: {Candles[N + variable].Close}, N: {N}, variable: {variable}" + "\n");
-                        if (Candles[N + variable].Close < Candles[p[p.Count-1]].Close)
+                        
+                        if (checkCondition(N + variable,Candles,p))//if (Candles[N + variable].Close > Candles[p.Last()].Close)
                         {
-                            //System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], $"findpatterRecursive Candles[N + variable].Close < {Candles[p[i]].Close}" + "\n");
-                            if (IsSwing(Candles, N + variable, "SwingLow"))
-                            {
-
-                                //System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], $"deltaY[{itercounter}] < 0 {deltaY[itercounter]}<{0}" + "\n");
-                                //System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], $"Candles[{Candles[N + variable].Timestamp}].Close < Candles[{Candles[p[p.Count - 1]].Timestamp}], {Candles[N + variable].Close}<{Candles[p[p.Count - 1]].Close},  and is swing Low" + "\n");
-                                //System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], $"Added p{p.Count}, {Candles[N + variable].Timestamp}, {Candles[N + variable].Close}, N: {N}, variable: {variable}" + "\n");
-
-                                p.Add(N + variable);
-                                AddPatternToList(p);
-                                itercounter++;
-                                //System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], $"findpatterRecursive IsSwing(Candles, N + variable, \"SwingLow\"), p.Add({N + variable})" + "\n");
-                                ExecuteForLoop(Candles, p.Last(), ref deltaY, N, ref p);
-                            }
-                        }
-                        else
-                        {
-                            shouldExit = true;
-                            //System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], $"deltaY[{itercounter}] {deltaY[itercounter]}, findpatterRecursive breaking at point {Candles[N + variable].Timestamp} as {Candles[N + variable].Close}>{Candles[p[p.Count - 1]].Close}, {Candles[p[p.Count - 1]].Timestamp}, p.Count: {p.Count}" + "\n");
-                            return;
-                        }
-
-                    }
-                    else
-                    {
-                        //System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], $"findpatterRecursive deltaY[i] :{deltaY[i]}" + "\n");
-                        if (Candles[N + variable].Close > Candles[p[p.Count - 1]].Close)
-                        {
-                            //System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], $"findpatterRecursive Candles[N + variable].Close > {Candles[p[i]].Close}" + "\n");
-                            //System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], $"findpatterRecursive i: {i},p[i]: {p[i]}" + "\n");
                             if (IsSwing(Candles, N + variable, "SwingHigh"))
                             {
-
-
-
-                                //System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], $"deltaY[{itercounter}] > 0 {deltaY[itercounter]}>{0}" + "\n");
-                                //System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], $"Candles[{Candles[N + variable].Timestamp}].Close > Candles[{Candles[p[p.Count - 1]].Timestamp}], {Candles[N + variable].Close}>{Candles[p[p.Count - 1]].Close},  and is swing High" + "\n");
-                                //System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], $"Added p{p.Count}, {Candles[N + variable].Timestamp}, {Candles[N + variable].Close}, N: {N}, variable: {variable}" + "\n");
-
-
-                                itercounter++;
+ 
+                                
                                 p.Add(N + variable);
                                 AddPatternToList(p);
-
-
-
-
-
-
-                                //System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], $"findpatterRecursive IsSwing(Candles, N + variable, \"SwingHigh\"),p.Add({N + variable})" + "\n");
-
-                                ExecuteForLoop(Candles, p.Last(), ref deltaY, N, ref p);
+                                itercounter++;
+                                ExecuteForLoop(Candles, variable, ref deltaY, N, ref p);
                             }
                         }
                         else
@@ -416,6 +421,26 @@ namespace BitmexGUI.Views
                             return;
                         }
                         
+                    }
+                    else
+                    {
+                        if (checkCondition(N + variable, Candles, p))
+                        {
+                            if (IsSwing(Candles, N + variable, "SwingLow"))
+                            {
+
+                                p.Add(N + variable);
+                                AddPatternToList(p);
+                                itercounter++;
+                                ExecuteForLoop(Candles, variable, ref deltaY, N, ref p);
+                            }
+                        }
+                        else
+                        {
+                            shouldExit = true;
+                            return;
+                        }
+
                     }
                 }
               
