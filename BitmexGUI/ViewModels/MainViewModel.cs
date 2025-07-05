@@ -46,9 +46,7 @@ namespace BitmexGUI.ViewModels
         private readonly string BinanceEndpointRest = ConfigurationManager.AppSettings["BaseRESTBinance"];
         private readonly string BinanceEndpointWss = ConfigurationManager.AppSettings["BaseWSSBinance"];
         private readonly string BitmexEndpointRest = ConfigurationManager.AppSettings["BaseBitmexUrl"] + ConfigurationManager.AppSettings["BaseRESTBitmex"];
-        private readonly string BitmexEndpointWss = ConfigurationManager.AppSettings["BaseWSSBitmex"];
-        private readonly string BinanceInstrument = ConfigurationManager.AppSettings["Instrument"];
-        private readonly string BitmexInstrument = ConfigurationManager.AppSettings["BitMexSymbol"];
+        private readonly string BitmexEndpointWss = ConfigurationManager.AppSettings["BaseWSSBitmex"]; 
         public event Action PriceDataUpdated;
         public event Action SettledPriceDataUpdated;
         public event Action BalanceUpdated;

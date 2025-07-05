@@ -40183,3 +40183,763 @@ PatternP0 01/09/2024 17:57:00 : 58071.1
 PatternP1 01/09/2024 18:02:00 : 58218.02
 PatternP2 01/09/2024 18:03:00 : 58204.67
 PatternP3 01/09/2024 18:04:00 : 58221.09
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2024-09-01T18:54:43.402Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":718}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1725218685,"d5c3239a0a4ca8ea9365fdcbf345cdde4812942c6c4bbce962fe27e7320923cd"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2024-09-01T18:54:44.321Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":717}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1725218685,"d5c3239a0a4ca8ea9365fdcbf345cdde4812942c6c4bbce962fe27e7320923cd"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2024-09-02T13:11:53.668Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":718}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1725284514,"ad7ab138450b4e0d6c56fed893b57a4dc11c174f65f81f0f8aba7ba9735e2a14"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2024-09-02T13:11:54.188Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":717}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1725284515,"23588a1f7618d6de615f3c43f52cd56dca4bfee14c449c803dee674578f15b17"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2024-09-02T13:12:01.893Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":716}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1725284523,"0088c46a15ee01ade431a717c93abbb6d412e285cb0445ccc0985f69a84b3ab7"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2024-09-02T13:12:03.428Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":713}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1725284524,"4773d3c19e5f175927137a51c5ad8a45c46f03d8cf95824089c3bdd841106eba"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+PatternP0 28/08/2024 17:45:00 : 58650
+PatternP1 28/08/2024 18:15:00 : 59023.99
+PatternP2 28/08/2024 18:30:00 : 58869
+PatternP3 28/08/2024 18:45:00 : 59487
+PatternP0 28/08/2024 19:45:00 : 58898.85
+PatternP1 28/08/2024 20:45:00 : 59312.01
+PatternP2 28/08/2024 21:00:00 : 59282.05
+PatternP3 28/08/2024 21:15:00 : 59364
+PatternP0 29/08/2024 01:15:00 : 58996.02
+PatternP1 29/08/2024 01:30:00 : 59016
+PatternP2 29/08/2024 01:45:00 : 58997.99
+PatternP3 29/08/2024 02:00:00 : 59141
+PatternP0 29/08/2024 01:45:00 : 58997.99
+PatternP1 29/08/2024 02:00:00 : 59141
+PatternP2 29/08/2024 02:15:00 : 59135
+PatternP3 29/08/2024 02:30:00 : 59154.05
+PatternP0 29/08/2024 03:00:00 : 59091.99
+PatternP1 29/08/2024 03:30:00 : 59151.11
+PatternP2 29/08/2024 04:00:00 : 59110.99
+PatternP3 29/08/2024 05:45:00 : 59436.17
+PatternP0 29/08/2024 04:00:00 : 59110.99
+PatternP1 29/08/2024 05:45:00 : 59436.17
+PatternP2 29/08/2024 06:00:00 : 59427
+PatternP3 29/08/2024 06:30:00 : 59663.34
+PatternP0 29/08/2024 08:00:00 : 59471.01
+PatternP1 29/08/2024 09:15:00 : 59749.99
+PatternP2 29/08/2024 09:45:00 : 59586
+PatternP3 29/08/2024 10:00:00 : 59797.23
+PatternP0 29/08/2024 09:45:00 : 59586
+PatternP1 29/08/2024 10:00:00 : 59797.23
+PatternP2 29/08/2024 10:45:00 : 59673.01
+PatternP3 29/08/2024 11:30:00 : 60162.01
+PatternP0 29/08/2024 11:45:00 : 60067.06
+PatternP1 29/08/2024 12:30:00 : 60387.11
+PatternP2 29/08/2024 12:45:00 : 60322
+PatternP3 29/08/2024 13:00:00 : 60419.99
+PatternP0 29/08/2024 13:15:00 : 60259
+PatternP1 29/08/2024 14:00:00 : 60770.01
+PatternP2 29/08/2024 14:15:00 : 60644
+PatternP3 29/08/2024 14:30:00 : 60879.99
+PatternP0 29/08/2024 14:15:00 : 60644
+PatternP1 29/08/2024 14:30:00 : 60879.99
+PatternP2 29/08/2024 14:45:00 : 60814.99
+PatternP3 29/08/2024 15:15:00 : 61019.99
+PatternP0 29/08/2024 20:15:00 : 59355
+PatternP1 29/08/2024 20:45:00 : 59529
+PatternP2 29/08/2024 21:15:00 : 59479
+PatternP3 29/08/2024 21:30:00 : 59561
+PatternP0 29/08/2024 22:00:00 : 59114.01
+PatternP1 29/08/2024 22:30:00 : 59277
+PatternP2 29/08/2024 22:45:00 : 59211.99
+PatternP3 29/08/2024 23:00:00 : 59350.99
+PatternP0 29/08/2024 22:45:00 : 59211.99
+PatternP1 29/08/2024 23:00:00 : 59350.99
+PatternP2 29/08/2024 23:15:00 : 59299.99
+PatternP3 29/08/2024 23:45:00 : 59359.01
+PatternP0 30/08/2024 03:00:00 : 58932.01
+PatternP1 30/08/2024 03:15:00 : 59003.26
+PatternP2 30/08/2024 03:30:00 : 58991.1
+PatternP3 30/08/2024 04:00:00 : 59102
+PatternP0 30/08/2024 05:15:00 : 58762.79
+PatternP1 30/08/2024 05:30:00 : 58861.1
+PatternP2 30/08/2024 05:45:00 : 58784
+PatternP3 30/08/2024 07:15:00 : 59566.99
+PatternP0 30/08/2024 07:45:00 : 59271.1
+PatternP1 30/08/2024 08:30:00 : 59463.79
+PatternP2 30/08/2024 08:45:00 : 59445
+PatternP3 30/08/2024 09:00:00 : 59570
+PatternP0 30/08/2024 08:45:00 : 59445
+PatternP1 30/08/2024 09:00:00 : 59570
+PatternP2 30/08/2024 09:15:00 : 59544
+PatternP3 30/08/2024 09:30:00 : 59626
+PatternP0 30/08/2024 15:15:00 : 58094
+PatternP1 30/08/2024 15:30:00 : 58212.54
+PatternP2 30/08/2024 15:45:00 : 58094.99
+PatternP3 30/08/2024 16:00:00 : 58341.08
+PatternP0 30/08/2024 16:15:00 : 58092
+PatternP1 30/08/2024 16:45:00 : 58551.11
+PatternP2 30/08/2024 17:30:00 : 58514.53
+PatternP3 30/08/2024 18:45:00 : 59370.99
+PatternP0 30/08/2024 19:45:00 : 58700.02
+PatternP1 30/08/2024 20:15:00 : 58862.99
+PatternP2 30/08/2024 20:30:00 : 58814
+PatternP3 30/08/2024 21:00:00 : 59101
+PatternP0 31/08/2024 03:00:00 : 59129.33
+PatternP1 31/08/2024 03:30:00 : 59254
+PatternP2 31/08/2024 04:00:00 : 59230.01
+PatternP3 31/08/2024 04:45:00 : 59350
+PatternP0 31/08/2024 09:30:00 : 58894
+PatternP1 31/08/2024 10:15:00 : 59031
+PatternP2 31/08/2024 10:30:00 : 59025
+PatternP3 31/08/2024 10:45:00 : 59136.99
+PatternP0 31/08/2024 13:45:00 : 58954.99
+PatternP1 31/08/2024 14:00:00 : 59090
+PatternP2 31/08/2024 14:15:00 : 59088.53
+PatternP3 31/08/2024 14:45:00 : 59126
+PatternP0 31/08/2024 17:00:00 : 58876.01
+PatternP1 31/08/2024 17:15:00 : 58939.99
+PatternP2 31/08/2024 17:30:00 : 58908.01
+PatternP3 31/08/2024 18:15:00 : 59088
+PatternP0 31/08/2024 20:15:00 : 58839.01
+PatternP1 31/08/2024 20:45:00 : 58951.08
+PatternP2 31/08/2024 21:00:00 : 58930
+PatternP3 31/08/2024 22:00:00 : 59134
+PatternP0 01/09/2024 05:45:00 : 57986
+PatternP1 01/09/2024 06:30:00 : 58244.95
+PatternP2 01/09/2024 07:15:00 : 58141.11
+PatternP3 01/09/2024 07:45:00 : 58478.64
+PatternP0 01/09/2024 10:45:00 : 57931
+PatternP1 01/09/2024 11:15:00 : 58047.92
+PatternP2 01/09/2024 11:30:00 : 58032
+PatternP3 01/09/2024 11:45:00 : 58240.52
+PatternP0 01/09/2024 16:15:00 : 58100
+PatternP1 01/09/2024 16:30:00 : 58140
+PatternP2 01/09/2024 16:45:00 : 58132.06
+PatternP3 01/09/2024 17:00:00 : 58161.11
+PatternP0 01/09/2024 17:15:00 : 57917.99
+PatternP1 01/09/2024 18:15:00 : 58532.61
+PatternP2 01/09/2024 18:30:00 : 58468
+PatternP3 01/09/2024 18:45:00 : 58541.1
+PatternP0 01/09/2024 23:00:00 : 57291.1
+PatternP1 01/09/2024 23:15:00 : 57374.01
+PatternP2 01/09/2024 23:45:00 : 57301.86
+PatternP3 02/09/2024 00:15:00 : 57522
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2024-09-03T07:41:10.494Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":719}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1725351068,"bc89ea8e3aa85534d8cf6758355180702054fa167200539207e4371440270b03"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2024-09-03T07:41:12.900Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":717}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1725351072,"63e46abac9bbbf9d23b83855a3a3e2ed8a3b974c6718f313d10d8438f52aaca9"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+PatternP0 02/09/2024 23:51:00 : 59088.99
+PatternP1 02/09/2024 23:54:00 : 59127.65
+PatternP2 02/09/2024 23:55:00 : 59108
+PatternP3 02/09/2024 23:56:00 : 59139.87
+PatternP0 03/09/2024 00:08:00 : 59064.01
+PatternP1 03/09/2024 00:10:00 : 59111.09
+PatternP2 03/09/2024 00:11:00 : 59103.03
+PatternP3 03/09/2024 00:13:00 : 59129.55
+PatternP0 03/09/2024 00:21:00 : 59052
+PatternP1 03/09/2024 00:22:00 : 59101
+PatternP2 03/09/2024 00:23:00 : 59095
+PatternP3 03/09/2024 00:25:00 : 59142.01
+PatternP0 03/09/2024 00:29:00 : 59129.04
+PatternP1 03/09/2024 00:31:00 : 59167.49
+PatternP2 03/09/2024 00:32:00 : 59161
+PatternP3 03/09/2024 00:33:00 : 59178
+PatternP0 03/09/2024 00:42:00 : 59097.01
+PatternP1 03/09/2024 00:45:00 : 59148
+PatternP2 03/09/2024 00:46:00 : 59140
+PatternP3 03/09/2024 00:55:00 : 59219
+PatternP0 03/09/2024 00:46:00 : 59140
+PatternP1 03/09/2024 00:55:00 : 59219
+PatternP2 03/09/2024 00:56:00 : 59213
+PatternP3 03/09/2024 00:57:00 : 59236.01
+PatternP0 03/09/2024 00:56:00 : 59213
+PatternP1 03/09/2024 00:57:00 : 59236.01
+PatternP2 03/09/2024 00:58:00 : 59236
+PatternP3 03/09/2024 00:59:00 : 59257.99
+PatternP0 03/09/2024 01:00:00 : 59229
+PatternP1 03/09/2024 01:02:00 : 59262
+PatternP2 03/09/2024 01:03:00 : 59248.99
+PatternP3 03/09/2024 01:05:00 : 59359
+PatternP0 03/09/2024 01:03:00 : 59248.99
+PatternP1 03/09/2024 01:05:00 : 59359
+PatternP2 03/09/2024 01:06:00 : 59342
+PatternP3 03/09/2024 01:07:00 : 59392.01
+PatternP0 03/09/2024 01:08:00 : 59348.83
+PatternP1 03/09/2024 01:09:00 : 59375.01
+PatternP2 03/09/2024 01:10:00 : 59373.69
+PatternP3 03/09/2024 01:11:00 : 59406
+PatternP0 03/09/2024 01:24:00 : 59213.68
+PatternP1 03/09/2024 01:25:00 : 59226
+PatternP2 03/09/2024 01:26:00 : 59216.01
+PatternP3 03/09/2024 01:31:00 : 59279
+PatternP0 03/09/2024 01:26:00 : 59216.01
+PatternP1 03/09/2024 01:31:00 : 59279
+PatternP2 03/09/2024 01:32:00 : 59265.01
+PatternP3 03/09/2024 01:33:00 : 59286.84
+PatternP0 03/09/2024 01:48:00 : 59291.1
+PatternP1 03/09/2024 01:50:00 : 59350
+PatternP2 03/09/2024 01:51:00 : 59349.74
+PatternP3 03/09/2024 01:54:00 : 59374.25
+PatternP0 03/09/2024 02:00:00 : 59354
+PatternP1 03/09/2024 02:01:00 : 59360.99
+PatternP2 03/09/2024 02:02:00 : 59358
+PatternP3 03/09/2024 02:04:00 : 59463.18
+PatternP0 03/09/2024 02:02:00 : 59358
+PatternP1 03/09/2024 02:04:00 : 59463.18
+PatternP2 03/09/2024 02:05:00 : 59431.99
+PatternP3 03/09/2024 02:09:00 : 59651.79
+PatternP0 03/09/2024 02:05:00 : 59431.99
+PatternP1 03/09/2024 02:09:00 : 59651.79
+PatternP2 03/09/2024 02:11:00 : 59597
+PatternP3 03/09/2024 02:13:00 : 59799.99
+PatternP0 03/09/2024 02:40:00 : 59418.01
+PatternP1 03/09/2024 02:41:00 : 59425.01
+PatternP2 03/09/2024 02:42:00 : 59422.01
+PatternP3 03/09/2024 02:44:00 : 59450.01
+PatternP0 03/09/2024 03:08:00 : 59238
+PatternP1 03/09/2024 03:11:00 : 59290.48
+PatternP2 03/09/2024 03:12:00 : 59263.99
+PatternP3 03/09/2024 03:13:00 : 59300
+PatternP0 03/09/2024 03:43:00 : 59145
+PatternP1 03/09/2024 03:44:00 : 59150.99
+PatternP2 03/09/2024 03:45:00 : 59148.01
+PatternP3 03/09/2024 03:46:00 : 59179
+PatternP0 03/09/2024 03:58:00 : 59094
+PatternP1 03/09/2024 03:59:00 : 59110.99
+PatternP2 03/09/2024 04:00:00 : 59109.98
+PatternP3 03/09/2024 04:01:00 : 59153.01
+PatternP0 03/09/2024 04:14:00 : 59106.01
+PatternP1 03/09/2024 04:16:00 : 59143.66
+PatternP2 03/09/2024 04:17:00 : 59142
+PatternP3 03/09/2024 04:19:00 : 59150
+PatternP0 03/09/2024 04:33:00 : 59193.87
+PatternP1 03/09/2024 04:35:00 : 59208
+PatternP2 03/09/2024 04:36:00 : 59207
+PatternP3 03/09/2024 04:37:00 : 59232.08
+PatternP0 03/09/2024 05:13:00 : 59226.81
+PatternP1 03/09/2024 05:14:00 : 59248
+PatternP2 03/09/2024 05:15:00 : 59236.01
+PatternP3 03/09/2024 05:16:00 : 59258.99
+PatternP0 03/09/2024 05:20:00 : 59219
+PatternP1 03/09/2024 05:21:00 : 59249.98
+PatternP2 03/09/2024 05:22:00 : 59239.85
+PatternP3 03/09/2024 05:23:00 : 59258.99
+PatternP0 03/09/2024 05:37:00 : 59190
+PatternP1 03/09/2024 05:38:00 : 59200.61
+PatternP2 03/09/2024 05:39:00 : 59193.21
+PatternP3 03/09/2024 05:40:00 : 59224.96
+PatternP0 03/09/2024 05:45:00 : 59146
+PatternP1 03/09/2024 05:48:00 : 59181
+PatternP2 03/09/2024 05:49:00 : 59177.99
+PatternP3 03/09/2024 05:52:00 : 59205.01
+PatternP0 03/09/2024 05:49:00 : 59177.99
+PatternP1 03/09/2024 05:52:00 : 59205.01
+PatternP2 03/09/2024 05:55:00 : 59183
+PatternP3 03/09/2024 05:56:00 : 59207.85
+PatternP0 03/09/2024 06:06:00 : 58969.38
+PatternP1 03/09/2024 06:07:00 : 58991.1
+PatternP2 03/09/2024 06:08:00 : 58972
+PatternP3 03/09/2024 06:09:00 : 59005.19
+PatternP0 03/09/2024 06:26:00 : 58882.92
+PatternP1 03/09/2024 06:28:00 : 58991
+PatternP2 03/09/2024 06:29:00 : 58982.01
+PatternP3 03/09/2024 06:31:00 : 59021
+PatternP0 03/09/2024 06:39:00 : 58947.01
+PatternP1 03/09/2024 06:40:00 : 58951
+PatternP2 03/09/2024 06:41:00 : 58947.42
+PatternP3 03/09/2024 06:43:00 : 58986
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2024-09-03T07:41:24.218Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":716}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1725351084,"204a1c30f1198ec7b516d4310649a232cf8c0ef14ef68c67f224f8c7870b69c9"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2024-09-03T07:41:27.267Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":716}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1725351087,"5f0ed6b4b4de987a5ff2232958bcf3f7629c3002465120142e52e0c9d860b4ed"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2024-09-03T12:42:07.573Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":718}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1725369126,"47a7cf99b096b7462d7714f6d484c3a3627801bf4f83f242e88db5595e1d7ec7"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2024-09-03T12:42:10.151Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":716}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1725369129,"157765259cf13db322ad204b3c42af67b702cebcdfce9a077dedc5f538dc6b24"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2024-09-03T12:42:30.687Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":719}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1725369149,"c9fba4f46c34b41ff36812b6a1af9f5d33578bb3a4b8fea3a670fe513d23a49f"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2024-09-03T12:42:34.093Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":716}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1725369153,"6fa6290000e86a6bdc120b4fa3313d2f60b2c5ca6cbd54dc4d1c3b0a7dda6a09"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-01-17T09:53:38.208Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":719}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1737109418,"1873129f4cc8165352f311059ee8f397028436516fbf08cea714a288bf28668b"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-01-17T09:53:38.873Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":716}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1737109419,"cc9bfb9bf6a611ba3b5e6c3613ce01fdac287c8a2996ed40430b64f414a785bb"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-01-17T09:54:19.272Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":719}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1737109460,"70749459cc3e0146c85a00841cea71333fc8978cfedf6e2cb1c8318c7d32d505"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-01-17T09:54:20.724Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":716}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1737109461,"efa881cdbbf9ea9352cf8045a7f64e1681db69f189ced91c70fe66cbe244f8d2"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-01-17T09:54:24.323Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":715}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1737109464,"3469c4602c653a15aee043f13403a57abecf43c23fbd8e04913df86ec2bd59dd"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-01-17T09:54:25.298Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":713}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1737109466,"43be3f3939d60bb734118dff7c5b718648b96601eb6b5f97ad099042ac998cd7"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-01-17T09:54:28.919Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":712}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1737109469,"cae722bf53ab9897537638b581f90d64d4573f6765db071902000fe9ce60ac58"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-01-17T09:54:30.724Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":711}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1737109471,"2c380bf9ee79ec9183d4bbf2295edae7864e1711892d19b1b8f46cd3b0581417"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-01-17T09:54:56.065Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":714}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1737109496,"3f16b6de8a9883c577be89a0acc97891e4646216845b1f501a5e81d22c35546c"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-01-17T09:54:57.307Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":712}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1737109498,"234bcac8c2ebbb5526d33395bdc73184ba6d3263bc3575e2230f81257b4ec18d"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-02-15T19:48:34.228Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":719}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1739650715,"286b18d61c9169308aa1c2278c7670bbabe2f5297a55e61dce5d12f3bb7f48d6"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-02-15T19:48:34.873Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":716}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1739650716,"c2d36219006a7dd8d76b7b23e03844ea2dccc1ebdd5226ed09a2bbc878aaf590"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+PatternP0 15/02/2025 11:37:00 : 9751212000000
+PatternP1 15/02/2025 11:38:00 : 9750000000000
+PatternP2 15/02/2025 11:43:00 : 9762838000000
+PatternP3 15/02/2025 11:44:00 : 9760672000000
+PatternP0 15/02/2025 11:46:00 : 9760792000000
+PatternP1 15/02/2025 11:48:00 : 9759750000000
+PatternP2 15/02/2025 11:49:00 : 9762081000000
+PatternP3 15/02/2025 11:50:00 : 9761702000000
+PatternP0 15/02/2025 11:49:00 : 9762081000000
+PatternP1 15/02/2025 11:50:00 : 9761702000000
+PatternP2 15/02/2025 11:52:00 : 9764400000000
+PatternP3 15/02/2025 11:53:00 : 9763165000000
+PatternP0 15/02/2025 12:02:00 : 9757919000000
+PatternP1 15/02/2025 12:03:00 : 9756701000000
+PatternP2 15/02/2025 12:04:00 : 9759057000000
+PatternP3 15/02/2025 12:06:00 : 9758493000000
+PatternP0 15/02/2025 12:34:00 : 9763368000000
+PatternP1 15/02/2025 12:35:00 : 9762399000000
+PatternP2 15/02/2025 12:39:00 : 9774178000000
+PatternP3 15/02/2025 12:40:00 : 9772041000000
+PatternP0 15/02/2025 12:45:00 : 9770127000000
+PatternP1 15/02/2025 12:46:00 : 9768878000000
+PatternP2 15/02/2025 12:48:00 : 9774960000000
+PatternP3 15/02/2025 12:49:00 : 9774781000000
+PatternP0 15/02/2025 12:48:00 : 9774960000000
+PatternP1 15/02/2025 12:49:00 : 9774781000000
+PatternP2 15/02/2025 12:51:00 : 9780685000000
+PatternP3 15/02/2025 12:52:00 : 9780323000000
+PatternP0 15/02/2025 13:13:00 : 9771279000000
+PatternP1 15/02/2025 13:16:00 : 9767729000000
+PatternP2 15/02/2025 13:17:00 : 9776748000000
+PatternP3 15/02/2025 13:18:00 : 9774308000000
+PatternP0 15/02/2025 13:17:00 : 9776748000000
+PatternP1 15/02/2025 13:18:00 : 9774308000000
+PatternP2 15/02/2025 13:21:00 : 9780052000000
+PatternP3 15/02/2025 13:22:00 : 9779473000000
+PatternP0 15/02/2025 13:46:00 : 9772197000000
+PatternP1 15/02/2025 13:47:00 : 9771626000000
+PatternP2 15/02/2025 13:49:00 : 9785293000000
+PatternP3 15/02/2025 13:50:00 : 9774548000000
+PatternP0 15/02/2025 14:04:00 : 9763249000000
+PatternP1 15/02/2025 14:05:00 : 9761125000000
+PatternP2 15/02/2025 14:06:00 : 9768092000000
+PatternP3 15/02/2025 14:07:00 : 9766987000000
+PatternP0 15/02/2025 14:10:00 : 9770001000000
+PatternP1 15/02/2025 14:11:00 : 9768068000000
+PatternP2 15/02/2025 14:13:00 : 9770917000000
+PatternP3 15/02/2025 14:14:00 : 9770125000000
+PatternP0 15/02/2025 14:43:00 : 9751145000000
+PatternP1 15/02/2025 14:44:00 : 9747907000000
+PatternP2 15/02/2025 14:48:00 : 9759957000000
+PatternP3 15/02/2025 14:50:00 : 9758795000000
+PatternP0 15/02/2025 14:58:00 : 9761684000000
+PatternP1 15/02/2025 14:59:00 : 9759361000000
+PatternP2 15/02/2025 15:05:00 : 9768589000000
+PatternP3 15/02/2025 15:06:00 : 9762265000000
+PatternP0 15/02/2025 15:32:00 : 9757073000000
+PatternP1 15/02/2025 15:33:00 : 9754823000000
+PatternP2 15/02/2025 15:38:00 : 9768772000000
+PatternP3 15/02/2025 15:39:00 : 9766628000000
+PatternP0 15/02/2025 16:37:00 : 9754019000000
+PatternP1 15/02/2025 16:38:00 : 9750689000000
+PatternP2 15/02/2025 16:40:00 : 9757096000000
+PatternP3 15/02/2025 16:41:00 : 9754046000000
+PatternP0 15/02/2025 16:51:00 : 9750774000000
+PatternP1 15/02/2025 16:52:00 : 9749490000000
+PatternP2 15/02/2025 16:53:00 : 9752135000000
+PatternP3 15/02/2025 16:54:00 : 9751158000000
+PatternP0 15/02/2025 17:20:00 : 9738096000000
+PatternP1 15/02/2025 17:21:00 : 9736001000000
+PatternP2 15/02/2025 17:23:00 : 9738962000000
+PatternP3 15/02/2025 17:24:00 : 9738961000000
+PatternP0 15/02/2025 17:35:00 : 9733706000000
+PatternP1 15/02/2025 17:36:00 : 9732923000000
+PatternP2 15/02/2025 17:37:00 : 9736553000000
+PatternP3 15/02/2025 17:39:00 : 9733715000000
+PatternP0 15/02/2025 17:43:00 : 9734257000000
+PatternP1 15/02/2025 17:44:00 : 9734256000000
+PatternP2 15/02/2025 17:47:00 : 9739677000000
+PatternP3 15/02/2025 17:48:00 : 9738749000000
+PatternP0 15/02/2025 18:00:00 : 9739134000000
+PatternP1 15/02/2025 18:01:00 : 9736883000000
+PatternP2 15/02/2025 18:05:00 : 9744874000000
+PatternP3 15/02/2025 18:06:00 : 9743844000000
+PatternP0 15/02/2025 18:18:00 : 9739026000000
+PatternP1 15/02/2025 18:19:00 : 9738576000000
+PatternP2 15/02/2025 18:20:00 : 9743000000000
+PatternP3 15/02/2025 18:21:00 : 9742219000000
+PatternP0 15/02/2025 18:20:00 : 9743000000000
+PatternP1 15/02/2025 18:21:00 : 9742219000000
+PatternP2 15/02/2025 18:22:00 : 9747123000000
+PatternP3 15/02/2025 18:23:00 : 9745578000000
+PatternP0 15/02/2025 18:29:00 : 9746085000000
+PatternP1 15/02/2025 18:30:00 : 9745569000000
+PatternP2 15/02/2025 18:31:00 : 9750824000000
+PatternP3 15/02/2025 18:33:00 : 9750176000000
+PatternP0 15/02/2025 18:40:00 : 9749645000000
+PatternP1 15/02/2025 18:41:00 : 9749310000000
+PatternP2 15/02/2025 18:43:00 : 9751693000000
+PatternP3 15/02/2025 18:44:00 : 9750652000000
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-02-15T19:49:54.821Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":718}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1739650796,"42596a75f24fc07d7fe41838e4137bd74796f61f6e584adf6bddfeddca9de8dc"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-02-15T19:49:56.132Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":716}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1739650797,"7f05f264bd0ef8e7a6d093126fdc6555455143d371d68c412691fef1090444fd"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-02-15T19:50:30.711Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":718}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1739650832,"8be7f0332797d12ce019583726ac16ba3b6198f3781edeb4080b1b0f6cd90026"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-02-15T19:50:32.294Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":717}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1739650833,"be8069b6b87f8418f42e9ad215baa12ee33d171d9f8e5dd19f946572dc5bc6e0"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-03-25T04:06:50.870Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":719}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1742877411,"c8aa191bdfdd255eb7af31da08fd12e06dbf4a5bcb0b75f40a0cbd68241d2233"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-03-25T04:06:51.965Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":716}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1742877412,"29857c1b4766deef266b54d62533e354602b987e83eaa2ecf1cd19655798c038"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-03-25T04:07:10.073Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":718}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1742877430,"02ec0ddc03372aec787dc905e437ac3ded96483e4737486dbcf364688bb258e8"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-03-25T04:07:11.344Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":717}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1742877431,"89f3c5168be5a9cc0d1472a669ef53dc742e33c6095190d9e95fdad061d89a24"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-04-05T03:18:57.332Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":719}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1743824936,"3f0b133d6503916998706118f6122ad345494ada2b67ef5bb5d5745d3b625051"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-04-05T03:18:58.100Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":716}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1743824937,"7cb0e4d6eb8474fc779573ca009cec02010213befc38a38a567d0fa5d21377fb"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-04-05T03:26:42.920Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":719}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1743825402,"a1fa97c47a1aeb1434cfcb544b65a2592128481952320a42e86d236d16f909e1"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-04-05T03:26:43.499Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":716}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1743825403,"79b35af919a7a697c315fda8582a7229a1292384076117716451a562e18725a1"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-04-05T03:26:54.794Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":716}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1743825414,"c4bec29436d6f29f392ccf0c5bd4ff1538ee524ff5f1d583638a8a9c4333dead"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-04-05T03:26:57.240Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":714}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1743825415,"8bfb18d0fc985e43b586a196aadb68e08bb49560c500141b52e730e5749d377b"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-04-05T03:26:59.629Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":713}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1743825419,"a77ce41a946cd45fe74b9bc623376f415661d62d8c01633106077f6b854d8d21"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-04-05T03:27:00.758Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":712}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1743825420,"0444cc65f662f19f2237b35d30abcda8e204a8b1320921624c610e48cb08920e"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-04-05T03:27:31.864Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":715}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1743825451,"fc827bf69b4b2830bb901d3ea33aac26984261e8cd66be2780b3bb2472feaf3e"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-04-05T03:27:32.937Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":714}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1743825452,"6d7f8cf782554842780d20eb56a32906e2ba0be113f89a0a811cc82d7a0d1ba1"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-04-05T03:27:39.043Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":713}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1743825458,"7896003490966782df76820f4ac236116821f6fbe8d984e8f80e3e49223b028d"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-04-05T03:27:40.920Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":711}}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1743825460,"3b86ba735cd08d84f53ba3d42ee6ca654c32d3ab333a3b31d6e5d7f339844aad"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-06-02T02:36:15.035Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":719},"appName":"ws-feedhandler-769bd59dc4-xf2bz"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1748833574,"86de41c42bc8935b7d08becfd9bce2d9f5603313e1b71ef17e9ce26848cd0741"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-06-02T02:36:15.798Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":716},"appName":"ws-feedhandler-769bd59dc4-5c8r9"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1748833575,"72c6ed4869ba0387034d955d3d559a7201d7170cb5801a39fdf3e33cc7e317b4"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:26:52.484Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":718},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751554614,"40eed9a37f7defb5dabc9784ed7140a8883394046ddc3c6c8ac0c78b232d47c9"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:26:53.087Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":717},"appName":"ws-feedhandler-55789b55f-77q88"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751554614,"40eed9a37f7defb5dabc9784ed7140a8883394046ddc3c6c8ac0c78b232d47c9"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:29:38.144Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":718},"appName":"ws-feedhandler-55789b55f-77q88"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751554779,"aae5045430473f337aad17c19633c44fc772f791857496134a7f6ff610458855"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:29:38.606Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":717},"appName":"ws-feedhandler-55789b55f-77q88"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751554780,"c711d3430e1d871d8ee6ee24f4138c2e2f9c4ca4914ac58a6cc8070da55b6284"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:30:50.596Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":719},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751554852,"36954bbbff07a505a0d69394485250b8267ed3fdba11434e7f5fd1dc18e3a622"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:30:51.450Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":717},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751554853,"fa4c84e218b026a9d6215afcaad1a7f9b854fafb2bd1e2a62c1b4d501a604e1f"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:34:36.693Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":719},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555078,"b251efd39a0d8e66e374a61719d96d0510e07accde4734414298fea04325eda5"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:34:37.506Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":717},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555079,"e26a91b2997087587b6a82bf3b2935574e876d5e9640af3fd39ffe2fb187aa32"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:34:53.767Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":718},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555095,"820a85bdb487688ce8562c2ac637ca1b7892f3bc03ad98b4cc340c832ac5091b"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:34:54.434Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":715},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555095,"820a85bdb487688ce8562c2ac637ca1b7892f3bc03ad98b4cc340c832ac5091b"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:35:08.355Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":716},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555110,"5bedc8a90b38c07cbe541dcf44cc365e96f31dde85e9aacd4598505512315aa0"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:35:08.854Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":714},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555110,"5bedc8a90b38c07cbe541dcf44cc365e96f31dde85e9aacd4598505512315aa0"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:35:39.797Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":719},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555141,"8af36bdf539ae6651141a484a5035cc12d8aef7cef524781bb9f11fd1bb3abf6"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:35:40.747Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":717},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555142,"30dd9ed4afee652be76da6eafd72e1801e509f1ae8c722cee36968c9676dcedd"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:36:51.994Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":718},"appName":"ws-feedhandler-55789b55f-77q88"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555213,"b4fb8098ce8b04312c3fd370c7203970b99ea96ae5aa17fd7b28fe72e3a502ec"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:36:52.611Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":717},"appName":"ws-feedhandler-55789b55f-77q88"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555214,"e4fd39435be9afaf8bd240c8a15baac653b2711f7b2bce125119b1c4cd311083"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:41:06.570Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":719},"appName":"ws-feedhandler-55789b55f-77q88"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555468,"ef88592ec2d2842aa089054592c27850327235787650a104ee0825758e12d762"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:41:07.127Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":717},"appName":"ws-feedhandler-55789b55f-77q88"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555468,"ef88592ec2d2842aa089054592c27850327235787650a104ee0825758e12d762"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:41:20.427Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":717},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555482,"64465e5247c961ef7a74a21e9e609c3062fe522cc8e62c8209a7d9dd4528044c"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:41:21.114Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":714},"appName":"ws-feedhandler-55789b55f-77q88"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555482,"64465e5247c961ef7a74a21e9e609c3062fe522cc8e62c8209a7d9dd4528044c"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:42:38.149Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":719},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555559,"985439dec221ea0742277b383a61befa658e71d91373d250d39a128bfd57e6c3"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:42:38.758Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":716},"appName":"ws-feedhandler-55789b55f-77q88"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555560,"347cf0d9e46db739f4c7429dc41bfb9f124027aa0862362129dff685c7616730"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:42:56.033Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":717},"appName":"ws-feedhandler-55789b55f-77q88"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555577,"85fbd8d3d9d456d8def81e2c01c5d36ed1cc19c0e2e705f929d463a0a6e5e1ff"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:42:56.318Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":715},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555578,"fa897d344a52e5f79061486dfca6d5bb2620af9fc4f71daaa7086ea37d464f1e"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:43:23.852Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":718},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555605,"f44201bf14d3cd60dd614ffb723736eac6cec6bdb845c8e45980a5e403f6166a"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:43:24.260Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":717},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555605,"f44201bf14d3cd60dd614ffb723736eac6cec6bdb845c8e45980a5e403f6166a"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:43:57.399Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":719},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555639,"1fefda548129869dcfe5b5b4ab7ab78132c92a6b605cc4003418970034eb43df"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:43:58.022Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":716},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555639,"1fefda548129869dcfe5b5b4ab7ab78132c92a6b605cc4003418970034eb43df"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:44:23.840Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":718},"appName":"ws-feedhandler-55789b55f-77q88"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555665,"7a0263fd4c38e5387c060a273cf108567a743f7ad08a087dfe5ce64ec255fe50"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:44:24.440Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":716},"appName":"ws-feedhandler-55789b55f-77q88"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555666,"fb8b2440dadebdcc619ef951b486b8c4c863b0571ccfa1532ee1cea9c46a31d4"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:45:36.559Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":718},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555738,"1d8953e4228929f9faeff65ffb26c2b83d0940b60e90ebfb585fa8adeaf04ec4"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:45:37.118Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":716},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555738,"1d8953e4228929f9faeff65ffb26c2b83d0940b60e90ebfb585fa8adeaf04ec4"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:46:04.550Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":719},"appName":"ws-feedhandler-55789b55f-77q88"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555766,"6897304c4666fd104400687f5dff4d8ecc7090637c2824e062790fb1e53cd6aa"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:46:05.040Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":716},"appName":"ws-feedhandler-55789b55f-77q88"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555766,"6897304c4666fd104400687f5dff4d8ecc7090637c2824e062790fb1e53cd6aa"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:46:23.074Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":717},"appName":"ws-feedhandler-55789b55f-77q88"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555784,"28814feaeacfa37458bd20665a6a388d78ac6433bd3492463d205f4692482d2c"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:46:23.626Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":715},"appName":"ws-feedhandler-55789b55f-77q88"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555785,"755281f78868db74c4afaeac0de26376011fff38a4c355562c333fa94f596f00"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:46:43.629Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":718},"appName":"ws-feedhandler-55789b55f-77q88"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555805,"cdd0384be5ae9a47ae262609aa8b7b3a5d74f58c7f528c8035c367862fb218d6"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:46:44.093Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":715},"appName":"ws-feedhandler-55789b55f-77q88"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555805,"cdd0384be5ae9a47ae262609aa8b7b3a5d74f58c7f528c8035c367862fb218d6"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:47:46.588Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":719},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555868,"760698a2dbd6ddfff91d35b2c1517d11c5aaaf1f3b2ad7df237a690a37da5d89"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:47:47.296Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":716},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555868,"760698a2dbd6ddfff91d35b2c1517d11c5aaaf1f3b2ad7df237a690a37da5d89"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:48:11.087Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":719},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555892,"b069a2b5ce3efaa710cd7b95151c308f9078fb1ac231eb8f700e25c9210e859a"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:48:12.427Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":717},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555894,"0f338c9940ee893d2de162a81300586f181ea3650552a597ff402e88c2afd076"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:48:20.940Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":715},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555902,"f1e6665284b85d859d7d8066d2d6d75fbf3eb114deafcdcb9e0bf28ae961b302"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:48:22.426Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":715},"appName":"ws-feedhandler-55789b55f-77q88"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555904,"9b4ecdf10230d3290ec59c1bdeea6cbf1b880b9806b74762d2d0840d9e971d58"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:48:39.901Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":716},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555921,"1c08939618e3dd04ab1ae823acd477231d0705dda78c67dd0ea278e739d947e1"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:48:41.219Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":714},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751555922,"b1446dadaa492a07bc1c1bbb597f271a6fca3852a0b6351138e11c7a44afe11a"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:54:01.688Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":719},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751556243,"aa0cc914ac75d41bd2e2b45b030e01615e7f34c838ced8d77114698220c673e1"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:54:02.313Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":716},"appName":"ws-feedhandler-55789b55f-77q88"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751556243,"aa0cc914ac75d41bd2e2b45b030e01615e7f34c838ced8d77114698220c673e1"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:54:23.326Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":719},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751556265,"8a4e8a210a140ebf2bcce186f96185903d52c0c66bf6c407d08cc26df1b0ad5f"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:54:30.636Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":718},"appName":"ws-feedhandler-55789b55f-77q88"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751556272,"a2e78ecb18da0bb8fb587614eb7c9e678cf4a3eee471f56c2e347b4f39c48765"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:55:32.453Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":718},"appName":"ws-feedhandler-55789b55f-77q88"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751556334,"c238e5edf3f5beb9ba82b69dd08bb390f82dca70e6bf278991c9cdb46ff2dbea"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-03T14:55:33.058Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":716},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751556334,"c238e5edf3f5beb9ba82b69dd08bb390f82dca70e6bf278991c9cdb46ff2dbea"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-05T06:28:01.116Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":719},"appName":"ws-feedhandler-55789b55f-77q88"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751698680,"622d7ad2027329e180ab48dfadebacee744edb737b9d3cf7aac3666b3c68afd4"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-05T06:28:01.632Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":717},"appName":"ws-feedhandler-55789b55f-jr929"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751698680,"622d7ad2027329e180ab48dfadebacee744edb737b9d3cf7aac3666b3c68afd4"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-05T06:28:24.245Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":718},"appName":"ws-feedhandler-55789b55f-77q88"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751698703,"e9c17ce4da9f67fdeebc3fe82c2df722b462ffd449d425b0cdef3f6b60b8fbbd"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}
+GetOrdersWSS in Bitmex {"info":"Welcome to the BitMEX Realtime API.","version":"2.0.0","timestamp":"2025-07-05T06:28:24.691Z","docs":"https://www.bitmex.com/app/wsAPI","heartbeatEnabled":false,"limit":{"remaining":717},"appName":"ws-feedhandler-55789b55f-77q88"}
+GetOrdersWSS in Bitmex {"success":true,"request":{"op":"authKeyExpires","args":["VrNaxTxfsUNZjXfDyusw0ukL",1751698703,"e9c17ce4da9f67fdeebc3fe82c2df722b462ffd449d425b0cdef3f6b60b8fbbd"]}}
+GetOrdersWSS in Bitmex {"success":true,"subscribe":"order","request":{"op":"subscribe","args":["order"]}}
+GetOrdersWSS in Bitmex {"table":"order","action":"partial","keys":["orderID"],"types":{"orderID":"guid","clOrdID":"string","clOrdLinkID":"string","account":"long","symbol":"symbol","side":"symbol","orderQty":"long","price":"float","displayQty":"long","stopPx":"float","pegOffsetValue":"float","pegPriceType":"symbol","currency":"symbol","settlCurrency":"symbol","ordType":"symbol","timeInForce":"symbol","execInst":"symbol","contingencyType":"symbol","ordStatus":"symbol","triggered":"symbol","workingIndicator":"boolean","ordRejReason":"string","leavesQty":"long","cumQty":"long","avgPx":"float","text":"string","transactTime":"timestamp","timestamp":"timestamp"},"filter":{"account":417643},"data":[]}

@@ -21,6 +21,7 @@
             <local:PriceConverterMapSettledPrice x:Key="PriceConverterMapSettledPrice"/>
             <local:PriceConverterMapLabel x:Key="PriceConverterMapLabel"/>
             <local:CommandParameterConverter x:Key="CommandParameterConverter"/>
+            <local:PriceFormat x:Key="PriceFormatConverter"/>
             <Style TargetType="Button">
                 <Setter Property="Template">
                     <Setter.Value>
@@ -215,7 +216,7 @@
                 </Canvas.Clip>
                 <Border BorderBrush="Black" BorderThickness="2" Width="800" Height="400" Background="Transparent" CornerRadius="8" Margin="0,0,0,0">
                     <StackPanel>
-                        <Canvas x:Name="MainRenderingCanvas" Margin="75,0,0,0" Width="650" HorizontalAlignment="Left">
+                        <Canvas x:Name="MainRenderingCanvas" Margin="95,0,0,0" Width="630" HorizontalAlignment="Left">
                             <Canvas.Clip>
                                 <RectangleGeometry Rect="0,-500,650,1800"
                                    RadiusX="8" RadiusY="8"/>
@@ -452,7 +453,7 @@
                                                   Canvas.Top="{Binding SettledPriceValue,Converter={StaticResource PriceConverterMapLabel}}"
                                                   Canvas.Left="5" 
                                                   Height="25"
-                                                  Width="65"
+                                                  Width="75"
                                                   HorizontalContentAlignment="Left"
                                                   VerticalAlignment="Center"
                                                   FontSize = "13"
@@ -494,7 +495,7 @@
                                                 Canvas.Top="{Binding PriceValue,Converter={StaticResource PriceConverterMapLabel}}"
                                                 Canvas.Left="5" 
                                                 Height="25"
-                                                Width="65"
+                                                Width="75"
                                                 HorizontalContentAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 FontSize = "13"
@@ -505,7 +506,7 @@
                                                 BorderBrush="Black"
                                                 Background = "Transparent" >
                                                 <TextBlock>  
-                                                  <Run Text="{Binding PriceValue }" />
+                                                  <Run Text="{Binding PriceValue, Converter={StaticResource PriceFormatConverter} }" />
                                                 </TextBlock>
                                             </Label>
 
@@ -549,7 +550,7 @@
 
                 <Button x:Name="BitmexSettled" Content="Bitmex Settled" Grid.Row="3" HorizontalAlignment="Left" Height="26" Margin="387,24,0,0" VerticalAlignment="Top" Width="89" Click="BitmexSettled_Click" />
                 <Label Content="Entry price: " Grid.Row="3" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="39" Margin="143,21,0,0" VerticalAlignment="Top" Width="130" FontFamily="Sitka Heading" FontSize="18"  FontWeight="Bold" Grid.RowSpan="2"/>
-                <TextBox x:Name="Entryprice" Text="{Binding EntryPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="3" HorizontalAlignment="Left" Height="25" Margin="252,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="132" FontFamily="Book Antiqua" FontSize="14"  />
+                <TextBox x:Name="Entryprice" Text="{Binding EntryPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource PriceFormatConverter}}" Grid.Row="3" HorizontalAlignment="Left" Height="25" Margin="252,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="132" FontFamily="Book Antiqua" FontSize="14"  />
                 <Label Content="Nominal value : " Grid.Row="3" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="38" Margin="517,17,0,0" VerticalAlignment="Top" Width="175" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
                 <TextBox x:Name="PositionValue" Grid.Row="3" IsEnabled="False" Text="{Binding PositionValue ,Mode=OneWay}" HorizontalAlignment="Left" Height="26" Margin="660,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="118" FontFamily="Book Antiqua" FontSize="14" />
                 <Label Content="Order Cost: " Grid.Row="3" VerticalContentAlignment="Top" HorizontalAlignment="Left" Height="38" Margin="807,17,0,0" VerticalAlignment="Top" Width="146" FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>

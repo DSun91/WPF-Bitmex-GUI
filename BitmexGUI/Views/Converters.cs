@@ -147,6 +147,26 @@ namespace BitmexGUI.Views
             throw new NotImplementedException();
         }
     }
+    public class PriceFormat : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is decimal decimalValue)
+            {
+                return Math.Round(decimalValue / 100000000,2);
+            }
+            else if (value is double doubleValue)
+            {
+                return Math.Round(doubleValue / 100000000,2);
+            }
+            return 0;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value;
+        }
+    }
 
     public class PriceConverterInvMapOrderline : IValueConverter
     {
