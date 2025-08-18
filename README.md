@@ -20,7 +20,7 @@ This project is a WPF (Windows Presentation Foundation) application designed wit
 
 ## Screenshots
 
-![Image Description](https://raw.githubusercontent.com/DSun91/WPF-Bitmex-GUI/main/BitmexGUI/Views/MainView.png)
+![Image Description](https://raw.githubusercontent.com/DSun91/WPF-Bitmex-GUI/main/BitmexGUI/Views/Imgs/MainView.png)
 
  
 
