@@ -1,0 +1,145 @@
+﻿<UserControl x:Class="BitmexGUI.Views.CreateOrderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BitmexGUI.Views" xmlns:system="clr-namespace:System;assembly=netstandard"
+             xmlns:converters="clr-namespace:BitmexGUI.ViewModels.Utilities"
+             mc:Ignorable="d"  >
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:PositionConverter  x:Key="PositionConverter"/>
+            <converters:PositionConverterCandlestickX  x:Key="PositionConverterCandlestickX"/>
+            <converters:PriceConverterMapOrderline  x:Key="PriceConverterMapOrderline"/>
+            <converters:PriceConverterInvMapOrderline  x:Key="PriceConverterInvMapOrderline"/>
+            <converters:ColorConverter   x:Key="ColorConverter"/>
+            <converters:ColorConverterOrderTag x:Key="ColorConverterOrderTag"/>
+            <converters:PriceConverterMapSettledPrice x:Key="PriceConverterMapSettledPrice"/>
+            <converters:PriceConverterMapLabel x:Key="PriceConverterMapLabel"/>
+            <converters:CommandParameterConverter x:Key="CommandParameterConverter"/>
+            <converters:PriceFormatConverter x:Key="PriceFormatConverter"/>
+            <converters:StringToDoubleConverter x:Key="StringToDoubleConverter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Border Background="AntiqueWhite" CornerRadius="15"   BorderThickness="5" Padding="9">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Buy Limit" x:Name="BuyLimit" Padding="3"  Grid.Row="0" Grid.Column="0" Margin="0,0,2,0"
+                    Command="{Binding CreateNewOrderCommand}" 
+                    HorizontalAlignment="Right" Height="25" FontStyle="Italic" 
+                    FontFamily="Sitka Heading" FontSize="16" FontWeight="Bold" VerticalContentAlignment="Center" 
+                    VerticalAlignment="Center" Width="95">
+                <Button.CommandParameter>
+                    <Binding>
+                        <Binding.Source>
+                            <system:String>BuyLimit</system:String>
+                        </Binding.Source>
+                    </Binding>
+                </Button.CommandParameter>
+            </Button>
+            <Button Content="Buy Market" x:Name="BuyMarket" Grid.Row="1" Grid.Column="0" Padding="3"  Margin="0,0,2,0"
+                    FontStyle="Italic" FontFamily="Sitka Heading" FontSize="15" FontWeight="Bold" VerticalContentAlignment="Center" 
+                    Command="{Binding CreateNewOrderCommand}"  HorizontalAlignment="Right" Height="25"   VerticalAlignment="Center" Width="95">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource CommandParameterConverter}">
+                        <Binding ElementName="Ticker"  Path="SelectedItem"/>
+                        <Binding>
+                            <Binding.Source>
+                                <system:String>BuyMarket</system:String>
+                            </Binding.Source>
+                        </Binding>
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+            <Button Content="Stop Limit Buy" Grid.Row="2" Grid.Column="0" FontStyle="Italic" Padding="3"  Margin="0,0,2,0"  
+                    FontFamily="Sitka Heading" FontSize="16" FontWeight="Bold" HorizontalAlignment="Right" Height="25" 
+                    VerticalAlignment="Center"  Command="{Binding CreateNewOrderCommand}"/>
+            <Button Content="Limit TP+SL Buy" x:Name="LimitTPSLBuy" Grid.Row="3" Grid.Column="0" Padding="3"  Margin="0,0,2,0"
+                    FontStyle="Italic" FontFamily="Sitka Heading" FontSize="16" FontWeight="Bold" 
+                    Command="{Binding CreateNewOrderCommand}"   HorizontalAlignment="Right" Height="25"  VerticalAlignment="Center"  >
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource CommandParameterConverter}">
+                        <Binding ElementName="Ticker"  Path="SelectedItem"/>
+                        <Binding>
+                            <Binding.Source>
+                                <system:String>LimitTPSLBuy</system:String>
+                            </Binding.Source>
+                        </Binding>
+                        <!-- Bind to another property or hardcoded value -->
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+            <Button Content="Sell Limit" Grid.Row="0"  Grid.Column="1" x:Name="SellLimit" Padding="3"  Margin="2,0,0,0"
+                    FontStyle="Italic" FontFamily="Sitka Heading" FontSize="16" FontWeight="Bold" 
+                    Command="{Binding CreateNewOrderCommand}" HorizontalAlignment="Left" Height="25"  VerticalAlignment="Center" Width="95">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource CommandParameterConverter}">
+                        <Binding ElementName="Ticker"  Path="SelectedItem"/>
+                        <Binding>
+                            <Binding.Source>
+                                <system:String>SellLimit</system:String>
+                            </Binding.Source>
+                        </Binding>
+                        <!-- Bind to another property or hardcoded value -->
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+
+            <Button Content="Sell Market" x:Name="SellMarket" Grid.Row="1"  Grid.Column="1" FontStyle="Italic" Padding="3"  Margin="2,0,0,0"
+                    FontFamily="Sitka Heading" FontSize="16" FontWeight="Bold" Command="{Binding CreateNewOrderCommand}"  HorizontalAlignment="Left" Height="25"   VerticalAlignment="Center" Width="94">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource CommandParameterConverter}">
+                        <Binding ElementName="Ticker"  Path="SelectedItem"/>
+                        <Binding>
+                            <Binding.Source>
+                                <system:String>SellMarket</system:String>
+                            </Binding.Source>
+                        </Binding>
+                        <!-- Bind to another property or hardcoded value -->
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+            <Button Content="Stop Limit Sell" x:Name="StopSellLimit"  Grid.Row="2"  Padding="3" Margin="2,0,0,0"
+                    Grid.Column="1" FontStyle="Italic" FontFamily="Sitka Heading" FontSize="16" 
+                    FontWeight="Bold" Command="{Binding CreateNewOrderCommand}"  HorizontalAlignment="Left" Height="25"   VerticalAlignment="Center"  >
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource CommandParameterConverter}">
+                        <Binding ElementName="Ticker"  Path="SelectedItem"/>
+                        <Binding>
+                            <Binding.Source>
+                                <system:String>StopLimitSell</system:String>
+                            </Binding.Source>
+                        </Binding>
+                        <!-- Bind to another property or hardcoded value -->
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+            <Button Content="Limit TP+SL Sell" x:Name="LimitTPSLSell" Grid.Row="3" Padding="3" Margin="2,0,0,0"
+                    Grid.Column="1" FontStyle="Italic" FontFamily="Sitka Heading" FontSize="16" 
+                    FontWeight="Bold" Command="{Binding CreateNewOrderCommand}"  HorizontalAlignment="Left" Height="25"  VerticalAlignment="Center"  >
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource CommandParameterConverter}">
+                        <Binding ElementName="Ticker"  Path="SelectedItem"/>
+                        <Binding>
+                            <Binding.Source>
+                                <system:String>LimitTPSLSell</system:String>
+                            </Binding.Source>
+                        </Binding>
+                        <!-- Bind to another property or hardcoded value -->
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+
+
+        </Grid>
+    </Border>
+</UserControl>

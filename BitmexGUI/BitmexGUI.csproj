@@ -16,11 +16,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Views\Resources\a.jpg" />
-    <None Remove="Views\Resources\a.png" />
-    <None Remove="Views\Resources\b.jpg" />
-    <None Remove="Views\Resources\b.png" />
-    <None Remove="Views\Resources\logo.jpg" />
+    <None Remove="Views\Imgs\a.jpg" />
+    <None Remove="Views\Imgs\a.png" />
+    <None Remove="Views\Imgs\b.jpg" />
+    <None Remove="Views\Imgs\b.png" />
+    <None Remove="Views\Imgs\logo.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,11 +33,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Views\Resources\a.jpg" />
-    <Resource Include="Views\Resources\a.png" />
-    <Resource Include="Views\Resources\b.jpg" />
-    <Resource Include="Views\Resources\b.png" />
-    <Resource Include="Views\Resources\logo.jpg">
+    <Resource Include="Views\Imgs\a.jpg" />
+    <Resource Include="Views\Imgs\a.png" />
+    <Resource Include="Views\Imgs\b.jpg" />
+    <Resource Include="Views\Imgs\b.png" />
+    <Resource Include="Views\Imgs\logo.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

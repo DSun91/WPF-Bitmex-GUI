@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using BitmexGUI.Services.Interfaces;
+using System.Configuration;
 using System.Data;
 using System.Windows;
 
@@ -12,6 +13,7 @@ namespace BitmexGUI
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
             var mainWindow = new Views.MainWindow();
             mainWindow.Show();
         }

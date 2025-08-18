@@ -11,7 +11,7 @@ namespace BitmexGUI.Services.Implementations
         // Target range
         public static double minTarget = 0;
         public static double maxTarget = 400;
-        public static int CachedCandles = 500;
+        public static int CachedCandles = 200;
         public static int CandlesToView = 75;
         public static double ScaleFactor = 0.1;
         public static double CandlesInterspace = 6; // Increased for better visibility
@@ -33,15 +33,14 @@ namespace BitmexGUI.Services.Implementations
 
                 MessageBox.Show(originalValue.ToString() + " " + (maxTarget - ((originalValue - minOriginal) * (maxTarget - minTarget)) / (maxOriginal - minOriginal) + minTarget).ToString());
             }
-
-            return maxTarget - ((originalValue - minOriginal) * (maxTarget - minTarget)) / (maxOriginal - minOriginal) + minTarget;
+            var value= maxTarget - ((originalValue - minOriginal) * (maxTarget - minTarget)) / (maxOriginal - minOriginal) + minTarget;
+            return value;
         }
 
         public static double InvMapToScale(double Value, string fromewhere = "")
         {
             if (fromewhere.Length > 0)
-            {
-
+            { 
                 MessageBox.Show(Value.ToString() + " " + (((maxTarget - Value) / (maxTarget - minTarget)) * (maxOriginal - minOriginal) + minOriginal).ToString());
             }
             return ((maxTarget - Value) / (maxTarget - minTarget)) * (maxOriginal - minOriginal) + minOriginal;

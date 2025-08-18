@@ -1,23 +1,20 @@
-﻿using System.Collections.ObjectModel;
+﻿using BitmexGUI.Models;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace BitmexGUI.Views
+namespace BitmexGUI.ViewModels
 {
-    public class GridData
-    {
-        public double X1 { get; set; }
-        public double Y1 { get; set; }
-
-        public double X2 { get; set; }
-        public double Y2 { get; set; }
-    }
-    internal class LocalViewModel : INotifyPropertyChanged
+  
+    public class GridDataViewModel : INotifyPropertyChanged
     {
 
-        private ObservableCollection<GridData> _gridData;
+        private ObservableCollection<GridData>? _gridData;
         public ObservableCollection<GridData> GridData
         {
-            get => _gridData;
+            get
+            {
+                return _gridData;
+            }
             set
             {
                 _gridData = value;
@@ -25,7 +22,7 @@ namespace BitmexGUI.Views
             }
         }
 
-        public LocalViewModel()
+        public GridDataViewModel()
         {
             InitializeGrid();
         }
@@ -50,12 +47,11 @@ namespace BitmexGUI.Views
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged(string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
 
- 

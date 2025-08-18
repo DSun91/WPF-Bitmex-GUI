@@ -3,15 +3,14 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace BitmexGUI.ViewModels
+namespace BitmexGUI.Services.Implementations
 {
-    public class mainViewProperties : INotifyPropertyChanged
+    public class MainViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
         private ObservableCollection<CandlestickData> _priceData = new ObservableCollection<CandlestickData>();
-        private ObservableCollection<SettledPrice> _settledPriceData = new ObservableCollection<SettledPrice>();
-        private ObservableCollection<Account> _accountData = new ObservableCollection<Account>();
+        private ObservableCollection<SettledPrice> _settledPriceData = new ObservableCollection<SettledPrice>(); 
         private ObservableCollection<Instrument> _instrumentData = new ObservableCollection<Instrument>();
         private ObservableCollection<Position> _positionData = new ObservableCollection<Position>();
         private ObservableCollection<Order> _orderData = new ObservableCollection<Order>();
@@ -21,7 +20,7 @@ namespace BitmexGUI.ViewModels
         private ObservableCollection<PositionLine> _positionLine = new ObservableCollection<PositionLine>();
 
 
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected void OnPropertyChanged(string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -74,15 +73,7 @@ namespace BitmexGUI.ViewModels
                 OnPropertyChanged(nameof(SettledPriceData));
             }
         }
-        public ObservableCollection<Account> AccountInfos
-        {
-            get => _accountData;
-            set
-            {
-                _accountData = value;
-                OnPropertyChanged(nameof(AccountInfos));
-            }
-        }
+        
         public ObservableCollection<Instrument> InstrumentInfo
         {
             get => _instrumentData;

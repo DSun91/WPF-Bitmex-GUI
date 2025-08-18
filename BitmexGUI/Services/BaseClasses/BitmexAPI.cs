@@ -124,7 +124,7 @@ namespace BitmexGUI.Services.Implementations
                 else
                 {
                     string responseString = await response.Content.ReadAsStringAsync();
-                    //MessageBox.Show(responseString);
+                    MessageBox.Show(responseString);
                 }
 
             }
@@ -774,56 +774,96 @@ namespace BitmexGUI.Services.Implementations
         }
         // LIVE PRICE FEED
 
-
+        bool offline = false;
         // WALLET
         public override void GetWallet()
         {
             string verb = "GET";
-            string path = "/api/v1/user/wallet?currency=all";
+            //string path = "/api/v1/user/wallet?currency=all";
+            string path = "/api/v1/user/margin?currency=all";
             int expires = (int)(DateTimeOffset.UtcNow.ToUnixTimeSeconds() + 1800); // 30 minutes from now
 
             string signature = GenerateSignature(ApiKey, verb, path, expires, "");
 
             string URL = BaseUrl + path;
-            using (HttpClient client = new HttpClient())
+
+            var accounts = new List<Account>();
+
+            if (offline!=true)
             {
-                client.DefaultRequestHeaders.Add("api-expires", expires.ToString());
-                client.DefaultRequestHeaders.Add("api-key", ApiID);
-                client.DefaultRequestHeaders.Add("api-signature", signature);
-
-                HttpResponseMessage response = client.GetAsync(URL).Result;
-                string responseBody = response.Content.ReadAsStringAsync().Result;
-
-                //MessageBox.Show(responseBody);
-                List<Dictionary<string, object>> data = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(responseBody);
-
-
-                var accounts = new List<Account>();
-
-                foreach (var x in data)
+                using (HttpClient client = new HttpClient())
                 {
+                    client.DefaultRequestHeaders.Add("api-expires", expires.ToString());
+                    client.DefaultRequestHeaders.Add("api-key", ApiID);
+                    client.DefaultRequestHeaders.Add("api-signature", signature);
 
-                    if (x["currency"].ToString() != null)
+                    HttpResponseMessage response = client.GetAsync(URL).Result;
+                    string responseBody = response.Content.ReadAsStringAsync().Result;
+
+                    //MessageBox.Show(responseBody);
+                    List<Dictionary<string, object>> data = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(responseBody);
+
+
+                   
+
+                    foreach (var x in data)
                     {
 
-                        var Account = new Account
+                        if (x["currency"].ToString() != null)
                         {
-                            Balance = Math.Round(double.Parse(x["amount"].ToString()) / 1000000, 2),
-                            CurrencyName = x["currency"].ToString().ToUpper()
-                        };
 
-                        accounts.Add(Account);
+                            var Account = new Account
+                            {
+                                Balance = Math.Round(double.Parse(x["availableMargin"].ToString()) / 1000000, 2),
+                                CurrencyName = x["currency"].ToString().ToUpper()
+                            };
 
+                            accounts.Add(Account);
+
+                        }
+                    }
+                    foreach (var account in accounts)
+                    {
+                        AccountInfo?.Invoke(account);
                     }
                 }
+            }
+            else
+            {
+                var Account = new Account
+                {
+                    Balance = 3000,
+                    CurrencyName = "BTCUSDT"
+                };
+                //if (count==0)
+                //{
+
+                //     Account = new Account
+                //    {
+                //        Balance = 3000,
+                //        CurrencyName = "BTCUSDT"
+                //    };
+                //}
+                //else
+                //{
+                //     Account = new Account
+                //    {
+                //        Balance = 4000,
+                //        CurrencyName = "BTCUSDT"
+                //    };
+                //}
+                //count += 1;
+                accounts.Add(Account);
                 foreach (var account in accounts)
                 {
                     AccountInfo?.Invoke(account);
                 }
             }
+
+            
         }
         // WALLET
-
+        public static int count = 0;
         // LEVERAGE
         public override async void SetLeverage(string Symbol, double leverage)
         {

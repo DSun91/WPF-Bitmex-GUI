@@ -1,0 +1,80 @@
+﻿<UserControl x:Class="BitmexGUI.Views.OpenOrdersView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BitmexGUI.Views"
+             mc:Ignorable="d" 
+             xmlns:converters="clr-namespace:BitmexGUI.ViewModels.Utilities">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:CommandParameterConverter x:Key="CommandParameterConverter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Border BorderThickness="1"   BorderBrush="Black"   CornerRadius="5" >
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" >
+                <DockPanel LastChildFill="True"   HorizontalAlignment="Left">
+                    <TextBlock Text="Open Orders" Margin="0,0,0,0"
+			Background="SandyBrown"
+			Foreground="White"
+			FontSize="20"
+			FontWeight="SemiBold"
+			TextAlignment="Center"
+			HorizontalAlignment="Stretch"
+			DockPanel.Dock="Top" />
+                    <DataGrid x:Name="Orders"  CanUserAddRows="False" RowHeaderWidth="30" Margin="0,00,0,0" ItemsSource="{Binding OrdersInfo, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False"  Height="160">
+                        <DataGrid.Resources>
+
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background" Value="#4A4A4A"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Padding" Value="5"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="BorderBrush" Value="#6A6A6A"/>
+
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="DataGridColumnHeader">
+                                            <Border Background="{TemplateBinding Background}"
+                                 BorderBrush="{TemplateBinding BorderBrush}"
+                                 BorderThickness="{TemplateBinding BorderThickness}"
+                                 Padding="{TemplateBinding Padding}"
+                                 Margin="2,0,2,0">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Order Status" Binding="{Binding OrdStatus}" Width="Auto" />
+                            <DataGridTextColumn Header="Symbol" Binding="{Binding Symbol}" Width="Auto" />
+                            <DataGridTextColumn Header="Side" Binding="{Binding Side}" Width="Auto" />
+                            <DataGridTextColumn Header="Order Type" Binding="{Binding OrdType}" Width="Auto" />
+                            <DataGridTextColumn Header="Average Price" Binding="{Binding AvgPx}" Width="Auto" />
+                            <DataGridTextColumn Header="Order Quantity" Binding="{Binding OrderQty}" Width="Auto" />
+                            <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="Auto" />
+                            <DataGridTextColumn Header="Display Quantity" Binding="{Binding DisplayQty}" Width="Auto" />
+                            <DataGridTextColumn Header="Stop Price" Binding="{Binding StopPx}" Width="Auto" />
+                            <DataGridTextColumn Header="Peg Offset Value" Binding="{Binding PegOffsetValue}" Width="Auto" />
+                            <DataGridTextColumn Header="Currency" Binding="{Binding Currency}" Width="Auto" />
+                            <DataGridTextColumn Header="Settl Currency" Binding="{Binding SettlCurrency}" Width="Auto" />
+                            <DataGridTextColumn Header="Time in Force" Binding="{Binding TimeInForce}" Width="Auto" />
+                            <DataGridTextColumn Header="Working Indicator" Binding="{Binding WorkingIndicator}" Width="Auto" />
+                            <DataGridTextColumn Header="Leaves Quantity" Binding="{Binding LeavesQty}" Width="Auto" />
+                            <DataGridTextColumn Header="Cumulative Quantity" Binding="{Binding CumQty}" Width="Auto" />
+                            <DataGridTextColumn Header="Text" Binding="{Binding Text}" Width="Auto" />
+                            <DataGridTextColumn Header="Transaction Time" Binding="{Binding TransactTime}" Width="Auto" />
+                            <DataGridTextColumn Header="Timestamp" Binding="{Binding Timestamp}" Width="Auto" />
+                            <DataGridTextColumn Header="Account" Binding="{Binding Account}" Width="Auto" />
+                            <DataGridTextColumn Header="Order ID" Binding="{Binding OrderID}" Width="Auto" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </ScrollViewer>
+        </Border>
+
+    </Grid>
+</UserControl>

@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="BitmexGUI.Views.EntryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BitmexGUI.Views"
+             xmlns:converters="clr-namespace:BitmexGUI.ViewModels.Utilities"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:DoubleToStringConverter x:Key="DoubleToStringConverter"/>
+            <converters:StringToDoubleConverter x:Key="StringToDoubleConverter"/>
+        </ResourceDictionary>
+     </UserControl.Resources>
+    <Border  CornerRadius="15" Background="AntiqueWhite"    Padding="5">
+        <Grid  >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" /> 
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/> 
+            </Grid.ColumnDefinitions>
+            <Label Content="Total Balance:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalContentAlignment="Center"    VerticalAlignment="Center" FontFamily="Sitka Heading" FontSize="18" FontWeight="Bold" />
+            <TextBox x:Name="CurrentBalance" Grid.Row="0" Grid.Column="1" IsEnabled="False" HorizontalAlignment="left" Text="{Binding CurrentBalance, Mode=OneWay}"  VerticalAlignment="Center" Width="108" FontFamily="Book Antiqua" FontSize="14" />
+            <ComboBox x:Name="CmbCurrency" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" SelectedItem="{Binding SelectedCurrency}" ItemsSource="{Binding Currencies}"  SelectedIndex="0"  Margin="5,0,0,0" VerticalAlignment="Center" Width="75"/>
+
+            <Label Content="Entry Amount:" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" VerticalContentAlignment="Top" HorizontalAlignment="Right"  VerticalAlignment="Center"  FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" />
+            <TextBox x:Name="EntryAmount"  Grid.Row="1" Grid.Column="1" Text="{Binding EntryAmount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Center" Width="108" FontFamily="Book Antiqua" FontSize="14" />
+            <Slider x:Name="AmountSlider" Grid.Row="2"  Grid.Column="1" Grid.ColumnSpan="2"  TickFrequency="5" Minimum="0" Maximum="{Binding CurrentBalance, Converter={StaticResource StringToDoubleConverter}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
+                    Value="{Binding AmountSlider,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left"  ValueChanged="AmountSlider_ValueChanged"  Width="190"  VerticalAlignment="Center" />
+            <Label x:Name="BalancePercent" Grid.Row="2" Grid.Column="2" Content="%" HorizontalAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Top"   FontWeight="Bold" />
+            <Label Content="Entry price: " Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right"  VerticalContentAlignment="Center"    VerticalAlignment="Center"  FontFamily="Sitka Heading" FontSize="18"  FontWeight="Bold"  />
+            <TextBox x:Name="Entryprice"  Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left"   TextWrapping="Wrap" VerticalAlignment="Center" Width="108" FontFamily="Book Antiqua" FontSize="14" Text="{Binding EntryPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            <Button x:Name="BitmexSettled" Grid.Row="3" Grid.Column="2" Content="Settled" FontStyle="Italic" FontFamily="Sitka Heading" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"  Click="BitmexSettled_Click" />
+
+            <Label Content="Leverage:" Grid.Row="4" Grid.Column="0"  HorizontalAlignment="Right"   FontFamily="Sitka Heading" FontSize="18"  FontWeight="Bold"  />
+            <Slider x:Name="SliderLeverage"  Grid.Row="4" Grid.Column="1"  Width="190" TickFrequency="5" Grid.ColumnSpan="2"  SmallChange="1" Minimum="1" Maximum="100" 
+                    Value="{Binding SliderLeverage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  TickPlacement="Both" HorizontalAlignment="Left"   VerticalAlignment="Center"   />
+            <Label x:Name="LeverageMultiplier" Grid.Row="4" Grid.Column="2" Content="{Binding SliderLeverage}" HorizontalAlignment="Right"    VerticalAlignment="Center" Margin="0,0,15,0"   FontWeight="Bold"/>
+            <Label x:Name="LeverageMultipliers" Grid.Row="4" Grid.Column="2" Content="X" HorizontalAlignment="Right" VerticalAlignment="Center" VerticalContentAlignment="Top"   FontWeight="Bold" />
+
+            <Label Content="Nominal value : " Grid.Row="5" Grid.Column="0" VerticalContentAlignment="Center" HorizontalAlignment="Right"  VerticalAlignment="Center"   FontFamily="Sitka Heading" FontSize="18"  FontWeight="Bold"/>
+            <TextBox x:Name="PositionValue" Grid.Row="5" Grid.Column="1" IsEnabled="False" Text="{Binding PositionValue ,Mode=OneWay}" HorizontalAlignment="Left"   TextWrapping="Wrap" VerticalAlignment="Center" Width="118" FontFamily="Book Antiqua" FontSize="14" />
+
+            <Label Content="Order Cost: " Grid.Row="5" Grid.Column="2" VerticalContentAlignment="Center" HorizontalAlignment="Right"     VerticalAlignment="Center"  FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
+            <TextBox x:Name="OrderCost" Grid.Row="5" Grid.Column="3" Text="{Binding OrderCost, Mode=OneWay}" HorizontalAlignment="Left"    TextWrapping="Wrap" VerticalAlignment="Center" Width="119" FontFamily="Book Antiqua" FontSize="14" />
+
+            <Label Content="Liquidation Price: " Grid.Row="6" Grid.Column="0" VerticalContentAlignment="Center" HorizontalAlignment="Right" VerticalAlignment="Center"  FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
+            <TextBox Text="" Grid.Row="6" Grid.Column="1" IsEnabled="False" BorderBrush="OrangeRed" BorderThickness="1" VerticalContentAlignment="Center" HorizontalAlignment="Left"    VerticalAlignment="Center" Width="118" FontFamily="Sitka Heading" FontSize="15"   FontWeight="Bold"/>
+
+            <Label Content="Quantity: " Grid.Row="6" Grid.Column="2" VerticalContentAlignment="Top" HorizontalAlignment="Right"  VerticalAlignment="Center"   FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"/>
+            <TextBox x:Name="Quantity" Grid.Row="6" Grid.Column="3" IsEnabled="False" Text="{Binding Quantity, Converter={StaticResource DoubleToStringConverter}, Mode=OneWay}" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Center" Width="119" FontFamily="Book Antiqua" FontSize="14" />
+
+            <Label Content="Entry Fee: " Grid.Row="7" Grid.Column="0" VerticalContentAlignment="Center" HorizontalAlignment="Right"  VerticalAlignment="Center"   FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold"  />
+            <TextBox Text="" Grid.Row="7" Grid.Column="1" IsEnabled="False" BorderBrush="OrangeRed" BorderThickness="1" VerticalContentAlignment="Center" HorizontalAlignment="Left"   VerticalAlignment="Center" Width="118" FontFamily="Sitka Heading" FontSize="15"  FontWeight="Bold"  />
+
+            <Label Content="Actual Value: " Grid.Row="7" Grid.Column="2" VerticalContentAlignment="Center" HorizontalAlignment="Right"  VerticalAlignment="Center"   FontFamily="Sitka Heading" FontSize="18"   FontWeight="Bold" />
+            <TextBox x:Name="ActualPositionValue" Grid.Row="7" Grid.Column="3" IsEnabled="False" Text="{Binding ActualPositionValue, Mode=OneWay}" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Center" Width="119" FontFamily="Book Antiqua" FontSize="14" />
+
+
+        </Grid>
+    </Border>
+</UserControl>
