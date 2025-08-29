@@ -9,21 +9,23 @@ using System.Windows.Data;
 
 namespace BitmexGUI.ViewModels.Utilities
 {
-    public class PositionConverterCandlestickX : IValueConverter
+    public class PositionConverterCandlestickX : IMultiValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is CandlestickData data)
+            if (values[0] is double posx && values[1] is double width)
             {
-
-                return (data.Posx - data.Width / 2);
+                return posx - width / 2;
             }
-            return 0;
+
+            return 0.0;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
+
+         
     }
 }

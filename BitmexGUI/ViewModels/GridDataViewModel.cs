@@ -29,9 +29,9 @@ namespace BitmexGUI.ViewModels
 
         private void InitializeGrid()
         {
-            int GridSpacing = 50;
-            double canvasHeight = 2550; // Example height
-            double canvasWidth = 1550; // Example width
+            int GridSpacing = 25;
+            double canvasHeight = 3550;  
+            double canvasWidth = 1550;  
             GridData = new ObservableCollection<GridData>();
 
             // Vertical lines

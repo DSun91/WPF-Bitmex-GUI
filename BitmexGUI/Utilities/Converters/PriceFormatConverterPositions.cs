@@ -10,22 +10,23 @@ using System.Windows.Media.Animation;
 
 namespace BitmexGUI.ViewModels.Utilities
 {
-    class PriceFormatConverterOrders : IValueConverter
+    class PriceFormatConverterPositions : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
 
             if(value is decimal vald)
             {
-                var val = (Math.Round(CandlestickChart.MapToScale(double.Parse((vald * 100000000).ToString())), 2));
+                var val = (Math.Round(CandlestickChart.MapToScale(double.Parse((Math.Round(vald) * 100000000).ToString())), 2));
                 return val;
             }
-            
-            else if(value is double val)
+
+            else if (value is float valf)
             {
+                var val = (Math.Round(CandlestickChart.MapToScale(double.Parse((valf * 100000000).ToString())), 2));
                 return val;
             }
-                    
+
             return value;
         }
 

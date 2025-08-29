@@ -6,32 +6,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
-using System.Windows.Media.Animation;
 
 namespace BitmexGUI.ViewModels.Utilities
 {
-    class PriceFormatConverterOrders : IValueConverter
+    public class SettledPriceFormatConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-
-            if(value is decimal vald)
-            {
-                var val = (Math.Round(CandlestickChart.MapToScale(double.Parse((vald * 100000000).ToString())), 2));
-                return val;
-            }
             
-            else if(value is double val)
-            {
+            if (value is double d)
+            { 
+                var val = (Math.Round(CandlestickChart.MapToScale(double.Parse((d*100000000).ToString())), 2));
                 return val;
             }
-                    
-            return value;
+            return 0;
+            
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            return value;
         }
     }
- }
+
+}

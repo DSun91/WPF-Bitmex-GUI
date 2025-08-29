@@ -18,9 +18,9 @@ namespace BitmexGUI.Views
     /// <summary>
     /// Interaction logic for ClosedPositionView.xaml
     /// </summary>
-    public partial class OpenOrdersView : UserControl
+    public partial class OpenOrdersTableView : UserControl
     {
-        public OpenOrdersView()
+        public OpenOrdersTableView()
         {
             InitializeComponent();
         }

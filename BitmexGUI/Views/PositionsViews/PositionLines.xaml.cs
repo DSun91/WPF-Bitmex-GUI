@@ -16,13 +16,13 @@ using System.Windows.Shapes;
 namespace BitmexGUI.Views
 {
     /// <summary>
-    /// Interaction logic for CandleView.xaml
+    /// Interaction logic for PositionLines.xaml
     /// </summary>
-    public partial class CandleView : UserControl
+    public partial class PositionLines : UserControl
     {
-        public CandleView()
+        public PositionLines()
         {
-            InitializeComponent(); 
+            InitializeComponent();
         }
     }
 }

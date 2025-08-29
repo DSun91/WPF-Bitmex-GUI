@@ -3,12 +3,14 @@ using BitmexGUI.Services.Abstract;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Configuration;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Net.WebSockets;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Windows;
 
 namespace BitmexGUI.Services.Implementations
@@ -25,18 +27,23 @@ namespace BitmexGUI.Services.Implementations
         public event Action<Account> AccountInfo;
         public event Action<Position> PositionUpdated;
         public event Action<Order> OrderUpdated;
-        private ClientWebSocket BitmexHttpClientOrdersWSS = new System.Net.WebSockets.ClientWebSocket();
-        private ClientWebSocket BitmexHttpClientPositionsWSS = new System.Net.WebSockets.ClientWebSocket();
-
+        private ClientWebSocket BitmexHttpClientOrdersWSS;
+        private ClientWebSocket BitmexHttpClientPositionsWSS;
+        public static CancellationTokenSource ConnectionTokenSource;  
+        public static CancellationTokenSource ReceiveTokenSource;
         public BitmexAPI(string ID, string key, string urlRest, string urlWss) : base(ID, key, urlRest, urlWss)
         {
             ApiID = ConfigurationManager.AppSettings["ID"];
             ApiKey = ConfigurationManager.AppSettings["SecretKey"];
             UrlRest = urlRest;
-            UrlWss = urlWss;
+            UrlWss = urlWss; 
+            BitmexHttpClientOrdersWSS = new ClientWebSocket();
+            BitmexHttpClientPositionsWSS = new ClientWebSocket();
+            ConnectionTokenSource = new CancellationTokenSource();
+            ReceiveTokenSource = new CancellationTokenSource();
         }
 
-        //AUTH SECTION
+        #region AUTH_SECTION
         private string GenerateSignature(string secret, string verb, string path, int expires, string data)
         {
 
@@ -60,7 +67,7 @@ namespace BitmexGUI.Services.Implementations
             byte[] buffer = Encoding.UTF8.GetBytes(message);
             await BitmexHttpClientWSS.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Text, true, CancellationToken.None);
         }
-        //AUTH SECTION
+        #endregion
 
 
 
@@ -246,7 +253,10 @@ namespace BitmexGUI.Services.Implementations
             }
 
         }
+       
 
+
+        
         public async void GetOrdersWSS()
         {
 
@@ -257,15 +267,11 @@ namespace BitmexGUI.Services.Implementations
             string signature = GenerateSignature(ApiKey, verb, path, expires, "");
 
 
-
-
-
-            CancellationTokenSource source = new CancellationTokenSource();
-            CancellationToken token = source.Token;
+             
 
             if (BitmexHttpClientOrdersWSS.State != WebSocketState.Connecting && BitmexHttpClientOrdersWSS.State != WebSocketState.Open && BitmexHttpClientOrdersWSS.State != WebSocketState.Closed)
-            {
-                await BitmexHttpClientOrdersWSS.ConnectAsync(new Uri(BaseWss), token);
+            { 
+                await BitmexHttpClientOrdersWSS.ConnectAsync(new Uri(BaseWss), ConnectionTokenSource.Token);
                 WebSocketManager.Instance.AddWebSocket(BitmexHttpClientOrdersWSS);
                 if (BitmexHttpClientOrdersWSS.State == WebSocketState.Open)
                 {
@@ -295,39 +301,45 @@ namespace BitmexGUI.Services.Implementations
 
 
 
-
+            
             int size = 5000;
             var buffer = new byte[size];
 
-            do
+            if(BitmexHttpClientOrdersWSS.State == WebSocketState.Open)
             {
-                try
+                do
                 {
-                    var result = await BitmexHttpClientOrdersWSS.ReceiveAsync(buffer, token);
-
-                    if (result.MessageType == WebSocketMessageType.Close && !result.CloseStatus.ToString().ToLower().Contains("normalclos"))
+                    try
                     {
-                        await BitmexHttpClientOrdersWSS.CloseAsync(WebSocketCloseStatus.NormalClosure, null, token);
-                    }
-                    else
-                    {
-                        string resp = Encoding.ASCII.GetString(buffer, 0, result.Count);
+                         
+                        var result = await BitmexHttpClientOrdersWSS.ReceiveAsync(buffer, ReceiveTokenSource.Token);
 
-
-                        if (!string.IsNullOrEmpty(resp))
-                        {
-                            System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], "GetOrdersWSS in Bitmex " + resp + "\n");
-                            ProcessResponseOrder(resp);
+                        if (result.MessageType == WebSocketMessageType.Close && !result.CloseStatus.ToString().ToLower().Contains("normalclos"))
+                        { 
+                            break;
                         }
+                        else
+                        {
+                            string resp = Encoding.ASCII.GetString(buffer, 0, result.Count);
 
+
+                            if (!string.IsNullOrEmpty(resp))
+                            {
+                                System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], "GetOrdersWSS in Bitmex " + resp + "\n");
+                                ProcessResponseOrder(resp);
+                            }
+
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //Debugger.Break();
+                        //MessageBox.Show(ex.Message + "  " + ex.StackTrace);
                     }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message + "  " + ex.StackTrace);
-                }
+                while (BitmexHttpClientOrdersWSS.State == WebSocketState.Open);
             }
-            while (BitmexHttpClientOrdersWSS.State == WebSocketState.Open);
+            
 
 
 
@@ -505,13 +517,15 @@ namespace BitmexGUI.Services.Implementations
             string path = "/realtime";
             string signature = GenerateSignature(ApiKey, verb, path, expires, "");
 
-            CancellationTokenSource source = new CancellationTokenSource();
-            CancellationToken token = source.Token;
+            
+            
             try
             {
                 if (BitmexHttpClientPositionsWSS.State != WebSocketState.Connecting && BitmexHttpClientPositionsWSS.State != WebSocketState.Open)
                 {
-                    await BitmexHttpClientPositionsWSS.ConnectAsync(new Uri(BaseWss), token);
+                    CancellationTokenSource cancellationToken = new CancellationTokenSource();
+                     
+                    await BitmexHttpClientPositionsWSS.ConnectAsync(new Uri(BaseWss), cancellationToken.Token);
                     WebSocketManager.Instance.AddWebSocket(BitmexHttpClientPositionsWSS);
                 }
 
@@ -541,28 +555,33 @@ namespace BitmexGUI.Services.Implementations
                 int size = 5000;
                 var buffer = new byte[size];
 
-                do
+                if(BitmexHttpClientPositionsWSS.State == WebSocketState.Open)
                 {
-                    var result = await BitmexHttpClientPositionsWSS.ReceiveAsync(buffer, token);
+                    do
+                    {
+                        CancellationTokenSource cancellationToken = new CancellationTokenSource();
+                        var result = await BitmexHttpClientPositionsWSS.ReceiveAsync(buffer, cancellationToken.Token);
 
-                    if (result.MessageType == WebSocketMessageType.Close && !result.CloseStatus.ToString().ToLower().Contains("normalclos"))
-                    {
-                        MessageBox.Show(result.CloseStatus.ToString() + "  " + result.CloseStatusDescription);
-                        await BitmexHttpClientPositionsWSS.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, null, token);
-                    }
-                    else
-                    {
-                        string resp = Encoding.ASCII.GetString(buffer, 0, result.Count);
-                        //MessageBox.Show(resp);
-                        //System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], "Positions: " + resp + "\n");
-                        if (!string.IsNullOrEmpty(resp))
+                        if (result.MessageType == WebSocketMessageType.Close && !result.CloseStatus.ToString().ToLower().Contains("normalclos"))
                         {
-                            ProcessResponsePosition(resp);
+                            MessageBox.Show(result.CloseStatus.ToString() + "  " + result.CloseStatusDescription);
+                            await BitmexHttpClientPositionsWSS.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, null, cancellationToken.Token);
                         }
+                        else
+                        {
+                            string resp = Encoding.ASCII.GetString(buffer, 0, result.Count);
+                            //MessageBox.Show(resp);
+                            //System.IO.File.AppendAllText(ConfigurationManager.AppSettings["LogFile"], "Positions: " + resp + "\n");
+                            if (!string.IsNullOrEmpty(resp))
+                            {
+                                ProcessResponsePosition(resp);
+                            }
 
+                        }
                     }
+                    while (BitmexHttpClientPositionsWSS.State == WebSocketState.Open);
                 }
-                while (BitmexHttpClientPositionsWSS.State == WebSocketState.Open);
+               
 
             }
             catch (Exception ex)

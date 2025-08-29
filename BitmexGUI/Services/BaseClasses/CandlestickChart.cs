@@ -6,12 +6,12 @@ namespace BitmexGUI.Services.Implementations
     public class CandlestickChart : AbstractCharts
     {
         public static double minOriginal = 0;
-        public static double maxOriginal = 70000;
+        public static double maxOriginal = 7000;
 
         // Target range
         public static double minTarget = 0;
         public static double maxTarget = 400;
-        public static int CachedCandles = 200;
+        public static int TotalCandlesCount = 700;
         public static int CandlesToView = 75;
         public static double ScaleFactor = 0.1;
         public static double CandlesInterspace = 6; // Increased for better visibility

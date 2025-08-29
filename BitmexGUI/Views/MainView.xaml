@@ -7,7 +7,7 @@
         xmlns:converters="clr-namespace:BitmexGUI.ViewModels.Utilities"
         xmlns:local="clr-namespace:BitmexGUI.Views" 
         xmlns:system="clr-namespace:System;assembly=mscorlib"
-        mc:Ignorable="d" MaxWidth="1500" MaxHeight="1150" StateChanged="Window_StateChanged" >
+        mc:Ignorable="d"   >
     <Window.Resources>
         <ResourceDictionary>
             <converters:PositionConverter  x:Key="PositionConverter"/>
@@ -22,137 +22,12 @@
             <converters:PriceConverterMapLabel x:Key="PriceConverterMapLabel"/>
             <converters:CommandParameterConverter x:Key="CommandParameterConverter"/>
             <converters:PriceFormatConverter x:Key="PriceFormatConverter"/>
-            <Style TargetType="Button">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="Button">
-                            <Border x:Name="border" 
-                                 CornerRadius="8" 
-                                 Background="AliceBlue" 
-                                 BorderBrush="#ccc" 
-                                 BorderThickness="1">
-                                <ContentPresenter x:Name="contentPresenter" 
-                                   ContentTemplate="{TemplateBinding ContentTemplate}" 
-                                   Content="{TemplateBinding Content}" 
-                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                   Margin="{TemplateBinding Padding}" 
-                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter TargetName="border" Property="Background" Value="LightSteelBlue"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-
-            <Style TargetType="TextBox">
-                <Setter Property="Background" Value="White"/>
-                <Setter Property="BorderBrush" Value="Gray"/>
-                <Setter Property="BorderThickness" Value="1"/>
-                <Setter Property="Padding" Value="1"/>
-                <Setter Property="FontFamily" Value="Book Antiqua"/>
-                <Setter Property="FontSize" Value="14"/>
-                <Setter Property="FontWeight" Value="DemiBold"/>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="TextBox">
-                            <Border Background="{TemplateBinding Background}"
-                                 BorderBrush="{TemplateBinding BorderBrush}"
-                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                 CornerRadius="5"
-                                 Padding="{TemplateBinding Padding}">
-                                <ScrollViewer x:Name="PART_ContentHost"/>
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-
-            <Style TargetType="Label">
-                <Setter Property="Foreground" Value="Black"/>
-                <Setter Property="FontFamily" Value="Book Antiqua"/>
-                <Setter Property="FontSize" Value="14"/>
-                <Setter Property="FontStyle" Value="Italic"/>
-                <Setter Property="FontWeight" Value="DemiBold"/>
-            </Style>
-
-            <Style x:Key="GridLineStyle" TargetType="Line">
-                <Setter Property="Stroke" Value="LightBlue"/>
-                <Setter Property="StrokeThickness" Value="2"/>
-                <Setter Property="StrokeDashArray" Value="2,2"/>
-            </Style>
-            <!-- Style for DataGridCell to Illuminate Updating Cells -->
-            <Style TargetType="DataGridCell">
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsEditing}" Value="True">
-                        <Setter Property="Background" Value="Yellow"/>
-                        <Setter Property="Foreground" Value="Black"/>
-                    </DataTrigger>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="LightGreen"/>
-                        <Setter Property="Foreground" Value="Black"/>
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
-            <Style TargetType="ComboBox">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="ComboBox">
-                            <Grid>
-                                <Border x:Name="Border"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="1"
-                                CornerRadius="3"
-                                Padding="1">
-                                    <Grid>
-                                        <ContentPresenter Content="{TemplateBinding SelectionBoxItem}"
-                                                  ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-                                                  ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                                  Margin="1"
-                                                  VerticalAlignment="Center"
-                                                  HorizontalAlignment="Left"/>
-
-                                        <ToggleButton Grid.Column="2"
-                                              Name="ToggleButton" 
-                                              IsChecked="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                                              ClickMode="Press"
-                                              Background="Transparent"
-                                              BorderThickness="0"
-                                              HorizontalAlignment="Right"
-                                              Content="▼"
-                                              VerticalAlignment="Top">
-                                        </ToggleButton>
-                                    </Grid>
-                                </Border>
-
-                                <Popup Name="Popup"
-                               Placement="Bottom"
-                               IsOpen="{TemplateBinding IsDropDownOpen}"
-                               AllowsTransparency="True"
-                               Focusable="False"
-                               PopupAnimation="Slide">
-                                    <Border x:Name="DropDownBorder"
-                                    Background="White"
-                                    BorderBrush="Gray"
-                                    BorderThickness="1"
-                                    CornerRadius="3">
-                                        <ScrollViewer>
-                                            <ItemsPresenter/>
-                                        </ScrollViewer>
-                                    </Border>
-                                </Popup>
-                            </Grid>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
             <converters:StringToDoubleConverter x:Key="StringToDoubleConverter"/>
-
-        </ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="CustomStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary> 
+            
     </Window.Resources>
     <Border Background="White" CornerRadius="15" BorderThickness="1" Padding="1">
         <DockPanel HorizontalAlignment="Center" Background="White">
@@ -191,54 +66,59 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <Label Content="Bitmex GUI" Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Height="50" VerticalAlignment="Center" Width="198" FontFamily="Franklin Gothic Book" FontSize="36" FontWeight="Bold" Cursor="AppStarting" FontStyle="Italic"/>
-                    <Image HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0" Height="50" Margin="520,0,0,0" VerticalAlignment="Center"   Source="imgs/logo.jpg" Stretch="Uniform"/>
+                    <Label Content="Bitmex GUI" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Height="50" VerticalAlignment="Center" Width="198" FontFamily="Franklin Gothic Book" FontSize="36" FontWeight="Bold" Cursor="AppStarting" FontStyle="Italic"/>
+                    <Image HorizontalAlignment="Left" Grid.Column="0"  Grid.ColumnSpan="2" Grid.Row="0" Height="50" Margin="850,0,0,0" VerticalAlignment="Center"   Source="imgs/logo.jpg" Stretch="Uniform"/>
 
                     <local:SymbolSelectionView x:Name="SymbolTimeFrameSelectionView"  
                             HorizontalAlignment="Left" 
-                            Grid.Row="1" 
-                            Grid.Column="1"
+                            Grid.Row="2" 
+                            Grid.Column="0"
                             VerticalAlignment="Top"
-                            Margin="0,10,0,0" />
+                            Margin="0,0,0,0" />
                     
-                    <Border Margin="3" Background="White" CornerRadius="15" BorderThickness="1" BorderBrush="Black" Padding="10" Grid.Row="1" Grid.Column="0" >
-                        <local:LivePriceChart x:Name="LiveChart" Grid.Row="1" 
-                                          Loaded="LivePriceChart_Loaded" 
+                    <Border   Background="AntiqueWhite" CornerRadius="15" 
+                            BorderThickness="1" 
+                            BorderBrush="Black"  
+                            Padding="5" Grid.Row="1" 
+                            Grid.Column="0" 
+                            Grid.ColumnSpan="2">
+                        <local:LivePriceChart x:Name="LiveChart" Grid.Row="1"   
                                           VerticalContentAlignment="Center" 
-                                          HorizontalAlignment="Center"
-                                          PreviewMouseWheel="Chart_PreviewMouseWheel"/>
+                                          HorizontalAlignment="Center"/>
                     </Border>
 
-                    <local:EntryView x:Name="EntrySetup" Grid.Row="1" 
-                                 Grid.Column="1" 
-                                 HorizontalAlignment="Left" 
-                                 Margin="5,140,10,10"/>
+                    <local:EntryView x:Name="EntrySetup" Grid.Row="2" 
+                                 Grid.Column="0" 
+                                 Grid.RowSpan="2"
+                                 HorizontalAlignment="Left"  
+                                 Margin="5,130,0,30"/>
 
-                    <local:CreateOrderView Grid.Row="1" 
-                                       Grid.Column="1" 
-                                       Margin="224,10,0,0" 
+                    <local:CreateOrderView Grid.Row="2" 
+                                       Grid.Column="0" 
+                                       Margin="237,0,0,0" 
                                        VerticalAlignment="Top" 
-                                       HorizontalAlignment="Left"/>
-
-                    <local:PositionsView Grid.Row="2"
-                                     Grid.Column="0" 
-                                     Width="850"  
+                                       HorizontalAlignment="Left"
+                                          />
+                    <local:OpenOrdersTableView Grid.Row="2" 
+                   Grid.Column="1"  
+                   Grid.ColumnSpan="2"
+                   HorizontalAlignment="Left" 
+                        Width="970"
+                   Margin="3"/>
+                    <local:OpenPositionsTablesView Grid.Row="3" x:Name="PositionsTable"
+                                     Grid.Column="1" 
                                      Grid.ColumnSpan="2" 
+                                          Width="980"
                                      HorizontalAlignment="Left"/>
 
-                    <local:OpenOrdersView Grid.Row="3" 
-                                      Grid.Column="0" 
-                                      Width="840" 
-                                      Grid.ColumnSpan="2"
-                                      HorizontalAlignment="Left" 
-                                      Margin="3"/>
+                   
 
-                    <local:LogsView Grid.Row="2"
+                    <!--<local:LogsView Grid.Row="2"
                                 Grid.Column="2"
                                 Grid.RowSpan="2"
                                 HorizontalAlignment="Left" 
-                                Margin="10"/>
-                    <!-- You can add more controls here to display other data or add user interactions -->
+                                Margin="10,0,0,0"/>
+                    You can add more controls here to display other data or add user interactions -->
                 </Grid>
 
             </ScrollViewer>

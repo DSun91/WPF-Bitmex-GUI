@@ -8,7 +8,7 @@
               d:DataContext="{d:DesignInstance Type=viewmodels:SymbolSelectionViewModel}"
              mc:Ignorable="d">
     <Border Background="AntiqueWhite" CornerRadius="15"   BorderThickness="5" Padding="10">
-        <Grid> 
+        <Grid HorizontalAlignment="Center" Width="210"> 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />

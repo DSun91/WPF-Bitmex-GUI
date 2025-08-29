@@ -25,7 +25,10 @@ namespace BitmexGUI.Services.Implementations
             }
         }
 
-        private WebSocketManager() { }
+        private WebSocketManager() 
+        {
+
+        }
 
         // Add a WebSocket connection
         public void AddWebSocket(WebSocket webSocket)
@@ -46,9 +49,10 @@ namespace BitmexGUI.Services.Implementations
         }
 
         // Close all WebSocket connections
-        public async Task CloseAllWebSocketsAsync(CancellationToken cancellationToken)
+        public async Task CloseAllWebSocketsAsync()
         {
             List<Task> closeTasks;
+             
             lock (_lock)
             {
                 closeTasks = new List<Task>();
@@ -56,15 +60,17 @@ namespace BitmexGUI.Services.Implementations
                 {
                     if (webSocket.State == WebSocketState.Open)
                     {
-                        closeTasks.Add(webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", cancellationToken));
+                        closeTasks.Add(webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", BitmexAPI.ConnectionTokenSource.Token));
                     }
                 }
 
             }
 
             try
-            {
+            { 
                 await Task.WhenAll(closeTasks);
+                 BitmexAPI.ReceiveTokenSource.Dispose();
+                 BitmexAPI.ConnectionTokenSource.Dispose();
             }
             catch (Exception ex)
             {
@@ -73,10 +79,7 @@ namespace BitmexGUI.Services.Implementations
             }
         }
 
-        public List<WebSocket> GetAllWebSockets()
-        {
-            return _webSockets;
-        }
+        
     }
 
 }

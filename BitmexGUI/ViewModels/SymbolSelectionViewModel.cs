@@ -13,7 +13,7 @@ namespace BitmexGUI.ViewModels
 {
     public class SymbolSelectionViewModel:ISymbolSelection
     {
-        public Action SymbolSelected { get; set; }// this is attached in the main viewmodel to execute refreshvm
+        public Action SymbolOrTimeFrameSelected { get; set; }// this is attached in the main viewmodel to execute refreshvm
         public SymbolSelectionViewModel() 
         {
             _selectedTicker = Tickers.FirstOrDefault() ?? string.Empty;
@@ -32,7 +32,7 @@ namespace BitmexGUI.ViewModels
             {
                 _selectedTicker = value; 
                 OnPropertyChanged(nameof(SelectedTicker));
-                SymbolSelected.Invoke();
+                SymbolOrTimeFrameSelected?.Invoke();
             }
         }
 
@@ -47,7 +47,7 @@ namespace BitmexGUI.ViewModels
             {
                 _selectedTimeframe = value;
                 OnPropertyChanged(nameof(SelectedTimeFrame));
-                SymbolSelected.Invoke();
+                SymbolOrTimeFrameSelected?.Invoke();
             }
         }
 

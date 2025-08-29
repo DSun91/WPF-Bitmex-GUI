@@ -9,7 +9,7 @@ using System.Text;
 
 namespace BitmexGUI.Services.Abstract
 {
-    public abstract class GeneralExchangeAPI : IPrice, IAccount
+    public abstract class GeneralExchangeAPI : IPriceFeed, IAccount
     {
         private readonly string ApiID;
         private readonly string ApiKey;
@@ -28,20 +28,19 @@ namespace BitmexGUI.Services.Abstract
             UrlWss = urlWss;
 
         }
-        public async void GetPriceREST(ObservableCollection<CandlestickData> PriceData, Dictionary<string, CandlestickData> _priceDataDictionary)
+        public  void GetPriceREST(ObservableCollection<CandlestickData> PriceData,  Dictionary<string, CandlestickData> _priceDataDictionary)
         {
             System.Net.Http.HttpClient BitmexHttpClient = new System.Net.Http.HttpClient();
 
             //BitmexHttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", key);
 
 
-            HttpResponseMessage response = await BitmexHttpClient.GetAsync(UrlRest);
-
+            HttpResponseMessage response =  BitmexHttpClient.GetAsync(UrlRest).Result;
 
             //MessageBox.Show(response.StatusCode.ToString());
 
 
-            string content = await response.Content.ReadAsStringAsync();
+            string content =  response.Content.ReadAsStringAsync().Result;
 
             ProcessResponseRest(content, PriceData, _priceDataDictionary);
             //MessageBox.Show(content);
@@ -77,7 +76,7 @@ namespace BitmexGUI.Services.Abstract
                 if (result.MessageType == WebSocketMessageType.Close)
                 {
                     //MessageBox.Show(result.MessageType.ToString() + " line 86 ");
-                    //await HttpClientPriceWSS.CloseAsync(WebSocketCloseStatus.NormalClosure, null, token);
+                    await HttpClientPriceWSS.CloseAsync(WebSocketCloseStatus.NormalClosure, null, token);
                 }
                 else
                 {
@@ -112,7 +111,7 @@ namespace BitmexGUI.Services.Abstract
         {
 
         }
-        public virtual async void ProcessResponseRest(string response, ObservableCollection<CandlestickData> PriceData, Dictionary<string, CandlestickData> _priceDataDictionary)
+        public virtual void ProcessResponseRest(string response, ObservableCollection<CandlestickData> PriceData, Dictionary<string, CandlestickData> _priceDataDictionary)
         {
 
 

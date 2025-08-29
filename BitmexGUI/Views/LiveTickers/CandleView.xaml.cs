@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -16,13 +17,17 @@ using System.Windows.Shapes;
 namespace BitmexGUI.Views
 {
     /// <summary>
-    /// Interaction logic for PositionsView.xaml
+    /// Interaction logic for CandleView.xaml
     /// </summary>
-    public partial class PositionsView : UserControl
+    public partial class CandleView : UserControl
     {
-        public PositionsView()
+        public CandleView()
         {
-            InitializeComponent();
+            InitializeComponent(); 
         }
+
+        
+
+
     }
 }

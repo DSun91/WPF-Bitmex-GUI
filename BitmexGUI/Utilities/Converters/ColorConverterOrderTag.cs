@@ -19,7 +19,7 @@ namespace BitmexGUI.ViewModels.Utilities
                 // Return Red if Open < Close, Green otherwise
                 if (data.Side.ToLower().Contains("sell"))
                 {
-                    return Brushes.Red;
+                    return Brushes.IndianRed;
                 }
                 if (data.Side.ToLower().Contains("buy"))
                 {

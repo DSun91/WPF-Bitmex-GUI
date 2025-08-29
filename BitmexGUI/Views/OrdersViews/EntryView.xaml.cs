@@ -26,6 +26,19 @@ namespace BitmexGUI.Views
         {
             InitializeComponent();
         }
+
+        public MainViewModel ParentViewModel
+        {
+            get { return (MainViewModel)GetValue(ParentViewModelProperty); }
+            set { SetValue(ParentViewModelProperty, value); }
+        }
+
+        public static readonly DependencyProperty ParentViewModelProperty =
+        DependencyProperty.Register(nameof(ParentViewModel),
+                                    typeof(MainViewModel),
+                                    typeof(EntryView),
+                                    new PropertyMetadata(null));
+
         private void AmountSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
 
@@ -51,9 +64,9 @@ namespace BitmexGUI.Views
 
         private void BitmexSettled_Click(object sender, RoutedEventArgs e)
         {
-            var vm = DataContext as MainViewModel;
-            var val = vm.SettledPriceData.LastOrDefault().SettledPriceValue;
-            Entryprice.Text = Math.Round(val, 3).ToString();
+             
+            var val = ParentViewModel.priceStreamViewModel.SettledPriceData.LastOrDefault().SettledPriceValue;
+            Entryprice.Text = Math.Round(val).ToString();
 
 
         }

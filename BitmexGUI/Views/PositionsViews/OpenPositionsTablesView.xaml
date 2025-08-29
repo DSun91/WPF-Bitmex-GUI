@@ -1,5 +1,6 @@
-﻿<UserControl x:Class="BitmexGUI.Views.PositionsView"
+﻿<UserControl x:Class="BitmexGUI.Views.OpenPositionsTablesView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             x:Name="PositionsTab"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
@@ -12,17 +13,20 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <Border BorderThickness="1"  Grid.Row="2" Grid.Column="0"   BorderBrush="Black"   CornerRadius="5"    VerticalAlignment="Center" Margin="5,10,5,30">
-            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" >
+        <Border BorderThickness="1" Background="SandyBrown" Grid.Row="2" Grid.Column="0"
+                BorderBrush="Black"   CornerRadius="5" 
+                VerticalAlignment="Center" Margin="5,10,5,30">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Center">
                 <DockPanel LastChildFill="True"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"    >
-                    <TextBlock Text="Open Positions" Margin="0,00,00,0"
-                            Background="SandyBrown"
+                    <TextBlock Text="Open Positions" Margin="0,0,0,0" 
                             Foreground="White"
                             FontSize="20"
                             FontWeight="SemiBold"
                             TextAlignment="Center"
                             DockPanel.Dock="Top" Height="27" />
-                    <DataGrid x:Name="Positions"  CanUserAddRows="False" Height="160" RowHeaderWidth="30"   ItemsSource="{Binding PositionsInfo, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False"  >
+                    <DataGrid x:Name="Positions"  CanUserAddRows="False" Height="160" RowHeaderWidth="30"   
+                              ItemsSource="{Binding positionsViewModel.PositionsInfo, UpdateSourceTrigger=PropertyChanged}" 
+                              AutoGenerateColumns="False"  >
                         <DataGrid.Resources>
                             <Style TargetType="DataGridColumnHeader">
                                 <Setter Property="Background" Value="#4A4A4A"/>
@@ -77,7 +81,8 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                            <Button x:Name="CloseLimit" Content=" Close Limit " Command="{Binding DataContext.ClosePositionCommand, RelativeSource={RelativeSource AncestorType=Window}}"  Margin="1,1">
+                                            <Button x:Name="CloseLimit" Content=" Close Limit " Command="{Binding DataContext.positionsViewModel.ClosePositionCommand, 
+                          RelativeSource={RelativeSource AncestorType=UserControl}}"  Margin="1,1">
                                                 <Button.Style>
                                                     <Style TargetType="Button">
                                                     </Style>
@@ -95,7 +100,8 @@
                                                     </MultiBinding>
                                                 </Button.CommandParameter>
                                             </Button>
-                                            <Button x:Name="CloseMarket" Content=" Close Market " Command="{Binding DataContext.ClosePositionCommand, RelativeSource={RelativeSource AncestorType=Window}}"   Margin="1,1">
+                                            <Button x:Name="CloseMarket" Content=" Close Market " Command="{Binding DataContext.positionsViewModel.ClosePositionCommand, 
+                          RelativeSource={RelativeSource AncestorType=UserControl}}"   Margin="1,1">
                                                 <Button.Style>
                                                     <Style TargetType="Button">
                                                     </Style>

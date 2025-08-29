@@ -68,7 +68,7 @@ namespace BitmexGUI.Services.Implementations
 
         }
 
-        public override async void ProcessResponseRest(string response, ObservableCollection<CandlestickData> PriceData, Dictionary<string, CandlestickData> _priceDataDictionary)
+        public override void ProcessResponseRest(string response, ObservableCollection<CandlestickData> PriceData, Dictionary<string, CandlestickData> _priceDataDictionary)
         {
             var klines = JArray.Parse(response);
 
@@ -113,19 +113,7 @@ namespace BitmexGUI.Services.Implementations
 
         }
 
-        public void UpdateRestEndpoint(string newEndpoint)
-        {
-            // Update the endpoint URL and potentially restart any connections
-            UrlRest = newEndpoint;
-
-
-        }
-
-        public void UpdateWssEndpoint(string newEndpoint)
-        {
-            // Update the endpoint URL and potentially restart any connections
-            UrlWss = newEndpoint;
-        }
+        
 
     }
 }

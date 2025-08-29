@@ -12,10 +12,11 @@
             <converters:PositionConverter  x:Key="PositionConverter"/>
             <converters:PositionConverterCandlestickX  x:Key="PositionConverterCandlestickX"/>
             <converters:ColorConverter   x:Key="ColorConverter"/>
+            <converters:CandlesToolTipConverter   x:Key="CandlesToolTipConverter"/>
         </ResourceDictionary>
         </UserControl.Resources>
 <Grid>
-    <ItemsControl ItemsSource="{Binding ScaledPriceData}">
+        <ItemsControl ItemsSource="{Binding priceStreamViewModel.ScaledPriceData}">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
                 <Canvas />
@@ -33,18 +34,39 @@
                            Y2="{Binding Low}" 
                            Stroke="Black"
                            StrokeThickness="2"/>
-                    <Rectangle 
-                           x:Name="Body"
-                           Canvas.Left="{Binding Converter={StaticResource PositionConverterCandlestickX}}"
+                        <Rectangle 
+                           x:Name="Body" 
                            Canvas.Top="{Binding Converter={StaticResource PositionConverter}}"
                            Width="{Binding Width}"
                            Height="{Binding Height}"  
                            Fill= "{Binding Converter={StaticResource ColorConverter}}"
-                           Panel.ZIndex="0"/>
-                </Canvas>
+                           Panel.ZIndex="0"
+                           ToolTipService.InitialShowDelay="0"
+                           ToolTipService.BetweenShowDelay="0">
+                            <Rectangle.ToolTip>
+                                <ToolTip DataContext="{Binding}">
+                                    <Border Background="Black" CornerRadius="2" Padding="2">
+                                        <TextBlock Foreground="LightGreen"
+                                          Text="{Binding PlacementTarget.DataContext,
+                                             RelativeSource={RelativeSource AncestorType=ToolTip},
+                                             Converter={StaticResource CandlesToolTipConverter}}"/>
+                                    </Border>
+
+                                </ToolTip>
+                            </Rectangle.ToolTip>
+                            <Canvas.Left>
+                                <MultiBinding Converter="{StaticResource PositionConverterCandlestickX}">
+                                    <Binding Path="Posx" />
+                                    <Binding Path="Width" />
+                                </MultiBinding>
+                            </Canvas.Left>
+                        </Rectangle>
+
+                    </Canvas>
             </DataTemplate>
 
         </ItemsControl.ItemTemplate>
     </ItemsControl>
-</Grid> 
+        
+    </Grid> 
 </UserControl>

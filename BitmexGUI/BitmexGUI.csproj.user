@@ -7,39 +7,51 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Views\CandleView.xaml.cs">
+    <Compile Update="Views\LiveTickers\CandleView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\LogsView.xaml.cs">
+    <Compile Update="Views\LogsAndPatternsRecognition\LogsView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\OpenOrdersView.xaml.cs">
+    <Compile Update="Views\LiveTickers\MarketValueTicker.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\CustomPTR.xaml.cs">
+    <Compile Update="Views\OrdersViews\OpenOrdersTableView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\EntryView.xaml.cs">
+    <Compile Update="Views\LogsAndPatternsRecognition\PatternRecognition\CustomPTR.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\GridView.xaml.cs">
+    <Compile Update="Views\OrdersViews\EntryView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\LivePriceChartView.xaml.cs">
+    <Compile Update="Views\LiveTickers\GridView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\CreateOrderView.xaml.cs">
+    <Compile Update="Views\LiveTickers\LivePriceChartView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\PositionsView.xaml.cs">
+    <Compile Update="Views\OrdersViews\CreateOrderView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\OrdersViews\OrderLines.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\PositionsViews\PositionLines.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\PositionsViews\OpenPositionsTablesView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\SymbolSelectionView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\LiveTickers\TicksCanvasSettled.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Views\CustomPTR.xaml">
+    <Page Update="Views\LogsAndPatternsRecognition\PatternRecognition\CustomPTR.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\MainView.xaml">
