@@ -51,7 +51,7 @@ namespace BitmexGUI.Services.Abstract
 
 
 
-        public async void GetPriceWSS()
+        public async void GetPriceWSS(string name)
         {
             System.Net.WebSockets.ClientWebSocket HttpClientPriceWSS = new System.Net.WebSockets.ClientWebSocket();
 
@@ -66,7 +66,7 @@ namespace BitmexGUI.Services.Abstract
             if (HttpClientPriceWSS.State != WebSocketState.Connecting && HttpClientPriceWSS.State != WebSocketState.Open)
             {
                 await HttpClientPriceWSS.ConnectAsync(new Uri(UrlWss), token);
-                WebSocketManager.Instance.AddWebSocket(HttpClientPriceWSS);
+                WebSocketManager.Instance.AddWebSocket(name, HttpClientPriceWSS);
             }
 
 
@@ -76,7 +76,7 @@ namespace BitmexGUI.Services.Abstract
                 if (result.MessageType == WebSocketMessageType.Close)
                 {
                     //MessageBox.Show(result.MessageType.ToString() + " line 86 ");
-                    await HttpClientPriceWSS.CloseAsync(WebSocketCloseStatus.NormalClosure, null, token);
+                    //await HttpClientPriceWSS.CloseAsync(WebSocketCloseStatus.NormalClosure, null, token);
                 }
                 else
                 {

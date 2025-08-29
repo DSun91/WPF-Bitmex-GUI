@@ -9,6 +9,6 @@ namespace BitmexGUI.Services.Interfaces
          
         public void GetPriceREST(ObservableCollection<CandlestickData> PriceData, Dictionary<string, CandlestickData> priceDataDictionary);
 
-        public void GetPriceWSS();
+        public void GetPriceWSS(string name);
     }
 }

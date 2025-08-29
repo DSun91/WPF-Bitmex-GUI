@@ -95,8 +95,8 @@ namespace BitmexGUI.ViewModels
             _bitmexApi.SettledPriceUpdated += priceStreamViewModel.OnPriceUpdatedBitmex;
             _binanceApi.PriceUpdated += priceStreamViewModel.OnPriceUpdatedBinance;
             _binanceApi.GetPriceREST(priceStreamViewModel.PriceData, _priceDataDictionary);
-            _binanceApi.GetPriceWSS(); 
-            _bitmexApi.GetPriceWSS();
+            _binanceApi.GetPriceWSS("BinancePriceFeed"); 
+            _bitmexApi.GetPriceWSS("BitmexPriceFeed");
         }
         public void StartMaintainOrdersPositionsWSS()
         {

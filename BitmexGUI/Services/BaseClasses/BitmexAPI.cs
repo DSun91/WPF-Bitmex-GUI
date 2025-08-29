@@ -272,7 +272,7 @@ namespace BitmexGUI.Services.Implementations
             if (BitmexHttpClientOrdersWSS.State != WebSocketState.Connecting && BitmexHttpClientOrdersWSS.State != WebSocketState.Open && BitmexHttpClientOrdersWSS.State != WebSocketState.Closed)
             { 
                 await BitmexHttpClientOrdersWSS.ConnectAsync(new Uri(BaseWss), ConnectionTokenSource.Token);
-                WebSocketManager.Instance.AddWebSocket(BitmexHttpClientOrdersWSS);
+                WebSocketManager.Instance.AddWebSocket("OrdersFeed",BitmexHttpClientOrdersWSS);
                 if (BitmexHttpClientOrdersWSS.State == WebSocketState.Open)
                 {
                     var auth_message = new
@@ -526,7 +526,7 @@ namespace BitmexGUI.Services.Implementations
                     CancellationTokenSource cancellationToken = new CancellationTokenSource();
                      
                     await BitmexHttpClientPositionsWSS.ConnectAsync(new Uri(BaseWss), cancellationToken.Token);
-                    WebSocketManager.Instance.AddWebSocket(BitmexHttpClientPositionsWSS);
+                    WebSocketManager.Instance.AddWebSocket("PositionsFeed",BitmexHttpClientPositionsWSS);
                 }
 
 

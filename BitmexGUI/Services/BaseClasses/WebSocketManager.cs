@@ -7,7 +7,7 @@ namespace BitmexGUI.Services.Implementations
     {
         private static WebSocketManager _instance;
         private static readonly object _lock = new object();
-        private readonly List<WebSocket> _webSockets = new List<WebSocket>();
+        private readonly Dictionary<string,WebSocket> _webSockets = new Dictionary<string, WebSocket>();
 
         // Singleton pattern
         public static WebSocketManager Instance
@@ -31,20 +31,25 @@ namespace BitmexGUI.Services.Implementations
         }
 
         // Add a WebSocket connection
-        public void AddWebSocket(WebSocket webSocket)
+        public void AddWebSocket(string name,WebSocket webSocket)
         {
             lock (_lock)
             {
-                _webSockets.Add(webSocket);
+                if (!_webSockets.ContainsKey(name))
+                {
+                    _webSockets.Add(name, webSocket);
+                }
+                    
             }
         }
 
         // Remove a WebSocket connection
-        public void RemoveWebSocket(WebSocket webSocket)
+        public void RemoveWebSocket(string name, WebSocket webSocket)
         {
             lock (_lock)
             {
-                _webSockets.Remove(webSocket);
+                if (_webSockets.ContainsKey(name))
+                    _webSockets.Remove(name);
             }
         }
 
@@ -56,11 +61,12 @@ namespace BitmexGUI.Services.Implementations
             lock (_lock)
             {
                 closeTasks = new List<Task>();
-                foreach (var webSocket in _webSockets)
+                foreach (KeyValuePair<string,WebSocket> webSocket in _webSockets)
                 {
-                    if (webSocket.State == WebSocketState.Open)
+                    if (webSocket.Key.Contains("Price") && _webSockets[webSocket.Key].State == WebSocketState.Open)
                     {
-                        closeTasks.Add(webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", BitmexAPI.ConnectionTokenSource.Token));
+                        closeTasks.Add(_webSockets[webSocket.Key].CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", BitmexAPI.ConnectionTokenSource.Token));
+                        _webSockets.Remove(webSocket.Key);
                     }
                 }
 
@@ -69,8 +75,8 @@ namespace BitmexGUI.Services.Implementations
             try
             { 
                 await Task.WhenAll(closeTasks);
-                 BitmexAPI.ReceiveTokenSource.Dispose();
-                 BitmexAPI.ConnectionTokenSource.Dispose();
+                 //BitmexAPI.ReceiveTokenSource.Dispose();
+                 //BitmexAPI.ConnectionTokenSource.Dispose();
             }
             catch (Exception ex)
             {
