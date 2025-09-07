@@ -1,5 +1,5 @@
-﻿using BitmexGUI.Models;
-using BitmexGUI.Services.Implementations;
+﻿using BitmexGUI.BaseClasses;
+using BitmexGUI.Models;
 using BitmexGUI.ViewModels;
 using BitmexGUI.ViewModels.Utilities;
 using System;
@@ -91,7 +91,7 @@ namespace BitmexGUI.Views
                     {
 
                         OrderID = existingLine.OrderID,
-                        Price = (decimal)(Math.Round(CandlestickChart.InvMapToScale(double.Parse((top).ToString())) / 100000000, 2)),
+                        Price = (decimal)(Math.Round(OHLCandlestickChart.InvMapToScale(double.Parse((top).ToString())) / 100000000, 2)),
                         Side = existingLine.Side,
                         Symbol = existingLine.Symbol
                     };

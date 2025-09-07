@@ -1,4 +1,4 @@
-﻿using BitmexGUI.Services.Interfaces;
+﻿using BitmexGUI.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,7 +21,16 @@ namespace BitmexGUI.ViewModels
             _selectedExchange = Exchanges.FirstOrDefault() ?? string.Empty;
         }
         
-        public List<string> Tickers { get; set; } = new List<string> { "BTCUSDT", "BTCUSD", "ETHUSDT" };
+        public List<string> Tickers { get; set; } = new List<string> { "BTCUSDT", "BTCUSD", "ETHUSDT", "ADAUSDT", "BNBUSDT" };
+
+        public static Dictionary<string, string> ExchangeTickersMap = new Dictionary<string, string>
+        {
+            { "BTCUSDT","XBTUSDT" },
+            { "BTCUSD","XBTUSD" },
+            { "ETHUSDT","ETHUSDT" },
+            { "ADAUSDT","ADAUSDT" },
+            { "BNBUSDT","BNBUSDT" },
+        };
         private string _selectedTicker;
 
       

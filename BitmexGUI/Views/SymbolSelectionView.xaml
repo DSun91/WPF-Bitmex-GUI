@@ -18,11 +18,11 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-            <Label Content="Ticker:" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="0" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
+            <Label Content="Ticker:" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="0" Margin="0,0,0,0" VerticalAlignment="Top" FontFamily="Sitka Heading" FontSize="18" FontWeight="Bold"/>
             <ComboBox x:Name="Ticker" HorizontalAlignment="Left" Height="25"  Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Width="87" ItemsSource="{Binding Tickers}" SelectedValue="{Binding SelectedTicker}"/>
-            <Label Content="Exchange:" HorizontalAlignment="Right"    Grid.Row="1" Grid.Column="0" VerticalAlignment="Top"  FontSize="18" FontWeight="Bold" />
+            <Label Content="Exchange:" HorizontalAlignment="Right"    Grid.Row="1" Grid.Column="0" VerticalAlignment="Top"  FontFamily="Sitka Heading" FontSize="18" FontWeight="Bold" />
             <ComboBox x:Name="ExchangeSelector" HorizontalAlignment="Left" Height="25"  Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Width="87" ItemsSource="{Binding Exchanges}" SelectedValue="{Binding SelectedExchange}"/>
-            <Label Content="Time-frame:" HorizontalAlignment="Right"  Grid.Row="2" Grid.Column="0" VerticalAlignment="Top"  FontSize="18" FontWeight="Bold"/>
+            <Label Content="Time-frame:" HorizontalAlignment="Right"  Grid.Row="2" Grid.Column="0" VerticalAlignment="Top"  FontFamily="Sitka Heading" FontSize="18" FontWeight="Bold"/>
             <ComboBox  x:Name="Timeframe" HorizontalAlignment="Left" Height="25" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Width="87" ItemsSource="{Binding TimeFrames}" SelectedValue="{Binding SelectedTimeFrame}"/>
         </Grid>
     </Border>

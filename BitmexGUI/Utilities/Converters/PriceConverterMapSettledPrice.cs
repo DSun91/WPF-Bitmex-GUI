@@ -1,4 +1,4 @@
-﻿using BitmexGUI.Services.Implementations;
+﻿using BitmexGUI.BaseClasses;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -15,7 +15,7 @@ namespace BitmexGUI.ViewModels.Utilities
         {
             if (value is double data)
             {
-                return Math.Round(CandlestickChart.MapToScale(double.Parse(data.ToString())), 2).ToString();
+                return Math.Round(OHLCandlestickChart.MapToScale(double.Parse(data.ToString())), 2).ToString();
             }
             return 0;
         }

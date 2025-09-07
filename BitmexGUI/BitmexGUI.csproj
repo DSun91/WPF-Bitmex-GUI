@@ -20,7 +20,10 @@
     <None Remove="Views\Imgs\a.png" />
     <None Remove="Views\Imgs\b.jpg" />
     <None Remove="Views\Imgs\b.png" />
+    <None Remove="Views\Imgs\Icon.ico" />
     <None Remove="Views\Imgs\logo.jpg" />
+    <None Remove="Views\Imgs\ta.png" />
+    <None Remove="Views\Imgs\technical-analysis-icon-in-logotype-vector.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.7.25104.5739" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NUnit" Version="4.2.1" />
   </ItemGroup>
@@ -37,9 +41,18 @@
     <Resource Include="Views\Imgs\a.png" />
     <Resource Include="Views\Imgs\b.jpg" />
     <Resource Include="Views\Imgs\b.png" />
+    <Resource Include="Views\Imgs\Icon.ico" />
     <Resource Include="Views\Imgs\logo.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Views\Imgs\ta.png" />
+    <Resource Include="Views\Imgs\technical-analysis-icon-in-logotype-vector.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\Indicators\SMA\SMAPannel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>

@@ -32,8 +32,8 @@
                             <Label
                                    x:Name="PriceTag"
                                    Tag="{Binding OrderID}" 
-                                   Height="28"
-                                   Width="120"
+                                   Height="45"
+                                   Width="150"
                                    HorizontalContentAlignment="Left"
                                    VerticalAlignment="Top"
                                    FontSize = "14"
@@ -45,14 +45,16 @@
                                    MouseMove = "OrderTag_MouseMove"
                                    MouseRightButtonUp="OrderTag_MouseRightButtonUp"  >
                                 <TextBlock>
-                                <Run Text="{Binding Side}"/>
-                                <Run Text=" : "/>
+                                    <Run Text="{Binding Side}"/>
+                                    <Run Text=" Order "/>
+                                 <LineBreak/>
+                                <Run Text=" Entry Price: "/>
                                 <Run Text="{Binding Price}" />
                                 </TextBlock>
                             </Label>
                         </Border>
                         <Border Canvas.Top="{Binding Price,Converter={StaticResource PriceFormatConverterOrders}}"
-                                Canvas.Left="1353" CornerRadius="5"> 
+                                Canvas.Left="1383" CornerRadius="5"> 
                             <Button
                                 x:Name="CancelOrder"
                                 Content="X"

@@ -14,7 +14,7 @@ namespace BitmexGUI.ViewModels.Utilities
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is CandlestickData data)
+            if (value is CandleStickViewModel data)
             {
                 // Return Red if Open < Close, Green otherwise
                 return data.Open < data.Close ? Brushes.Red : Brushes.Green;

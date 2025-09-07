@@ -1,4 +1,4 @@
-﻿using BitmexGUI.Services.Interfaces;
+﻿using BitmexGUI.Interfaces;
 using System.Configuration;
 using System.Data;
 using System.Windows;

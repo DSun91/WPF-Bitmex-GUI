@@ -1,5 +1,5 @@
-﻿using BitmexGUI.Models;
-using BitmexGUI.Services.Implementations;
+﻿using BitmexGUI.BaseClasses;
+using BitmexGUI.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -69,7 +69,7 @@ namespace BitmexGUI.ViewModels
                         Currencies.Add(accountInfo.CurrencyName);
                     }
                    
-                        EntryAmount = 0;
+                    EntryAmount = 0;
                     SliderLeverage = 1;
                     AmountSlider = 0;
                     UpdateCurrentTickerBalance();
@@ -88,7 +88,7 @@ namespace BitmexGUI.ViewModels
                     _entryAmount = value;
                     OnPropertyChanged();
                     CalculatePositionValue();
-                    CalculateOrderCost(); 
+                    CalculateFeesAndOrderCost(); 
                 }
             }
         }
@@ -110,7 +110,7 @@ namespace BitmexGUI.ViewModels
                     _sliderLeverage = Math.Round(value);
                     OnPropertyChanged();
                     CalculatePositionValue();
-                    CalculateOrderCost();
+                    CalculateFeesAndOrderCost();
                 }
             }
         }
@@ -144,7 +144,7 @@ namespace BitmexGUI.ViewModels
             }
         }
 
-        private void CalculateOrderCost()
+        private void CalculateFeesAndOrderCost()
         {
             CalculateQuantity();
 
@@ -152,10 +152,12 @@ namespace BitmexGUI.ViewModels
 
             double EOV = (Quantity) * EntryPrice;
 
-            double BK = EOV + (EOV / SliderLeverage);
-
+            double BK = EOV + (EOV / SliderLeverage); 
 
             OrderCost = Math.Round((EOV / SliderLeverage) + (EOV + BK) * (0.075 / 100), 2);
+
+            FeesAmount = Math.Round((EOV + BK) * (0.075 / 100), 3);
+
         }
 
         private void CalculateQuantity()
@@ -175,7 +177,20 @@ namespace BitmexGUI.ViewModels
             CalculateActualPositionValue();
         }
 
+        private double _feesAmount;
+        public double FeesAmount
+        {
+            get 
+            {
+                return _feesAmount;
+            } set 
+            {
+                _feesAmount = value;
+                OnPropertyChanged(nameof(FeesAmount));
+            }
+        }
 
+     
         public double PositionValue
         {
             get => _positionValue;
@@ -198,7 +213,7 @@ namespace BitmexGUI.ViewModels
                 if (Math.Abs(_entryPrice - value) > 0.001) // Avoid unnecessary updates
                 {
                     _entryPrice = value;
-                    CalculateOrderCost();
+                    CalculateFeesAndOrderCost();
                     OnPropertyChanged();
                     
                 }

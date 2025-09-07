@@ -1,5 +1,5 @@
-﻿using BitmexGUI.Models;
-using BitmexGUI.Services.Implementations;
+﻿using BitmexGUI.BaseClasses;
+using BitmexGUI.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -15,13 +15,13 @@ namespace BitmexGUI.ViewModels.Utilities
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             
-            if (value is CandlestickData candle)
+            if (value is CandleStickViewModel candle)
             {
                 string timestamp = ((DateTime)candle.Timestamp).ToString("d/MM/y HH:mm:ss");
-                string Open = Math.Round(CandlestickChart.InvMapToScale(candle.Open)/100000000,2).ToString();
-                string High = Math.Round(CandlestickChart.InvMapToScale(candle.High) / 100000000, 2).ToString();
-                string Low =  Math.Round(CandlestickChart.InvMapToScale(candle.Low) / 100000000, 2).ToString();
-                string Close =Math.Round(CandlestickChart.InvMapToScale(candle.Close) / 100000000, 2).ToString();
+                string Open = Math.Round(OHLCandlestickChart.InvMapToScale(candle.Open)/100000000,2).ToString();
+                string High = Math.Round(OHLCandlestickChart.InvMapToScale(candle.High) / 100000000, 2).ToString();
+                string Low =  Math.Round(OHLCandlestickChart.InvMapToScale(candle.Low) / 100000000, 2).ToString();
+                string Close =Math.Round(OHLCandlestickChart.InvMapToScale(candle.Close) / 100000000, 2).ToString();
                
                 return $"{timestamp}\n" + $"Open: {Open}\n" + $"High: {High}\n" + $"Low: {Low}\n" + $"Close: {Close}";
 

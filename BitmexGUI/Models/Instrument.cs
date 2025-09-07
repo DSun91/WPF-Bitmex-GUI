@@ -1,12 +1,14 @@
-﻿namespace BitmexGUI.Models
-{ 
-    public class Instrument
+﻿using BitmexGUI.Interfaces;
+
+namespace BitmexGUI.Models
+{
+    public class Instrument : IInstrument
     {
         public string CurrencyName { get; set; }
 
-        public double makerFee { get; set; }
+        public double MakerFee { get; set; }
 
-        public double takerFee { get; set; }
+        public double TakerFee { get; set; }
     }
 
 

@@ -1,5 +1,6 @@
-﻿using BitmexGUI.Models;
-using BitmexGUI.Services.Implementations;
+﻿using BitmexGUI.BaseClasses;
+using BitmexGUI.Models;
+using BitmexGUI.ViewModels.Indicators;
 using BitmexGUI.ViewModels.Utilities;
 using BitmexGUI.Views;
 using System.Collections.ObjectModel;
@@ -23,11 +24,8 @@ namespace BitmexGUI.ViewModels
         private string BinanceEndpointRest;
         private string BinanceEndpointWss;
         private string BitmexEndpointRest;
-        private string BitmexEndpointWss; 
-        public event Action SettledPriceDataUpdated;  
-        
-        public event Action OpenordersInfoUpdated;
-        public event Action HistoricOrderdataUpdated;
+        private string BitmexEndpointWss;  
+         
         public static Dictionary<string, CandlestickData> _priceDataDictionary = new Dictionary<string, CandlestickData>();
 
         private BinanceAPI _binanceApi;
@@ -37,14 +35,10 @@ namespace BitmexGUI.ViewModels
         public SymbolSelectionViewModel symbolSelectionViewModel { get; set; }
         public OrdersViewModel ordersViewModel { get; set; } 
         public PriceStreamViewModel priceStreamViewModel { get; set; }
-        public PositionsViewModel positionsViewModel { get; set; }
+        public PositionsViewModel positionsViewModel { get; set; } 
+        public IndicatorsViewModelManager indicatorsViewModelManager { get; set; }
 
-        public static Dictionary<string, string> ExchangeTickersMap = new Dictionary<string, string>
-        {
-            { "BTCUSDT","XBTUSDT" },
-            { "BTCUSD","XBTUSD" },
-            { "ETHUSDT","ETHUSDT" }
-        };
+        private Stopwatch _stopwatch = new Stopwatch();
 
         public MainViewModel()
         {
@@ -53,9 +47,9 @@ namespace BitmexGUI.ViewModels
           
             var BinanceInstrument = symbolSelectionViewModel.SelectedTicker.ToString().Equals("BTCUSD") ? "BTCUSDT" : symbolSelectionViewModel.SelectedTicker.ToString();
             var TimeFrame = symbolSelectionViewModel.SelectedTimeFrame.ToString();
-            var BitmexInstrument = ExchangeTickersMap[symbolSelectionViewModel.SelectedTicker.ToString()];
+            var BitmexInstrument = SymbolSelectionViewModel.ExchangeTickersMap[symbolSelectionViewModel.SelectedTicker.ToString()];
 
-            SetEndpoints(CandlestickChart.TotalCandlesCount, BinanceInstrument, TimeFrame, BitmexInstrument);
+            SetEndpoints(OHLCandlestickChart.TotalCandlesCount, BinanceInstrument, TimeFrame, BitmexInstrument);
 
 
             _binanceApi = new BinanceAPI(IdBinance, ApiKeyBinance, BinanceEndpointRest, BinanceEndpointWss);
@@ -64,7 +58,9 @@ namespace BitmexGUI.ViewModels
 
             entryViewModel = new EntryViewModel(_bitmexApi);
 
-            priceStreamViewModel = new PriceStreamViewModel(); 
+            priceStreamViewModel = new PriceStreamViewModel();
+
+            indicatorsViewModelManager= new IndicatorsViewModelManager(priceStreamViewModel);
 
             ordersViewModel = new OrdersViewModel(_bitmexApi, symbolSelectionViewModel, entryViewModel, priceStreamViewModel); 
 
@@ -94,9 +90,12 @@ namespace BitmexGUI.ViewModels
         {
             _bitmexApi.SettledPriceUpdated += priceStreamViewModel.OnPriceUpdatedBitmex;
             _binanceApi.PriceUpdated += priceStreamViewModel.OnPriceUpdatedBinance;
+            _stopwatch.Start();
             _binanceApi.GetPriceREST(priceStreamViewModel.PriceData, _priceDataDictionary);
+            _stopwatch.Stop();
+            //MessageBox.Show($"Binance REST API call completed in {_stopwatch.ElapsedMilliseconds} ms."); 
             _binanceApi.GetPriceWSS("BinancePriceFeed"); 
-            _bitmexApi.GetPriceWSS("BitmexPriceFeed");
+            _bitmexApi.GetPriceWSS("BitmexPriceFeed"); 
         }
         public void StartMaintainOrdersPositionsWSS()
         {
@@ -104,15 +103,14 @@ namespace BitmexGUI.ViewModels
             _bitmexApi.GetPositionWSS(); 
         }
          
-        
-
+         
         public async void RefreshDataContext()
         {
             try
             {
                 var BinanceInstrument = symbolSelectionViewModel.SelectedTicker.ToString().Equals("BTCUSD") ? "BTCUSDT" : symbolSelectionViewModel.SelectedTicker.ToString();
                 var TimeFrame = symbolSelectionViewModel.SelectedTimeFrame.ToString();
-                var BitmexInstrument = ExchangeTickersMap[symbolSelectionViewModel.SelectedTicker.ToString()];
+                var BitmexInstrument = SymbolSelectionViewModel.ExchangeTickersMap[symbolSelectionViewModel.SelectedTicker.ToString()];
 
                 if (TimeFrame != null && BitmexInstrument != null)
                 {
@@ -125,7 +123,7 @@ namespace BitmexGUI.ViewModels
 
                     await WebSocketManager.Instance.CloseAllWebSocketsAsync();
 
-                    SetEndpoints(CandlestickChart.TotalCandlesCount, BinanceInstrument, TimeFrame, BitmexInstrument);
+                    SetEndpoints(OHLCandlestickChart.TotalCandlesCount, BinanceInstrument, TimeFrame, BitmexInstrument);
 
 
                     _binanceApi = new BinanceAPI(IdBinance, ApiKeyBinance, BinanceEndpointRest, BinanceEndpointWss);
@@ -140,6 +138,7 @@ namespace BitmexGUI.ViewModels
 
                     
                     StartPriceFeed();
+
                     StartMaintainOrdersPositionsWSS();
 
                 }
@@ -154,14 +153,7 @@ namespace BitmexGUI.ViewModels
         }
 
 
-
-        private void PatternCreator()
-        {
-            CustomPTR secondWindow = new CustomPTR(25, priceStreamViewModel.PriceData);
-            secondWindow.Show();
-        }
-
-
+         
         private ICommand _createPatternRecognitionWindow;
         public ICommand CreatePatternRecognitionWindow
         {
@@ -171,7 +163,7 @@ namespace BitmexGUI.ViewModels
                 {
                     _createPatternRecognitionWindow = new RelayCommand(param =>
                     {
-                        PatternCreator();
+                       
                     });
                 }
                 return _createPatternRecognitionWindow;

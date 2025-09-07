@@ -13,7 +13,7 @@ namespace BitmexGUI.ViewModels.Utilities
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is CandlestickData data)
+            if (value is CandleStickViewModel data)
             {
 
                 return data.Close > data.Open ? data.Open : data.Close;

@@ -9,20 +9,7 @@
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"   >
     <Window.Resources>
-        <ResourceDictionary>
-            <converters:PositionConverter  x:Key="PositionConverter"/>
-            <converters:PositionConverterCandlestickX  x:Key="PositionConverterCandlestickX"/>
-            <converters:PriceConverterMapOrderline  x:Key="PriceConverterMapOrderline"/>
-            <converters:PriceConverterInvMapOrderline  x:Key="PriceConverterInvMapOrderline"/>
-            <converters:ColorConverter   x:Key="ColorConverter"/>
-            <viewmodels:GridDataViewModel x:Key="GridDataViewModel"/>
-            <viewmodels:SymbolSelectionViewModel x:Key="SymbolSelectionViewModel"/>
-            <converters:ColorConverterOrderTag x:Key="ColorConverterOrderTag"/>
-            <converters:PriceConverterMapSettledPrice x:Key="PriceConverterMapSettledPrice"/>
-            <converters:PriceConverterMapLabel x:Key="PriceConverterMapLabel"/>
-            <converters:CommandParameterConverter x:Key="CommandParameterConverter"/>
-            <converters:PriceFormatConverter x:Key="PriceFormatConverter"/>
-            <converters:StringToDoubleConverter x:Key="StringToDoubleConverter"/>
+        <ResourceDictionary>  
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="CustomStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
@@ -68,14 +55,17 @@
 
                     <Label Content="Bitmex GUI" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Height="50" VerticalAlignment="Center" Width="198" FontFamily="Franklin Gothic Book" FontSize="36" FontWeight="Bold" Cursor="AppStarting" FontStyle="Italic"/>
                     <Image HorizontalAlignment="Left" Grid.Column="0"  Grid.ColumnSpan="2" Grid.Row="0" Height="50" Margin="850,0,0,0" VerticalAlignment="Center"   Source="imgs/logo.jpg" Stretch="Uniform"/>
-
-                    <local:SymbolSelectionView x:Name="SymbolTimeFrameSelectionView"  
+                    <!-- <Canvas x:Name="MainCanvas" Background="LightGray">-->
+                        <local:SymbolSelectionView x:Name="SymbolTimeFrameSelectionView"  
                             HorizontalAlignment="Left" 
                             Grid.Row="2" 
                             Grid.Column="0"
                             VerticalAlignment="Top"
-                            Margin="0,0,0,0" />
-                    
+                                                   Margin="0,0,0,0" />
+                          <!--  MouseLeftButtonDown="Control_MouseLeftButtonDown"
+                         MouseMove="Control_MouseMove"
+                         MouseLeftButtonUp="Control_MouseLeftButtonUp" 
+                    </Canvas> -->
                     <Border   Background="AntiqueWhite" CornerRadius="15" 
                             BorderThickness="1" 
                             BorderBrush="Black"  
@@ -99,16 +89,16 @@
                                        VerticalAlignment="Top" 
                                        HorizontalAlignment="Left"
                                           />
-                    <local:OpenOrdersTableView Grid.Row="2" 
-                   Grid.Column="1"  
-                   Grid.ColumnSpan="2"
-                   HorizontalAlignment="Left" 
-                        Width="970"
-                   Margin="3"/>
+                    <local:OpenOrdersTableView Grid.Row="2" x:Name="OrdersTable"
+                                               Grid.Column="1"  
+                                               Grid.ColumnSpan="2"
+                                               HorizontalAlignment="Left" 
+                                                    Width="960"
+                                               Margin="3"/>
                     <local:OpenPositionsTablesView Grid.Row="3" x:Name="PositionsTable"
                                      Grid.Column="1" 
                                      Grid.ColumnSpan="2" 
-                                          Width="980"
+                                          Width="970"
                                      HorizontalAlignment="Left"/>
 
                    

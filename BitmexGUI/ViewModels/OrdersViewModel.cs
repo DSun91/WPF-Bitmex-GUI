@@ -1,6 +1,6 @@
-﻿using BitmexGUI.Models;
-using BitmexGUI.Services.Abstract;
-using BitmexGUI.Services.Implementations;
+﻿using BitmexGUI.Abstract;
+using BitmexGUI.BaseClasses;
+using BitmexGUI.Models;
 using BitmexGUI.ViewModels.Utilities;
 using BitmexGUI.Views;
 using System.Collections.ObjectModel;
@@ -122,7 +122,7 @@ namespace BitmexGUI.ViewModels
             if (orderside.Contains("buylimit"))
             {
 
-                BitmexApi.CreateOrder(MainViewModel.ExchangeTickersMap[symbolSelectionViewModel.SelectedTicker],
+                BitmexApi.CreateOrder(SymbolSelectionViewModel.ExchangeTickersMap[symbolSelectionViewModel.SelectedTicker],
                                        entryViewModel.Quantity * 1000000,
                                        Math.Round(entryViewModel.EntryPrice, 0),
                                        "Limit",
@@ -134,7 +134,7 @@ namespace BitmexGUI.ViewModels
             else if (orderside.Contains("selllimit"))
             {
 
-                BitmexApi.CreateOrder(MainViewModel.ExchangeTickersMap[symbolSelectionViewModel.SelectedTicker],
+                BitmexApi.CreateOrder(SymbolSelectionViewModel.ExchangeTickersMap[symbolSelectionViewModel.SelectedTicker],
                                        entryViewModel.Quantity * 1000000,
                                        Math.Round(entryViewModel.EntryPrice, 0),
                                        "Limit",
@@ -145,7 +145,7 @@ namespace BitmexGUI.ViewModels
 
             else if (orderside.Contains("buymarket"))
             {
-                BitmexApi.CreateOrder(MainViewModel.ExchangeTickersMap[symbolSelectionViewModel.SelectedTicker],
+                BitmexApi.CreateOrder(SymbolSelectionViewModel.ExchangeTickersMap[symbolSelectionViewModel.SelectedTicker],
                                        entryViewModel.Quantity * 1000000,
                                        Math.Round(entryViewModel.EntryPrice, 0),
                                        "Market",
@@ -156,7 +156,7 @@ namespace BitmexGUI.ViewModels
 
             else if (orderside.Contains("sellmarket"))
             {
-                BitmexApi.CreateOrder(MainViewModel.ExchangeTickersMap[symbolSelectionViewModel.SelectedTicker],
+                BitmexApi.CreateOrder(SymbolSelectionViewModel.ExchangeTickersMap[symbolSelectionViewModel.SelectedTicker],
                                        -entryViewModel.Quantity * 1000000,
                                        Math.Round(entryViewModel.EntryPrice, 0),
                                        "Market",

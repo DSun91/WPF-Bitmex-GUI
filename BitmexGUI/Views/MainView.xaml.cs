@@ -1,8 +1,4 @@
-﻿using BitmexGUI.Models;
-using BitmexGUI.Services.Implementations;
-using BitmexGUI.ViewModels;
-using System.Globalization;
-using System.Net.WebSockets;
+﻿using BitmexGUI.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -44,18 +40,47 @@ namespace BitmexGUI.Views
             EntrySetup.ParentViewModel = viewModel;
             EntrySetup.DataContext = viewModel.entryViewModel;
             LiveChart.DataContext = viewModel;
+            OrdersTable.DataContext = viewModel;
             
 
 
+
         }
-       
-
-         
 
 
-       
+        //private bool _isDragging;
+        //private Point _clickPosition;
 
-      
+        //private void Control_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    _isDragging = true;
+        //    _clickPosition = e.GetPosition(SymbolTimeFrameSelectionView);
+        //    SymbolTimeFrameSelectionView.CaptureMouse();
+        //}
+
+        //private void Control_MouseMove(object sender, MouseEventArgs e)
+        //{
+        //    if (_isDragging)
+        //    {
+        //        var canvasPos = e.GetPosition(MainCanvas);
+        //        double left = canvasPos.X - _clickPosition.X;
+        //        double top = canvasPos.Y - _clickPosition.Y;
+
+        //        Canvas.SetLeft(SymbolTimeFrameSelectionView, left);
+        //        Canvas.SetTop(SymbolTimeFrameSelectionView, top);
+        //    }
+        //}
+
+        //private void Control_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        //{
+        //    _isDragging = false;
+        //    SymbolTimeFrameSelectionView.ReleaseMouseCapture();
+        //}
+
+
+
+
+
         private void Window_StateChanged(object sender, EventArgs e)
         {
             if (WindowState == WindowState.Maximized)

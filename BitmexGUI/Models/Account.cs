@@ -1,4 +1,4 @@
-﻿using BitmexGUI.Services.Interfaces;
+﻿using BitmexGUI.Interfaces;
 
 namespace BitmexGUI.Models
 {

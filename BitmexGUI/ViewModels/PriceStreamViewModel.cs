@@ -1,5 +1,5 @@
-﻿using BitmexGUI.Models;
-using BitmexGUI.Services.Implementations;
+﻿using BitmexGUI.BaseClasses;
+using BitmexGUI.Models;
 using BitmexGUI.Views;
 using System;
 using System.Collections.Generic;
@@ -16,10 +16,16 @@ namespace BitmexGUI.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private ObservableCollection<CandlestickData> _priceData = new ObservableCollection<CandlestickData>();
-        private ObservableCollection<SettledPrice> _settledPriceData = new ObservableCollection<SettledPrice>(); 
-        private ObservableCollection<CandlestickData> _scaledpriceData = new ObservableCollection<CandlestickData>();
-     
+        private ObservableCollection<CandleStickViewModel> _priceData = new ObservableCollection<CandleStickViewModel>(); 
+
+        private ObservableCollection<CandleStickViewModel> _scaledpriceData = new ObservableCollection<CandleStickViewModel>();
+
+        private ObservableCollection<SettledPrice> _settledPriceData = new ObservableCollection<SettledPrice>();
+
+        public List<CandleStickViewModel> CachedScaledCandlesticks = new List<CandleStickViewModel>();
+
+        private ObservableCollection<CurrentClosePrice> _currentClose = new ObservableCollection<CurrentClosePrice>();
+
         public  Action ScaledPriceUpdated;
 
         public PriceStreamViewModel()
@@ -36,7 +42,7 @@ namespace BitmexGUI.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private ObservableCollection<CurrentClosePrice> _currentClose = new ObservableCollection<CurrentClosePrice>();
+        
 
         #region Properties
 
@@ -51,7 +57,7 @@ namespace BitmexGUI.ViewModels
         }
 
 
-        public ObservableCollection<CandlestickData> ScaledPriceData
+        public ObservableCollection<CandleStickViewModel> ScaledPriceData
         {
             get => _scaledpriceData;
             set
@@ -60,7 +66,7 @@ namespace BitmexGUI.ViewModels
                 OnPropertyChanged(nameof(ScaledPriceData));
             }
         }
-        public ObservableCollection<CandlestickData> PriceData
+        public ObservableCollection<CandleStickViewModel> PriceData
         {
             get => _priceData;
             set
@@ -79,25 +85,26 @@ namespace BitmexGUI.ViewModels
             }
         }
 
-        public List<CandlestickData> CachedScaledCandlesticks = new List<CandlestickData>();
+        
         #endregion
         private void InitializedCachedCandlesticks()
         {
              
-            for (int i = 0; i < CandlestickChart.TotalCandlesCount; i++)
+            for (int i = 0; i < OHLCandlestickChart.TotalCandlesCount; i++)
             {
-                CachedScaledCandlesticks.Add(new CandlestickData());
+                CachedScaledCandlesticks.Add(new CandleStickViewModel(new CandlestickData()));
 
             }
         }
         private void InitializedScaledData()
         {
        
-            for (int i = 0; i < CandlestickChart.CandlesToView; i++)
+            for (int i = 0; i < OHLCandlestickChart.CandlesToView; i++)
             {
-                ScaledPriceData.Add(new CandlestickData());
+                ScaledPriceData.Add(new CandleStickViewModel( new CandlestickData()));
 
             }
+
         }
 
         private void AppendPriceData(DateTime timestamp, CandlestickData priceData)
@@ -114,11 +121,11 @@ namespace BitmexGUI.ViewModels
                 existingData.Close = priceData.Close;
 
                 
-                int index = PriceData.IndexOf(existingData);
+                int index = PriceData.ToList().FindIndex(x=>x.Candlestick.Timestamp.Equals(existingData.Timestamp));
 
                 if (index >= 0)
                 { 
-                    PriceData[index] = existingData;  
+                    PriceData[index] =new CandleStickViewModel(existingData);  
                 }
             }
         }
@@ -128,7 +135,7 @@ namespace BitmexGUI.ViewModels
             int indexScaledPrice = ScaledPriceData.IndexOf(ScaledPriceExisting);
             if (indexScaledPrice > 0)
             {
-                ScaledPriceData[indexScaledPrice] = ScaleCandle(priceData);
+                ScaledPriceData[indexScaledPrice] =new CandleStickViewModel( ScaleCandle(priceData));
                 ScaledPriceData[indexScaledPrice].Posx = ScaledPriceExisting.Posx;
             }
 
@@ -139,17 +146,17 @@ namespace BitmexGUI.ViewModels
         private void AddNewPriceData(DateTime timestamp, CandlestickData priceData)
         {
             MainViewModel._priceDataDictionary[timestamp.ToString()] = priceData;
-            priceData.Posx = CandlestickChart.CandlesInterspace * PriceData.Count;
+            priceData.Posx = OHLCandlestickChart.CandlesInterspace * PriceData.Count;
 
-            PriceData.Add(priceData);
+            PriceData.Add(new CandleStickViewModel(priceData));
 
-            if (PriceData.Count > CandlestickChart.TotalCandlesCount)
+            if (PriceData.Count > OHLCandlestickChart.TotalCandlesCount)
             {
                 PriceData.Remove(PriceData.First());
 
                 for (int i = 0; i < PriceData.Count; i++)
                 {
-                    PriceData[i].Posx = CandlestickChart.CandlesInterspace * i;
+                    PriceData[i].Posx = OHLCandlestickChart.CandlesInterspace * i;
                      
                 }
             }
@@ -162,23 +169,23 @@ namespace BitmexGUI.ViewModels
         private void AddNewScaledPriceData(DateTime timestamp, CandlestickData priceData)
         {
             MainViewModel._priceDataDictionary[timestamp.ToString()] = priceData;
-            priceData.Posx = CandlestickChart.CandlesInterspace * PriceData.Count;
+            priceData.Posx = OHLCandlestickChart.CandlesInterspace * PriceData.Count;
 
-            ScaledPriceData.Add(ScaleCandle(priceData));
+            ScaledPriceData.Add(new CandleStickViewModel(ScaleCandle(priceData)));
 
-            if (ScaledPriceData.Count > CandlestickChart.CandlesToView)
+            if (ScaledPriceData.Count > OHLCandlestickChart.CandlesToView)
             {
                 ScaledPriceData.Remove(ScaledPriceData.First());
 
                 for (int i = 0; i < ScaledPriceData.Count; i++)
                 {
-                    ScaledPriceData[i].Posx = CandlestickChart.CandlesInterspace * i;
+                    ScaledPriceData[i].Posx = OHLCandlestickChart.CandlesInterspace * i;
                 }
             }
             CachedScaledCandlesticks = ScaledPriceData.ToList();
         }
 
-
+        // Gets alle each time the live price stream is updated from the websocket
         public void OnPriceUpdatedBinance(CandlestickData priceData)
         {
             Application.Current.Dispatcher.Invoke(() =>
@@ -244,13 +251,14 @@ namespace BitmexGUI.ViewModels
         public void RefreshScaledPriceData(string FromEvenFeed)
         { 
             ScalePriceData(FromEvenFeed);
+
             ScaledPriceUpdated?.Invoke();
             
         }
        
         public void ScalePriceData(string FromEvenFeed)
         {
-            int CandlesToSkip = CandlestickChart.TotalCandlesCount - CandlestickChart.CandlesToView;
+            int CandlesToSkip = OHLCandlestickChart.TotalCandlesCount - OHLCandlestickChart.CandlesToView;
 
             if (FromEvenFeed == "FromPriceFeed" )
             {
@@ -264,14 +272,14 @@ namespace BitmexGUI.ViewModels
                         if (CachedScaledCandlesticks[i].Close != ScaledPriceData[i].Close)
                         {
 
-                            CandlestickData scaledCandle = ScaleCandle(PriceData[i + CandlesToSkip]);
+                            CandlestickData scaledCandle = ScaleCandle(PriceData[i + CandlesToSkip].Candlestick);
 
                             ScaledPriceData[i].Open = scaledCandle.Open;
                             ScaledPriceData[i].Close = scaledCandle.Close;
                             ScaledPriceData[i].High = scaledCandle.High;
                             ScaledPriceData[i].Low = scaledCandle.Low;
-                            ScaledPriceData[i].Posx = i * CandlestickChart.CandlesInterspace;
-                            ScaledPriceData[i].Width = CandlestickChart.candleWidth;
+                            ScaledPriceData[i].Posx = i * OHLCandlestickChart.CandlesInterspace;
+                            ScaledPriceData[i].Width = OHLCandlestickChart.candleWidth;
                             ScaledPriceData[i].Symbol = scaledCandle.Symbol;
                             ScaledPriceData[i].Timestamp = scaledCandle.Timestamp;
                         }
@@ -295,7 +303,7 @@ namespace BitmexGUI.ViewModels
         }
 
 
-        private void ReloadAllScaledPriceScaled(int ToSkip)
+        public void ReloadAllScaledPriceScaled(int ToSkip)
         {
             // Actual Loop that Clears and Scales all the priceStreamViewModel.ScaledPriceData list of candles in case events like
             // dragging and mousewheel are triggered from LivePriceChart
@@ -307,11 +315,11 @@ namespace BitmexGUI.ViewModels
             for (int i = ToSkip; i < PriceData.Count; i++)
             {
 
-                CandlestickData scaledCandle = ScaleCandle(PriceData[i]);
-                scaledCandle.Posx = (i - ToSkip) * CandlestickChart.CandlesInterspace;
-                scaledCandle.Width = CandlestickChart.candleWidth;
+                CandlestickData scaledCandle = ScaleCandle(PriceData[i].Candlestick);
+                scaledCandle.Posx = (i - ToSkip) * OHLCandlestickChart.CandlesInterspace;
+                scaledCandle.Width = OHLCandlestickChart.candleWidth;
 
-                ScaledPriceData.Add(scaledCandle);
+                ScaledPriceData.Add(new CandleStickViewModel( scaledCandle));
 
             }
             CachedScaledCandlesticks = ScaledPriceData.ToList();
@@ -323,23 +331,23 @@ namespace BitmexGUI.ViewModels
             CandlestickData temp = new CandlestickData();
             try
             {
-                int maxCandlesInView = (int)Math.Ceiling(700 / (CandlestickChart.CandlesInterspace - CandlestickChart.candleWidth));
-                var allValues = PriceData.Skip(CandlestickChart.TotalCandlesCount - CandlestickChart.CandlesToView).Take(CandlestickChart.TotalCandlesCount).SelectMany(data => new[] { data.Open, data.High, data.Low, data.Close });
+                int maxCandlesInView = (int)Math.Ceiling(700 / (OHLCandlestickChart.CandlesInterspace - OHLCandlestickChart.candleWidth));
+                var allValues = PriceData.Skip(OHLCandlestickChart.TotalCandlesCount - OHLCandlestickChart.CandlesToView).Take(OHLCandlestickChart.TotalCandlesCount).SelectMany(data => new[] { data.Open, data.High, data.Low, data.Close });
                 var minVal = allValues.Min();
                 var maxVal = allValues.Max();
 
 
-                CandlestickChart.minOriginal = minVal;
-                CandlestickChart.maxOriginal = maxVal;
-                double padding = (CandlestickChart.maxOriginal - CandlestickChart.minOriginal) * CandlestickChart.ScaleFactor;
-                CandlestickChart.minOriginal -= padding;
-                CandlestickChart.maxOriginal += padding;
+                OHLCandlestickChart.minOriginal = minVal;
+                OHLCandlestickChart.maxOriginal = maxVal;
+                double padding = (OHLCandlestickChart.maxOriginal - OHLCandlestickChart.minOriginal) * OHLCandlestickChart.ScaleFactor;
+                OHLCandlestickChart.minOriginal -= padding;
+                OHLCandlestickChart.maxOriginal += padding;
 
 
-                temp.Open = CandlestickChart.MapToScale(priceData.Open) + CandlestickChart.VericalOffset;
-                temp.High = CandlestickChart.MapToScale(priceData.High) + CandlestickChart.VericalOffset;
-                temp.Low = CandlestickChart.MapToScale(priceData.Low) + CandlestickChart.VericalOffset;
-                temp.Close = CandlestickChart.MapToScale(priceData.Close) + CandlestickChart.VericalOffset;
+                temp.Open = OHLCandlestickChart.MapToScale(priceData.Open) + OHLCandlestickChart.VerticalOffset;
+                temp.High = OHLCandlestickChart.MapToScale(priceData.High) + OHLCandlestickChart.VerticalOffset;
+                temp.Low = OHLCandlestickChart.MapToScale(priceData.Low) + OHLCandlestickChart.VerticalOffset;
+                temp.Close = OHLCandlestickChart.MapToScale(priceData.Close) + OHLCandlestickChart.VerticalOffset;
                 temp.Timestamp = priceData.Timestamp;
                 temp.Width = priceData.Width;
                 temp.Posx = priceData.Posx;

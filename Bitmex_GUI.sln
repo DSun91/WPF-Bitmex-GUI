@@ -5,6 +5,8 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitmexGUI", "BitmexGUI\BitmexGUI.csproj", "{AB064950-6C51-482A-949A-560CCD4DF056}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "BitmexApp", "BitmexApp\BitmexApp.vdproj", "{9F5F00AA-A39E-A3D2-3EBA-3049B5878EFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{AB064950-6C51-482A-949A-560CCD4DF056}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB064950-6C51-482A-949A-560CCD4DF056}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB064950-6C51-482A-949A-560CCD4DF056}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F5F00AA-A39E-A3D2-3EBA-3049B5878EFC}.Debug|Any CPU.ActiveCfg = Debug
+		{9F5F00AA-A39E-A3D2-3EBA-3049B5878EFC}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

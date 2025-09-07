@@ -29,21 +29,24 @@ namespace BitmexGUI.ViewModels
 
         private void InitializeGrid()
         {
-            int GridSpacing = 25;
-            double canvasHeight = 3550;  
-            double canvasWidth = 1550;  
+            int GridSpacing = 50;
+            double canvasHeight = 450;  
+            double canvasWidth = 1400;  
             GridData = new ObservableCollection<GridData>();
 
+
+             
+
             // Vertical lines
-            for (double x = -canvasWidth; x <= canvasWidth; x += GridSpacing)
+            for (double x = 100; x <= canvasWidth; x += GridSpacing)
             {
-                GridData.Add(new GridData { X1 = x, Y1 = -canvasWidth, X2 = x, Y2 = canvasWidth });
+                GridData.Add(new GridData { X1 = x, Y1 = 0, X2 = x, Y2 = canvasHeight });
             }
 
             // Horizontal lines
-            for (double y = -canvasHeight; y <= canvasHeight; y += GridSpacing)
+            for (double y = 0; y <= canvasHeight; y += GridSpacing)
             {
-                GridData.Add(new GridData { X1 = -canvasHeight, Y1 = y, X2 = canvasHeight, Y2 = y });
+                GridData.Add(new GridData { X1 = 100, Y1 = y, X2 = canvasWidth, Y2 = y });
             }
         }
 

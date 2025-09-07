@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BitmexGUI.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BitmexGUI.Models
 {
-    public class Order
+    public class Order:IOrder
     {
         public string? OrderID { get; set; }        // Represents "orderID"
         public int? Account { get; set; }           // Represents "account"

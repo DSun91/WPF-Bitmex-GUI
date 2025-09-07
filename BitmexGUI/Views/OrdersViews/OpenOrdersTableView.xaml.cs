@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BitmexGUI.Models;
+using BitmexGUI.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,30 @@ namespace BitmexGUI.Views
         public OpenOrdersTableView()
         {
             InitializeComponent();
+
+            Loaded += OpenOrdersTableView_Loaded;
+
+        }
+        private void OpenOrdersTableView_Loaded(object sender, RoutedEventArgs e)
+        {
+            CreateGrid();
+        }
+        public void CreateGrid()
+        {
+            //Orders.Columns.Clear();
+
+            //var props = typeof(Order).GetProperties();
+            //foreach (var prop in props)
+            //{
+            //    if ((DataContext as MainViewModel).ordersViewModel.OrdersInfo.Any(o => prop.GetValue(o) != null))
+            //    {
+            //        Orders.Columns.Add(new DataGridTextColumn
+            //        {
+            //            Header = prop.Name,
+            //            Binding = new Binding(prop.Name)
+            //        });
+            //    }
+            //}
         }
     }
 }

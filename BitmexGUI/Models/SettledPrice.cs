@@ -1,12 +1,12 @@
-﻿namespace BitmexGUI.Models
-{
-    
+﻿using BitmexGUI.Interfaces;
 
-    public class SettledPrice
+namespace BitmexGUI.Models
+{
+     
+    public class SettledPrice: ISettledPrice
     {
         public string Symbol { get; set; }
-        public double SettledPriceValue { get; set; }
-
+        public double SettledPriceValue { get; set; } 
         public string Timestamp { get; set; }
 
     }

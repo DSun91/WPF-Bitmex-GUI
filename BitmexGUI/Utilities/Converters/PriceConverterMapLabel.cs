@@ -1,4 +1,4 @@
-﻿using BitmexGUI.Services.Implementations;
+﻿using BitmexGUI.BaseClasses;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -16,20 +16,20 @@ namespace BitmexGUI.ViewModels.Utilities
            
             if (value is decimal decimalValue)
             {
-                var val = (Math.Round(CandlestickChart.MapToScale(double.Parse(decimalValue.ToString())), 2) - 12.5);
+                var val = (Math.Round(OHLCandlestickChart.MapToScale(double.Parse(decimalValue.ToString())), 2) - 12.5);
                 return val;
             }
             else if (value is double doubleValue)
             {
                 if (doubleValue > 10e6)
                 {
-                    var val = (Math.Round(CandlestickChart.MapToScale(doubleValue), 2) - 12.5);
+                    var val = (Math.Round(OHLCandlestickChart.MapToScale(doubleValue), 2) - 12.5);
                     return val;
                 }
                 else
                 {
                     var corrected = doubleValue * 100000000;
-                    var val = (Math.Round(CandlestickChart.MapToScale(corrected), 2) - 12.5);
+                    var val = (Math.Round(OHLCandlestickChart.MapToScale(corrected), 2) - 12.5);
                     return val;
                 }
             }

@@ -1,5 +1,5 @@
-﻿using BitmexGUI.Models;
-using BitmexGUI.Services.Implementations;
+﻿using BitmexGUI.BaseClasses;
+using BitmexGUI.Models;
 using BitmexGUI.ViewModels.Utilities;
 using BitmexGUI.Views;
 using System;
@@ -52,11 +52,11 @@ namespace BitmexGUI.ViewModels
             PositionLine newpositionLine = new PositionLine
             {
                 AccountID = newPositionData.AccountID,
-                AvgEntryPrice = (decimal)double.Parse(newPositionData.AvgEntryPrice.ToString()),
+                AvgEntryPrice = (float)double.Parse(newPositionData.AvgEntryPrice.ToString()),
                 Symbol = newPositionData.Symbol,
-                BreakEvenPrice = (decimal)double.Parse(newPositionData.BreakEvenPrice.ToString()),
-                UnrealisedPnl = (decimal)newPositionData.UnrealisedPnl,
-                LiquidationPrice = (decimal)newPositionData.LiquidationPrice,
+                BreakEvenPrice = (float)double.Parse(newPositionData.BreakEvenPrice.ToString()),
+                UnrealisedPnl = (float)newPositionData.UnrealisedPnl,
+                LiquidationPrice = (float)newPositionData.LiquidationPrice,
                 DeltaFromBreakEven = (decimal)newPositionData.DeltaFromBreakEven, 
             };
 

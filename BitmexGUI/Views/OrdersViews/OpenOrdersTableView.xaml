@@ -22,7 +22,10 @@
 			        TextAlignment="Center"
 			        HorizontalAlignment="Stretch"
 			        DockPanel.Dock="Top" /> 
-                    <DataGrid x:Name="Orders"  CanUserAddRows="False" RowHeaderWidth="30" Margin="0,00,0,0" ItemsSource="{Binding ordersViewModel.OrdersInfo, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False"  Height="160">
+                    <DataGrid x:Name="Orders"  CanUserAddRows="False" 
+                              RowHeaderWidth="30" 
+                              Margin="0,00,0,0" 
+                              ItemsSource="{Binding ordersViewModel.OrdersInfo, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False"  Height="160">
                         <DataGrid.Resources> 
                             <Style TargetType="DataGridColumnHeader">
                                 <Setter Property="Background" Value="#4A4A4A"/>

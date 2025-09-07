@@ -7,18 +7,8 @@
              xmlns:converters="clr-namespace:BitmexGUI.ViewModels.Utilities"
              mc:Ignorable="d"  >
     <UserControl.Resources>
-        <ResourceDictionary>
-            <converters:PositionConverter  x:Key="PositionConverter"/>
-            <converters:PositionConverterCandlestickX  x:Key="PositionConverterCandlestickX"/>
-            <converters:PriceConverterMapOrderline  x:Key="PriceConverterMapOrderline"/>
-            <converters:PriceConverterInvMapOrderline  x:Key="PriceConverterInvMapOrderline"/>
-            <converters:ColorConverter   x:Key="ColorConverter"/>
-            <converters:ColorConverterOrderTag x:Key="ColorConverterOrderTag"/>
-            <converters:PriceConverterMapSettledPrice x:Key="PriceConverterMapSettledPrice"/>
-            <converters:PriceConverterMapLabel x:Key="PriceConverterMapLabel"/>
-            <converters:CommandParameterConverter x:Key="CommandParameterConverter"/>
-            <converters:PriceFormatConverter x:Key="PriceFormatConverter"/>
-            <converters:StringToDoubleConverter x:Key="StringToDoubleConverter"/>
+        <ResourceDictionary> 
+            <converters:CommandParameterConverter x:Key="CommandParameterConverter"/> 
         </ResourceDictionary>
     </UserControl.Resources>
     <Border Background="AntiqueWhite" CornerRadius="15"   BorderThickness="5" Padding="9" Width="295">

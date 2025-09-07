@@ -1,6 +1,9 @@
-﻿namespace BitmexGUI.Models
+﻿using BitmexGUI.Interfaces;
+using System.ComponentModel;
+
+namespace BitmexGUI.Models
 {
-    public class Position
+    public class Position: IPosition
     {
         public int AccountID { get; set; }
         public string Symbol { get; set; }
